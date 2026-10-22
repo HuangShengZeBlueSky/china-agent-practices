@@ -19,6 +19,8 @@
 | baidubce/app-builder | 76a7316c0671 | 0 | 33838831 | [全部原文](baidubce/app-builder/76a7316c0671900b698f9e955afb432ec9a93183/files) · [清单](baidubce/app-builder/76a7316c0671900b698f9e955afb432ec9a93183/manifest.json) |
 | bytedance/trae-agent | e839e559ac61 | 0 | 4402468 | [全部原文](bytedance/trae-agent/e839e559ac61bdd0e057c375dd1dee391fee797d/files) · [清单](bytedance/trae-agent/e839e559ac61bdd0e057c375dd1dee391fee797d/manifest.json) |
 | cloudwego/eino | 0a5ca53b9d3b | 0 | 5104712 | [全部原文](cloudwego/eino/0a5ca53b9d3bf7b661dccc863465ec568a421eea/files) · [清单](cloudwego/eino/0a5ca53b9d3bf7b661dccc863465ec568a421eea/manifest.json) |
+| coze-dev/coze-loop | 59a6855aab29 | 0 | 8303947 | [全部原文](coze-dev/coze-loop/59a6855aab290fef37ff041d739883e08082ede7/files) · [清单](coze-dev/coze-loop/59a6855aab290fef37ff041d739883e08082ede7/manifest.json) |
+| coze-dev/coze-loop | 95dc2eebbc10 | 0 | 8299244 | [全部原文](coze-dev/coze-loop/95dc2eebbc100b929c102d90111bb94fad41e500/files) · [清单](coze-dev/coze-loop/95dc2eebbc100b929c102d90111bb94fad41e500/manifest.json) |
 | coze-dev/coze-studio | fefb05ff27be | 0 | 22816886 | [全部原文](coze-dev/coze-studio/fefb05ff27be1da939612fbf9faf5db62583b8ae/files) · [清单](coze-dev/coze-studio/fefb05ff27be1da939612fbf9faf5db62583b8ae/manifest.json) |
 | larksuite/cli | 017b19a793ad | 37 | 7142542 | [全部原文](larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files) · [清单](larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/manifest.json) |
 | meituan-longcat/vitabench | 742e240855bf | 0 | 5656535 | [全部原文](meituan-longcat/vitabench/742e240855bf8686a0842360749d5ea970ea3987/files) · [清单](meituan-longcat/vitabench/742e240855bf8686a0842360749d5ea970ea3987/manifest.json) |

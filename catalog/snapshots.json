@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:57:51.055042+00:00",
+  "updated_at": "2026-10-22T15:58:00.090930+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -96,6 +96,14 @@
       "ok": true,
       "commits": [
         "fefb05ff27be1da939612fbf9faf5db62583b8ae"
+      ]
+    },
+    {
+      "repository": "coze-dev/coze-loop",
+      "ok": true,
+      "commits": [
+        "95dc2eebbc100b929c102d90111bb94fad41e500",
+        "59a6855aab290fef37ff041d739883e08082ede7"
       ]
     }
   ],
@@ -218,6 +226,24 @@
       "archive_file_count": 462
     },
     {
+      "repository": "coze-dev/coze-loop",
+      "commit": "59a6855aab290fef37ff041d739883e08082ede7",
+      "captured_at": "2026-10-22T15:57:59.984515+00:00",
+      "archive_bytes": 8303947,
+      "archive_sha256": "2abb3c3209f37c9d3c16c1ca24e5c98251a0786e0cd8759dfaee408354764d17",
+      "skills_count": 0,
+      "archive_file_count": 7252
+    },
+    {
+      "repository": "coze-dev/coze-loop",
+      "commit": "95dc2eebbc100b929c102d90111bb94fad41e500",
+      "captured_at": "2026-10-22T15:57:57.916151+00:00",
+      "archive_bytes": 8299244,
+      "archive_sha256": "0907d00ad746145d465947f49a4ca18820e065af082c075cff3b095801f05800",
+      "skills_count": 0,
+      "archive_file_count": 7251
+    },
+    {
       "repository": "coze-dev/coze-studio",
       "commit": "fefb05ff27be1da939612fbf9faf5db62583b8ae",
       "captured_at": "2026-10-22T15:57:50.937815+00:00",
@@ -263,7 +289,7 @@
       "archive_file_count": 7880
     }
   ],
-  "repositories": 13,
+  "repositories": 14,
   "skill_paths_across_versions": 6059,
-  "bytes": 1681362924
+  "bytes": 1697966115
 }

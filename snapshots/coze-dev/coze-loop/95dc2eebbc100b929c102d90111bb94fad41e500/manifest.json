@@ -1,0 +1,58 @@
+{
+  "repository": "coze-dev/coze-loop",
+  "commit": "95dc2eebbc100b929c102d90111bb94fad41e500",
+  "captured_at": "2026-10-22T15:57:57.916151+00:00",
+  "source_ids": [
+    "bytedance-coze-loop"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/coze-dev/coze-loop/tar.gz/95dc2eebbc100b929c102d90111bb94fad41e500",
+  "archive_sha256": "0907d00ad746145d465947f49a4ca18820e065af082c075cff3b095801f05800",
+  "archive_bytes": 8299244,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8299244,
+      "sha256": "0907d00ad746145d465947f49a4ca18820e065af082c075cff3b095801f05800"
+    }
+  ],
+  "archive_file_count": 7251,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": ".github/workflows/license-check.yaml",
+      "bytes": 838,
+      "sha256": "498f72fee1a90b88ea1e68f3eba0a07fcca1f39166530a4ba9ac05f0d8598d51"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "README.cn.md",
+      "bytes": 10938,
+      "sha256": "1fa7633bec754091b6129a77b51c4c587427e1e355917fc555fd90e280578169"
+    },
+    {
+      "path": "README.md",
+      "bytes": 12582,
+      "sha256": "eefcc669bacb314fb2b405ef1bc59b00c425182bf3746a560abcfd56b6557f84"
+    },
+    {
+      "path": "backend/modules/evaluation/domain/entity/evaluator_version_prompt.go",
+      "bytes": 5068,
+      "sha256": "8b80d66c012be154d62ab863a4b84e8736802a76f8fb0e19b4813b8e66bbac13"
+    },
+    {
+      "path": "backend/modules/evaluation/domain/service/evaluator_source_prompt_impl.go",
+      "bytes": 32110,
+      "sha256": "7c33a15237f3a009e4e6e0a04382a2ffaffe8b2c9412657510d6459d090f58e4"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
