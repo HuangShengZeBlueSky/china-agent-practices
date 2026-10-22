@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="中国科技公司的 Agent 工程研究台：浏览公开提示词、Skill、CLI 与工具源码，理解机制，形成自己的方法。">
+  <meta name="theme-color" content="#102d2e">
+  <title>中国 Agent 工程研究台</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="vendor/marked.umd.js"></script>
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到内容</a>
+  <aside class="sidebar" aria-label="主导航">
+    <a class="brand" href="#library" data-view="library"><span class="brand-mark" aria-hidden="true">研</span><span>Agent 工程研究台<small>CHINA AGENT ATLAS</small></span></a>
+    <div class="sidebar-intro">从公开实现里，<br>找到值得学走的方法。</div>
+    <nav id="navigation" class="navigation">
+      <button class="nav-item active" data-view="library"><span aria-hidden="true">▦</span>资料库<span id="nav-count" class="nav-count"></span></button>
+      <button class="nav-item" data-view="methods"><span aria-hidden="true">◇</span>方法地图</button>
+      <button class="nav-item" data-view="paths"><span aria-hidden="true">↗</span>学习路线</button>
+      <button class="nav-item" data-view="archive"><span aria-hidden="true">▧</span>归档作者怎么做</button>
+      <button class="nav-item" data-view="learning"><span aria-hidden="true">☆</span>我的学习</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <p class="eyebrow">阅读的三个问题</p>
+      <p>它怎样工作？<br>凭什么这样说？<br>我能怎样用？</p>
+      <button class="sidebar-link" data-doc="docs/research-method.md">查看研究口径 <span>↗</span></button>
+      <div class="sidebar-version"><span class="status-dot"></span>资料快照 <span id="snapshot-date"></span></div>
+    </div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <span class="breadcrumb">研究工作台 <span>/</span> <strong id="current-location">资料库</strong></span>
+      <div class="topbar-actions"><button class="text-button" id="export-catalog">导出来源 JSON <span aria-hidden="true">↓</span></button><a id="download-pack" class="button primary small" hidden download>下载研究包 <span aria-hidden="true">↓</span></a></div>
+    </header>
+    <main id="main" tabindex="-1">
+      <div id="page-content"></div>
+      <footer class="page-footer"><span>收集原文 · 拆解机制 · 提炼方法 · 记录实践</span><button class="text-button" data-doc="NOTICE.md">来源与使用说明</button></footer>
+    </main>
+  </div>
+  <dialog id="source-dialog" class="source-dialog" aria-labelledby="source-title"><div id="source-content"></div></dialog>
+  <dialog id="reader-dialog" class="reader-dialog" aria-labelledby="reader-title"><header class="reader-header"><div><p class="eyebrow">中文研究笔记</p><h2 id="reader-title"></h2></div><button class="icon-button" id="close-reader" aria-label="关闭研究笔记">×</button></header><article id="reader-content" class="reader-prose"></article></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

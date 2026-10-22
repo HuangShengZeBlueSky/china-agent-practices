@@ -1,0 +1,9 @@
+# 本仓库仅保留研究成果；临时文件和本地凭据不进入版本历史。
+.DS_Store
+__pycache__/
+*.pyc
+.env
+.env.*
+research-tmp/
+tmp/
+downloads/

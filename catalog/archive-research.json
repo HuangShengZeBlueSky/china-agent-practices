@@ -1,0 +1,861 @@
+{
+  "schema_version": "1.0",
+  "checked_at": "2026-10-21",
+  "repository": {
+    "full_name": "ahang1598/doubao-workbuddy-qwenwork-skills",
+    "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills",
+    "snapshot_commit": "1c9239cc90585f57d9e06d32deffc017bbff5802",
+    "commit_date": "2026-10-20T10:03:16Z",
+    "default_branch_at_check": "main",
+    "root_license": null,
+    "license_note": "根目录未见许可证且 GitHub license 元数据为 null；六个代表包目录未发现独立 LICENSE/COPYING 文件。本分析只保存原创摘要与链接，不作再分发许可推断。",
+    "source_type": "third_party_archive",
+    "independent_repository_count": 1,
+    "new_repositories_added": 0,
+    "existing_catalog_source_ids": [
+      "doubao-archive-base",
+      "doubao-archive-search"
+    ],
+    "no_runtime_execution": true
+  },
+  "definitions": {
+    "active_path": "产品目录中的 Git blob，排除产品根下 archive/ 和 change-logs/；active 表示仍在快照主路径，不能据此确认客户端正在启用。",
+    "skill_path": "basename 严格等于 SKILL.md 的文件路径；包含嵌套技能、连接器技能、插件中的副本及缓存版本。",
+    "historical_path": "产品根下 archive/ 路径；本次命中的 211 个 SKILL.md 均在 archive/deleted/。",
+    "unique_blob": "按 Git blob SHA 去重，仅表示字节相同内容合并，不表示语义独立技能、原创归属或部署实例。",
+    "versioned_plugin_cache": "仅根据 ChatGPT 产品目录 plugins/<namespace>/<plugin>/<version>/ 路径识别，包括历史删除路径还原后的同结构；不解析正文版本。",
+    "no_skill_body": "索引不保存 SKILL 正文或说明；全部路径的语义未逐一审读。deep_read_in_this_case 只标记本次六份代表文件。",
+    "file_count": "文件数按 Git tree type=blob 计；目录与 tree 对象不计。reference/script 统计以任意路径段 references/ 或 scripts/ 为准。",
+    "collection_scope": "同一既有第三方仓库的展开研究，不新增独立上游仓库计数。ChatGPT/Codex 只作对照，不算中国公司。",
+    "readme_counts": "README 中的索引条目和文件数为作者生成的目录索引统计，与我们的 Git 树口径并列展示；差额未逐项归因。"
+  },
+  "declared_readme_counts": {
+    "products": [
+      {
+        "platform": "doubao",
+        "index_entries": 280,
+        "index_file_count": 4885,
+        "source": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-doubao.md"
+      },
+      {
+        "platform": "workbuddy",
+        "index_entries": 634,
+        "index_file_count": 17602,
+        "source": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-workbuddy.md"
+      },
+      {
+        "platform": "qwenwork",
+        "index_entries": 265,
+        "index_file_count": 4761,
+        "source": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-qwenwork.md"
+      },
+      {
+        "platform": "chatgpt",
+        "index_entries": 20,
+        "index_file_count": 949,
+        "source": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-chatgpt.md"
+      }
+    ],
+    "total_entries": 1199,
+    "total_index_file_count": 28197,
+    "fully_reconciled_with_git_tree": false
+  },
+  "observed_git_tree": {
+    "retrieval": "根树与产品子树分段读取；WorkBuddy 由七个完整子树合成；各递归返回均 truncated=false。",
+    "root_tree_sha": "c2da69d8d6c2b1d4f024bf82d38c1392aba5cc0d",
+    "products": [
+      {
+        "platform": "doubao",
+        "all_product_blob_files": 5156,
+        "active_blob_files": 4397,
+        "archive_blob_files": 721,
+        "change_log_blob_files": 38,
+        "active_skill_paths": 305,
+        "historical_skill_paths": 32,
+        "unique_active_skill_blobs": 305,
+        "immediate_skills_directories": 275,
+        "plugin_manifest_files": 0,
+        "reference_blob_files": 1885,
+        "script_blob_files": 895,
+        "groups": [
+          {
+            "group": "skills",
+            "active_blob_files": 4397,
+            "active_skill_paths": 305,
+            "immediate_subdirectories": 275
+          }
+        ]
+      },
+      {
+        "platform": "workbuddy",
+        "all_product_blob_files": 18814,
+        "active_blob_files": 17915,
+        "archive_blob_files": 871,
+        "change_log_blob_files": 28,
+        "active_skill_paths": 1858,
+        "historical_skill_paths": 114,
+        "unique_active_skill_blobs": 1830,
+        "immediate_skills_directories": 17,
+        "plugin_manifest_files": 320,
+        "reference_blob_files": 7103,
+        "script_blob_files": 2241,
+        "groups": [
+          {
+            "group": "cb_teams_experts",
+            "active_blob_files": 1444,
+            "active_skill_paths": 139,
+            "immediate_subdirectories": 1
+          },
+          {
+            "group": "connectors",
+            "active_blob_files": 5335,
+            "active_skill_paths": 695,
+            "immediate_subdirectories": 2
+          },
+          {
+            "group": "experts",
+            "active_blob_files": 7170,
+            "active_skill_paths": 560,
+            "immediate_subdirectories": 83
+          },
+          {
+            "group": "official_experts",
+            "active_blob_files": 3800,
+            "active_skill_paths": 437,
+            "immediate_subdirectories": 2
+          },
+          {
+            "group": "skills",
+            "active_blob_files": 166,
+            "active_skill_paths": 27,
+            "immediate_subdirectories": 17
+          }
+        ]
+      },
+      {
+        "platform": "qwenwork",
+        "all_product_blob_files": 5154,
+        "active_blob_files": 4447,
+        "archive_blob_files": 694,
+        "change_log_blob_files": 13,
+        "active_skill_paths": 380,
+        "historical_skill_paths": 23,
+        "unique_active_skill_blobs": 380,
+        "immediate_skills_directories": 168,
+        "plugin_manifest_files": 22,
+        "reference_blob_files": 1834,
+        "script_blob_files": 862,
+        "groups": [
+          {
+            "group": "connectors",
+            "active_blob_files": 3,
+            "active_skill_paths": 0,
+            "immediate_subdirectories": 0
+          },
+          {
+            "group": "experts",
+            "active_blob_files": 1685,
+            "active_skill_paths": 201,
+            "immediate_subdirectories": 20
+          },
+          {
+            "group": "skills",
+            "active_blob_files": 2759,
+            "active_skill_paths": 179,
+            "immediate_subdirectories": 168
+          }
+        ]
+      },
+      {
+        "platform": "chatgpt",
+        "all_product_blob_files": 2407,
+        "active_blob_files": 957,
+        "archive_blob_files": 1444,
+        "change_log_blob_files": 6,
+        "active_skill_paths": 38,
+        "historical_skill_paths": 42,
+        "unique_active_skill_blobs": 38,
+        "immediate_skills_directories": 5,
+        "plugin_manifest_files": 15,
+        "reference_blob_files": 93,
+        "script_blob_files": 94,
+        "groups": [
+          {
+            "group": "plugins",
+            "active_blob_files": 907,
+            "active_skill_paths": 33,
+            "immediate_subdirectories": 3
+          },
+          {
+            "group": "skills",
+            "active_blob_files": 50,
+            "active_skill_paths": 5,
+            "immediate_subdirectories": 5
+          }
+        ]
+      }
+    ],
+    "totals": {
+      "all_product_blob_files": 31531,
+      "active_blob_files": 27716,
+      "archive_blob_files": 3730,
+      "change_log_blob_files": 85,
+      "skill_paths": 2792,
+      "active_skill_paths": 2581,
+      "historical_skill_paths": 211,
+      "unique_active_skill_blobs": 2553,
+      "unique_all_skill_blobs": 2753
+    },
+    "index_file": "archive-skill-index.json",
+    "evidence_urls": [
+      "https://api.github.com/repos/ahang1598/doubao-workbuddy-qwenwork-skills/git/trees/c2da69d8d6c2b1d4f024bf82d38c1392aba5cc0d",
+      "https://api.github.com/repos/ahang1598/doubao-workbuddy-qwenwork-skills/git/trees/e3d0d9cc4e1c5fcd1543e98fd494b87e01ed489f?recursive=1",
+      "https://api.github.com/repos/ahang1598/doubao-workbuddy-qwenwork-skills/git/trees/11510cd680a183b8df2938a911e6aaaa3ecbf2b7?recursive=1",
+      "https://api.github.com/repos/ahang1598/doubao-workbuddy-qwenwork-skills/git/trees/edaa1425069bf7a9f872fc835a567b13b0cd756b?recursive=1",
+      "https://api.github.com/repos/ahang1598/doubao-workbuddy-qwenwork-skills/git/trees/6333a0ae26cdb9f5b417fabacdec1768c66c1c75"
+    ]
+  },
+  "local_source_mapping": [
+    {
+      "product": "doubao",
+      "local_roots": [
+        "%USERPROFILE%/AppData/Local/Doubao/User Data/Default/.doubao/agent_mode/workspace/.skills"
+      ],
+      "archive_roots": [
+        "doubao/skills"
+      ],
+      "source": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-doubao.md"
+    },
+    {
+      "product": "workbuddy",
+      "local_roots": [
+        "%USERPROFILE%/.workbuddy/plugins/marketplaces",
+        "%USERPROFILE%/.workbuddy/skills",
+        "%USERPROFILE%/.workbuddy/connectors-marketplace",
+        "%USERPROFILE%/.workbuddy/connectors/default/mcp.json"
+      ],
+      "archive_roots": [
+        "workbuddy/experts",
+        "workbuddy/official_experts",
+        "workbuddy/cb_teams_experts",
+        "workbuddy/skills",
+        "workbuddy/connectors"
+      ],
+      "source": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-workbuddy.md"
+    },
+    {
+      "product": "qwenwork",
+      "local_roots": [
+        "%USERPROFILE%/.qwenworkcn/plugins",
+        "%USERPROFILE%/.qwenworkcn/skills",
+        "%USERPROFILE%/.qwenworkcn/mcp.json",
+        "%USERPROFILE%/.qwenworkcn/cache/mcp/market-metadata-cn.json"
+      ],
+      "archive_roots": [
+        "qwenwork/experts",
+        "qwenwork/skills",
+        "qwenwork/connectors"
+      ],
+      "source": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-qwenwork.md"
+    },
+    {
+      "product": "chatgpt",
+      "local_roots": [
+        "%USERPROFILE%/.codex/skills/.system",
+        "%USERPROFILE%/.codex/plugins/cache"
+      ],
+      "archive_roots": [
+        "chatgpt/skills",
+        "chatgpt/plugins"
+      ],
+      "source": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-chatgpt.md",
+      "note": "仓库产品名为 ChatGPT，采集路径实际为本机 Codex 技能和缓存；只作对照。"
+    }
+  ],
+  "collection_methods": [
+    {
+      "id": "local-cache-inputs",
+      "kind": "author_statement_and_code",
+      "statement": "作者自述归档本机各产品已安装技能、专家与插件市场；SourceSpec 明确本地 Windows/WSL 路径到仓库目标目录的映射。",
+      "sources": [
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README.md",
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/sync_platform.py",
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-doubao.md",
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-workbuddy.md",
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-qwenwork.md",
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-chatgpt.md"
+      ],
+      "limit": "无法通过公开仓库验证作者本机的真实下载来源、账号覆盖范围、原文件与已提交文件是否始终一致。"
+    },
+    {
+      "id": "scheduled-sync",
+      "kind": "code_configuration",
+      "statement": "四个平台各有每日 18:00 Windows 计划任务配置，经 WSL 执行 sync_platform.py --commit --push；带平台锁与 Git 全局锁。",
+      "sources": [
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/register-windows-task.ps1",
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/sync_platform.py"
+      ],
+      "limit": "配置与若干提交证明实现和部分运行痕迹；不证明每日均执行成功。"
+    },
+    {
+      "id": "file-delta",
+      "kind": "source_static",
+      "statement": "用相对路径找增删，用 SHA-256 比较同路径文件；新增/修改复制，删除移至带时间戳的 archive/deleted；缺失整个配置源路径会报错。",
+      "sources": [
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/sync_platform.py"
+      ],
+      "limit": "未执行作者脚本。Git blob 去重与此 SHA-256 同步算法是不同统计层。"
+    },
+    {
+      "id": "observed-delete",
+      "kind": "commit_observation",
+      "statement": "固定提交把 student-discount-application 的 13 个文件移到删除归档，Git API 标为 renamed、changes=0。",
+      "sources": [
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/1c9239cc90585f57d9e06d32deffc017bbff5802",
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/doubao/change-logs/2026-10-20-180008.md"
+      ],
+      "limit": "只核对该具体提交，不推断所有历史删除处理均无误。"
+    },
+    {
+      "id": "metadata-and-rules",
+      "kind": "source_static",
+      "statement": "元信息优先从 plugin.json 读取，再读 SKILL frontmatter/README；默认分类按有序关键词匹配，Qwen 分类结合现有标签与目录前缀，专家市场还可读既有分析 Markdown。",
+      "sources": [
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/sync_platform.py"
+      ],
+      "limit": "未发现同步流程调用大模型；不能把该分类方法描述为语义推理。"
+    },
+    {
+      "id": "generated-vs-editorial",
+      "kind": "author_statement_and_code",
+      "statement": "分产品 README/SUMMARY 自动生成；根 README 已存在时脚本不覆盖，根 README 的最近同步栏自述由模型按需总结且不随计划任务更新。",
+      "sources": [
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README.md",
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/sync_platform.py",
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/db7573b51f1024cbdbf52e629e6dc70bfbfd9b96"
+      ],
+      "limit": "模型选择、实际总结提示词和审查流程未公开核对。"
+    },
+    {
+      "id": "no-op",
+      "kind": "source_static",
+      "statement": "源文件无变更且未要求刷新文档时，跳过索引重写及 Git 提交/推送；内容相同的刷新也可不提交。",
+      "sources": [
+        "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/sync_platform.py"
+      ],
+      "limit": "某天没有提交不能直接推断某天采集失败。"
+    }
+  ],
+  "representative_deep_reads": [
+    {
+      "id": "archive-workbuddy-team-handoff",
+      "product": "workbuddy",
+      "title": "五角色团队的交接字段与任务状态",
+      "path": "workbuddy/experts/ai-expert-studio/skills/ai-expert-studio-orchestrator/SKILL.md",
+      "version_label": "1.1.1",
+      "source_type": "third_party_archive",
+      "evidence_level": "归档文本可见，未运行",
+      "manifest_author_label": "AI-HIVE Team（来自归档 plugin.json 的 author 字段，非独立身份认证）",
+      "inputs": "创作目标、参考素材、产物数量和规格、用户已确认的生成任务。",
+      "context_before_model": "划定 Lead、Brief Planner、Model Scout、Gen Executor、QA Deliverer 职责；交接包含事实、素材角色、提示词、参数、模型和价格快照、确认记录。",
+      "executor": "归档列出 TeamCreate、AgentTool、SendMessage 等协作工具；Gen Executor 负责已确认的生成调用。",
+      "outputs": "结构化 taskId、状态、结果、失败；QA 汇总数量、链接、元数据与契约符合性。",
+      "recovery": "非终态继续轮询原 taskId；改变模型、提示词或任务数量视为新生成意图，不能把重复提交当查询状态。",
+      "completion": "终态结果与技术验收匹配；未预览时不能把技术验收包装成视觉质量验收。",
+      "dependencies": [
+        "宿主团队工具",
+        "可访问的模型目录与生成连接器",
+        "任务状态查询",
+        "相关角色与 references 文件"
+      ],
+      "learning": "把角色的输入、输出、越权边界和原任务续查写进交接契约；避免只写角色人设。",
+      "limits": [
+        "allowed-tools 是声明，未核对宿主强制执行。",
+        "市场插件 author 字段不等于腾讯作者。",
+        "未验证模型价格、接口和生成结果。"
+      ],
+      "support_paths": [
+        "workbuddy/experts/ai-expert-studio/.codebuddy-plugin/plugin.json",
+        "workbuddy/experts/ai-expert-studio/agents/brief-planner.md",
+        "workbuddy/experts/ai-expert-studio/agents/qa-deliverer.md"
+      ],
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/workbuddy/experts/ai-expert-studio/skills/ai-expert-studio-orchestrator/SKILL.md",
+      "support_files": [
+        {
+          "path": "workbuddy/experts/ai-expert-studio/.codebuddy-plugin/plugin.json",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/workbuddy/experts/ai-expert-studio/.codebuddy-plugin/plugin.json",
+          "inspection": "read"
+        },
+        {
+          "path": "workbuddy/experts/ai-expert-studio/agents/brief-planner.md",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/workbuddy/experts/ai-expert-studio/agents/brief-planner.md",
+          "inspection": "tree_presence_only"
+        },
+        {
+          "path": "workbuddy/experts/ai-expert-studio/agents/qa-deliverer.md",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/workbuddy/experts/ai-expert-studio/agents/qa-deliverer.md",
+          "inspection": "tree_presence_only"
+        }
+      ]
+    },
+    {
+      "id": "archive-workbuddy-semantic-plan",
+      "product": "workbuddy",
+      "title": "DataBuddy 把业务规划与执行隔开",
+      "path": "workbuddy/connectors/marketplace/connectors/databuddy/skills/data-task-planner/SKILL.md",
+      "source_type": "third_party_archive",
+      "evidence_level": "归档文本可见，未运行",
+      "inputs": "用户分析问题与宿主提供的 workspace_folder。",
+      "context_before_model": "抽取业务目标、指标、时间、维度、基线、假设与待澄清项；按需要探查实体元数据，形成任务依赖。",
+      "executor": "规划阶段只允许有限的 wedatacli 元数据查询；宿主 To-dos 工具负责把计划渲染成任务列表。",
+      "outputs": "可独立回答的业务任务列表，以及文本、数量、顺序与计划一致的界面任务。",
+      "recovery": "未知条件写为假设或待澄清项；规划工具不得通过查询业务数据、预测或相关性计算来偷偷完成分析。",
+      "completion": "任务清单登记结束即退出规划；后续执行另行承担。",
+      "dependencies": [
+        "wedatacli",
+        "用户工作空间（归档默认 ~/.wedata）",
+        "宿主 To-dos/TaskCreate 能力"
+      ],
+      "learning": "先按业务语义拆任务，再在执行阶段绑定工具；计划与看板保持逐条一致。",
+      "limits": [
+        "约束写在提示文本中，未找到本轮核对范围内的运行时强制门禁。",
+        "宿主任务创建工具名称由运行时决定。"
+      ],
+      "support_paths": [
+        "workbuddy/connectors/marketplace/connectors/databuddy/cli.json"
+      ],
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/workbuddy/connectors/marketplace/connectors/databuddy/skills/data-task-planner/SKILL.md",
+      "support_files": [
+        {
+          "path": "workbuddy/connectors/marketplace/connectors/databuddy/cli.json",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/workbuddy/connectors/marketplace/connectors/databuddy/cli.json",
+          "inspection": "tree_presence_only"
+        }
+      ]
+    },
+    {
+      "id": "archive-qwen-dingtalk-todo",
+      "product": "qwenwork",
+      "title": "钉钉对话转待办的证据与 ID 传递",
+      "path": "qwenwork/skills/dingtalk-chat-to-todo/SKILL.md",
+      "version_label": "1.0.0",
+      "source_type": "third_party_archive",
+      "evidence_level": "归档文本可见，未运行",
+      "origin_label": "install_source: official 仅是文件自带字段",
+      "inputs": "明确的群范围、时间范围与当前用户身份。",
+      "context_before_model": "取得真实 userId、groupId 和绝对时间范围；分页读消息并结合前后对话识别待办候选，保留不采纳项理由。",
+      "executor": "dws CLI 读取联系人/群/消息，用户确认候选后调用待办创建。",
+      "outputs": "候选任务、责任人来源、最终待办创建结果。",
+      "recovery": "访问失败明确报告；分页中断标明结果不完整；创建失败核对执行人 ID；不得猜群或捏造 ID。",
+      "completion": "确认后的任务有创建结果；读到消息或提出候选不能当作已经创建。",
+      "dependencies": [
+        "已登录的 dws CLI",
+        "联系人、群消息、待办权限",
+        "workflow-detail.md",
+        "task-recognition-rules.md"
+      ],
+      "learning": "把读取完整性、语义判断、用户决策和外部写入分成可追踪阶段，传递 ID 的来源。",
+      "limits": [
+        "未核对实际 CLI 版本或执行成功。",
+        "official 自标签不证明该副本得到厂商认证。"
+      ],
+      "support_paths": [
+        "qwenwork/skills/dingtalk-chat-to-todo/references/workflow-detail.md",
+        "qwenwork/skills/dingtalk-chat-to-todo/references/task-recognition-rules.md"
+      ],
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/skills/dingtalk-chat-to-todo/SKILL.md",
+      "support_files": [
+        {
+          "path": "qwenwork/skills/dingtalk-chat-to-todo/references/workflow-detail.md",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/skills/dingtalk-chat-to-todo/references/workflow-detail.md",
+          "inspection": "tree_presence_only"
+        },
+        {
+          "path": "qwenwork/skills/dingtalk-chat-to-todo/references/task-recognition-rules.md",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/skills/dingtalk-chat-to-todo/references/task-recognition-rules.md",
+          "inspection": "tree_presence_only"
+        }
+      ]
+    },
+    {
+      "id": "archive-qwen-design-qa",
+      "product": "qwenwork",
+      "title": "设计验收的结构化上下文与协议漂移",
+      "path": "qwenwork/experts/product-design/skills/qa/SKILL.md",
+      "source_type": "third_party_archive",
+      "evidence_level": "归档文本与目录可见，未运行",
+      "inputs": "设计标准、上游流程产物、既有检查结果，与实现代码或截图。",
+      "context_before_model": "chain.reads 指定 brief、flow-web、flow-mobile、check、sitemap、stories；从对话标记和落盘 JSON 读取上游，不足则补问。",
+      "executor": "宿主文件/代码读取工具；可选 Figma/GitHub 连接器；QA 产出偏差 JSON 和验收报告，并尝试刷新模板看板。",
+      "outputs": "qa.deviations 包含设计源、实现、差异、建议、位置、严重性与上游问题关联。",
+      "recovery": "按代码、截图、人工清单等证据能力降级；看板生成失败按文档不阻断核心报告交付。",
+      "completion": "偏差结论有对应源与实现证据，状态文件和报告交付；看板仅展示该状态，不能证明实现通过。",
+      "dependencies": [
+        "宿主文件工具",
+        "项目代码或截图",
+        "可选 Figma/GitHub 连接器",
+        "_shared/dashboard-template.html",
+        "chain-protocol.md"
+      ],
+      "learning": "用显式上游读写契约串起技能；同时验证路径、JSON schema 和状态更新规则的一致性。",
+      "limits": [
+        "qa/SKILL.md 使用 spark-output/context，chain-protocol.md 使用 .spark/context。",
+        "QA 前段要求完整 JSON marker，后段要求写盘后紧凑 ref marker，文件内部约定有差异。",
+        "协议要求 dist/validate-chain.py，但该固定提交 product-design 子树未发现该路径；不能宣称套件已经可运行。"
+      ],
+      "support_paths": [
+        "qwenwork/experts/product-design/chain-protocol.md",
+        "qwenwork/experts/product-design/_shared/dashboard-template.html",
+        "qwenwork/experts/product-design/_shared/skill-graph.json"
+      ],
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/experts/product-design/skills/qa/SKILL.md",
+      "support_files": [
+        {
+          "path": "qwenwork/experts/product-design/chain-protocol.md",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/experts/product-design/chain-protocol.md",
+          "inspection": "read"
+        },
+        {
+          "path": "qwenwork/experts/product-design/_shared/dashboard-template.html",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/experts/product-design/_shared/dashboard-template.html",
+          "inspection": "tree_presence_only"
+        },
+        {
+          "path": "qwenwork/experts/product-design/_shared/skill-graph.json",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/experts/product-design/_shared/skill-graph.json",
+          "inspection": "tree_presence_only"
+        }
+      ]
+    },
+    {
+      "id": "archive-doubao-builder-extension",
+      "product": "doubao",
+      "title": "应用构建扩展的复杂输入与验收控制",
+      "path": "doubao/skills/app-builder-orchestration/SKILL.md",
+      "source_type": "third_party_archive",
+      "evidence_level": "归档文本可见，未运行",
+      "inputs": "复杂附件、需全量导入的表格、真实 app_id、允许变更和须保留项。",
+      "context_before_model": "先加载基础 doubao-app-builder；扩展补充原始意图、附件清单、真实字段/行数、编号变更单与验收条件。",
+      "executor": "doubao-app-builder/app_builder_agent 承担应用操作；sheet 读取表格；需要附件 URL 时用 FileBatchUpload。",
+      "outputs": "输入数据清单、变更单、返回结果对齐表、未命中项与下一轮续跑指令。",
+      "recovery": "结果与需求不符时形成差异并复用同一 app_id；不能用抽样宣称全量，不能猜测其他沙箱路径。",
+      "completion": "字段、页面、数据量、默认状态、移动端及须保留项得到核对，未验证项明确保留。",
+      "dependencies": [
+        "doubao-app-builder",
+        "app_builder_agent",
+        "sheet",
+        "FileBatchUpload"
+      ],
+      "learning": "主 Skill 负责入口和执行，扩展 Skill 负责更复杂的交接与验收，防止入口竞争和对象漂移。",
+      "limits": [
+        "专有宿主工具的 schema 和运行时未公开核对。",
+        "未确认本归档与当前豆包产品实际启用版本一致。"
+      ],
+      "support_paths": [],
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/doubao/skills/app-builder-orchestration/SKILL.md",
+      "support_files": []
+    },
+    {
+      "id": "archive-codex-review-threshold",
+      "product": "chatgpt",
+      "title": "只读代码审查的证据门槛",
+      "path": "chatgpt/skills/review-agent/SKILL.md",
+      "source_type": "third_party_archive",
+      "evidence_level": "归档文本可见，未运行",
+      "comparison_only": true,
+      "inputs": "另一个 agent 委派的变更、提交或分支比较目标。",
+      "context_before_model": "读取适用 AGENTS.md、完整 diff、相关上下文/调用点/测试；分支比较先确定 merge-base。",
+      "executor": "只读仓库与 Git 工具；禁止修改、提交、推送、发表评论和再次委派。",
+      "outputs": "按严重性排序的可操作缺陷，每条包含位置与触发场景；没有合格发现可直接报告无发现。",
+      "recovery": "分支解析失败检查其 upstream；证据不足时不猜测缺陷。",
+      "completion": "完整变更范围审查完毕，只报告本次引入且能从代码证明的问题，交代实质验证缺口。",
+      "dependencies": [
+        "本地 Git 仓库",
+        "适用 AGENTS.md",
+        "只读代码与测试访问"
+      ],
+      "learning": "审查提示词应写清纳入标准、排除标准、证据要求和允许零发现，避免凑数。",
+      "limits": [
+        "归档来源配置指向 .codex/skills/.system；不等于 ChatGPT 网页产品完整系统提示。",
+        "OpenAI 比较样本，不计入中国公司。"
+      ],
+      "support_paths": [
+        "chatgpt/skills/review-agent/agents/openai.yaml"
+      ],
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/chatgpt/skills/review-agent/SKILL.md",
+      "support_files": [
+        {
+          "path": "chatgpt/skills/review-agent/agents/openai.yaml",
+          "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/chatgpt/skills/review-agent/agents/openai.yaml",
+          "inspection": "tree_presence_only"
+        }
+      ]
+    }
+  ],
+  "protocol_drift": {
+    "id": "qwen-product-design-path-marker-drift",
+    "files": [
+      "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/experts/product-design/skills/qa/SKILL.md",
+      "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/experts/product-design/chain-protocol.md"
+    ],
+    "observations": [
+      "状态目录 spark-output/context 与 .spark/context 不同。",
+      "qa/SKILL.md 前段和后段对完整 JSON/紧凑 ref marker 的要求不一致。",
+      "chain-protocol 要求 dist/validate-chain.py，但固定提交的 product-design 子树没有该文件。"
+    ],
+    "inference": "可以研究协议设计意图，但不能据此宣称整套归档具备一致且经验证的运行契约。",
+    "not_executed": true
+  },
+  "dependency_scope": "仅汇总同步实现及六份代表文件明确点名的依赖；完整目录索引不等于已解析所有依赖。",
+  "collection_runtime_dependencies": [
+    "Windows 计划任务",
+    "WSL/Linux 与 Python 3",
+    "源产品的本地安装/缓存文件",
+    "Git",
+    "选择 --push 时需要 gh CLI 和已配置认证"
+  ],
+  "evidence_boundaries": [
+    "作者的个人设备样本不代表厂商全量发布目录。",
+    "归档内容不等于各产品完整系统提示词；宿主系统指令、动态工具 schema、账户状态、服务端编排可能不可见。",
+    "marketplace、official_experts、install_source 等目录/字段不构成作者身份和来源认证。",
+    "文本要求、运行时执行和有效性实验分开；本次为静态核对。",
+    "未证明作者怎样首次得到每个插件、是否编辑过个别副本、厂商是否认可再发布。",
+    "没有对全部 2,792 份 SKILL 正文做深读或语义去重。"
+  ],
+  "recommendations": [
+    {
+      "stage": "登记",
+      "action": "同一上游只建一条仓库身份记录；子文件建证据条目，固定 SHA、路径、检查日、许可和采集来源。"
+    },
+    {
+      "stage": "索引",
+      "action": "机器做确定性的目录枚举、哈希、增删改和链接校验；保留活跃路径/历史删除/缓存版本维度。"
+    },
+    {
+      "stage": "研读",
+      "action": "模型阅读全文及必要依赖，按任务语义生成场景、输入、上下文、执行者、工具契约、失败、验收、可迁移方法和原文证据；不以关键词命中代替语义判断。"
+    },
+    {
+      "stage": "去重",
+      "action": "Git blob 去重只标记完全相同内容；模型再判断近似能力与设计差异，保留各来源关系。"
+    },
+    {
+      "stage": "验证",
+      "action": "声明与运行证据分开；路径/schema/状态协议不一致标为待验证。只有适配最小场景并有结果时才标实验验证。"
+    },
+    {
+      "stage": "看板",
+      "action": "同时展示目录总量与研读进度；目录可按平台、路径关键词、历史状态筛选，代表案例另卡片；不要把目录数当学习完成度。"
+    },
+    {
+      "stage": "更新",
+      "action": "先生成可审查差异，再决定更新结论；无变更不制造提交；旧版本保留。需要定时任务时另行按用户授权配置。"
+    },
+    {
+      "stage": "复用",
+      "action": "借鉴采集和状态设计，使用允许采集的输入白名单；本机连接器注册表可能含敏感配置，复用前明确排除凭据和个人数据。未观察到该同步脚本提供自动脱敏。"
+    }
+  ],
+  "recent_commit_sample": [
+    {
+      "sha": "1c9239cc90585f57d9e06d32deffc017bbff5802",
+      "date": "2026-10-20T10:03:16Z",
+      "message": "sync doubao: 2026-10-20 18:00",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/1c9239cc90585f57d9e06d32deffc017bbff5802"
+    },
+    {
+      "sha": "6cb03574efedc421e6d06cfc5f3133a103809f10",
+      "date": "2026-10-19T11:57:23Z",
+      "message": "sync doubao: 2026-10-19 19:54",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/6cb03574efedc421e6d06cfc5f3133a103809f10"
+    },
+    {
+      "sha": "cfb60a6e2ad6d15fb43482aee6a396e467fafbbf",
+      "date": "2026-10-18T10:01:20Z",
+      "message": "sync chatgpt: 2026-10-18 18:00",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/cfb60a6e2ad6d15fb43482aee6a396e467fafbbf"
+    },
+    {
+      "sha": "94a3f626d4920330ac6532ae97447dc70b0a76f1",
+      "date": "2026-10-17T10:14:56Z",
+      "message": "sync workbuddy: 2026-10-17 18:00",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/94a3f626d4920330ac6532ae97447dc70b0a76f1"
+    },
+    {
+      "sha": "c69e0088df128704e4d50a5ec77dd7d98654a566",
+      "date": "2026-10-17T10:03:41Z",
+      "message": "sync doubao: 2026-10-17 18:00",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/c69e0088df128704e4d50a5ec77dd7d98654a566"
+    },
+    {
+      "sha": "8552c9239278e31dbd7c8481573fb013f8b33e9b",
+      "date": "2026-10-17T10:00:40Z",
+      "message": "sync chatgpt: 2026-10-17 18:00",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/8552c9239278e31dbd7c8481573fb013f8b33e9b"
+    },
+    {
+      "sha": "4753c7afbf76e02c60d509ec2f22670101e14685",
+      "date": "2026-10-16T10:03:45Z",
+      "message": "sync doubao: 2026-10-16 18:00",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/4753c7afbf76e02c60d509ec2f22670101e14685"
+    },
+    {
+      "sha": "db7573b51f1024cbdbf52e629e6dc70bfbfd9b96",
+      "date": "2026-10-15T11:45:05Z",
+      "message": "docs: rebuild README with 2026-10-15 sync summary",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/db7573b51f1024cbdbf52e629e6dc70bfbfd9b96"
+    },
+    {
+      "sha": "062f6de1b7f39ddfeefd8763eadbb4ff30a387ea",
+      "date": "2026-10-15T11:28:20Z",
+      "message": "sync doubao: 2026-10-15 19:25",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/062f6de1b7f39ddfeefd8763eadbb4ff30a387ea"
+    },
+    {
+      "sha": "6f5624c5f04dd1137aedc07e2b6a9589456a32e4",
+      "date": "2026-10-15T11:27:52Z",
+      "message": "sync qwenwork: 2026-10-15 19:25",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/6f5624c5f04dd1137aedc07e2b6a9589456a32e4"
+    },
+    {
+      "sha": "2bbcf0e85e807a15c0f4692785858eda3955e608",
+      "date": "2026-10-13T12:56:05Z",
+      "message": "docs: restructure README",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/2bbcf0e85e807a15c0f4692785858eda3955e608"
+    },
+    {
+      "sha": "8c0770b97eef24fa46c2eabd2877fa1c7c0cfd4b",
+      "date": "2026-10-13T12:48:31Z",
+      "message": "sync qwenwork: 2026-10-13 20:47",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/8c0770b97eef24fa46c2eabd2877fa1c7c0cfd4b"
+    },
+    {
+      "sha": "7ab85ea210c1e8316013317292eebce34f59a8af",
+      "date": "2026-10-13T12:45:14Z",
+      "message": "sync qwenwork: 2026-10-13 20:43",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/7ab85ea210c1e8316013317292eebce34f59a8af"
+    },
+    {
+      "sha": "ce667b762b0b68e5c96ba8a2e5d641f5b40429e8",
+      "date": "2026-10-13T12:36:36Z",
+      "message": "sync qwenwork: 2026-10-13 20:35",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/ce667b762b0b68e5c96ba8a2e5d641f5b40429e8"
+    },
+    {
+      "sha": "f90f2a01f585e219dc1b4ffc7d76efb685a82937",
+      "date": "2026-10-13T12:32:27Z",
+      "message": "sync qwenwork: 2026-10-13 20:29",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/commit/f90f2a01f585e219dc1b4ffc7d76efb685a82937"
+    }
+  ],
+  "inspected_files": [
+    {
+      "path": "README.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README.md",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "README-doubao.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-doubao.md",
+      "reading_scope": "overview_sources_navigation_and_index_structure",
+      "not_executed": true
+    },
+    {
+      "path": "README-workbuddy.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-workbuddy.md",
+      "reading_scope": "overview_sources_navigation_and_index_structure",
+      "not_executed": true
+    },
+    {
+      "path": "README-qwenwork.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-qwenwork.md",
+      "reading_scope": "overview_sources_navigation_and_index_structure",
+      "not_executed": true
+    },
+    {
+      "path": "README-chatgpt.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/README-chatgpt.md",
+      "reading_scope": "overview_sources_navigation_and_index_structure",
+      "not_executed": true
+    },
+    {
+      "path": "scripts/sync_platform.py",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/sync_platform.py",
+      "reading_scope": "source_mapping_diff_archival_index_classification_lock_and_commit_functions",
+      "not_executed": true
+    },
+    {
+      "path": "scripts/register-windows-task.ps1",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/register-windows-task.ps1",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "scripts/sync_doubao_skills.py",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/scripts/sync_doubao_skills.py",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": ".gitignore",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/.gitignore",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "doubao/change-logs/2026-10-20-180008.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/doubao/change-logs/2026-10-20-180008.md",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "workbuddy/experts/ai-expert-studio/skills/ai-expert-studio-orchestrator/SKILL.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/workbuddy/experts/ai-expert-studio/skills/ai-expert-studio-orchestrator/SKILL.md",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "workbuddy/connectors/marketplace/connectors/databuddy/skills/data-task-planner/SKILL.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/workbuddy/connectors/marketplace/connectors/databuddy/skills/data-task-planner/SKILL.md",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "qwenwork/skills/dingtalk-chat-to-todo/SKILL.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/skills/dingtalk-chat-to-todo/SKILL.md",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "qwenwork/experts/product-design/skills/qa/SKILL.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/experts/product-design/skills/qa/SKILL.md",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "doubao/skills/app-builder-orchestration/SKILL.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/doubao/skills/app-builder-orchestration/SKILL.md",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "chatgpt/skills/review-agent/SKILL.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/chatgpt/skills/review-agent/SKILL.md",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "workbuddy/experts/ai-expert-studio/.codebuddy-plugin/plugin.json",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/workbuddy/experts/ai-expert-studio/.codebuddy-plugin/plugin.json",
+      "reading_scope": "full_text",
+      "not_executed": true
+    },
+    {
+      "path": "qwenwork/experts/product-design/chain-protocol.md",
+      "url": "https://github.com/ahang1598/doubao-workbuddy-qwenwork-skills/blob/1c9239cc90585f57d9e06d32deffc017bbff5802/qwenwork/experts/product-design/chain-protocol.md",
+      "reading_scope": "state_paths_markers_read_write_rules_dashboard_merge_and_validation_sections",
+      "not_executed": true
+    }
+  ]
+}

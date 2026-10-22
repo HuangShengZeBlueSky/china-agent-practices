@@ -1,0 +1,151 @@
+[
+  {
+    "id": "business-skill",
+    "title": "写出一个能交付的业务 Skill",
+    "description": "适合已经有工具或业务 API，希望让 Agent 知道什么时候用、按什么顺序用。",
+    "output": "一份业务技能草稿，以及输入、工具调用和验收结果的对应表。",
+    "steps": [
+      {
+        "title": "看触发条件与职责范围",
+        "task": "先读一个小工作流技能，圈出何时触发、何时交给其他技能。",
+        "source_ids": [
+          "bytedance-lark-official-skills"
+        ]
+      },
+      {
+        "title": "把业务问题变成结构",
+        "task": "比较 Base 设计指引与官方技能，记录对象、字段、依赖和版本差异。",
+        "source_ids": [
+          "doubao-archive-base"
+        ]
+      },
+      {
+        "title": "把执行与验收写完整",
+        "task": "借鉴全栈技能的阶段与交接方式，为自己的任务规定可检查的产物。",
+        "source_ids": [
+          "minimax-official-skills",
+          "tencent-rtc-agent-skills"
+        ]
+      },
+      {
+        "title": "给后续复核留证据",
+        "task": "用案例模板写明出处、未验证边界和一次小任务的验收计划。",
+        "source_ids": [],
+        "doc": "templates/case-study.md"
+      }
+    ]
+  },
+  {
+    "id": "reliable-tools",
+    "title": "让模型正确使用 CLI 与工具",
+    "description": "适合工具调用参数经常出错、重复执行、或难以判断异步任务是否完成的项目。",
+    "output": "一份工具契约和包含失败、等待、部分成功的返回样例。",
+    "steps": [
+      {
+        "title": "拆命令层级与返回语义",
+        "task": "比较业务快捷入口、标准 API 与通用调用；读懂部分成功的结果处理。",
+        "source_ids": [
+          "bytedance-lark-cli"
+        ]
+      },
+      {
+        "title": "核对描述与真实执行器",
+        "task": "重点看子进程、并发、超时、退出码以及参数前后条件。",
+        "source_ids": [
+          "xiaomi-mimoagent",
+          "meituan-vitabench-tools"
+        ]
+      },
+      {
+        "title": "处理效果未知与长任务",
+        "task": "画出提交、任务编号、查询、终态的流程；明确哪些请求不能自动重试。",
+        "source_ids": [
+          "alibaba-opensandbox",
+          "minimax-mcp-media"
+        ]
+      },
+      {
+        "title": "校准模型可见的能力",
+        "task": "检查运行时真实工具集合是否与提示词、示例和参考资料一致。",
+        "source_ids": [
+          "alibaba-qwen-code",
+          "tencent-cloudbase-ai-toolkit"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "agent-runtime",
+    "title": "看懂一个 Agent 的运行骨架",
+    "description": "适合正在设计上下文、子任务、沙箱和观测体系的开发者。",
+    "output": "一张消息流与执行边界图，外加一条任务轨迹的逐步说明。",
+    "steps": [
+      {
+        "title": "从一次模型请求开始",
+        "task": "标出系统消息、检索结果、历史和工具返回各由谁加入。",
+        "source_ids": [
+          "alibaba-qwen-agent",
+          "bytedance-coze-studio"
+        ]
+      },
+      {
+        "title": "追踪技能与子上下文",
+        "task": "比较按需加载和独立子任务；明确父任务要传入哪些信息。",
+        "source_ids": [
+          "bytedance-eino-skills",
+          "alibaba-agentscope"
+        ]
+      },
+      {
+        "title": "处理长结果与执行状态",
+        "task": "把模型请求副本、持久轨迹、外置文件和执行器状态分别画出。",
+        "source_ids": [
+          "bytedance-deerflow",
+          "alibaba-opensandbox"
+        ]
+      },
+      {
+        "title": "为结束附上证据",
+        "task": "区分 trace、格式解析、产物检查和业务成功；为自己的任务挑一个可验证指标。",
+        "source_ids": [
+          "bytedance-coze-loop",
+          "meituan-vitabench-tools"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "knowledge-workflow",
+    "title": "建立自己的长期研究库",
+    "description": "适合想持续收集提示词、技能和工具经验，又不希望最后只得到一堆链接的人。",
+    "output": "一套来源目录、版本差异记录、方法卡与个人实践笔记。",
+    "steps": [
+      {
+        "title": "看作者怎样采集",
+        "task": "读本地来源映射、哈希比较、删除归档和无变化跳过；先分清采集和学习。",
+        "source_ids": [
+          "archive-collection-method"
+        ]
+      },
+      {
+        "title": "明确证据和统计口径",
+        "task": "分别统计仓库、研究条目、具体文件与技能路径；区分官方、归档和运行验证。",
+        "source_ids": [],
+        "doc": "docs/research-method.md"
+      },
+      {
+        "title": "把失败经验写成条件化规则",
+        "task": "学习规则入库门槛，把“一次出错”转成带适用条件的待验证经验。",
+        "source_ids": [
+          "tencent-cloudbase-ai-toolkit"
+        ]
+      },
+      {
+        "title": "完成一次可审阅的更新",
+        "task": "从一个来源变更开始，更新证据、方法卡和变更记录，再重新生成看板。",
+        "source_ids": [],
+        "doc": "docs/collection-workflow.md"
+      }
+    ]
+  }
+]

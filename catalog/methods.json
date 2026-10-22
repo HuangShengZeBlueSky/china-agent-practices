@@ -1,0 +1,164 @@
+[
+  {
+    "id": "capability-aligned-prompts",
+    "title": "提示词与真实能力一起装配",
+    "problem": "提示词提到了工具，当前运行环境却没有这个工具；同一段指令被多个入口重复维护。",
+    "mechanism": "飞书把参数结构、适用指引、Skill 和参考资料分工；Qwen Code 按会话工具声明快照筛选相关指引；Coze Studio 在前置数据到齐后渲染模板，并按工具配置选择执行分支。",
+    "practice": "为自己的 Agent 画一张“哪段上下文从哪里来”的表，把工具可用条件与调用示例的装配放在同一位置维护。",
+    "source_ids": [
+      "bytedance-lark-cli",
+      "alibaba-qwen-code",
+      "bytedance-coze-studio"
+    ],
+    "boundary": "公开实现中仍可能有例外；这里没有测量幻觉或成功率变化。"
+  },
+  {
+    "id": "progressive-skills",
+    "title": "技能目录先到，正文按需加载",
+    "problem": "一次塞入所有技能正文会占用上下文，也让模型难以选对内容。",
+    "mechanism": "Eino 将 List 元数据与 Get 正文分开；AgentScope 让技能随工具组启用；openJiuwen 依赖外部读取工具；历史 Kimi CLI 保留技能作用域和路径。",
+    "practice": "先记录技能名称、触发描述、作用域与正文路径，再抓一条实际请求验证正文在何时进入模型上下文。",
+    "source_ids": [
+      "bytedance-eino-skills",
+      "alibaba-agentscope",
+      "huawei-openjiuwen-skills",
+      "moonshot-kimi-cli-legacy"
+    ],
+    "boundary": "读到文件并不等于已经具备依赖工具；不同宿主加载通道不同。"
+  },
+  {
+    "id": "business-skill-contract",
+    "title": "把业务 Skill 写成执行契约",
+    "problem": "技能只有角色和目标，没有对象解析、前提、输出或验收，模型难以知道下一步。",
+    "mechanism": "飞书技能先确认真实对象和字段；归档 Base 指引从业务结构推到数据模型；MiniMax fullstack-dev 将需求、实施、验证与交接分开。",
+    "practice": "用一个小任务写出触发条件、职责范围、输入、依赖、执行顺序、失败处理和可检查的交付物。",
+    "source_ids": [
+      "bytedance-lark-official-skills",
+      "doubao-archive-base",
+      "minimax-official-skills"
+    ],
+    "boundary": "技能文本表达意图；哪些约束由程序强制执行需要另查执行器。"
+  },
+  {
+    "id": "tool-semantics",
+    "title": "工具描述要解释实际执行语义",
+    "problem": "参数格式正确，但模型误解了子进程、并发、时间、分页或状态，仍然会做错事。",
+    "mechanism": "mimoagent 的 Bash 说明进程与并发语义；VitaBench 声明工具前后条件；AppBuilder 用调用编号连接云端请求与本地结果。",
+    "practice": "挑最常失败的工具，把状态变化、前置条件、结果判定和副作用写进描述，再对照执行代码检查是否一致。",
+    "source_ids": [
+      "xiaomi-mimoagent",
+      "meituan-vitabench-tools",
+      "baidu-appbuilder"
+    ],
+    "boundary": "接口说明的完善不能代替真实任务测试。"
+  },
+  {
+    "id": "async-idempotency",
+    "title": "异步任务先查状态，再决定重试",
+    "problem": "响应超时或暂时查不到结果时再次提交，可能重复创建资源或重复运行任务。",
+    "mechanism": "OpenSandbox 的非幂等 SSE 启动请求绕开自动重试；MiniMax MCP 将视频提交与查询分离；飞书技能明确区分异步写入与失败。",
+    "practice": "让提交返回任务编号，查询返回明确终态；对“效果未知”的错误先查原任务，只有幂等语义明确的操作才自动重试。",
+    "source_ids": [
+      "alibaba-opensandbox",
+      "minimax-mcp-media",
+      "bytedance-lark-official-skills"
+    ],
+    "boundary": "客户端返回次数上限不一定等于严格总超时；不同 API 的幂等保证要逐项核对。"
+  },
+  {
+    "id": "bounded-context",
+    "title": "长结果外置，但保留状态和回读入口",
+    "problem": "长日志、网页和文件挤占上下文；直接截断又可能丢失失败证据。",
+    "mechanism": "DeerFlow 在输出预算中间件启用且结果超过阈值时，将大工具结果外置为文件并提供回读路径，持久化失败时降级截断；mimoagent 截断正文后保留退出码；AWorld 的压缩提示要求摘要保留待办、错误与当前工作。",
+    "practice": "为大结果保存原始产物、简要类型、退出状态和可回读位置；测试一次失败时模型是否还能找到决定性的原文。",
+    "source_ids": [
+      "bytedance-deerflow",
+      "xiaomi-mimoagent",
+      "ant-aworld"
+    ],
+    "boundary": "这里包含提示约定和代码处理机制；关键内容是否实际保留，以及上下文与任务效果变化，仍需运行验证。"
+  },
+  {
+    "id": "handoff-state",
+    "title": "任务交接要有输入、状态与责任",
+    "problem": "拆了很多角色，却没有完整任务输入、产物引用、状态版本和清楚的完成条件。",
+    "mechanism": "Eino 区分独立与继承上下文子任务；JoyAgent 分离计划与执行；TRTC 的技能与工具通过会话工具的版本检查和原子替换更新共享状态；归档团队技能明确交接字段。",
+    "practice": "把任务目标、已有事实、约束、产物路径、未完成项与验证责任写进交接记录，按实际依赖决定是否共享历史。",
+    "source_ids": [
+      "bytedance-eino-skills",
+      "jd-joyagent-jdgenie",
+      "tencent-rtc-agent-skills",
+      "archive-collection-method"
+    ],
+    "boundary": "TRTC 在缺少 fcntl 的平台有无锁降级；文本协议与程序保证不能混写。"
+  },
+  {
+    "id": "observe-act-observe",
+    "title": "界面变化后更新观察与操作目标",
+    "problem": "界面变化后仍用旧元素引用或旧坐标，动作能执行却作用到错误对象。",
+    "mechanism": "BrowserSkill 用 session 和 tab 约束引用并规定失效后的恢复；UI-TARS 与 Open-AutoGLM 在动作之后取得新截图继续推理。",
+    "practice": "把观察、动作解析、执行结果和下一次观察分别记录；超时但效果未知时先重新观察，不连续重复点击。",
+    "source_ids": [
+      "tencent-browserskill",
+      "bytedance-ui-tars-desktop",
+      "zhipu-open-autoglm"
+    ],
+    "boundary": "模型发出的 finished 与真实任务成功不同；本轮没有操作设备或浏览器验证上游能力。"
+  },
+  {
+    "id": "verify-completion",
+    "title": "结束信号、格式正确与业务完成分别验",
+    "problem": "模型说完成、状态字段是 completed，或者 JSON 能解析，就被当成任务成功。",
+    "mechanism": "Trae 暴露任务结束工具；VitaBench 用独立提示评估轨迹；Coze Loop 拆分模板、调用与解析；TRTC 的代码静态约束检查与 SkillHub 的报告字段校验，分别展示了静态检查和格式合规的边界。",
+    "practice": "为同一任务单独记录：循环是否结束、输出格式是否通过、产物是否存在、需求是否满足。把最后一项落实到可观察证据。",
+    "source_ids": [
+      "bytedance-trae-agent",
+      "meituan-vitabench-tools",
+      "bytedance-coze-loop",
+      "tencent-rtc-agent-skills",
+      "tencent-skillhub"
+    ],
+    "boundary": "评委模型本身需要校准；静态字符串命中与评分字段合法都不证明质量。"
+  },
+  {
+    "id": "trace-message-path",
+    "title": "沿消息与轨迹理解框架",
+    "problem": "只读系统提示词，遗漏检索发生的位置、工具输出的角色及状态写回顺序。",
+    "mechanism": "Qwen-Agent 把检索所得资料装入系统消息；Lagent 分离消息聚合、动作解析与执行；Coze Loop 分阶段留 trace；MindSearch 合并子搜索的引用映射。",
+    "practice": "记录一次模型调用前后的消息序列，标出检索执行者、注入角色、调用编号和可追溯引用。",
+    "source_ids": [
+      "alibaba-qwen-agent",
+      "shanghai-ai-lagent",
+      "bytedance-coze-loop",
+      "shanghai-ai-mindsearch"
+    ],
+    "boundary": "MindSearch 的图执行与父节点传递有已记录的实现边界，不能把设计图当成运行验证。"
+  },
+  {
+    "id": "maintain-learning",
+    "title": "文件变化与知识更新分别维护",
+    "problem": "收藏越来越多，但缺少适用条件、变化原因和读完后的实践结论。",
+    "mechanism": "第三方归档将文件同步、变更日志与根目录模型总结分开；CloudBase 对长期规则的证据设门槛；BrowserSkill 记录包来源和文件指纹。",
+    "practice": "每次新增记录至少补一条“解决什么问题、证据在哪、何时适用、怎样验证”；文件没变不制造提交，结论变了写清原因。",
+    "source_ids": [
+      "archive-collection-method",
+      "tencent-cloudbase-ai-toolkit",
+      "tencent-browserskill"
+    ],
+    "boundary": "本仓没有设置定时采集任务；归档作者的关键词分类不等于语义学习。"
+  },
+  {
+    "id": "snapshot-drift",
+    "title": "把版本与协议差异留下来",
+    "problem": "同名技能来自不同渠道；文档、主技能和引用协议并不总是一致。",
+    "mechanism": "飞书官方与豆包归档的 Base 职责存在差异；openJiuwen 文档与实现的读取工具不同；QwenWork 归档 QA 的路径和状态标记出现漂移。",
+    "practice": "按来源、提交、路径和检查日保存结论。发现冲突时同时记录两份证据，说明采用哪个实现作为解释依据。",
+    "source_ids": [
+      "bytedance-lark-official-skills",
+      "doubao-archive-base",
+      "huawei-openjiuwen-skills",
+      "archive-collection-method"
+    ],
+    "boundary": "版本号大小不代表渠道间的先后关系，也不能证明全量生产部署。"
+  }
+]
