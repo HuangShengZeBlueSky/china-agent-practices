@@ -1,0 +1,594 @@
+{
+  "repository": "inclusionAI/AWorld",
+  "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+  "captured_at": "2026-10-22T15:59:07.221645+00:00",
+  "source_ids": [
+    "ant-aworld"
+  ],
+  "license_notes": [
+    "MIT"
+  ],
+  "archive_url": "https://codeload.github.com/inclusionAI/AWorld/tar.gz/82af4062e29e128910afa8622c866f4b99a4d23d",
+  "archive_sha256": "1e3acd44a47b69a943e2cd4f1ce1a031b9fea8245e2b9840db67f3b608c578f9",
+  "archive_bytes": 112196860,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "f607238c6d13db30d35bc35babe0203304e44468a90f03bec2cd3e5e3ff81bdd"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 8388608,
+      "sha256": "a69e7977d5521722c00566d95ef1ba72f283d8a4192bb6ada44de5f4fa887233"
+    },
+    {
+      "path": "source.tar.gz.part0002",
+      "bytes": 8388608,
+      "sha256": "d531c20037ec1a87a0f53806aab908d10f965bde14d9b947b42722a2c01da35f"
+    },
+    {
+      "path": "source.tar.gz.part0003",
+      "bytes": 8388608,
+      "sha256": "2102f0c5eb71da844934e00010138fa12462326b3d36bb6a433139c376d2d4b9"
+    },
+    {
+      "path": "source.tar.gz.part0004",
+      "bytes": 8388608,
+      "sha256": "88b405b82818d0425c120740c091afb60628a5e829d14867ada3aef3515878e2"
+    },
+    {
+      "path": "source.tar.gz.part0005",
+      "bytes": 8388608,
+      "sha256": "d1fb8bdec3662634f18c47165d4430004e80d173c7b7136484204e8f90696e17"
+    },
+    {
+      "path": "source.tar.gz.part0006",
+      "bytes": 8388608,
+      "sha256": "82b197dff42ecc2648b1fd34be1a708e1f6887d84f7db70472056217c70f16ea"
+    },
+    {
+      "path": "source.tar.gz.part0007",
+      "bytes": 8388608,
+      "sha256": "f1c9ae5888b793f268cbf417419eb52d22b2709ad2ecc440eacbf9960b37768b"
+    },
+    {
+      "path": "source.tar.gz.part0008",
+      "bytes": 8388608,
+      "sha256": "5db5013b2b9732c566a5ed7cef82902845862a4ff7fc7ff499f06c0bbc44a76f"
+    },
+    {
+      "path": "source.tar.gz.part0009",
+      "bytes": 8388608,
+      "sha256": "bf45897fce608ce129cdc1448c898b2ed3fa327ccd6a8715aa9bc6aedeae8041"
+    },
+    {
+      "path": "source.tar.gz.part0010",
+      "bytes": 8388608,
+      "sha256": "2d37037b42636ebb5d1aa7c8da7a1fa2c0ffd1255876aad95348e2d43e881f49"
+    },
+    {
+      "path": "source.tar.gz.part0011",
+      "bytes": 8388608,
+      "sha256": "d00b87c11f673543f3e5adba83820f2644ed96889c7f8933cdba0f6205886482"
+    },
+    {
+      "path": "source.tar.gz.part0012",
+      "bytes": 8388608,
+      "sha256": "107638a9116e462c0d1710853668af9a75535a867ac19079f823b7369768a36f"
+    },
+    {
+      "path": "source.tar.gz.part0013",
+      "bytes": 3144956,
+      "sha256": "c72846a02d3244fc6b844f4499ccf1a3696b94399cc6f9381fb7170ad5d5bffd"
+    }
+  ],
+  "archive_file_count": 3757,
+  "skills_count": 25,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1071,
+      "sha256": "7a6308fd98e53e0ef59b98fab14f9312ef32f4edae093b1604e56c7ade56e3b5"
+    },
+    {
+      "path": "README.md",
+      "bytes": 28420,
+      "sha256": "b9d6055a36e5dee6cf5aa283fe4c6b27035eafc4998a3620669779bb7fb4d25b"
+    },
+    {
+      "path": "README_env_config.md",
+      "bytes": 974,
+      "sha256": "0e3c7aab5a4dd768103074e0bda7da37f3fac9d8a299c6d59def654e77c86c32"
+    },
+    {
+      "path": "README_zh.md",
+      "bytes": 27816,
+      "sha256": "c07a4bf9b74590e3c3ecf742b6da9fd66bc799c1cc1028a89c44d3e712e44770"
+    },
+    {
+      "path": "aworld-cli/src/aworld_cli/core/compact_history_prompt.txt",
+      "bytes": 4343,
+      "sha256": "49842b0c60b206796c72fb04d2b2671dd723e292572df68d959502fb7892e5f1"
+    },
+    {
+      "path": "aworld-cli/src/aworld_cli/core/context.py",
+      "bytes": 14767,
+      "sha256": "4c50942bf8d15f31a125b3d8e5c3f1dc875b6ae9d27cbd6c45e8e394895bb199"
+    },
+    {
+      "path": "aworld-cli/src/aworld_cli/core/runtime_skill_registry.py",
+      "bytes": 3374,
+      "sha256": "f550d996ce3bae8fa911c199e81f71574010fcb7fa98586ea1cb74625537d166"
+    },
+    {
+      "path": "aworld-cli/src/aworld_cli/core/skill_activation_resolver.py",
+      "bytes": 15235,
+      "sha256": "4c8c4ea3139cc1bb1a74bb5df744738d78b642a722677b114a17b4e2eff2096e"
+    },
+    {
+      "path": "aworld-skills/ad_image_create_skill/SKILL.md",
+      "bytes": 6776,
+      "sha256": "de5c02b76f0c4b0b8f88832ba4df6c8365d133e4bb99a67306d71c6c8b506ee2"
+    },
+    {
+      "path": "aworld-skills/ad_video_create_skill/SKILL.md",
+      "bytes": 11794,
+      "sha256": "e59317051057fe92b9a238af58a465fb6b12e015a26c345893d4d4d485af2a46"
+    },
+    {
+      "path": "aworld-skills/agent-browser/SKILL.md",
+      "bytes": 8796,
+      "sha256": "d1af996f1f0339d98ce8a58362003d36b4f11143e040a94a17322768b816dc12"
+    },
+    {
+      "path": "aworld-skills/agent-browser/replay/capability.json",
+      "bytes": 398,
+      "sha256": "abd5ea500b5488dad6caa6e66957a4682ff90ddba40317f1b8133af2a2093efc"
+    },
+    {
+      "path": "aworld-skills/agent-browser/replay/compiler.py",
+      "bytes": 8309,
+      "sha256": "f4847e011bb7c74653a92912345533cd3ac96c7de98fba8ac85037147165a45d"
+    },
+    {
+      "path": "aworld-skills/agent-browser/replay/runtime.py",
+      "bytes": 12050,
+      "sha256": "64f753fbe5afa48d32c9c4a852539f73822771d41c8ac6e67ccb3165324a910d"
+    },
+    {
+      "path": "aworld-skills/app_evaluator/SKILL.md",
+      "bytes": 18107,
+      "sha256": "a2f40b1f636e3bbde0d06529f0aa7d5acdc2c9f401d9b8e8f479fe83b8b3e8ff"
+    },
+    {
+      "path": "aworld-skills/embedded_video/SKILL.md",
+      "bytes": 3376,
+      "sha256": "319fbe9c2826a82e7b64946e6d071c653b745a1ec264c8f58bc4bdba049eddf1"
+    },
+    {
+      "path": "aworld-skills/filex/SKILL.md",
+      "bytes": 23912,
+      "sha256": "2084f1bd41e99ea603d6838bd90a42753798c21c8a7e5b0dd2e015362f9d586d"
+    },
+    {
+      "path": "aworld-skills/filex/agents/openai.yaml",
+      "bytes": 172,
+      "sha256": "51b3eb95b8fe7599c01a6f779875069bc7772b53ce199a1caa1bb71ee9fcf947"
+    },
+    {
+      "path": "aworld-skills/filex/scripts/filex.py",
+      "bytes": 13995,
+      "sha256": "e1bad8c2f9c49f6737a39e5bdc826913baf38b92c614b861e1eced691ea85b5c"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/README.html",
+      "bytes": 15874,
+      "sha256": "9ad757ddaeca27d5a0a8c48765aa3cf6d8e963e9e92e69f77ed100d5168b7f04"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/SKILL.md",
+      "bytes": 13144,
+      "sha256": "661c0088d093c60f8a1745b257d5acc7ee1e6118dec1f8e5137009c9fd8c9464"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/references/x-high-signal-accounts.md",
+      "bytes": 4151,
+      "sha256": "0939905411b7f773667300acc106dd59f83406378f7fa1cec0012bc44016846c"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/scripts/ensure_x_cookies.sh",
+      "bytes": 2630,
+      "sha256": "329037c5e5bd8ce0a82703b9d16bfdaecefc38244c712340b6513bc1d6ae611a"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/scripts/export_x_cookies.py",
+      "bytes": 3834,
+      "sha256": "594257bc5a7a2cd7d3e482c78ea93552aee7e5f903126f2e0c269fee1f783690"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/scripts/generate_report.py",
+      "bytes": 4685,
+      "sha256": "4cb3860d45f484f60dada394122aa47d9cae0a0025ccd941d153e6248c87238f"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/scripts/open_x_login_cdp.sh",
+      "bytes": 2125,
+      "sha256": "0ac7f28ab169f7306d06c53eff79e43a55b26d29aadcc69a1e20e504356c5891"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/scripts/prepare_x_search.py",
+      "bytes": 5250,
+      "sha256": "3bd3131df814b460e6512ed7039cab1fccaf038bea44c06c664245728b25d9e8"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/scripts/template.html",
+      "bytes": 18010,
+      "sha256": "a4729057ad47f974e33b6e5bb4092a7c5650e30833b7677677529458cbe72d11"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/scripts/validate_x_cookies.py",
+      "bytes": 6557,
+      "sha256": "708ba1f0e558ed07176a203b8ba50e3f094b5c6a49d1566d49953be9d24fc9d0"
+    },
+    {
+      "path": "aworld-skills/long-running-agent/SKILL.md",
+      "bytes": 12810,
+      "sha256": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4"
+    },
+    {
+      "path": "aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "bytes": 5085,
+      "sha256": "ff7783fc3f18b8cb8c88f55f8bad4e0ac9a6412b4021e8e3fecb20f10b030e23"
+    },
+    {
+      "path": "aworld-skills/long-running-agent/references/execution-semantics.md",
+      "bytes": 2508,
+      "sha256": "23e9520d70d8136085dab308f5dfb43478e83d91982a03dcf11568708c969468"
+    },
+    {
+      "path": "aworld-skills/media_comprehension/SKILL.md",
+      "bytes": 14492,
+      "sha256": "e82fd53a4d97a3706e95fd8091a9bca08d4a3bfe18ed16a715691fe6907f61d9"
+    },
+    {
+      "path": "aworld-skills/optimizer/SKILL.md",
+      "bytes": 27490,
+      "sha256": "7ace0d170d8702319565f5690c4155428622536762d3a653bead001cd82e05c4"
+    },
+    {
+      "path": "aworld-skills/self_evolve/SKILL.md",
+      "bytes": 15115,
+      "sha256": "248053caf33931cc3d940ef9dc1ae68b1966c2cb365d0e1fc64198701369481c"
+    },
+    {
+      "path": "aworld-skills/self_evolve/references/plan.md",
+      "bytes": 6927,
+      "sha256": "12f57e2497c5e1713af259dc5a93aa1f36a088747a89202bfa2f5f41cb2430d0"
+    },
+    {
+      "path": "aworld-skills/text2agent/SKILL.md",
+      "bytes": 27992,
+      "sha256": "74ec8ed8f158e8c9c6190130e5e8d5833ebfac41a658542a398977460a552657"
+    },
+    {
+      "path": "aworld-skills/tiktok_download/SKILL.md",
+      "bytes": 26105,
+      "sha256": "82d5aa65484c2ce84432380ec41f425e044481a6e19c39c6d94aaa0c25b0446f"
+    },
+    {
+      "path": "aworld-skills/video_script_review/SKILL.md",
+      "bytes": 4922,
+      "sha256": "2272eb61fdb13c1d258a5ad83c9cd824084a4bbb201f10595c70518a1d4d811b"
+    },
+    {
+      "path": "aworld-skills/video_script_writting/SKILL.md",
+      "bytes": 6510,
+      "sha256": "f154a52e42bf592ed1fd4064660456f2d246d2d5ef976d06928b8a4dc1a2a8bb"
+    },
+    {
+      "path": "aworld-skills/video_subtitles_audios_insert/SKILL.md",
+      "bytes": 13705,
+      "sha256": "160032fbcc72bdd9af6fb19e905f417b186f62d9c53b46df57d6a9a25b5adfe2"
+    },
+    {
+      "path": "aworld-skills/workbench/SKILL.md",
+      "bytes": 5393,
+      "sha256": "34999a35cfae6e2abee0b5b2f7e0084cb8a46c55296beda7239a8e6162828cb7"
+    },
+    {
+      "path": "aworld-skills/workbench/scripts/workbench.py",
+      "bytes": 26211,
+      "sha256": "1179c76fb3ee4002c89b98f593742a869c9b863770188f3683b9c545cad2c58e"
+    },
+    {
+      "path": "aworld-skills/workbench/scripts/workbench_runtime/__init__.py",
+      "bytes": 78,
+      "sha256": "06d7871ef27b72d6ebdb9347bc56e9bf58fec02a560e31477173fa331fc69cfc"
+    },
+    {
+      "path": "aworld-skills/workbench/scripts/workbench_runtime/_process.py",
+      "bytes": 6127,
+      "sha256": "7de0d04c9ef0f73ed7d7837cc751c98a97c393b9288dac38598804cf3e5e748e"
+    },
+    {
+      "path": "aworld-skills/workbench/scripts/workbench_runtime/_process_child.py",
+      "bytes": 849,
+      "sha256": "e9ef71923bb2f599c8fd36c61f11e4622d42f6c0f197528efa4ab8e2f3de03bf"
+    },
+    {
+      "path": "aworld-skills/workbench/scripts/workbench_runtime/session.py",
+      "bytes": 14037,
+      "sha256": "bde4f8e599437c183c777e43b1a9cf1598efbe8b4176bbba522843951503a498"
+    },
+    {
+      "path": "aworld-skills/workbench/scripts/workbench_runtime/store.py",
+      "bytes": 47363,
+      "sha256": "b9314267b7909ea19a95866719ece2ce4976ba6c79bba6c11ff109d27e2cb840"
+    },
+    {
+      "path": "aworld-skills/workbench/scripts/workbench_runtime/store_inputs.py",
+      "bytes": 6838,
+      "sha256": "bbf5d3c6ea06b9087ed78827f4af642eb172b1b9d26576b488428eefafd5bca6"
+    },
+    {
+      "path": "aworld-skills/workbench/scripts/workbench_runtime/store_io.py",
+      "bytes": 5779,
+      "sha256": "c3ca15fabce434f40fdb4a9d69fb27ddfff6b9b62bc15af94c496d09928b5c6d"
+    },
+    {
+      "path": "aworld-skills/workbench/scripts/workbench_runtime/validation.py",
+      "bytes": 38328,
+      "sha256": "842d11253a230f100243c14b8ee0e1e8876fdf7ccd47df76bfb768ca837554d2"
+    },
+    {
+      "path": "aworld-skills/xiaohongshu_search/SKILL.md",
+      "bytes": 11597,
+      "sha256": "7c2cd067410fe4c76dc2de0988a05d3d25971950877e75b8074f4d311865378d"
+    },
+    {
+      "path": "aworld-skills/youtube_search/SKILL.md",
+      "bytes": 13170,
+      "sha256": "a772e4d18cef792b2018efb594910e4e537a89ecdc6091f5c5d9cd2a34306ff6"
+    },
+    {
+      "path": "aworld/LICENSE",
+      "bytes": 1071,
+      "sha256": "7a6308fd98e53e0ef59b98fab14f9312ef32f4edae093b1604e56c7ade56e3b5"
+    },
+    {
+      "path": "examples/skill_agent/skills/agent-browser/SKILL.md",
+      "bytes": 8796,
+      "sha256": "d1af996f1f0339d98ce8a58362003d36b4f11143e040a94a17322768b816dc12"
+    },
+    {
+      "path": "examples/skill_agent/skills/html-to-image/SKILL.md",
+      "bytes": 1958,
+      "sha256": "c70e9093b72ccddca1130f9726fa22b7a0e48572468b09a7dee2899788620f4a"
+    },
+    {
+      "path": "examples/skill_agent/skills/html-to-image/html_to_image.sh",
+      "bytes": 4263,
+      "sha256": "aaf1fcd5fc27ffbe7a4a7b78a32194167fc8f68fef50d47c8871ebb1dbd95275"
+    },
+    {
+      "path": "examples/skill_agent/skills/x-scraper/SKILL.md",
+      "bytes": 2748,
+      "sha256": "c5b55139b89805d03b704735f2630a14e1ecdfd50bd7ad426690645549fed169"
+    },
+    {
+      "path": "examples/skill_agent/skills/x-scraper/scrape_x_home.sh",
+      "bytes": 11077,
+      "sha256": "0650971e4d14b54762370aeed5e5563eff48f0106a3681181729fc419a1ad1f1"
+    },
+    {
+      "path": "examples/skill_agent/skills/x-scraper/scrape_x_user.sh",
+      "bytes": 9853,
+      "sha256": "24c55d5620e2b70b2091d4f90624ee54ad513d16efcb821eda7a8ad40c90b4ec"
+    },
+    {
+      "path": "examples/skill_agent/skills/xhs-publisher/SKILL.md",
+      "bytes": 1714,
+      "sha256": "a265fc24fb43da8388e031adfc3a2a50cc4093216ac3f017bd7bdf27ad06af33"
+    },
+    {
+      "path": "examples/skill_agent/skills/xhs-publisher/publish_xhs.sh",
+      "bytes": 9049,
+      "sha256": "de071716b986c51d7742b1590d644892bfc1cd583cb11de4c27314f93a334eda"
+    },
+    {
+      "path": "examples/skill_agent/skills/xhs-scraper/SKILL.md",
+      "bytes": 1290,
+      "sha256": "48c95f81d2e271e41217bcec273fac3b2ba22d0a85bbeb6913f85a841570377d"
+    },
+    {
+      "path": "examples/skill_agent/skills/xhs-scraper/scrape_xhs.sh",
+      "bytes": 15011,
+      "sha256": "c977e1af2d926e82705e6ad03e47cde9f9c213c6af65770f2c2b75d2aa0ad7b9"
+    },
+    {
+      "path": "tests/fixtures/plugins/legacy_agents_only/skills/demo/SKILL.md",
+      "bytes": 167,
+      "sha256": "72dd69580286d9bfe00af83d38b69703b789c3533265c8208d4174ba03539c19"
+    }
+  ],
+  "skills": [
+    {
+      "path": "aworld-skills/ad_image_create_skill/SKILL.md",
+      "bytes": 6776,
+      "sha256": "de5c02b76f0c4b0b8f88832ba4df6c8365d133e4bb99a67306d71c6c8b506ee2",
+      "directory": "aworld-skills/ad_image_create_skill",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/ad_video_create_skill/SKILL.md",
+      "bytes": 11794,
+      "sha256": "e59317051057fe92b9a238af58a465fb6b12e015a26c345893d4d4d485af2a46",
+      "directory": "aworld-skills/ad_video_create_skill",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/agent-browser/SKILL.md",
+      "bytes": 8796,
+      "sha256": "d1af996f1f0339d98ce8a58362003d36b4f11143e040a94a17322768b816dc12",
+      "directory": "aworld-skills/agent-browser",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/app_evaluator/SKILL.md",
+      "bytes": 18107,
+      "sha256": "a2f40b1f636e3bbde0d06529f0aa7d5acdc2c9f401d9b8e8f479fe83b8b3e8ff",
+      "directory": "aworld-skills/app_evaluator",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/embedded_video/SKILL.md",
+      "bytes": 3376,
+      "sha256": "319fbe9c2826a82e7b64946e6d071c653b745a1ec264c8f58bc4bdba049eddf1",
+      "directory": "aworld-skills/embedded_video",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/filex/SKILL.md",
+      "bytes": 23912,
+      "sha256": "2084f1bd41e99ea603d6838bd90a42753798c21c8a7e5b0dd2e015362f9d586d",
+      "directory": "aworld-skills/filex",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/last_7_days_news/SKILL.md",
+      "bytes": 13144,
+      "sha256": "661c0088d093c60f8a1745b257d5acc7ee1e6118dec1f8e5137009c9fd8c9464",
+      "directory": "aworld-skills/last_7_days_news",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/long-running-agent/SKILL.md",
+      "bytes": 12810,
+      "sha256": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4",
+      "directory": "aworld-skills/long-running-agent",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/media_comprehension/SKILL.md",
+      "bytes": 14492,
+      "sha256": "e82fd53a4d97a3706e95fd8091a9bca08d4a3bfe18ed16a715691fe6907f61d9",
+      "directory": "aworld-skills/media_comprehension",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/optimizer/SKILL.md",
+      "bytes": 27490,
+      "sha256": "7ace0d170d8702319565f5690c4155428622536762d3a653bead001cd82e05c4",
+      "directory": "aworld-skills/optimizer",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/self_evolve/SKILL.md",
+      "bytes": 15115,
+      "sha256": "248053caf33931cc3d940ef9dc1ae68b1966c2cb365d0e1fc64198701369481c",
+      "directory": "aworld-skills/self_evolve",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/text2agent/SKILL.md",
+      "bytes": 27992,
+      "sha256": "74ec8ed8f158e8c9c6190130e5e8d5833ebfac41a658542a398977460a552657",
+      "directory": "aworld-skills/text2agent",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/tiktok_download/SKILL.md",
+      "bytes": 26105,
+      "sha256": "82d5aa65484c2ce84432380ec41f425e044481a6e19c39c6d94aaa0c25b0446f",
+      "directory": "aworld-skills/tiktok_download",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/video_script_review/SKILL.md",
+      "bytes": 4922,
+      "sha256": "2272eb61fdb13c1d258a5ad83c9cd824084a4bbb201f10595c70518a1d4d811b",
+      "directory": "aworld-skills/video_script_review",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/video_script_writting/SKILL.md",
+      "bytes": 6510,
+      "sha256": "f154a52e42bf592ed1fd4064660456f2d246d2d5ef976d06928b8a4dc1a2a8bb",
+      "directory": "aworld-skills/video_script_writting",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/video_subtitles_audios_insert/SKILL.md",
+      "bytes": 13705,
+      "sha256": "160032fbcc72bdd9af6fb19e905f417b186f62d9c53b46df57d6a9a25b5adfe2",
+      "directory": "aworld-skills/video_subtitles_audios_insert",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/workbench/SKILL.md",
+      "bytes": 5393,
+      "sha256": "34999a35cfae6e2abee0b5b2f7e0084cb8a46c55296beda7239a8e6162828cb7",
+      "directory": "aworld-skills/workbench",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/xiaohongshu_search/SKILL.md",
+      "bytes": 11597,
+      "sha256": "7c2cd067410fe4c76dc2de0988a05d3d25971950877e75b8074f4d311865378d",
+      "directory": "aworld-skills/xiaohongshu_search",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "aworld-skills/youtube_search/SKILL.md",
+      "bytes": 13170,
+      "sha256": "a772e4d18cef792b2018efb594910e4e537a89ecdc6091f5c5d9cd2a34306ff6",
+      "directory": "aworld-skills/youtube_search",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "examples/skill_agent/skills/agent-browser/SKILL.md",
+      "bytes": 8796,
+      "sha256": "d1af996f1f0339d98ce8a58362003d36b4f11143e040a94a17322768b816dc12",
+      "directory": "examples/skill_agent/skills/agent-browser",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "examples/skill_agent/skills/html-to-image/SKILL.md",
+      "bytes": 1958,
+      "sha256": "c70e9093b72ccddca1130f9726fa22b7a0e48572468b09a7dee2899788620f4a",
+      "directory": "examples/skill_agent/skills/html-to-image",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "examples/skill_agent/skills/x-scraper/SKILL.md",
+      "bytes": 2748,
+      "sha256": "c5b55139b89805d03b704735f2630a14e1ecdfd50bd7ad426690645549fed169",
+      "directory": "examples/skill_agent/skills/x-scraper",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "examples/skill_agent/skills/xhs-publisher/SKILL.md",
+      "bytes": 1714,
+      "sha256": "a265fc24fb43da8388e031adfc3a2a50cc4093216ac3f017bd7bdf27ad06af33",
+      "directory": "examples/skill_agent/skills/xhs-publisher",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "examples/skill_agent/skills/xhs-scraper/SKILL.md",
+      "bytes": 1290,
+      "sha256": "48c95f81d2e271e41217bcec273fac3b2ba22d0a85bbeb6913f85a841570377d",
+      "directory": "examples/skill_agent/skills/xhs-scraper",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "tests/fixtures/plugins/legacy_agents_only/skills/demo/SKILL.md",
+      "bytes": 167,
+      "sha256": "72dd69580286d9bfe00af83d38b69703b789c3533265c8208d4174ba03539c19",
+      "directory": "tests/fixtures/plugins/legacy_agents_only/skills/demo",
+      "status": "snapshot_only"
+    }
+  ],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
