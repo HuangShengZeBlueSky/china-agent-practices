@@ -6,6 +6,7 @@
 
 | 来源 | 固定提交 | 技能路径 | 完整归档字节 | 本地原文与清单 |
 | --- | --- | ---: | ---: | --- |
+| MiniMax-AI/skills | 60aaae52bb2a | 23 | 5162153 | [全部原文](MiniMax-AI/skills/60aaae52bb2af8162732751a4332f62a5fef518b/files) · [清单](MiniMax-AI/skills/60aaae52bb2af8162732751a4332f62a5fef518b/manifest.json) |
 | MoonshotAI/kimi-cli | 9ab1286b8fe4 | 12 | 10522491 | [全部原文](MoonshotAI/kimi-cli/9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82/files) · [清单](MoonshotAI/kimi-cli/9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82/manifest.json) |
 | QwenLM/Qwen-Agent | 31a4d36d1236 | 0 | 16882337 | [全部原文](QwenLM/Qwen-Agent/31a4d36d123688581a9e9744427272b33ce940e0/files) · [清单](QwenLM/Qwen-Agent/31a4d36d123688581a9e9744427272b33ce940e0/manifest.json) |
 | QwenLM/qwen-code | 2050db87ef62 | 44 | 72839391 | [全部原文](QwenLM/qwen-code/2050db87ef62143f3fbca3113edb59f1a0e25da3/files) · [清单](QwenLM/qwen-code/2050db87ef62143f3fbca3113edb59f1a0e25da3/manifest.json) |

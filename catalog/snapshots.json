@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:59:39.618427+00:00",
+  "updated_at": "2026-10-22T15:59:44.409256+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -171,9 +171,25 @@
       "commits": [
         "9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82"
       ]
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "ok": true,
+      "commits": [
+        "60aaae52bb2af8162732751a4332f62a5fef518b"
+      ]
     }
   ],
   "versions": [
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "captured_at": "2026-10-22T15:59:44.308316+00:00",
+      "archive_bytes": 5162153,
+      "archive_sha256": "83715bcaf8ca5577fe352d67ba55193e7f9b6e9c7d9692376e4c2e3a7dfa853b",
+      "skills_count": 23,
+      "archive_file_count": 472
+    },
     {
       "repository": "MoonshotAI/kimi-cli",
       "commit": "9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82",
@@ -463,7 +479,7 @@
       "archive_file_count": 3766
     }
   ],
-  "repositories": 23,
-  "skill_paths_across_versions": 6185,
-  "bytes": 2070924693
+  "repositories": 24,
+  "skill_paths_across_versions": 6208,
+  "bytes": 2076086846
 }

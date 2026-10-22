@@ -1,0 +1,2060 @@
+{
+  "repository": "MiniMax-AI/skills",
+  "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+  "captured_at": "2026-10-22T15:59:44.308316+00:00",
+  "source_ids": [
+    "minimax-official-skills"
+  ],
+  "license_notes": [
+    "主许可证 MIT；CREDITS 列出 Anthropic Apache-2.0、Expo MIT 等衍生材料，具体资产另看各自许可"
+  ],
+  "archive_url": "https://codeload.github.com/MiniMax-AI/skills/tar.gz/60aaae52bb2af8162732751a4332f62a5fef518b",
+  "archive_sha256": "83715bcaf8ca5577fe352d67ba55193e7f9b6e9c7d9692376e4c2e3a7dfa853b",
+  "archive_bytes": 5162153,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 5162153,
+      "sha256": "83715bcaf8ca5577fe352d67ba55193e7f9b6e9c7d9692376e4c2e3a7dfa853b"
+    }
+  ],
+  "archive_file_count": 472,
+  "skills_count": 23,
+  "files": [
+    {
+      "path": ".claude/skills/pr-review/SKILL.md",
+      "bytes": 2476,
+      "sha256": "c4b12fa291ee11d58285c7db9bbc2bbf5be23d56d34456411202b958c6365292"
+    },
+    {
+      "path": ".claude/skills/pr-review/references/quality-guidelines.md",
+      "bytes": 2662,
+      "sha256": "202b6063d7d61beb0d0eef4b5b201ab50428894aad1aa2af4de469cf111d97a5"
+    },
+    {
+      "path": ".claude/skills/pr-review/references/structure-rules.md",
+      "bytes": 1815,
+      "sha256": "a1a71e13c3c5647c9ef4052dc4fe835c9840d9df8de96f3a26e7dacc0c2ad129"
+    },
+    {
+      "path": ".claude/skills/pr-review/scripts/validate_skills.py",
+      "bytes": 7208,
+      "sha256": "a46cb671734cbd067e57eb465250dce9507cb798a2f24b71d1dbf33555dd7d2b"
+    },
+    {
+      "path": "CREDITS.md",
+      "bytes": 2609,
+      "sha256": "536cfa5cf8171d6c9418a7520d732ce5a382fa68947654bd5f037bdfc6368897"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "eed4ccce37c2d24822da3bd9d5bee7bc12d494741de56ada513d0b97f537fcd0"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7865,
+      "sha256": "a82475844a437bf210fcd1590ce75c17a0721db72ae60654d3ced61670381b6c"
+    },
+    {
+      "path": "README_zh.md",
+      "bytes": 7336,
+      "sha256": "9afbe1291caefcd1cbb68cc2f7d60826b602c77f94b1f3784d512458d9f9c27e"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/color-font-skill/SKILL.md",
+      "bytes": 7878,
+      "sha256": "ac8ff901ad88a13d76ee72cc3a90cf08c6a4afb7331fc318250ca2b5938fd513"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/design-style-skill/SKILL.md",
+      "bytes": 6202,
+      "sha256": "b89d4b37c1024ab5d4852cea3bba9c7823e3a76e5e255c9bfcb07cde546899fe"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/ppt-editing-skill/SKILL.md",
+      "bytes": 6906,
+      "sha256": "e390b991244ddac3b0e62124310b4882a300d2c7f9fc372d6b545321104229fe"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/ppt-orchestra-skill/SKILL.md",
+      "bytes": 5986,
+      "sha256": "60c1981c3d741969ff7ee02bf20a58324f2b7659c7db0105ece09d5288f8b41e"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/slide-making-skill/SKILL.md",
+      "bytes": 7260,
+      "sha256": "264c78af862fc8c2cad085bb15248e0ef2071e5adc3291a4e14faa9ba1443840"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/slide-making-skill/pptxgenjs.md",
+      "bytes": 12819,
+      "sha256": "9539534d92b7170813b735a448750df3580390da2da6c52a02b687ed53ecba86"
+    },
+    {
+      "path": "skills/android-native-dev/SKILL.md",
+      "bytes": 28621,
+      "sha256": "043129d00d8fd400fa2ff6a2126471fcf01e83d57ce5749c4c75eb4009e9e909"
+    },
+    {
+      "path": "skills/android-native-dev/references/accessibility.md",
+      "bytes": 5732,
+      "sha256": "80f6f5950883c9ddbfe14facdc7690ef58141acaf9796d19a8f60a7600a1c792"
+    },
+    {
+      "path": "skills/android-native-dev/references/adaptive-screens.md",
+      "bytes": 6098,
+      "sha256": "509b0a9fb7c264675b2d78b3505d779bd1a68516ccd51146c8dfcbb50f4c0968"
+    },
+    {
+      "path": "skills/android-native-dev/references/design-style-guide.md",
+      "bytes": 10126,
+      "sha256": "bc7cdf92ddb8d745538603f3701de634b3793369d503728ddce7457f60ee37c3"
+    },
+    {
+      "path": "skills/android-native-dev/references/functional-requirements.md",
+      "bytes": 6175,
+      "sha256": "732b91d2b7091914358ed8eb752d7203fef302188c104d29bfade32df5659643"
+    },
+    {
+      "path": "skills/android-native-dev/references/motion-system.md",
+      "bytes": 5443,
+      "sha256": "781edd94ae6d107719adbd9ae199d358f545fa00a052fd8015842477c4d717bb"
+    },
+    {
+      "path": "skills/android-native-dev/references/performance-stability.md",
+      "bytes": 6334,
+      "sha256": "ac3fc3776add17cfb0f40ee57029736c480f70e2672b4bbfcdd8c3896fe2c422"
+    },
+    {
+      "path": "skills/android-native-dev/references/privacy-security.md",
+      "bytes": 6667,
+      "sha256": "324d84c3d6c955854cc6095f4c6a86cd4b43fe7d28980f5d453105c625ab8063"
+    },
+    {
+      "path": "skills/android-native-dev/references/testing.md",
+      "bytes": 17568,
+      "sha256": "a6d2cead93bc43b22e64fe5208d284fd8931474d0c6d48664f1cd009a7b43baa"
+    },
+    {
+      "path": "skills/android-native-dev/references/visual-design.md",
+      "bytes": 7523,
+      "sha256": "39d30ddf2e11c1659b1fd3515cdb3d1fa41ab31268cc615456ce62f407ae3a9f"
+    },
+    {
+      "path": "skills/buddy-sings/SKILL.md",
+      "bytes": 16382,
+      "sha256": "83006e66236079fdeba978a80c0d2178109cf7780de058a541f8453ba0180a50"
+    },
+    {
+      "path": "skills/flutter-dev/SKILL.md",
+      "bytes": 5230,
+      "sha256": "b0e5eb337c1891481ff7875d0fee974ba4a7bddafb6a7f0947747c008b5c2e28"
+    },
+    {
+      "path": "skills/flutter-dev/references/animations.md",
+      "bytes": 12863,
+      "sha256": "83600209588577f9c2005edca10d0cba4255cbe9370f3f297f3158824b809406"
+    },
+    {
+      "path": "skills/flutter-dev/references/bloc-state.md",
+      "bytes": 6765,
+      "sha256": "9ea17d693a6a0e8a1e80c55b716b98a12a89972f8ce2c25428925607075cfcca"
+    },
+    {
+      "path": "skills/flutter-dev/references/forms.md",
+      "bytes": 17424,
+      "sha256": "11d76fe7be4656221b89778a1c860a3575d3f4b9272b0c54dd0f344493e7c60d"
+    },
+    {
+      "path": "skills/flutter-dev/references/gorouter-navigation.md",
+      "bytes": 6244,
+      "sha256": "0c71e90920777d89df7c1f4d5b32eaa4af3c85eaaee6fcda136ab231a8cbd016"
+    },
+    {
+      "path": "skills/flutter-dev/references/localization.md",
+      "bytes": 11992,
+      "sha256": "d711c335b235db35c8e7faed1c2871e66ae65d08e16b40cc404fd231a6adca31"
+    },
+    {
+      "path": "skills/flutter-dev/references/networking.md",
+      "bytes": 13946,
+      "sha256": "d6bded9a7b561d859883cf70eb0e64858bde38526be22856487f09ece1de848a"
+    },
+    {
+      "path": "skills/flutter-dev/references/performance.md",
+      "bytes": 6634,
+      "sha256": "2f5c557c6c7218dffafb3d56b0e569020c03ba6f187df96f3c66f1b1ae1e11b1"
+    },
+    {
+      "path": "skills/flutter-dev/references/platform-specific.md",
+      "bytes": 11049,
+      "sha256": "f0d8c283400ab00586e5bd8e68de3af2f35dde31841a0f9cd0ea1dba47b414ce"
+    },
+    {
+      "path": "skills/flutter-dev/references/project-structure.md",
+      "bytes": 6723,
+      "sha256": "3d45de13d573e740db1e98877dc0ae29d02af5d877f853205d024a1c32f23588"
+    },
+    {
+      "path": "skills/flutter-dev/references/riverpod-state.md",
+      "bytes": 5450,
+      "sha256": "4633cba2912145032641d5921765d34335f9763f28a8c9629559ffb4cfcba227"
+    },
+    {
+      "path": "skills/flutter-dev/references/testing.md",
+      "bytes": 8651,
+      "sha256": "a782ec57cc7785b5de3a13bff403af843a12c1e3e3b1b5d0b3263f3753b9efa2"
+    },
+    {
+      "path": "skills/flutter-dev/references/widget-patterns.md",
+      "bytes": 5262,
+      "sha256": "03531b22a5f7f3789e29abef3851f437cb2b3cceeaad51a071c5b798bae84f01"
+    },
+    {
+      "path": "skills/frontend-dev/SKILL.md",
+      "bytes": 20944,
+      "sha256": "500ff2234e5adad4e2666ba633a1e242ef6af4c0da6bd94a3d6d37819e9aabce"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/ArsenalSC-OFL.txt",
+      "bytes": 4373,
+      "sha256": "8ddd61b18ba2c0d0dbe4a691cf5f1a0673f473d02fa0546e67ee88c006aeff6e"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/ArsenalSC-Regular.ttf",
+      "bytes": 165848,
+      "sha256": "65e6f89df58f68fd905b3add34a79dd6106aa3b3044df0dad9676fff53d504b9"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/BigShoulders-Bold.ttf",
+      "bytes": 94528,
+      "sha256": "b43bcd198b9fdf717dd42aa61a34dba32e01aceaeae659d689afd0ca52c37ea2"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/BigShoulders-OFL.txt",
+      "bytes": 4397,
+      "sha256": "fbc746aabf0eb1847dfd92e2efc4596d79fa897d60b8e64062a22f585508fb3f"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/BigShoulders-Regular.ttf",
+      "bytes": 94396,
+      "sha256": "18a879fc71978a4447150705caf880a9da3860083c259fd29e6dc03057b6842a"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Boldonse-OFL.txt",
+      "bytes": 4390,
+      "sha256": "45cc82ab4032273c0924025ffcf8f0665a68e1a5955e3f7247e5daf1deeb1326"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Boldonse-Regular.ttf",
+      "bytes": 77168,
+      "sha256": "cc2e540604565c0f90a7d8d46194a2f42fc9c45512cd2e39bf03b50eb68c35a4"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/BricolageGrotesque-Bold.ttf",
+      "bytes": 90952,
+      "sha256": "a737b146fe0d77ffe8a86e3cd16700dd431d3b1e420d4fd80e142cd68a1cb50d"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/BricolageGrotesque-OFL.txt",
+      "bytes": 4403,
+      "sha256": "0e4f4eb8534bc66a76aca13dd19c1f9731b2008866b29ccff182b764649df9b4"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/BricolageGrotesque-Regular.ttf",
+      "bytes": 90920,
+      "sha256": "972a6d098c9867ae131d0ea99e221e63976b11a19d4b931c2c7ace525674e4f6"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/CrimsonPro-Bold.ttf",
+      "bytes": 107352,
+      "sha256": "48f191e38355c8db100eb3ce157c20f9302a3b9a37b44a660f77ecfce3986609"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/CrimsonPro-Italic.ttf",
+      "bytes": 108828,
+      "sha256": "52318db3526b644e6efa60be0b3ca5a50e40fbe8bd026c261e0aa206f0772267"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/CrimsonPro-OFL.txt",
+      "bytes": 4394,
+      "sha256": "35680d14547b6748b6f362a052a46d22764ce5eccf96e18b74f567bb2ee58114"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/CrimsonPro-Regular.ttf",
+      "bytes": 106696,
+      "sha256": "48fad08cb1917a7b2f2c6fe5135d6c07743a6663cf7631ec4481108aaf081422"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/DMMono-OFL.txt",
+      "bytes": 4392,
+      "sha256": "bfe7842fcb88323e2981e24710c25202677385a8c75fb6a87217b275a0247ae3"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/DMMono-Regular.ttf",
+      "bytes": 48852,
+      "sha256": "f98ada968dc3b6b2c08d3f5caaf266977df0bfe0929372b93df5a06cf2ace450"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/EricaOne-OFL.txt",
+      "bytes": 4410,
+      "sha256": "e0de629968b52255548d5fafcf30b24ff9edae0eda362380755a75816404d0fa"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/EricaOne-Regular.ttf",
+      "bytes": 24872,
+      "sha256": "db1d89e80e33a8a01beaaac7a85df582857d24a43f1e181461aa7ff5d701476a"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/GeistMono-Bold.ttf",
+      "bytes": 78304,
+      "sha256": "75c0828d5c1ee44b9ef9f4df577bf41595ec362e2ea3f1e558590c9e92c7949d"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/GeistMono-OFL.txt",
+      "bytes": 4388,
+      "sha256": "6a873c900f584109b13ae0aaf81d6e3cf0a68751a216b03f7b6c68d547057bb4"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/GeistMono-Regular.ttf",
+      "bytes": 78232,
+      "sha256": "a55c1b51cda4afeab9e471e7947b85a20f7c8831d7e6b1470c1b7fbdc0f0f15e"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Gloock-OFL.txt",
+      "bytes": 4381,
+      "sha256": "c0a3f3125ac491ef3d1f09f401be4834c646562f647e44f2bcbc49f0466c656d"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Gloock-Regular.ttf",
+      "bytes": 95156,
+      "sha256": "e86b4ce66dbd3f1f83eee8db99ec96e0da1128c3f53df0e9b3b7472025dfe960"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/IBMPlexMono-Bold.ttf",
+      "bytes": 136008,
+      "sha256": "dbd2a2fb024579438d6400a84e57579bfd2dbe67c306c8fd9fde92a61e4f2eea"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/IBMPlexMono-OFL.txt",
+      "bytes": 4363,
+      "sha256": "5294ce778857e1eb02e830b6ab06435537d38f43055327e73d03a2d4d57d5123"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/IBMPlexMono-Regular.ttf",
+      "bytes": 133796,
+      "sha256": "ab08018ccd276b79fb2c636bb95b9c543598f9d50505fe92506fcb4dae7810cd"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/IBMPlexSerif-Bold.ttf",
+      "bytes": 161000,
+      "sha256": "b8d294e9b5c5a0940f167c3ced0f7ef2e3f57082ca3ff096ef30e86e26c1c159"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/IBMPlexSerif-BoldItalic.ttf",
+      "bytes": 169840,
+      "sha256": "da64b75f4284f53e7b5c71fa190a35b8bf3494fe19f1804c81c3a53340bca570"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/IBMPlexSerif-Italic.ttf",
+      "bytes": 170004,
+      "sha256": "b11f1048745e715a55c9d837b3f10226ca3d78867b7db7251ddad8f98dcf0f38"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/IBMPlexSerif-Regular.ttf",
+      "bytes": 160380,
+      "sha256": "77cd233a2af8dc6b1022faea3bb3b01f3c75af68bcf530cb6aeb15982ff3dbb7"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/InstrumentSans-Bold.ttf",
+      "bytes": 68084,
+      "sha256": "444f85bf1c4b0e1ce1ca624f6be54bcd832207714ccaf4ea99ee531341683bdf"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/InstrumentSans-BoldItalic.ttf",
+      "bytes": 70004,
+      "sha256": "3762f6cef95d6039489ad5ba5787d4c30f17a1ad01e9ac3c816ed69692722a68"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/InstrumentSans-Italic.ttf",
+      "bytes": 69900,
+      "sha256": "78e85858e371b2cb4e18f617c10f0f937c0e12a0887ffee98555b24ed305b3a7"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/InstrumentSans-OFL.txt",
+      "bytes": 4403,
+      "sha256": "bf4dc6d13a8cccd4807133c77a1ee9619a16b92cb23322258725ab6731c2f6e5"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/InstrumentSans-Regular.ttf",
+      "bytes": 68028,
+      "sha256": "a22cb26e48fd79bcb01bf2fc92d36785474dce36d9c544ab0a8868c2657c4a87"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/InstrumentSerif-Italic.ttf",
+      "bytes": 70868,
+      "sha256": "9c86e4d5a47b50224a2463a9eca8535835257c8e85c470c2c6b454b1af6f046e"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/InstrumentSerif-Regular.ttf",
+      "bytes": 69312,
+      "sha256": "56ac3be03ac3ba283196b3e77850ab2ffcf56cfb6fd3212c5620109a972f8c99"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Italiana-OFL.txt",
+      "bytes": 4394,
+      "sha256": "8373b11312ace78c4cec2e8f9f6aa9f2330601107dac7bcf899c6f2dbd40c5a5"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Italiana-Regular.ttf",
+      "bytes": 27184,
+      "sha256": "15c4dd6ab8cf4a29ba8826f65edcbe2f6c266c557d34d081f25072dfd5605fd2"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/JetBrainsMono-Bold.ttf",
+      "bytes": 114828,
+      "sha256": "a2349098b9e45419e7bf0e2958d6c4937a049dded37387b08be725be4c7615f3"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/JetBrainsMono-OFL.txt",
+      "bytes": 4399,
+      "sha256": "a76abf002c49097d146e86740a3105a5d00450b1592e820a1109a8c5680cd697"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/JetBrainsMono-Regular.ttf",
+      "bytes": 114904,
+      "sha256": "b6b1ff4ddefe36d7f2a6174e1d001cab374e594519ee9049af028d577b64c5f5"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Jura-Light.ttf",
+      "bytes": 154308,
+      "sha256": "c891a381df056b2c4dfe85841e911bf45da0890fa21a7b2692cbe5ea1f505e1e"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Jura-Medium.ttf",
+      "bytes": 154488,
+      "sha256": "c72965cb732a92872643819fd1734128238583cc36b116313859137a51d3368a"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Jura-OFL.txt",
+      "bytes": 4380,
+      "sha256": "eaf9bdb675f6d87e5feb88199ab3ea581d3bd2082f426e384fa9c394576d7260"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/LibreBaskerville-OFL.txt",
+      "bytes": 4449,
+      "sha256": "55959eef5b0c3b2e3c1c7631b8ff0f9447d75de20f29cfa7db5bcfb026763343"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/LibreBaskerville-Regular.ttf",
+      "bytes": 147584,
+      "sha256": "2101302538d9e88adb679031c04623e4578b5745e89566284fd2c508d79acae0"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Lora-Bold.ttf",
+      "bytes": 133828,
+      "sha256": "7d74015e950c2fb66519c7295b8155621d22200ae2ca2a4c6b43ce3c490cac87"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Lora-BoldItalic.ttf",
+      "bytes": 140332,
+      "sha256": "152f87e71f5ddb60d5c57ecd9132807c947e65c42977193c9164e7c5a6690081"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Lora-Italic.ttf",
+      "bytes": 139328,
+      "sha256": "be627e595184e8afe521f08da0607eee613f1997d423bc8dadc5798995581377"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Lora-OFL.txt",
+      "bytes": 4423,
+      "sha256": "62e37a82d3f1ef2a70712885fa8b3144b65fd144d8e748d6196b690a354d792c"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Lora-Regular.ttf",
+      "bytes": 133888,
+      "sha256": "7ed00e7c9cdf16ab7e2fd2361fe45d4f0b61263cd60aae398b27b7ee08108827"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/NationalPark-Bold.ttf",
+      "bytes": 79208,
+      "sha256": "69ac4c301c4a7233c6e602d12a92c54d7967b575f4449951c45ce773f7acff53"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/NationalPark-OFL.txt",
+      "bytes": 4399,
+      "sha256": "81c6c71d83b5b45d7344f96df12bb4a2477a5b092a9144757ee1d0f50f855175"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/NationalPark-Regular.ttf",
+      "bytes": 76424,
+      "sha256": "a477338b7e18308d476650dfe31235ef86a883572665e56ffb5fb80f82009b58"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/NothingYouCouldDo-OFL.txt",
+      "bytes": 4363,
+      "sha256": "7c2a6970584ddad04919816163746f83b378078015899b18468b40f05e9ce128"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/NothingYouCouldDo-Regular.ttf",
+      "bytes": 32020,
+      "sha256": "d866f985896d3280f4fce72db7e17302c24a0c1fdb0699b6b5ed3af14f944d57"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Outfit-Bold.ttf",
+      "bytes": 55392,
+      "sha256": "6654b93d21301ec61887d3cedd6c11d9df1b1dfb63f9cf45ac7995f6e2235ab1"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Outfit-OFL.txt",
+      "bytes": 4389,
+      "sha256": "1945b62cd76da9a3051a1660dde72afaa64ffc2666d30e7a78356d651653ba2f"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Outfit-Regular.ttf",
+      "bytes": 54912,
+      "sha256": "f24945365147c9e783e91d8649959b59be6b00c9ee4ecd2f6b33afbb2dd871fe"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/PixelifySans-Medium.ttf",
+      "bytes": 51072,
+      "sha256": "38397504f71c122b03d234ea6f55118e3d5bdbddffd82bedddbd7755d3b3be82"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/PixelifySans-OFL.txt",
+      "bytes": 4395,
+      "sha256": "7f54d1d9f1ae1ba9f2722f978145f90324fea34ca3c2304b3a29cfa96ac6037e"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/PoiretOne-OFL.txt",
+      "bytes": 4366,
+      "sha256": "2eaf541f7eb8b512e4c757a5212060abf5b6edfef230e9d7640bf736b315c33a"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/PoiretOne-Regular.ttf",
+      "bytes": 45244,
+      "sha256": "9cf265b139648b36b6c0afdfeb0bf27f7e66db9a16094bc40f644d8da05bc318"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/RedHatMono-Bold.ttf",
+      "bytes": 34420,
+      "sha256": "7ef48353f4be5ddb90f000f6fad48f2b62b3e8c27d9818d8d45ff46c201065e0"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/RedHatMono-OFL.txt",
+      "bytes": 4394,
+      "sha256": "435fbfb7e66988b2a06686a4cb966faec733f35d8fe100a1601573c27f3e0bb8"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/RedHatMono-Regular.ttf",
+      "bytes": 34488,
+      "sha256": "452fe826871b37539f5212b20c87cf30f82f58dd2741f1c96edd1dcbdc0db6b4"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Silkscreen-OFL.txt",
+      "bytes": 4394,
+      "sha256": "6b849745119bbe85ec01fd080c9cd50234da9f52ac6e48b55d1a424a0c4d7ca9"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Silkscreen-Regular.ttf",
+      "bytes": 31960,
+      "sha256": "49567408600809e25147e9225ac4f37f410e2df45a750696c45027531fb65f1b"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/SmoochSans-Medium.ttf",
+      "bytes": 59704,
+      "sha256": "dd76e6e77cce82f827a8654cd906e9ce58f3aaf78adda63c4a7f655b8ecb41f0"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/SmoochSans-OFL.txt",
+      "bytes": 4396,
+      "sha256": "74c9c4eb88e891483e1b7bc54780b452cbf4f4df66d4e71881d7569aa2130749"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Tektur-Medium.ttf",
+      "bytes": 76248,
+      "sha256": "52bbe8c9b057b3d2da4eeace31a524b1ea26a1375ae34319cf6900ccc57a4c82"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Tektur-OFL.txt",
+      "bytes": 4385,
+      "sha256": "3f1466cb5438f31782eeb6e895f3a655bc4d090e24263e331f555357d1cb734e"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/Tektur-Regular.ttf",
+      "bytes": 75604,
+      "sha256": "162e1b36c4718c5b051b36c971ad7e50d341944f35618f480422ebbe72988f98"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/WorkSans-Bold.ttf",
+      "bytes": 191304,
+      "sha256": "240d125fc9f8561363dc1ea3f513501253bd70942f41468f48f0b0cafb0c82e2"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/WorkSans-BoldItalic.ttf",
+      "bytes": 175772,
+      "sha256": "a5b2cad813df0aaa7d16621f2e93b5117c25e9bc788bc9a3ad218e9d6348ce34"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/WorkSans-Italic.ttf",
+      "bytes": 174280,
+      "sha256": "6b7f7002e0b0c8b261fe878658ef5551e3e59d9f6b609b04efb90dde1e2c1ada"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/WorkSans-OFL.txt",
+      "bytes": 4397,
+      "sha256": "ace8c22a3326318b54e67c3691857929634205533f454a70ef5a3473ddb2e2ba"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/WorkSans-Regular.ttf",
+      "bytes": 188916,
+      "sha256": "e67985a843df0d3cdee51a3d0f329eb1774a344ad9ff0c9ab923751f1577e2a4"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/YoungSerif-OFL.txt",
+      "bytes": 4398,
+      "sha256": "cdcb8039606b40a027a6d24586ec62d5fe29c701343d82a048c829cb28a3dd28"
+    },
+    {
+      "path": "skills/frontend-dev/canvas-fonts/YoungSerif-Regular.ttf",
+      "bytes": 105136,
+      "sha256": "f8dc08f77abad753a00670af70756a8ace938e5c3f0b770f4f4c2071c4bd8fc6"
+    },
+    {
+      "path": "skills/frontend-dev/references/asset-prompt-guide.md",
+      "bytes": 2020,
+      "sha256": "fead1bdd67a43709d3806f7f013e6b24c3821934d6e90344eadfe8c199609529"
+    },
+    {
+      "path": "skills/frontend-dev/references/env-setup.md",
+      "bytes": 649,
+      "sha256": "4b13680a4e130cbf1fbd6574a638c61a618042a4118e1498242e11074acc4c9c"
+    },
+    {
+      "path": "skills/frontend-dev/references/minimax-cli-reference.md",
+      "bytes": 5166,
+      "sha256": "472932d84016c013b5a2edad67d8c9456928c27a950fffe3482847def29cb316"
+    },
+    {
+      "path": "skills/frontend-dev/references/minimax-image-guide.md",
+      "bytes": 1913,
+      "sha256": "cde6283d00befa2706d8bf7789cdc62656af42cda0d75158ddebee8b2e851cf2"
+    },
+    {
+      "path": "skills/frontend-dev/references/minimax-music-guide.md",
+      "bytes": 6644,
+      "sha256": "bec88105be3cf43085708f3ac1ccee66f79949f278fbbdbdc3992832a8b63348"
+    },
+    {
+      "path": "skills/frontend-dev/references/minimax-tts-guide.md",
+      "bytes": 2192,
+      "sha256": "24df205db8e2d5d9c2a9598247dfa6584260dd6316288ac2a4b7a6c3f1390a7e"
+    },
+    {
+      "path": "skills/frontend-dev/references/minimax-video-guide.md",
+      "bytes": 2754,
+      "sha256": "d13a146b9dde00360687850f3f9e1e8dfdebdcbc37f9e335e4ce74c8b1f3e70f"
+    },
+    {
+      "path": "skills/frontend-dev/references/minimax-voice-catalog.md",
+      "bytes": 47494,
+      "sha256": "21dc71aa702e4c71349c924f8754b24f9f1770fdfd805362729b806e216468b8"
+    },
+    {
+      "path": "skills/frontend-dev/references/motion-recipes.md",
+      "bytes": 10302,
+      "sha256": "6a4dea9a775b765ae27f3a1b08781c60e217ff3706081cb33ac72d3236475bc7"
+    },
+    {
+      "path": "skills/frontend-dev/references/troubleshooting.md",
+      "bytes": 1789,
+      "sha256": "df47d367b578ba3d18865c210a1fe98f98bc36e8321dbb52d6f5e48754d195e4"
+    },
+    {
+      "path": "skills/frontend-dev/scripts/minimax_image.py",
+      "bytes": 4474,
+      "sha256": "d441cbd336277b02c7e4053319b59629bad2250c56a8b00e15f5548316125a81"
+    },
+    {
+      "path": "skills/frontend-dev/scripts/minimax_music.py",
+      "bytes": 5451,
+      "sha256": "6ddadd4d2fb253be2093cb7c6360c76a0467c3b294b94d3a29739994cbdb7cd9"
+    },
+    {
+      "path": "skills/frontend-dev/scripts/minimax_tts.py",
+      "bytes": 3995,
+      "sha256": "41964d77667fe3f6d91578fbe7406d4a2f2b4b61044d2104d28f7807aeb9e96d"
+    },
+    {
+      "path": "skills/frontend-dev/scripts/minimax_video.py",
+      "bytes": 6162,
+      "sha256": "5b6d2e71cc17c8c185b4fbff77bc4fa4f4bf2377cdf55ce291b2a0f3c4ad956c"
+    },
+    {
+      "path": "skills/frontend-dev/templates/generator_template.js",
+      "bytes": 7822,
+      "sha256": "b601d56dc95b4749adc1fcbae0ab889f93e83403ce8b07ccf1bd201638437944"
+    },
+    {
+      "path": "skills/frontend-dev/templates/viewer.html",
+      "bytes": 20714,
+      "sha256": "f3584b5b365b36f17a5a87047ac7c1e5cd12c26f3b1dd24b6fa3d7cc77462d10"
+    },
+    {
+      "path": "skills/fullstack-dev/SKILL.md",
+      "bytes": 34810,
+      "sha256": "94d2f5b3859611a0caeeb03e6562ba809c3d3747ac917b8675d5ce21d395c39e"
+    },
+    {
+      "path": "skills/fullstack-dev/references/api-design.md",
+      "bytes": 13910,
+      "sha256": "6361608bd921de22abc529f3d1b2cb645e50e7ba1d220ef0beb6113d9fc8dcd0"
+    },
+    {
+      "path": "skills/fullstack-dev/references/auth-flow.md",
+      "bytes": 4566,
+      "sha256": "052212855039010757506cf2e66383eb971c841deb0b254d1122857f8cb021c1"
+    },
+    {
+      "path": "skills/fullstack-dev/references/db-schema.md",
+      "bytes": 23400,
+      "sha256": "4ae692ef8515c24afc393cf3c43235a48c5c0adebd81d7428e08328440e75859"
+    },
+    {
+      "path": "skills/fullstack-dev/references/django-best-practices.md",
+      "bytes": 13052,
+      "sha256": "c25cef53e39fa16642a4a8212e409c2d2c62f389a5e5c59a6385d9fdf8d79904"
+    },
+    {
+      "path": "skills/fullstack-dev/references/environment-management.md",
+      "bytes": 2309,
+      "sha256": "4a5da75bb616ab9b477eadfaeab5f53bd5ba451191fc526786aabefcddb9ba7a"
+    },
+    {
+      "path": "skills/fullstack-dev/references/release-checklist.md",
+      "bytes": 7841,
+      "sha256": "aca9e883145ca033a23c45dee402a7bb91e0956ae0af98c9bfb322444439323d"
+    },
+    {
+      "path": "skills/fullstack-dev/references/technology-selection.md",
+      "bytes": 9223,
+      "sha256": "3da55a3594d5dfb003f1c23cfc6d0868609283f68e70127068895bd3625ce646"
+    },
+    {
+      "path": "skills/fullstack-dev/references/testing-strategy.md",
+      "bytes": 11818,
+      "sha256": "1516a483b8950aa4a4b3ea470a0d520cf3975bbe2beb76781d9addfe0e35d943"
+    },
+    {
+      "path": "skills/gif-sticker-maker/SKILL.md",
+      "bytes": 5005,
+      "sha256": "57002b47b7aaffb784acedae2750e14a75dc18ba58edb003f846755d7eb0c447"
+    },
+    {
+      "path": "skills/gif-sticker-maker/assets/image-prompt-template.txt",
+      "bytes": 1013,
+      "sha256": "1239e2ede72babb990776e7d66b6c1fddda9fae513bc417063e2adfca9071434"
+    },
+    {
+      "path": "skills/gif-sticker-maker/assets/video-prompt-template.txt",
+      "bytes": 586,
+      "sha256": "55f0c64ccd128b76c40f7980f33bca6bb0df03842f8f5ff8aef377c85a5a632b"
+    },
+    {
+      "path": "skills/gif-sticker-maker/references/captions.md",
+      "bytes": 916,
+      "sha256": "ae7ffa4720dfb3266e0e8b6b1754aa31f9a301b8770899d7fdab6ce7c9b689d6"
+    },
+    {
+      "path": "skills/gif-sticker-maker/references/requirements.txt",
+      "bytes": 153,
+      "sha256": "b7ac87e559f7b5c5f3e7cc3f06fb5f0c67af564e966df21cd78a9587c64a991b"
+    },
+    {
+      "path": "skills/gif-sticker-maker/scripts/convert_mp4_to_gif.py",
+      "bytes": 2906,
+      "sha256": "4b563292a76fee031437caf22582e87a89935d8274273e57519f5e36780a10b1"
+    },
+    {
+      "path": "skills/gif-sticker-maker/scripts/minimax_image.py",
+      "bytes": 5657,
+      "sha256": "5dd8cc2585514a85549679fb86d6105a1c775594915874a01567da842e27be5d"
+    },
+    {
+      "path": "skills/gif-sticker-maker/scripts/minimax_video.py",
+      "bytes": 7413,
+      "sha256": "6ce81cea0d1df844108f24d6e062d8ab168463f54d9ee5f574a9b2a5f6a71f50"
+    },
+    {
+      "path": "skills/ios-application-dev/SKILL.md",
+      "bytes": 7207,
+      "sha256": "4f4da03f2144d0d50174d36edd514ca56ad06e23570c173ac5f4c61d27d40c1e"
+    },
+    {
+      "path": "skills/ios-application-dev/references/accessibility.md",
+      "bytes": 6867,
+      "sha256": "096d049e5b7097cf10929f16ff5c222ad6ea5e82e09b55e740ced849a301bd9d"
+    },
+    {
+      "path": "skills/ios-application-dev/references/graphics-animation.md",
+      "bytes": 9183,
+      "sha256": "2b16b307373306c4a4fee5327c1058ed45b0b0a330bb59f4cbde0a6f5df488a2"
+    },
+    {
+      "path": "skills/ios-application-dev/references/layout-system.md",
+      "bytes": 6886,
+      "sha256": "3c9351fac09b7f92a4da4818c74504cea8c002d08787864270e4b2823eb92682"
+    },
+    {
+      "path": "skills/ios-application-dev/references/metal-shader.md",
+      "bytes": 5973,
+      "sha256": "4124261ba095878e5330801033c5e0a2f92e406cc1010428dcfb1d9beeb78ac6"
+    },
+    {
+      "path": "skills/ios-application-dev/references/navigation-patterns.md",
+      "bytes": 5056,
+      "sha256": "a773f8f3e8f22a8321b66b40722ba0f9c172af557ccdb89a157e710e447133aa"
+    },
+    {
+      "path": "skills/ios-application-dev/references/swift-coding-standards.md",
+      "bytes": 15218,
+      "sha256": "6b830305e0596bc23dd78589c577b939176a1427c1f702c07ba147745cdd6546"
+    },
+    {
+      "path": "skills/ios-application-dev/references/swiftui-design-guidelines.md",
+      "bytes": 32986,
+      "sha256": "b72b63bdf41258733061f05d8b1b6c55897978ab852dd045d3fa608203c2c267"
+    },
+    {
+      "path": "skills/ios-application-dev/references/system-integration.md",
+      "bytes": 9765,
+      "sha256": "1ff8bc0a9cc3bea3da831eb533bafb6b7850af89977e90b097376878c147d461"
+    },
+    {
+      "path": "skills/ios-application-dev/references/uikit-components.md",
+      "bytes": 8681,
+      "sha256": "fef0b3f23c19085f6edb05042b08bc28689c59c10921a1fc15793cc0167373e7"
+    },
+    {
+      "path": "skills/minimax-docx/.gitignore",
+      "bytes": 17,
+      "sha256": "ec7f1104103454e8908002a0f9fed5219ccb795972350a2bf39cd13c1d55e932"
+    },
+    {
+      "path": "skills/minimax-docx/LICENSE",
+      "bytes": 1066,
+      "sha256": "8288840186d6d3d6a0b74395e17448c06160b38e796963c7745f579631b47b01"
+    },
+    {
+      "path": "skills/minimax-docx/SKILL.md",
+      "bytes": 15818,
+      "sha256": "45c169630f30b8f034bc7d53edf73d592fbd82e82188beec7da3ca1996a97fb5"
+    },
+    {
+      "path": "skills/minimax-docx/assets/styles/academic_styles.xml",
+      "bytes": 7408,
+      "sha256": "367341503b9ff77c8f8809f4a1eb3e351b654cbaea2209b4fe305d734f714d9b"
+    },
+    {
+      "path": "skills/minimax-docx/assets/styles/corporate_styles.xml",
+      "bytes": 8524,
+      "sha256": "d6216dce62323e626049172ea9c77447dfca2eb518fdf17c64d4f2239f1ef2b5"
+    },
+    {
+      "path": "skills/minimax-docx/assets/styles/default_styles.xml",
+      "bytes": 12324,
+      "sha256": "f77d90d5c9a255a4adc351e655d2248da76c1bc01e1af6b7323e3d0e37fcddfc"
+    },
+    {
+      "path": "skills/minimax-docx/assets/xsd/aesthetic-rules.xsd",
+      "bytes": 25219,
+      "sha256": "734888609265c327fd1f5d1a068957676b442ba65dcd79a6b735e0bae3d5e03e"
+    },
+    {
+      "path": "skills/minimax-docx/assets/xsd/business-rules.xsd",
+      "bytes": 5593,
+      "sha256": "ebf945da7561e2457ec0a9e2b9cd36f3c88fbd926d0c13c643d61c235bc8b056"
+    },
+    {
+      "path": "skills/minimax-docx/assets/xsd/common-types.xsd",
+      "bytes": 5175,
+      "sha256": "2cccc41a42855d6c10471b2e7e085c633c47d8344276b0be4d75d772b18839cd"
+    },
+    {
+      "path": "skills/minimax-docx/assets/xsd/wml-subset.xsd",
+      "bytes": 25751,
+      "sha256": "4c23b3cb324b85989f6c1a7bdcaa35c617289e47ccfed043464446dd06d75b7c"
+    },
+    {
+      "path": "skills/minimax-docx/references/cjk_typography.md",
+      "bytes": 11927,
+      "sha256": "ddc0b9e0984d43101da24b67df3d0603236b67fe46c8d0ecbc3c6bea7983afcd"
+    },
+    {
+      "path": "skills/minimax-docx/references/cjk_university_template_guide.md",
+      "bytes": 7901,
+      "sha256": "986e44f5cf3ea4aa69b436c73581dca2d31ad130965269a934caf3838c9ff27d"
+    },
+    {
+      "path": "skills/minimax-docx/references/comments_guide.md",
+      "bytes": 6530,
+      "sha256": "fe9150b84734844f3010561927436f6bc787fe46c4cf4d621abb330835d1ba38"
+    },
+    {
+      "path": "skills/minimax-docx/references/design_good_bad_examples.md",
+      "bytes": 30831,
+      "sha256": "e2c9331ed35b211f1239ed283abbac444c2a15347c710f01a97c33d0e952a079"
+    },
+    {
+      "path": "skills/minimax-docx/references/design_principles.md",
+      "bytes": 27641,
+      "sha256": "e9fe196ad16fecce988671cf8a8fc9ec3403e792530ee4c665370ddbc266ed20"
+    },
+    {
+      "path": "skills/minimax-docx/references/openxml_element_order.md",
+      "bytes": 10930,
+      "sha256": "d9ab673ca87ffb2fc0586b77702bf339cdb3283edc540c2f450732746afe8ca1"
+    },
+    {
+      "path": "skills/minimax-docx/references/openxml_encyclopedia_part1.md",
+      "bytes": 140456,
+      "sha256": "598c5fbf357f536fd9f3bd1a1307be536f533495631981d9f7518751019490c9"
+    },
+    {
+      "path": "skills/minimax-docx/references/openxml_encyclopedia_part2.md",
+      "bytes": 94465,
+      "sha256": "c4adc5480fedaeee85e8963d09fd27914f731ce298b323df9133b9745679ecea"
+    },
+    {
+      "path": "skills/minimax-docx/references/openxml_encyclopedia_part3.md",
+      "bytes": 121826,
+      "sha256": "9e801e58c53b83f5988a23a533a0a5b0b3a80c6b3dea06b5a1ce902a685b2ba0"
+    },
+    {
+      "path": "skills/minimax-docx/references/openxml_namespaces.md",
+      "bytes": 5561,
+      "sha256": "be2ecd2f84e02b2ba492d9c68fb4cf6cac3d016cc583425b73d4105c5464d02d"
+    },
+    {
+      "path": "skills/minimax-docx/references/openxml_units.md",
+      "bytes": 2369,
+      "sha256": "ce480ab62cf78c045a04b0c8f9ef6400a5efaa33233ace8eb666f9cbe1f9acde"
+    },
+    {
+      "path": "skills/minimax-docx/references/scenario_a_create.md",
+      "bytes": 7841,
+      "sha256": "4be8e1f88b2993a43b74854a78533233b385a84d5b3c1510be86bed2f6af567e"
+    },
+    {
+      "path": "skills/minimax-docx/references/scenario_b_edit_content.md",
+      "bytes": 7947,
+      "sha256": "f04c35eec63b6e5df6b1b6d1a06a1feb26c920262686941ff705642c55e6cc4a"
+    },
+    {
+      "path": "skills/minimax-docx/references/scenario_c_apply_template.md",
+      "bytes": 18408,
+      "sha256": "3602c5cad48ef0f3e2ed08113be2a7ce36e9b8cadb5987bc9a5a9f06e2f6d335"
+    },
+    {
+      "path": "skills/minimax-docx/references/track_changes_guide.md",
+      "bytes": 5323,
+      "sha256": "57fa023f4a6db8b9225d56a7d5e17f3eb9fa05ddaac6f891033253f84f94b82f"
+    },
+    {
+      "path": "skills/minimax-docx/references/troubleshooting.md",
+      "bytes": 18963,
+      "sha256": "70382108dcd419fd46b7c66cee4dfad7da82d378afe4f3bed74c60ffdb9d1caa"
+    },
+    {
+      "path": "skills/minimax-docx/references/typography_guide.md",
+      "bytes": 10097,
+      "sha256": "835f3549972f24b94b89eb08a86df932e5f957f322337fcd75e24cb3b06c0738"
+    },
+    {
+      "path": "skills/minimax-docx/references/xsd_validation_guide.md",
+      "bytes": 5068,
+      "sha256": "de6c4285ffec5cbd5c80bbc1eff6afb9c7fc0757d957a1f069cd3eec277036be"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/doc_to_docx.sh",
+      "bytes": 872,
+      "sha256": "9966b21215c82094efdd07cbeb36975307ebc5e15170c4694e9fa2a0f3645e8f"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/docx_preview.sh",
+      "bytes": 836,
+      "sha256": "3960b1a02b73aad32efaca316f98239079caf7993307540ed4cf4b8039e70ccd"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Cli/MiniMaxAIDocx.Cli.csproj",
+      "bytes": 497,
+      "sha256": "d5ef8fdb094916f8e6d3cb4eff17069aec91e14683d8755175457bd3d9db000b"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Cli/Program.cs",
+      "bytes": 591,
+      "sha256": "daae3bc20cbdc9b77d91cab3a74efb40f5b9af661384a8c87eb726405d13bddc"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Commands/AnalyzeCommand.cs",
+      "bytes": 6171,
+      "sha256": "b1d452ad764f4ea8ea106bb0e837adba53014e612c9166c71fb7aa9d72f0a019"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Commands/ApplyTemplateCommand.cs",
+      "bytes": 12991,
+      "sha256": "934bc17f239a9bf478596312447c048b001b459ddd2db70010ca0314aed23675"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Commands/CreateCommand.cs",
+      "bytes": 14530,
+      "sha256": "74382c607387fbf2036ee202696799f20b6bcf6a52a7670cc2fd0a01c4045449"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Commands/DiffCommand.cs",
+      "bytes": 6097,
+      "sha256": "218239b9325cde5b1955a6ce0237d1d6ac05ed6a006a340733767e59b575234f"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Commands/EditContentCommand.cs",
+      "bytes": 19780,
+      "sha256": "cc779ef7ddc364310ab942e231eb8cfc8c761beae8ae4e57b6134b8ce1702624"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Commands/FixOrderCommand.cs",
+      "bytes": 4495,
+      "sha256": "0bdfd163069211eb17594504f4b61f26773a96c00182cb84a028df0a096b73f0"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Commands/MergeRunsCommand.cs",
+      "bytes": 4794,
+      "sha256": "2dd5d519aa5e0cf9533448f63d89e6776b5b7019ffb34868a6c715741a389e66"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Commands/ValidateCommand.cs",
+      "bytes": 4214,
+      "sha256": "856697852a5254b977d97f301a759e42a03b893f690fe88ede2c46a30f336480"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/MiniMaxAIDocx.Core.csproj",
+      "bytes": 425,
+      "sha256": "6f87fe7e0b6b2e8c7d4a068ebfb7d6709d932e2f11294afc5613f63327377829"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/OpenXml/CommentSynchronizer.cs",
+      "bytes": 6476,
+      "sha256": "a4454a6a493f011857a5d634a918e9e9a398556644d6706e57ac8eb4078de7f0"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/OpenXml/ElementOrder.cs",
+      "bytes": 4155,
+      "sha256": "01620be46ba0dc6a7ae113c800181367b1da02070f661252d80187b051273c11"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/OpenXml/NamespaceConstants.cs",
+      "bytes": 3584,
+      "sha256": "8d8099f70cac3e8976b47ef34fec224b4bc92ee9ff8286483ef7315cfedeb467"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/OpenXml/RunMerger.cs",
+      "bytes": 2630,
+      "sha256": "6d90be5f4427c29eabd92a5709bbe7a0b0f6ab8177347575bc5e197a350e13c8"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/OpenXml/StyleAnalyzer.cs",
+      "bytes": 2999,
+      "sha256": "8d45627608eaef19b7844c1bd8e6d8c8796bc0cbf5f9c50a47d85b45b61f8985"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/OpenXml/TrackChangesHelper.cs",
+      "bytes": 3032,
+      "sha256": "a95da32c428f58d6fb76090de47679f0dc3ee0b9e9d1821cea7e778e0d3cccb3"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/OpenXml/UnitConverter.cs",
+      "bytes": 1057,
+      "sha256": "045038a1865d21cb11e32c74b7dc5152e03905e969ca892743c256840f2a1ee7"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/AestheticRecipeSamples.cs",
+      "bytes": 77371,
+      "sha256": "12e6921d53b8e4b7f71f499c7d06a9c169e16a80b9666bd6a17e27503bc9c651"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/AestheticRecipeSamples_Batch1.cs",
+      "bytes": 38797,
+      "sha256": "e5b478f71abe1892064b5baec9c5d3d91b8e9e14e21a5ee98bdca7f543510cb6"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/AestheticRecipeSamples_Batch2.cs",
+      "bytes": 43403,
+      "sha256": "f984ed0493762c12706e88295504fa2cced700d230a0de030d80e28cbc7e650f"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/AestheticRecipeSamples_Batch3.cs",
+      "bytes": 45319,
+      "sha256": "e2e4ff1ecefcd9e984af4ac2b82c6cfda2b01e842812eb420c377a4921fb6f92"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/AestheticRecipeSamples_Batch4.cs",
+      "bytes": 48195,
+      "sha256": "6c0c370a2dc5b06e6ceb4f09333d15f043bb4314673740bd150d2d34fb13454f"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/CharacterFormattingSamples.cs",
+      "bytes": 47171,
+      "sha256": "95458b9de60a381e14461a6224aa2d660266de4344800870bbc1530511818075"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/DocumentCreationSamples.cs",
+      "bytes": 53357,
+      "sha256": "f6d567f68f624c455549040629c3419fdc0591e5a45ba5b9abe79fb84c7ab425"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/FieldAndTocSamples.cs",
+      "bytes": 26933,
+      "sha256": "138652396d18836cc2252a82fcd2528a949ea32db1c3d74c47d14c3440ccdf8d"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/FootnoteAndCommentSamples.cs",
+      "bytes": 30838,
+      "sha256": "aace21251fd6a4aa5aa7b754d3eab3d291419641c1dad2350278ae64dc5e842c"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/HeaderFooterSamples.cs",
+      "bytes": 36271,
+      "sha256": "12f51f5a2befe41ff299c342eedfa5c0549cfe2fe53df69533009c2f7479cf92"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/ImageSamples.cs",
+      "bytes": 40191,
+      "sha256": "0fe5bbb7c810b6c99313c11829f72d01cc896d9c6e01909edcd1431b8e7c690e"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/ListAndNumberingSamples.cs",
+      "bytes": 35152,
+      "sha256": "2e696c491f4d95cdb1bef4e65898202a87385a76ab4793cd9422ee0452b89287"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/ParagraphFormattingSamples.cs",
+      "bytes": 56837,
+      "sha256": "2fe44aa4461eafdb6d20f8e6f5480c217bf0bc54284ea025914f315f394c0258"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/StyleSystemSamples.cs",
+      "bytes": 65581,
+      "sha256": "b8b4cb6ed9a0c67797cf8b0aab00b482c650173ad41d7cdd5d78af3a50b4cbea"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/TableSamples.cs",
+      "bytes": 51771,
+      "sha256": "9d8cb65afaef088d8c90ea438fd8155b91e1ca74c5b92a1049698565faa39052"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Samples/TrackChangesSamples.cs",
+      "bytes": 26780,
+      "sha256": "067ecbc69bf70bece3f26553ddfb2452e166a570d73942dcc60c996b8fc52d6a"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Typography/CjkHelper.cs",
+      "bytes": 1200,
+      "sha256": "eacdceed0103749ef34de8a32bdc1cc4df8c23dad360dce33e24ba626d733ebc"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Typography/FontDefaults.cs",
+      "bytes": 898,
+      "sha256": "91aa2368bad387763f60e4b2156012dc699ed78eaacccc3e1e32dca95e1fc0f4"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Typography/PageSizes.cs",
+      "bytes": 979,
+      "sha256": "6e95bb3f99d0b35e93ea55233e58cb1d6b4d947c0ca769ab01d983c9b78aef66"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Validation/BusinessRuleValidator.cs",
+      "bytes": 9229,
+      "sha256": "173b07e0c24f4f5b64e145a90a2630a640e22b2afb6e092f75f3a5ec42197791"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Validation/GateCheckValidator.cs",
+      "bytes": 5952,
+      "sha256": "6f07ee9a1631d868e119313131b8cfc75a605ac6ba4046ebbae17d164f94d9d7"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Validation/ValidationResult.cs",
+      "bytes": 651,
+      "sha256": "e992fec3bf1756869a523dfc22714f02f91639b5051f64567b76f89caa037d0f"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.Core/Validation/XsdValidator.cs",
+      "bytes": 2175,
+      "sha256": "d6ca121941dcb906047f2c591eaf80f1e69bd8cd5c687a238c5b6f80f89f6a6d"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/dotnet/MiniMaxAIDocx.slnx",
+      "bytes": 153,
+      "sha256": "145f185521c15cfc13a3cc1bd6ca5494132a88f5c242b1f0994c330faa9b2aeb"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/env_check.sh",
+      "bytes": 7097,
+      "sha256": "317dd5067710d32699f1bb7819c406ee57f33a496db31944570dd24110cc7342"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/setup.ps1",
+      "bytes": 10156,
+      "sha256": "d47aa72db7d0558a67695b88d50127175cfdbec17f03f12e48317a36ab54c121"
+    },
+    {
+      "path": "skills/minimax-docx/scripts/setup.sh",
+      "bytes": 16481,
+      "sha256": "9b371d075d4ca29346cd4d2d6889e0200d35c8ea07ce2aa3edbe651749c6bc9b"
+    },
+    {
+      "path": "skills/minimax-multimodal-toolkit/SKILL.md",
+      "bytes": 10960,
+      "sha256": "2388fddd3f8f767818540b6d47cfbfcc5c51e89799f55aa66f03c200d3c391a8"
+    },
+    {
+      "path": "skills/minimax-music-gen/SKILL.md",
+      "bytes": 14059,
+      "sha256": "0c81d746c2ea895cbf92094087812304cdf83ff9fe1eb7ba7f8efe650b0a5914"
+    },
+    {
+      "path": "skills/minimax-music-gen/references/prompt_guide.md",
+      "bytes": 5712,
+      "sha256": "307cf6903296ef95d271b2c7efb860a0eae4bddf7f0fbd07f1f31d4bd6799b74"
+    },
+    {
+      "path": "skills/minimax-music-playlist/SKILL.md",
+      "bytes": 12822,
+      "sha256": "87891a7959e3e26f54e1985216f574e77391ff015ed8062f10b2eefd77089ec3"
+    },
+    {
+      "path": "skills/minimax-music-playlist/data/artist_genre_map.json",
+      "bytes": 3187972,
+      "sha256": "6e10699f4e8c4fd377ab2d7518a8253e609a0be83fac7c9ff6c259640e23b834"
+    },
+    {
+      "path": "skills/minimax-pdf/README.md",
+      "bytes": 8534,
+      "sha256": "ab7f0ee3ec300c87dee6f652b9bf96003ddd552c23a6c210ae1bb22cdd48396d"
+    },
+    {
+      "path": "skills/minimax-pdf/SKILL.md",
+      "bytes": 8624,
+      "sha256": "8b0497ddd27da142deb09b570a56f702f95e5f3f1e192cfe1ae24421416a408d"
+    },
+    {
+      "path": "skills/minimax-pdf/design/design.md",
+      "bytes": 17208,
+      "sha256": "870932013e86371697d88406273f8796830270a9171ac8065b13078acef6ffe2"
+    },
+    {
+      "path": "skills/minimax-pdf/scripts/cover.py",
+      "bytes": 48008,
+      "sha256": "ad6c6b927805c8d189869cd309e260e7a82a75cb809c92d4ca0627de4a724cfa"
+    },
+    {
+      "path": "skills/minimax-pdf/scripts/fill_inspect.py",
+      "bytes": 6402,
+      "sha256": "f048e44f5cc094c18790c4e8ff194d3ff6fe4018fa63bed148dd9730fff83467"
+    },
+    {
+      "path": "skills/minimax-pdf/scripts/fill_write.py",
+      "bytes": 8451,
+      "sha256": "afece596da883cc3bdfe112b9e46798b313312d93a05037b1bc5c3359502f993"
+    },
+    {
+      "path": "skills/minimax-pdf/scripts/make.sh",
+      "bytes": 19562,
+      "sha256": "c4f5c5a88be4b69f186f3712a357631dbf91be7233942e16144a864a914e25fb"
+    },
+    {
+      "path": "skills/minimax-pdf/scripts/merge.py",
+      "bytes": 3750,
+      "sha256": "4e194d8fe6a85a6d1981011c6f495be9a2c25c71bac5446c5386f0c3fb3e5660"
+    },
+    {
+      "path": "skills/minimax-pdf/scripts/palette.py",
+      "bytes": 19662,
+      "sha256": "520a55d4c3134a074fcfa24f1dab6369f489ca0a24b546f283064c3db17e86c1"
+    },
+    {
+      "path": "skills/minimax-pdf/scripts/reformat_parse.py",
+      "bytes": 13295,
+      "sha256": "1b5618ae2a423e9c0abb8eb7e1bf3c41d97ef24353b4a886432052170942f974"
+    },
+    {
+      "path": "skills/minimax-pdf/scripts/render_body.py",
+      "bytes": 40661,
+      "sha256": "7cdd0ad4cfd845eefabf641c41265c934639f4a43be2290b25c5e23313667c7e"
+    },
+    {
+      "path": "skills/minimax-pdf/scripts/render_cover.js",
+      "bytes": 3844,
+      "sha256": "5511c5b72d1e95e5fd8dc424c360d7ccd16fb70bc15235db327c1317cb875ba7"
+    },
+    {
+      "path": "skills/minimax-xlsx/SKILL.md",
+      "bytes": 8398,
+      "sha256": "4ffb70af6ccd00e90c3b14516d50a850ae0f2f1807a01d326aa1393e0067dd41"
+    },
+    {
+      "path": "skills/minimax-xlsx/references/create.md",
+      "bytes": 24602,
+      "sha256": "56ca500af2a9880ee72148f07000486512c6022fbcee20afd1c202874653c3b9"
+    },
+    {
+      "path": "skills/minimax-xlsx/references/edit.md",
+      "bytes": 24474,
+      "sha256": "515cbce48c43abc769140bc3ca8bb1b72506d035d68eaf134e6a030cb5041f4e"
+    },
+    {
+      "path": "skills/minimax-xlsx/references/fix.md",
+      "bytes": 1265,
+      "sha256": "5d91be6bc928b61741848381e5c82e3ae664b97bfb3064cd7d71ba0592e1a647"
+    },
+    {
+      "path": "skills/minimax-xlsx/references/format.md",
+      "bytes": 34103,
+      "sha256": "60ad868439aaf7b0a255f55ea92eaa629ae1238abf10503faf43727fc47b569c"
+    },
+    {
+      "path": "skills/minimax-xlsx/references/ooxml-cheatsheet.md",
+      "bytes": 6430,
+      "sha256": "cc285ed13d967ed65a7c4e404a724532ab4b57af6a993ceabc93ab65f2924eed"
+    },
+    {
+      "path": "skills/minimax-xlsx/references/read-analyze.md",
+      "bytes": 4299,
+      "sha256": "78fc8f0c982ae36e3c3141a0d7e2d93a9d85b6c04c1a57645001628ac32c59a4"
+    },
+    {
+      "path": "skills/minimax-xlsx/references/validate.md",
+      "bytes": 30153,
+      "sha256": "fee73ec103df50dcc88c1cfd5ce769c24ef85570fd90dab1dacf45239261da08"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/formula_check.py",
+      "bytes": 17540,
+      "sha256": "94661b6ebbfef0450b762392b45477678a7cd641982e0eb9397fef7bcb716e15"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/libreoffice_recalc.py",
+      "bytes": 9415,
+      "sha256": "a7967a78aff2f8f74f4975db2f674215a4dce1086c38b5312e353f7bad084f87"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/shared_strings_builder.py",
+      "bytes": 5179,
+      "sha256": "18cecc1990a59b6c208173a405de48d6bfb983b4682938bcb1f949ef05cd7c7c"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/style_audit.py",
+      "bytes": 22424,
+      "sha256": "4ac17193e5ad306cb89007a7fe8492b9117de0d4b0136a3ffaa65223e60abcb6"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/xlsx_add_column.py",
+      "bytes": 14737,
+      "sha256": "8575ecfb6b8863933e36546339202de9d3cc54d4a811ac3f9f5a7754a79f1bd8"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/xlsx_insert_row.py",
+      "bytes": 10046,
+      "sha256": "e67f580d55577cd080eabde9455869169dd1c8635a173d16f51bde05fd14c445"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/xlsx_pack.py",
+      "bytes": 2956,
+      "sha256": "a267748f5e0265987094380b99e6d7a61bc3af73a82aa55763d5e99c917e22d9"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/xlsx_reader.py",
+      "bytes": 13545,
+      "sha256": "585071399f9e5683700081db959812bcce02edb694bb5a7dece94d9b89a5e1f0"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/xlsx_shift_rows.py",
+      "bytes": 13614,
+      "sha256": "bcfdafa80414fd74c4dbfd7c11bcc69dae986ffd84b7ffacdd2d000b82911c6d"
+    },
+    {
+      "path": "skills/minimax-xlsx/scripts/xlsx_unpack.py",
+      "bytes": 4804,
+      "sha256": "9169017fde883e6c5685fa6111b22b9027052e4721142785b037ceaf7a60fe18"
+    },
+    {
+      "path": "skills/minimax-xlsx/templates/minimal_xlsx/[Content_Types].xml",
+      "bytes": 836,
+      "sha256": "af1b5e212ea1c6081649269e2126f0f8c28bea7cc0b8039731f4cdd064eb9a09"
+    },
+    {
+      "path": "skills/minimax-xlsx/templates/minimal_xlsx/_rels/.rels",
+      "bytes": 309,
+      "sha256": "04fb672e829ec6d5942a95014326ff1a89365346d8593631fe58a067379f79db"
+    },
+    {
+      "path": "skills/minimax-xlsx/templates/minimal_xlsx/xl/_rels/workbook.xml.rels",
+      "bytes": 862,
+      "sha256": "f60ff34ef9eeae7a2c01f2e316180b6771cce3ce96bbef4a6ca4c8c4c60704c9"
+    },
+    {
+      "path": "skills/minimax-xlsx/templates/minimal_xlsx/xl/sharedStrings.xml",
+      "bytes": 1167,
+      "sha256": "2f5b6bb2ad8bc9b7d3077555917377404f7c14e0b2736ad7ba936ae5b99fca95"
+    },
+    {
+      "path": "skills/minimax-xlsx/templates/minimal_xlsx/xl/styles.xml",
+      "bytes": 8383,
+      "sha256": "7a83fa48c30277de1f2110a699f18fe6496af31a6f7264a01e3cbdff5313da32"
+    },
+    {
+      "path": "skills/minimax-xlsx/templates/minimal_xlsx/xl/workbook.xml",
+      "bytes": 1119,
+      "sha256": "64a5961f39a8c255ba5d0c49d1e0be86c01d25ca1fd87445759d2d92756380dc"
+    },
+    {
+      "path": "skills/minimax-xlsx/templates/minimal_xlsx/xl/worksheets/sheet1.xml",
+      "bytes": 2596,
+      "sha256": "666bff4e34691adb89a53cecddc3d84a6f1f04b38eba353c188b7d1693e342ac"
+    },
+    {
+      "path": "skills/pptx-generator/SKILL.md",
+      "bytes": 7930,
+      "sha256": "6eeb36239fdef35ab133ca462e1ec4674cb96dd9c5cd63da39c29151899bda10"
+    },
+    {
+      "path": "skills/pptx-generator/references/design-system.md",
+      "bytes": 16159,
+      "sha256": "8a225af2ebd3bfa979616da74b7ec34395712fe1a8195e5613214aa291211996"
+    },
+    {
+      "path": "skills/pptx-generator/references/editing.md",
+      "bytes": 6577,
+      "sha256": "5385ef88e7d081c43ee488ca308174743678314d53f6afc5df9b932390dcb3bf"
+    },
+    {
+      "path": "skills/pptx-generator/references/pitfalls.md",
+      "bytes": 3849,
+      "sha256": "247a8eb1860524fdd0d8a3365a791490c162d4a58677eb3f329d4dd682ce0257"
+    },
+    {
+      "path": "skills/pptx-generator/references/pptxgenjs.md",
+      "bytes": 12752,
+      "sha256": "4b66df00dd581c2eeadb140fd9bbad71daea6fb48b424f97b993f8521e41d470"
+    },
+    {
+      "path": "skills/pptx-generator/references/slide-types.md",
+      "bytes": 15790,
+      "sha256": "fa2c0da76d420463990317dc5932e607cea5e126389ca391e3e5718629b0cb38"
+    },
+    {
+      "path": "skills/react-native-dev/SKILL.md",
+      "bytes": 7273,
+      "sha256": "6e16a6c9ab081bc0192316ebfe514915e55ef18ab0001ccc64763ea600aa304d"
+    },
+    {
+      "path": "skills/react-native-dev/references/animations.md",
+      "bytes": 6822,
+      "sha256": "091b408952852687253552b2738dec02ddab55c928869d8b069f8d43efa11d51"
+    },
+    {
+      "path": "skills/react-native-dev/references/components.md",
+      "bytes": 2739,
+      "sha256": "6cdc21a29d9f346c4d157b83373207c64d04346741f91f08b62bdd3366ba4386"
+    },
+    {
+      "path": "skills/react-native-dev/references/engineering.md",
+      "bytes": 13995,
+      "sha256": "fe95b4992ce69ab95711508ae1ac3ce0e4348b230fc51115958801eaf11baf23"
+    },
+    {
+      "path": "skills/react-native-dev/references/forms.md",
+      "bytes": 9048,
+      "sha256": "d9543142d5083b022344d7d368b028731f3285958bf56311cda3de9cfbd6bb89"
+    },
+    {
+      "path": "skills/react-native-dev/references/native-capabilities.md",
+      "bytes": 4561,
+      "sha256": "6f0c22f707f9c8a49b22f04a343783319e898f1d2113fc58f5625d786aa9eacf"
+    },
+    {
+      "path": "skills/react-native-dev/references/navigation.md",
+      "bytes": 6779,
+      "sha256": "a933b2c257ef5e978b3fc6d6891aa6d3f08a444faec869162b7353a8784c7e25"
+    },
+    {
+      "path": "skills/react-native-dev/references/networking.md",
+      "bytes": 9826,
+      "sha256": "015986c0f66712539b791c49f0edbf2b80e55f6f832392756a72bbb5179c3bac"
+    },
+    {
+      "path": "skills/react-native-dev/references/performance.md",
+      "bytes": 7110,
+      "sha256": "ff05c1bff721609f9f9b0fa0df9a2d2a5782ba02535bcb0a926c03eb704167a3"
+    },
+    {
+      "path": "skills/react-native-dev/references/state-management.md",
+      "bytes": 6453,
+      "sha256": "7866f029e2b2da1d4b1e974ff6efdd2d304efbc70cf96809358bb12ff0df7948"
+    },
+    {
+      "path": "skills/react-native-dev/references/styling.md",
+      "bytes": 2915,
+      "sha256": "32dd5002b29fbffd7ecfdfb944c07d131724372a7c1a90ec899eb05f686f739d"
+    },
+    {
+      "path": "skills/react-native-dev/references/testing.md",
+      "bytes": 8082,
+      "sha256": "3d40db21f10a138443ea24ab4aaaaa2bab068142df420b657086b4b560bccf24"
+    },
+    {
+      "path": "skills/shader-dev/SKILL.md",
+      "bytes": 16887,
+      "sha256": "7d3cc9d69da2b598e423da5ec927ff61371edab669e2b9a2f4bcf3ec0f29db4d"
+    },
+    {
+      "path": "skills/shader-dev/reference/ambient-occlusion.md",
+      "bytes": 14798,
+      "sha256": "026d1a8cf85799e525964101b523378f3d10dfeaa78c4554c0bcf39f80346d2e"
+    },
+    {
+      "path": "skills/shader-dev/reference/analytic-ray-tracing.md",
+      "bytes": 24674,
+      "sha256": "7b5be6a7949055cbe8a627b246d26176fa0645db2e732b31740489936c4e6fd3"
+    },
+    {
+      "path": "skills/shader-dev/reference/anti-aliasing.md",
+      "bytes": 3003,
+      "sha256": "7ae0fd4969f036bc52f713ee23af325f9a1f6eaa4ebc1ffc1b301ce528748876"
+    },
+    {
+      "path": "skills/shader-dev/reference/atmospheric-scattering.md",
+      "bytes": 28185,
+      "sha256": "699c461a18c3426aeb4137a408378257b3429a49143dabcc4351e6859102d212"
+    },
+    {
+      "path": "skills/shader-dev/reference/camera-effects.md",
+      "bytes": 3080,
+      "sha256": "b9a066ce73f8f08e29f39c6863d22eff75644fd44db1db979b094ec26d32d659"
+    },
+    {
+      "path": "skills/shader-dev/reference/cellular-automata.md",
+      "bytes": 27330,
+      "sha256": "a5741e109dd489af193bfb44560eb1973270495a09ba2e927127766c4a037de9"
+    },
+    {
+      "path": "skills/shader-dev/reference/color-palette.md",
+      "bytes": 20345,
+      "sha256": "19529d6b10f1ad09e29f5453e69377da1f5152e5bd31f1f02f2c55c5c7b570c7"
+    },
+    {
+      "path": "skills/shader-dev/reference/csg-boolean-operations.md",
+      "bytes": 17952,
+      "sha256": "5465eb980c80d8f4869e883cdb7b75f603c44cbd578f926a105eb77e83194ca4"
+    },
+    {
+      "path": "skills/shader-dev/reference/domain-repetition.md",
+      "bytes": 18161,
+      "sha256": "5ca346f470492a1168d0128f1b9f966eee5177218eaba9cfe8136cefacc8acda"
+    },
+    {
+      "path": "skills/shader-dev/reference/domain-warping.md",
+      "bytes": 17008,
+      "sha256": "2cb44b9d46883f2fa26928f878be19fb7fa31cf345212e621454ec462f287dc1"
+    },
+    {
+      "path": "skills/shader-dev/reference/fluid-simulation.md",
+      "bytes": 18991,
+      "sha256": "601da19ad79b438ed09e510cd906b770b1564571482872b4f9eabac4be913048"
+    },
+    {
+      "path": "skills/shader-dev/reference/fractal-rendering.md",
+      "bytes": 18587,
+      "sha256": "381b0379f018ab428a9ed5a7330511da91bf9091b257d6c1c5d6c10b3b2173bd"
+    },
+    {
+      "path": "skills/shader-dev/reference/lighting-model.md",
+      "bytes": 30132,
+      "sha256": "071e8f42c4b79f468b17685c536f72a892f25867492368e37365c4b84eb9c8b1"
+    },
+    {
+      "path": "skills/shader-dev/reference/matrix-transform.md",
+      "bytes": 18933,
+      "sha256": "d69d0ac03abfc2f94cd467d78ffef57f072ee7bf571106ad3745b77409bdc824"
+    },
+    {
+      "path": "skills/shader-dev/reference/multipass-buffer.md",
+      "bytes": 25441,
+      "sha256": "4ec6f91059e6289aa68e1c8bbebd7f323a9ef4d6423e10609922a8b0ed2cca8c"
+    },
+    {
+      "path": "skills/shader-dev/reference/normal-estimation.md",
+      "bytes": 17568,
+      "sha256": "c3ff7482db60f67cf31faa260848722ea44752d07919826b8c8a0e28b0c40aa2"
+    },
+    {
+      "path": "skills/shader-dev/reference/particle-system.md",
+      "bytes": 28932,
+      "sha256": "fc10bbe781ccfcf6df8dffa5e87955b6d10afc7735d86d9c1b0a8269132a7c2b"
+    },
+    {
+      "path": "skills/shader-dev/reference/path-tracing-gi.md",
+      "bytes": 28193,
+      "sha256": "639e9da7586b2c374fcbb5db8aaa6e561feb6ee50db70b8fc733ba36fed2f8d6"
+    },
+    {
+      "path": "skills/shader-dev/reference/polar-uv-manipulation.md",
+      "bytes": 23190,
+      "sha256": "f88ed9571429ecad18e611a5ae891a59301f07e5a03603ae1827833667788a04"
+    },
+    {
+      "path": "skills/shader-dev/reference/post-processing.md",
+      "bytes": 24425,
+      "sha256": "c91a3c254aaf4a2c6b9a4eeace8f7ce7736d63f47ebbaad973056f235abe59ec"
+    },
+    {
+      "path": "skills/shader-dev/reference/procedural-2d-pattern.md",
+      "bytes": 16688,
+      "sha256": "c3b59cc31d98251ae2154e3ef3bfc8f6f9661576f46d4fd8bf63910873016287"
+    },
+    {
+      "path": "skills/shader-dev/reference/procedural-noise.md",
+      "bytes": 22226,
+      "sha256": "b3c1a23cf0c68d7c9341958a87a0fc24ed6886ec7ca54283ea67547ac7cf8523"
+    },
+    {
+      "path": "skills/shader-dev/reference/ray-marching.md",
+      "bytes": 15840,
+      "sha256": "d904a84f3c4acdcc6a9674fe77dc9db0f5139176bb500ac9b0a88a4cb695279e"
+    },
+    {
+      "path": "skills/shader-dev/reference/sdf-2d.md",
+      "bytes": 28189,
+      "sha256": "6609e4b6a58ac085ce316336feb462510a04ae97cc3485fa3264e6edfb04ab06"
+    },
+    {
+      "path": "skills/shader-dev/reference/sdf-3d.md",
+      "bytes": 27475,
+      "sha256": "76fe2536f068b10aa911f5b8f36da53978622595ffdd6077770cb6ae33d4c7c8"
+    },
+    {
+      "path": "skills/shader-dev/reference/sdf-tricks.md",
+      "bytes": 2685,
+      "sha256": "d318fe207f076a70bc3fc6dfef752139ae75e6140dcca74fdc063b1ae500103f"
+    },
+    {
+      "path": "skills/shader-dev/reference/shadow-techniques.md",
+      "bytes": 21527,
+      "sha256": "0a11fa7a1716044b7fb9d450001b6c67299aa1d56b4e9b2ffdf8838621cdfde1"
+    },
+    {
+      "path": "skills/shader-dev/reference/simulation-physics.md",
+      "bytes": 28223,
+      "sha256": "05bd388f759a90d28467c5db6bf298a4ccef208d11fdecedace874dcb1e5ba6e"
+    },
+    {
+      "path": "skills/shader-dev/reference/sound-synthesis.md",
+      "bytes": 24185,
+      "sha256": "994245b4232568b0567cac03fc0154a8a62abf545fee7ea3246e8edfb2957a44"
+    },
+    {
+      "path": "skills/shader-dev/reference/terrain-rendering.md",
+      "bytes": 32978,
+      "sha256": "7a017d1fd230c23682840ec41cd5fb44aeecca905840c06afd76fc75e7b22c43"
+    },
+    {
+      "path": "skills/shader-dev/reference/texture-mapping-advanced.md",
+      "bytes": 3409,
+      "sha256": "6e95500d391ac4df2e55c1dc9792e0ff4857730800b1d72835eace5f1f851050"
+    },
+    {
+      "path": "skills/shader-dev/reference/texture-sampling.md",
+      "bytes": 26244,
+      "sha256": "13eae848d63271419b738611bb0fc63f1f8c4d09153e6bbc16109584c4fb4783"
+    },
+    {
+      "path": "skills/shader-dev/reference/volumetric-rendering.md",
+      "bytes": 28747,
+      "sha256": "b34181665c3e356aac2168eea0a096bc4d6b93341f95eb7ac7edb3cf7cb48243"
+    },
+    {
+      "path": "skills/shader-dev/reference/voronoi-cellular-noise.md",
+      "bytes": 17974,
+      "sha256": "e0ff61e059d56b9d0219ca001ff02e560f34533df3749f0ebc9cba8aea549b7c"
+    },
+    {
+      "path": "skills/shader-dev/reference/voxel-rendering.md",
+      "bytes": 29912,
+      "sha256": "41137bb01b5fa8635dd64b910680f0f818a198a2fff567e0b01854211e2e1c55"
+    },
+    {
+      "path": "skills/shader-dev/reference/water-ocean.md",
+      "bytes": 20634,
+      "sha256": "11a43fa7b9d81dbd1242a9c684dbacfd8c45fd2077e2e13a65b44f881781aaff"
+    },
+    {
+      "path": "skills/shader-dev/reference/webgl-pitfalls.md",
+      "bytes": 1974,
+      "sha256": "a5be3d362ec43d63cc1db2dfc4858b963e2ba2d4d0f118f90b94fb06de6e3184"
+    },
+    {
+      "path": "skills/shader-dev/techniques/ambient-occlusion.md",
+      "bytes": 11378,
+      "sha256": "ece48ac8bf9d3705ec75b221f6137e383194c6dee542d1ca5391bbb918406f1d"
+    },
+    {
+      "path": "skills/shader-dev/techniques/analytic-ray-tracing.md",
+      "bytes": 19243,
+      "sha256": "d8abf6653cdd0a49dc7d3fbaf4c4c0c1fa098d060bdd452c3a4a0f9ebc773b46"
+    },
+    {
+      "path": "skills/shader-dev/techniques/anti-aliasing.md",
+      "bytes": 4605,
+      "sha256": "a86b6645cae7d0e41d6d13d4332cfbb0d0bf198cae37bd1831dce58469c285e7"
+    },
+    {
+      "path": "skills/shader-dev/techniques/atmospheric-scattering.md",
+      "bytes": 18590,
+      "sha256": "535dcecb25de1ef3bd3087588b82cba09edf20346f6806b812b56abc4df534a8"
+    },
+    {
+      "path": "skills/shader-dev/techniques/camera-effects.md",
+      "bytes": 3493,
+      "sha256": "9c9c2aeee72e11ce8df0bd5bd7940277051d2d58527ad4ae04741b2d604131d6"
+    },
+    {
+      "path": "skills/shader-dev/techniques/cellular-automata.md",
+      "bytes": 19481,
+      "sha256": "7ac24ef6da0e1801ef70dc9400602e3019937ea8942329b2e0c7544c7b23f886"
+    },
+    {
+      "path": "skills/shader-dev/techniques/color-palette.md",
+      "bytes": 13144,
+      "sha256": "96b0b417da68ca96f1aa8a84cb5c2af850c48d0870bf652d6a5cfde40c1f14b4"
+    },
+    {
+      "path": "skills/shader-dev/techniques/csg-boolean-operations.md",
+      "bytes": 15310,
+      "sha256": "2fc7f36823ff5fa75bd60e72a33962b91639416479e4f82a84c11211a42cc549"
+    },
+    {
+      "path": "skills/shader-dev/techniques/domain-repetition.md",
+      "bytes": 9958,
+      "sha256": "8f40caa37e71b6bcd75603cb54fe4883f8d8551d47a39e255008ffffcd82b676"
+    },
+    {
+      "path": "skills/shader-dev/techniques/domain-warping.md",
+      "bytes": 12817,
+      "sha256": "cd0838d6fc8d770f087ae33e56588db0e8ece205a16ee0f6170498ca0666ab17"
+    },
+    {
+      "path": "skills/shader-dev/techniques/fluid-simulation.md",
+      "bytes": 47610,
+      "sha256": "85c6314b4b71ce13d01a713de6f2ff5c8a3870f9eacc4c45b7465a82424426b1"
+    },
+    {
+      "path": "skills/shader-dev/techniques/fractal-rendering.md",
+      "bytes": 13269,
+      "sha256": "694a3e87cd47670e21ef1af294fb18cdf23b9b76a4e6946ff011bfe75428e694"
+    },
+    {
+      "path": "skills/shader-dev/techniques/lighting-model.md",
+      "bytes": 17481,
+      "sha256": "1c85240cf8650d320bbc8996e36333623e4d916b05f4baa2a54a06b1c22f1bcd"
+    },
+    {
+      "path": "skills/shader-dev/techniques/matrix-transform.md",
+      "bytes": 12711,
+      "sha256": "46b5ef46f93c143537627e1d29799657e32bc9f8ca973dc6501b75431d2fc9d3"
+    },
+    {
+      "path": "skills/shader-dev/techniques/multipass-buffer.md",
+      "bytes": 34333,
+      "sha256": "50d54c06a55ae5b75b36eedcd074ad40c6c2b233b675da6cba7738d5f9f50147"
+    },
+    {
+      "path": "skills/shader-dev/techniques/normal-estimation.md",
+      "bytes": 9322,
+      "sha256": "1f07cadacc05ed9cd9acc150796549519efd1419df714714314e40222f5a0891"
+    },
+    {
+      "path": "skills/shader-dev/techniques/particle-system.md",
+      "bytes": 45637,
+      "sha256": "a5d49ac5d828d37fcc8e053e63f00c93c87ca43ff01707af83c140016dcc6b92"
+    },
+    {
+      "path": "skills/shader-dev/techniques/path-tracing-gi.md",
+      "bytes": 22057,
+      "sha256": "8dc0d709e1b6c51aaab79c08d034881764a54873c2a19bc5f4c1ebc2cacaf03f"
+    },
+    {
+      "path": "skills/shader-dev/techniques/polar-uv-manipulation.md",
+      "bytes": 13565,
+      "sha256": "a2f3e7838271d021f7072353f2542c9e41c6b4779823ff03bd9efa3393c6252f"
+    },
+    {
+      "path": "skills/shader-dev/techniques/post-processing.md",
+      "bytes": 30997,
+      "sha256": "617e8608e76af3491d2e79fd7a9f56b9bccc821608d3c61ef1bc05c62e2cbf99"
+    },
+    {
+      "path": "skills/shader-dev/techniques/procedural-2d-pattern.md",
+      "bytes": 10932,
+      "sha256": "3ad1d15fed160066d9b78f46a284a4e444a9965fbf2e7ec8fa4d8d7dbbbeb8e2"
+    },
+    {
+      "path": "skills/shader-dev/techniques/procedural-noise.md",
+      "bytes": 17310,
+      "sha256": "3f3ace3f7f346fb4eb6a7d77e7cb8d8339c3db089f1eeacfaf9a101ff6b3dc25"
+    },
+    {
+      "path": "skills/shader-dev/techniques/ray-marching.md",
+      "bytes": 13988,
+      "sha256": "bc9519c1f8d36d611f48d80decb0155da5d2aa6de25eac2d22713510f05e7819"
+    },
+    {
+      "path": "skills/shader-dev/techniques/sdf-2d.md",
+      "bytes": 21719,
+      "sha256": "e65e1fc945d16531a7f505b68db920cfab9d518226fb0a327b267475743ffd43"
+    },
+    {
+      "path": "skills/shader-dev/techniques/sdf-3d.md",
+      "bytes": 22163,
+      "sha256": "61255ef5f36afec009ee041eab88904730fb57b9d13db0d5435795a7f6fc34e5"
+    },
+    {
+      "path": "skills/shader-dev/techniques/sdf-tricks.md",
+      "bytes": 3520,
+      "sha256": "d6b40ee14035b0da219c68a563da85114a4243b2d32ed8a7dfe2bae8f4247af9"
+    },
+    {
+      "path": "skills/shader-dev/techniques/shadow-techniques.md",
+      "bytes": 25360,
+      "sha256": "d9aa1eb66df922760380fc22079f6b373be854f699702862f7abf079242f4c3f"
+    },
+    {
+      "path": "skills/shader-dev/techniques/simulation-physics.md",
+      "bytes": 57526,
+      "sha256": "29fa7d8535ec39684d30d29b8f7bc561119aec8a576bc75a51acbbc1aea1eab7"
+    },
+    {
+      "path": "skills/shader-dev/techniques/sound-synthesis.md",
+      "bytes": 17587,
+      "sha256": "098b075a08cb816885ddab78da6a39b5dd5ce3839c2ab49edac9204d30c897ed"
+    },
+    {
+      "path": "skills/shader-dev/techniques/terrain-rendering.md",
+      "bytes": 14650,
+      "sha256": "d7525e73245c5f3ed8e0326bcd4024b510fd3197578898a34159041467cd6c78"
+    },
+    {
+      "path": "skills/shader-dev/techniques/texture-mapping-advanced.md",
+      "bytes": 4378,
+      "sha256": "d54da86c06a4fba5843bc100d61e464d0ce5d4e7b42babe4783a349ee9794e0a"
+    },
+    {
+      "path": "skills/shader-dev/techniques/texture-sampling.md",
+      "bytes": 13299,
+      "sha256": "17f890578f622f3417e3a9d3060a6ae28a1147181a8f72bdc48be662a7b165ef"
+    },
+    {
+      "path": "skills/shader-dev/techniques/volumetric-rendering.md",
+      "bytes": 12634,
+      "sha256": "5b35c76ed78930227c38017d34e6af03a91994be125b3fb0b300c3813b711567"
+    },
+    {
+      "path": "skills/shader-dev/techniques/voronoi-cellular-noise.md",
+      "bytes": 13277,
+      "sha256": "3751fe0cd87ad7dc049fe59a247971bed73861eb951acae71a24c89195871a14"
+    },
+    {
+      "path": "skills/shader-dev/techniques/voxel-rendering.md",
+      "bytes": 46256,
+      "sha256": "4ebebd4380c4243c4e704349d5696ea42a17e69ffb98b2a29bb77a7d02313350"
+    },
+    {
+      "path": "skills/shader-dev/techniques/water-ocean.md",
+      "bytes": 18197,
+      "sha256": "52d0a5638561e4a935dbce6d8ac5612aef07ba7e03602f7080a1e39c9c08eda8"
+    },
+    {
+      "path": "skills/shader-dev/techniques/webgl-pitfalls.md",
+      "bytes": 5518,
+      "sha256": "a4639b1286662ee0be49e1acd324591d8a65da97c26f11160ed53744e3da76d7"
+    },
+    {
+      "path": "skills/vision-analysis/SKILL.md",
+      "bytes": 5427,
+      "sha256": "a3b4720bfc5f1083cc6c2670bd4d7d5b673f3c86e84b536169f5e545206de157"
+    }
+  ],
+  "skills": [
+    {
+      "path": ".claude/skills/pr-review/SKILL.md",
+      "bytes": 2476,
+      "sha256": "c4b12fa291ee11d58285c7db9bbc2bbf5be23d56d34456411202b958c6365292",
+      "directory": ".claude/skills/pr-review",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/color-font-skill/SKILL.md",
+      "bytes": 7878,
+      "sha256": "ac8ff901ad88a13d76ee72cc3a90cf08c6a4afb7331fc318250ca2b5938fd513",
+      "directory": "plugins/pptx-plugin/skills/color-font-skill",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/design-style-skill/SKILL.md",
+      "bytes": 6202,
+      "sha256": "b89d4b37c1024ab5d4852cea3bba9c7823e3a76e5e255c9bfcb07cde546899fe",
+      "directory": "plugins/pptx-plugin/skills/design-style-skill",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/ppt-editing-skill/SKILL.md",
+      "bytes": 6906,
+      "sha256": "e390b991244ddac3b0e62124310b4882a300d2c7f9fc372d6b545321104229fe",
+      "directory": "plugins/pptx-plugin/skills/ppt-editing-skill",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/ppt-orchestra-skill/SKILL.md",
+      "bytes": 5986,
+      "sha256": "60c1981c3d741969ff7ee02bf20a58324f2b7659c7db0105ece09d5288f8b41e",
+      "directory": "plugins/pptx-plugin/skills/ppt-orchestra-skill",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "plugins/pptx-plugin/skills/slide-making-skill/SKILL.md",
+      "bytes": 7260,
+      "sha256": "264c78af862fc8c2cad085bb15248e0ef2071e5adc3291a4e14faa9ba1443840",
+      "directory": "plugins/pptx-plugin/skills/slide-making-skill",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/android-native-dev/SKILL.md",
+      "bytes": 28621,
+      "sha256": "043129d00d8fd400fa2ff6a2126471fcf01e83d57ce5749c4c75eb4009e9e909",
+      "directory": "skills/android-native-dev",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/buddy-sings/SKILL.md",
+      "bytes": 16382,
+      "sha256": "83006e66236079fdeba978a80c0d2178109cf7780de058a541f8453ba0180a50",
+      "directory": "skills/buddy-sings",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/flutter-dev/SKILL.md",
+      "bytes": 5230,
+      "sha256": "b0e5eb337c1891481ff7875d0fee974ba4a7bddafb6a7f0947747c008b5c2e28",
+      "directory": "skills/flutter-dev",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/frontend-dev/SKILL.md",
+      "bytes": 20944,
+      "sha256": "500ff2234e5adad4e2666ba633a1e242ef6af4c0da6bd94a3d6d37819e9aabce",
+      "directory": "skills/frontend-dev",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/fullstack-dev/SKILL.md",
+      "bytes": 34810,
+      "sha256": "94d2f5b3859611a0caeeb03e6562ba809c3d3747ac917b8675d5ce21d395c39e",
+      "directory": "skills/fullstack-dev",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/gif-sticker-maker/SKILL.md",
+      "bytes": 5005,
+      "sha256": "57002b47b7aaffb784acedae2750e14a75dc18ba58edb003f846755d7eb0c447",
+      "directory": "skills/gif-sticker-maker",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/ios-application-dev/SKILL.md",
+      "bytes": 7207,
+      "sha256": "4f4da03f2144d0d50174d36edd514ca56ad06e23570c173ac5f4c61d27d40c1e",
+      "directory": "skills/ios-application-dev",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/minimax-docx/SKILL.md",
+      "bytes": 15818,
+      "sha256": "45c169630f30b8f034bc7d53edf73d592fbd82e82188beec7da3ca1996a97fb5",
+      "directory": "skills/minimax-docx",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/minimax-multimodal-toolkit/SKILL.md",
+      "bytes": 10960,
+      "sha256": "2388fddd3f8f767818540b6d47cfbfcc5c51e89799f55aa66f03c200d3c391a8",
+      "directory": "skills/minimax-multimodal-toolkit",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/minimax-music-gen/SKILL.md",
+      "bytes": 14059,
+      "sha256": "0c81d746c2ea895cbf92094087812304cdf83ff9fe1eb7ba7f8efe650b0a5914",
+      "directory": "skills/minimax-music-gen",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/minimax-music-playlist/SKILL.md",
+      "bytes": 12822,
+      "sha256": "87891a7959e3e26f54e1985216f574e77391ff015ed8062f10b2eefd77089ec3",
+      "directory": "skills/minimax-music-playlist",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/minimax-pdf/SKILL.md",
+      "bytes": 8624,
+      "sha256": "8b0497ddd27da142deb09b570a56f702f95e5f3f1e192cfe1ae24421416a408d",
+      "directory": "skills/minimax-pdf",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/minimax-xlsx/SKILL.md",
+      "bytes": 8398,
+      "sha256": "4ffb70af6ccd00e90c3b14516d50a850ae0f2f1807a01d326aa1393e0067dd41",
+      "directory": "skills/minimax-xlsx",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/pptx-generator/SKILL.md",
+      "bytes": 7930,
+      "sha256": "6eeb36239fdef35ab133ca462e1ec4674cb96dd9c5cd63da39c29151899bda10",
+      "directory": "skills/pptx-generator",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/react-native-dev/SKILL.md",
+      "bytes": 7273,
+      "sha256": "6e16a6c9ab081bc0192316ebfe514915e55ef18ab0001ccc64763ea600aa304d",
+      "directory": "skills/react-native-dev",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/shader-dev/SKILL.md",
+      "bytes": 16887,
+      "sha256": "7d3cc9d69da2b598e423da5ec927ff61371edab669e2b9a2f4bcf3ec0f29db4d",
+      "directory": "skills/shader-dev",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/vision-analysis/SKILL.md",
+      "bytes": 5427,
+      "sha256": "a3b4720bfc5f1083cc6c2670bd4d7d5b673f3c86e84b536169f5e545206de157",
+      "directory": "skills/vision-analysis",
+      "status": "snapshot_only"
+    }
+  ],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
