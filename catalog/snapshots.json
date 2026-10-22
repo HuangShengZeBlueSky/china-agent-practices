@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:58:00.090930+00:00",
+  "updated_at": "2026-10-22T15:58:11.730904+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -105,6 +105,14 @@
         "95dc2eebbc100b929c102d90111bb94fad41e500",
         "59a6855aab290fef37ff041d739883e08082ede7"
       ]
+    },
+    {
+      "repository": "bytedance/deer-flow",
+      "ok": true,
+      "commits": [
+        "d4012c4b24f9b5ee14236a8214c82815de5b5214",
+        "66508d7522015ab6582105130da691e2803eba0d"
+      ]
     }
   ],
   "versions": [
@@ -208,6 +216,24 @@
       "archive_file_count": 1233
     },
     {
+      "repository": "bytedance/deer-flow",
+      "commit": "66508d7522015ab6582105130da691e2803eba0d",
+      "captured_at": "2026-10-22T15:58:11.630871+00:00",
+      "archive_bytes": 31668045,
+      "archive_sha256": "82df01805af486bf0647818f2471f6867d7667396d09d8579d28dddd37321959",
+      "skills_count": 33,
+      "archive_file_count": 4826
+    },
+    {
+      "repository": "bytedance/deer-flow",
+      "commit": "d4012c4b24f9b5ee14236a8214c82815de5b5214",
+      "captured_at": "2026-10-22T15:58:08.016618+00:00",
+      "archive_bytes": 31486667,
+      "archive_sha256": "8795bccab50caa143b13f4f08386d136079befd8c03e66a95faa3af9fab23fbc",
+      "skills_count": 33,
+      "archive_file_count": 4768
+    },
+    {
       "repository": "bytedance/trae-agent",
       "commit": "e839e559ac61bdd0e057c375dd1dee391fee797d",
       "captured_at": "2026-10-22T15:50:50.301035+00:00",
@@ -289,7 +315,7 @@
       "archive_file_count": 7880
     }
   ],
-  "repositories": 14,
-  "skill_paths_across_versions": 6059,
-  "bytes": 1697966115
+  "repositories": 15,
+  "skill_paths_across_versions": 6125,
+  "bytes": 1761120827
 }
