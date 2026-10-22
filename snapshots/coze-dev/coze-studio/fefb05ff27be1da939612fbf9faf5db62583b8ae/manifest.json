@@ -1,0 +1,73 @@
+{
+  "repository": "coze-dev/coze-studio",
+  "commit": "fefb05ff27be1da939612fbf9faf5db62583b8ae",
+  "captured_at": "2026-10-22T15:57:50.937815+00:00",
+  "source_ids": [
+    "bytedance-coze-studio"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/coze-dev/coze-studio/tar.gz/fefb05ff27be1da939612fbf9faf5db62583b8ae",
+  "archive_sha256": "12913c3863ef8c513e8ec5fc4f0179dd896f3b627a2dee84c9969399573f53ca",
+  "archive_bytes": 22816886,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "95335eb7e91a4745e5fb730f1146157745ab9f338e49012881401c12714e7728"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 8388608,
+      "sha256": "b637df50dcfe2edb10fea90d305625603b8e799a30637bac8d99ffea08d62db7"
+    },
+    {
+      "path": "source.tar.gz.part0002",
+      "bytes": 6039670,
+      "sha256": "c77e4ceb040aca65c649cf97cd3921ffa47247812d5e67363ef4e47fa140c449"
+    }
+  ],
+  "archive_file_count": 20490,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": ".github/workflows/license-check.yaml",
+      "bytes": 768,
+      "sha256": "25fa6178dbcd996f623c68cf966968ec1719fd008ec870e3f659769eea46c0e3"
+    },
+    {
+      "path": "LICENSE-APACHE",
+      "bytes": 10174,
+      "sha256": "69849221bfb90053de2134ef5e6d540287b4b98062326492f1f96f5da685524b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 11720,
+      "sha256": "eb88f0ea792ec66d2c68eb76e36749deea4340e834eccff8ced4254639a0296e"
+    },
+    {
+      "path": "README.zh_CN.md",
+      "bytes": 10354,
+      "sha256": "3645c51f19cb30b272a1502bd7862a2ee6ad84008a8077072233a7ba02a4a554"
+    },
+    {
+      "path": "backend/domain/agent/singleagent/internal/agentflow/agent_flow_builder.go",
+      "bytes": 8862,
+      "sha256": "1b9a0d2f042ce0191f773d1eefdb5dd47eff8677b1bc60c61f08d8e66b729dd8"
+    },
+    {
+      "path": "backend/domain/agent/singleagent/internal/agentflow/node_chat_prompt.go",
+      "bytes": 950,
+      "sha256": "d35eb095e0541ce35af1d1b2ebb25f197131ba2a1cb7977ac428763f0e6eb545"
+    },
+    {
+      "path": "backend/domain/agent/singleagent/internal/agentflow/system_prompt.go",
+      "bytes": 2756,
+      "sha256": "558a7262df65a0577b7c2069b83abc49b77873cc99dcfdc29a286c0c0f0ac026"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
