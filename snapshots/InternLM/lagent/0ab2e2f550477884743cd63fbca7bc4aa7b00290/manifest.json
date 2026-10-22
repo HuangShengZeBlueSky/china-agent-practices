@@ -1,0 +1,58 @@
+{
+  "repository": "InternLM/lagent",
+  "commit": "0ab2e2f550477884743cd63fbca7bc4aa7b00290",
+  "captured_at": "2026-10-22T16:00:25.787780+00:00",
+  "source_ids": [
+    "shanghai-ai-lagent"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/InternLM/lagent/tar.gz/0ab2e2f550477884743cd63fbca7bc4aa7b00290",
+  "archive_sha256": "0b64041b3875d926fb93a886f8f879b0ba74d6698807845b40f566557322ecb8",
+  "archive_bytes": 206582,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 206582,
+      "sha256": "0b64041b3875d926fb93a886f8f879b0ba74d6698807845b40f566557322ecb8"
+    }
+  ],
+  "archive_file_count": 173,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "README.md",
+      "bytes": 24099,
+      "sha256": "fc04cfee6d0c1d5ef3c3c6a425caaf041eb4ca3a886ae668aea40173f26e931e"
+    },
+    {
+      "path": "lagent/actions/action_executor.py",
+      "bytes": 7788,
+      "sha256": "bad5198953a4a439d9984bbbbcb5734ee0a7e60e65b16c87d6a035a9b34c232f"
+    },
+    {
+      "path": "lagent/agents/agent.py",
+      "bytes": 24771,
+      "sha256": "2b629b4a18de666295306ad2a0407ff7f0621f32dc9e68fc896f5fc8d1eb245a"
+    },
+    {
+      "path": "lagent/agents/react.py",
+      "bytes": 6284,
+      "sha256": "70f031e389e6f067c11a25bdbdd93539cd2515e4dd39f54b1a54ae72ab0df455"
+    },
+    {
+      "path": "lagent/hooks/action_preprocessor.py",
+      "bytes": 2605,
+      "sha256": "cd2a67ae9e621c680febf7f9a6515f71b16afd00a4b663c5808e8021388ec118"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

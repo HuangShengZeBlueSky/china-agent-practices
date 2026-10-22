@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T16:00:12.928296+00:00",
+  "updated_at": "2026-10-22T16:00:25.891675+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -213,9 +213,25 @@
       "commits": [
         "b649d5c80f25887e6d0c1ff04024150f7476da5d"
       ]
+    },
+    {
+      "repository": "InternLM/lagent",
+      "ok": true,
+      "commits": [
+        "0ab2e2f550477884743cd63fbca7bc4aa7b00290"
+      ]
     }
   ],
   "versions": [
+    {
+      "repository": "InternLM/lagent",
+      "commit": "0ab2e2f550477884743cd63fbca7bc4aa7b00290",
+      "captured_at": "2026-10-22T16:00:25.787780+00:00",
+      "archive_bytes": 206582,
+      "archive_sha256": "0b64041b3875d926fb93a886f8f879b0ba74d6698807845b40f566557322ecb8",
+      "skills_count": 0,
+      "archive_file_count": 173
+    },
     {
       "repository": "KwaiKEG/KwaiAgents",
       "commit": "3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c",
@@ -559,7 +575,7 @@
       "archive_file_count": 89
     }
   ],
-  "repositories": 29,
+  "repositories": 30,
   "skill_paths_across_versions": 6235,
-  "bytes": 2169855865
+  "bytes": 2170062447
 }
