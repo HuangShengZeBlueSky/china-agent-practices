@@ -1,0 +1,118 @@
+# base +field-create
+
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+
+创建一个或多个字段；同一表的多个字段优先使用一次非空 JSON 数组。
+
+## Agent 最小工作流
+
+1. 先判断是不是 `formula` / `lookup`。
+2. 如果是：先读对应 guide。
+3. 没读 guide 前，不要直接创建 formula / lookup 字段。
+4. 读完 guide 后，再构造 `--json` 并创建字段。
+5. 如果是跨表 formula / lookup，再补查**目标表**的结构。
+
+需要从现有单值人员或创建人字段生成部门、直属上级、工号等通讯录信息列时，不用普通 `+field-create`，读取 [lark-base-contact-field-enrichment](lark-base-contact-field-enrichment.md)。
+
+## 推荐命令
+
+```bash
+lark-cli base +field-create \
+  --base-token <base_token> \
+  --table-id <table_id> \
+  --json '{"name":"预算","type":"number","style":{"type":"plain","precision":2}}'
+
+lark-cli base +field-create \
+  --base-token <base_token> \
+  --table-id <table_id> \
+  --json '{"name":"状态","type":"select","multiple":false,"default_value":["Todo"],"options":[{"name":"Todo","hue":"Blue","lightness":"Lighter"},{"name":"Done","hue":"Green","lightness":"Light"}]}'
+
+lark-cli base +field-create \
+  --base-token <base_token> \
+  --table-id <table_id> \
+  --json '{"name":"负责人","type":"user","multiple":false,"default_value":[{"$slot":"current_user"}],"description":"用于标记记录的直接负责人；协作约定可参考[团队字段约定](https://example.com/field-spec)"}'
+
+lark-cli base +field-create \
+  --base-token <base_token> \
+  --table-id <table_id> \
+  --json '[{"name":"备注","type":"text"},{"name":"预算","type":"number"}]'
+```
+
+## 参数
+
+| 参数 | 必填 | 说明 |
+|------|------|------|
+| `--base-token <token>` | 是 | Base Token |
+| `--table-id <id_or_name>` | 是 | 表 ID 或表名 |
+| `--json <body>` | 是 | 单个字段 JSON 对象，或多个字段对象组成的非空数组 |
+## API 入参详情
+
+**HTTP 方法和路径：**
+
+```
+POST /open-apis/base/v3/bases/:base_token/tables/:table_id/fields
+```
+
+## JSON 值规范
+
+- `--json` 接受单个字段 **JSON 对象**，也接受多个字段对象组成的非空数组；不要再套 `fields` 等外层对象。
+- 每个字段对象最少包含：`name`、`type`；数组不能为空，且每个元素都必须是合法字段对象。
+- 数组按顺序创建字段，遇到首个失败即停止且不自动回滚；保留结果中的 `created` 项，按 `hint` 修正 `failed` 项后，与 `not_attempted` 项按依赖顺序重新提交，不要重复创建已成功字段。
+- 所有字段类型都支持可选 `description`；支持纯文本，也支持 Markdown 链接，如 `协作约定可参考[团队字段约定](https://example.com/field-spec)`。
+- 需要字段默认值时传 `default_value`，直接使用字段对应 CellValue；`datetime` / `user` 的动态填充用 `$slot`。完整规则见 [lark-base-field-json.md](lark-base-field-json.md)。
+- `type` 不同，必填子字段不同：
+  - `select`：`multiple` 控制是否多选，`options` 定义静态选项，`dynamic_options_source` 定义动态选项来源。静态与动态选项配置二选一，不能同时传。
+  - `link`：必须有 `link_table`，可选 `bidirectional`、`bidirectional_link_field_name`。
+  - `formula`：必须有 `expression`；先读 formula guide，再创建。
+  - `lookup`：必须有 `from`、`select`、`where`；先读 lookup guide，再创建。
+  - `attachment`：签字字段没有 `"type":"signature"`，用 `style.type:"signature"` 创建；见 [lark-base-field-json.md](lark-base-field-json.md) §3.12。若接口拒绝该 style，停止并报告当前环境尚未支持；不要删掉 `style` 重试，否则会创建普通附件字段。
+
+**正确（base +field-create）**
+
+```json
+{
+  "name": "状态",
+  "type": "select",
+  "multiple": false,
+  "default_value": ["Todo"],
+  "options": [
+    { "name": "Todo", "hue": "Blue", "lightness": "Lighter" },
+    { "name": "Done", "hue": "Green", "lightness": "Light" }
+  ]
+}
+```
+
+**字段说明示例**
+
+```json
+{
+  "name": "负责人",
+  "type": "user",
+  "multiple": false,
+  "description": "用于标记记录的直接负责人；协作约定可参考[团队字段约定](https://example.com/field-spec)"
+}
+```
+
+## 返回重点
+
+- 单对象成功返回 `field` 和 `created: true`；数组成功返回 `fields`、`total` 和 `created: true`。
+- 如果返回 `field_get_recommended:false` 且 `next_step:"done"`，表示本次是简单字段创建，通常不需要立刻执行 `+field-get`。
+- 如果返回 `field_get_recommended:true` 或 `next_step:"field_get"`，按 `verification_hint` 读回字段；`formula`、`lookup`、`link`、`auto_number` 等计算、关联或生成型字段更适合读回确认服务端最终结构。
+
+## 工作流
+
+
+1. formula / lookup 字段必须先阅读对应指南；没读之前不要直接创建。
+2. 创建简单字段时，优先相信命令返回；只有用户要求精确核对额外属性，或返回建议读回时，才继续执行 `+field-get`。
+
+## 坑点
+
+- ⚠️ 这是写入操作，执行前必须确认。
+- ⚠️ 当 `type` 是 `formula` 或 `lookup` 时，先读对应 guide，再创建，并在命令上带隐藏确认 flag `--i-have-read-guide`；不带该 flag 时 CLI 会直接拒绝。
+- ⚠️ 不要把“每次创建后都 `+field-get`”当作固定流程；按返回里的 `field_get_recommended` 和 `next_step` 决定是否读回。
+
+## 参考
+
+- [lark-base-field-json.md](lark-base-field-json.md) — 字段 JSON 规范（推荐）
+- [formula-field-guide.md](formula-field-guide.md) — formula 指南（创建公式必读）
+- [lookup-field-guide.md](lookup-field-guide.md) — lookup 指南（创建查找引用必读）
