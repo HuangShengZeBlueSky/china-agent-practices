@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:59:31.063215+00:00",
+  "updated_at": "2026-10-22T15:59:35.389091+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -157,6 +157,13 @@
       "commits": [
         "55a6bcf643acb4104105359ed0a1d194bdee7696"
       ]
+    },
+    {
+      "repository": "Tencent/skillhub",
+      "ok": true,
+      "commits": [
+        "a051f06f7944d24ade04bea27735f430b19a8298"
+      ]
     }
   ],
   "versions": [
@@ -204,6 +211,15 @@
       "archive_sha256": "a614ffd9fbfef994420b3b82dd81d403d22960c32b91c1d14ead7e1883e91c37",
       "skills_count": 2,
       "archive_file_count": 1172
+    },
+    {
+      "repository": "Tencent/skillhub",
+      "commit": "a051f06f7944d24ade04bea27735f430b19a8298",
+      "captured_at": "2026-10-22T15:59:35.287763+00:00",
+      "archive_bytes": 1002532,
+      "archive_sha256": "d187da39d0714c8270b4bd77f220ecba7e100bd9b870842630a4cbb0d62ee94d",
+      "skills_count": 2,
+      "archive_file_count": 119
     },
     {
       "repository": "Tencent-RTC/agent-skills",
@@ -431,7 +447,7 @@
       "archive_file_count": 3766
     }
   ],
-  "repositories": 21,
-  "skill_paths_across_versions": 6171,
-  "bytes": 2059399670
+  "repositories": 22,
+  "skill_paths_across_versions": 6173,
+  "bytes": 2060402202
 }

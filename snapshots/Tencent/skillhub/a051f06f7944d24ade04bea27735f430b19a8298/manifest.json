@@ -1,0 +1,203 @@
+{
+  "repository": "Tencent/skillhub",
+  "commit": "a051f06f7944d24ade04bea27735f430b19a8298",
+  "captured_at": "2026-10-22T15:59:35.287763+00:00",
+  "source_ids": [
+    "tencent-skillhub"
+  ],
+  "license_notes": [
+    "MIT"
+  ],
+  "archive_url": "https://codeload.github.com/Tencent/skillhub/tar.gz/a051f06f7944d24ade04bea27735f430b19a8298",
+  "archive_sha256": "d187da39d0714c8270b4bd77f220ecba7e100bd9b870842630a4cbb0d62ee94d",
+  "archive_bytes": 1002532,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 1002532,
+      "sha256": "d187da39d0714c8270b4bd77f220ecba7e100bd9b870842630a4cbb0d62ee94d"
+    }
+  ],
+  "archive_file_count": 119,
+  "skills_count": 2,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1411,
+      "sha256": "6d9e08aac94450e40d7310e36c9beaa41f6c36b069f3b07cc232e9c7ced594c4"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6320,
+      "sha256": "72e805b9624ee623d288bc68e1233d6406fb245d80a5020c160fbae1a78e5d67"
+    },
+    {
+      "path": "README_EN.md",
+      "bytes": 6757,
+      "sha256": "494d37fb556247c2e274c27326091fefcb3058b4effaf44728d59b2112765be7"
+    },
+    {
+      "path": "dsh-plugin/LICENSE",
+      "bytes": 1411,
+      "sha256": "6d9e08aac94450e40d7310e36c9beaa41f6c36b069f3b07cc232e9c7ced594c4"
+    },
+    {
+      "path": "skills/find-skill-skillhub/SKILL.md",
+      "bytes": 3780,
+      "sha256": "d643d671c6e1f0f7c41961d8e17b616816f20506a487adbe8f4e00ca4b88d7fc"
+    },
+    {
+      "path": "skills/find-skill-skillhub/_meta.json",
+      "bytes": 112,
+      "sha256": "85c4057012707dd9a5165d6d4b296fbc4b640317eed45e401c6941a1ac8b1fd2"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/ai-agent.md",
+      "bytes": 835,
+      "sha256": "f97bab4c6d90e6c8eca71374ba90137c9524bd23ad4e38e539c480b6fa537a67"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/api.md",
+      "bytes": 4352,
+      "sha256": "1fd886722d7a6baf9ddfb0d0b66e7ddf50f4cb657c75e318057e2428dd90a527"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/business-ops.md",
+      "bytes": 776,
+      "sha256": "00e24392ece6f88f6a66e124ce2000822300804ddea00e53d9709f83167a618c"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/categories.md",
+      "bytes": 1673,
+      "sha256": "a31eb5b4ffe8c7512c7630df9e963019019d274e0684bb2b0f73f60640ef2735"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/content-creation.md",
+      "bytes": 851,
+      "sha256": "9ad20fc7708654f90b55db896bb19be70e522a55c46bc0c16092afd0d40e1152"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/data-analysis.md",
+      "bytes": 829,
+      "sha256": "605c451d563ae4f9e1316213e138c41a24ae8023f8679acf4c11eb883904b1e8"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/design-media.md",
+      "bytes": 790,
+      "sha256": "b856b0a830808fa648af9b33f59bc6832d7d0da1ab706107101ec25ffe401412"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/dev-programming.md",
+      "bytes": 739,
+      "sha256": "e2142666a73efb69a0f70861f8ecb6b1009ea21956c6adcbfa01537008c4bb34"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/education.md",
+      "bytes": 784,
+      "sha256": "924520535ca1739e89f7ccec3e5e1742ea0ee8611a8259d311e33fa98f1447f9"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/it-ops-security.md",
+      "bytes": 848,
+      "sha256": "bf7434a228df3b6d5cc7cf3ba90fe8eb7e5d0e97407b641e2ca8a92d84536ee6"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/knowledge-management.md",
+      "bytes": 884,
+      "sha256": "cf28d278fd8331a7e5559699a703940f21bee730368d8526363c1bf8c51b817b"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/life-service.md",
+      "bytes": 813,
+      "sha256": "102624229be64a269d855963f3ddaf8c025ac14a3970d573fa9484a3400a4090"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/office-efficiency.md",
+      "bytes": 814,
+      "sha256": "2ec61a30bd76100c2430d324bcaae483864d4db2a2b93f187e70f6f6bff6729b"
+    },
+    {
+      "path": "skills/find-skill-skillhub/references/professional.md",
+      "bytes": 764,
+      "sha256": "b85080c5366862c5569400709cca155b53275df61f8bdd86f9d3aaa8bed34adc"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/SKILL.md",
+      "bytes": 2972,
+      "sha256": "3704a9e9077bcd1f6f98207236a95098f5157fd84ac81f039aa9b6d129469bad"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/_meta.json",
+      "bytes": 117,
+      "sha256": "7ac3fda5a918d0469a9f55247ec31f8e78c017a7bfbadb3822753aaf07c45eb5"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/examples/sample-report.invalid.json",
+      "bytes": 2411,
+      "sha256": "13570b9cd00d548febbd63ccba1efdd16f2191e87be4ca9107d0e789e7f08124"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/examples/sample-report.valid.json",
+      "bytes": 5214,
+      "sha256": "c2b65efff3322197de455a6fdc4a56f237fa65b2e0c774562b0684980aa1122b"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/references/adaptability.md",
+      "bytes": 1041,
+      "sha256": "c79b606bf9c66c8df6621efee63da8b947d43ce05e94922b04b01b51eed81f92"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/references/convention.md",
+      "bytes": 1544,
+      "sha256": "9d13811a110261e21f1ca773f837017d5df90f816b5c69ad7b77c089d4261641"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/references/effectiveness.md",
+      "bytes": 1654,
+      "sha256": "e650c2ad4b864b9e2c0dcf15741125bfe5fb713ec3908fbe5b2f61742800cf7b"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/references/explore.md",
+      "bytes": 842,
+      "sha256": "965494d1b948427985c86acfbb21a2251ca05f9e001ee45274e392b8ea4e8890"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/references/output-schema.md",
+      "bytes": 3404,
+      "sha256": "be64e78083cd7be4b1a51ce7c820cba891dddc41733bc0dc7ab5dec3c48903bd"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/references/reliability.md",
+      "bytes": 1506,
+      "sha256": "f87727eb507790f3f639dda5e6281e7123f5972223959047c5954b6477bfbb70"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/references/trust.md",
+      "bytes": 1281,
+      "sha256": "8b1491ba4492f0ab8922b8de833bfa9e848efaef8dfe4beaa47cfc2d0004cb15"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/scripts/validate_trace_scores.py",
+      "bytes": 6552,
+      "sha256": "500ea8b248cbbe16e92976fa1ebd8445178d720dccfaac31aa6a3d5bc20d00b1"
+    }
+  ],
+  "skills": [
+    {
+      "path": "skills/find-skill-skillhub/SKILL.md",
+      "bytes": 3780,
+      "sha256": "d643d671c6e1f0f7c41961d8e17b616816f20506a487adbe8f4e00ca4b88d7fc",
+      "directory": "skills/find-skill-skillhub",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/skillhub-trace-evaluator/SKILL.md",
+      "bytes": 2972,
+      "sha256": "3704a9e9077bcd1f6f98207236a95098f5157fd84ac81f039aa9b6d129469bad",
+      "directory": "skills/skillhub-trace-evaluator",
+      "status": "snapshot_only"
+    }
+  ],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
