@@ -1,0 +1,158 @@
+{
+  "repository": "Tencent/BrowserSkill",
+  "commit": "6214e3d6a3d74eaf39c0202c4f182b5755974da9",
+  "captured_at": "2026-10-22T15:59:24.792190+00:00",
+  "source_ids": [
+    "tencent-browserskill"
+  ],
+  "license_notes": [
+    "MIT"
+  ],
+  "archive_url": "https://codeload.github.com/Tencent/BrowserSkill/tar.gz/6214e3d6a3d74eaf39c0202c4f182b5755974da9",
+  "archive_sha256": "c7dc085ee00436c14c01dc6b4f5a712e10893f1e03982c7ddd6e0be9a86c64bb",
+  "archive_bytes": 3999928,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 3999928,
+      "sha256": "c7dc085ee00436c14c01dc6b4f5a712e10893f1e03982c7ddd6e0be9a86c64bb"
+    }
+  ],
+  "archive_file_count": 1139,
+  "skills_count": 2,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "45426ad9507fe1b922121f5af6a4669096e721980b4426609a4384da410f5114"
+    },
+    {
+      "path": "README.md",
+      "bytes": 23114,
+      "sha256": "80d60cdc331290e6bd108be576339263eedbe03847c1996735817f55191b1d04"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "bytes": 21590,
+      "sha256": "e85dd534638b6a281e82b248d16450332ffedcd62e4599253597653a7612bbb0"
+    },
+    {
+      "path": "apps/extension/src/tools/snapshot-ref.ts",
+      "bytes": 2432,
+      "sha256": "7edc0aa156547f0a00892517c98cf24232ee1674a1ea19afa9ed7d3c17b67a28"
+    },
+    {
+      "path": "crates/bsk-cli/skill/SKILL.md",
+      "bytes": 6952,
+      "sha256": "a338f79a6eef3cd7f05e3d565c589b942b424da564c62af99e5c3aac8f072d66"
+    },
+    {
+      "path": "crates/bsk-cli/skill/references/debugging.md",
+      "bytes": 8630,
+      "sha256": "a73b2ccbc8e5042e8be1312b09a88d3e47f0923eb1d1a96ee4ee9e67a911e994"
+    },
+    {
+      "path": "crates/bsk-cli/skill/references/environment.md",
+      "bytes": 6475,
+      "sha256": "3dd6dce9fd7b4798d0b024cc19dc49b36670c8ac79a1f6c0e0f5e8966b7eb130"
+    },
+    {
+      "path": "crates/bsk-cli/skill/references/extraction.md",
+      "bytes": 2302,
+      "sha256": "dd45378a53fbfe8400d966572660ab8d14960bd46976cc03c226d2c0810683da"
+    },
+    {
+      "path": "crates/bsk-cli/skill/references/files.md",
+      "bytes": 1138,
+      "sha256": "adc7e65fb1c8ee9415d091d48db20e68a2ab4836f45c6565b0e9755608195a14"
+    },
+    {
+      "path": "crates/bsk-cli/skill/references/help-and-recovery.md",
+      "bytes": 3899,
+      "sha256": "6d1f4037b99a68e29a495fa47e718935b1b422e280ecede5e70e85d68f210fff"
+    },
+    {
+      "path": "crates/bsk-cli/skill/references/interaction-details.md",
+      "bytes": 4873,
+      "sha256": "acdc880fa175e5307b8c43be9446389cd6588ad12856c5326a82c0fc1a6c9d97"
+    },
+    {
+      "path": "crates/bsk-cli/skill/references/screenshots-and-canvas.md",
+      "bytes": 3131,
+      "sha256": "d4dafd443606d55d55150a8cd7e2fd381ed8dcc7baa7ef1594b93a1cc9808e47"
+    },
+    {
+      "path": "crates/bsk-cli/skill/references/tabs-and-profiles.md",
+      "bytes": 6377,
+      "sha256": "6db26601c6db6f551c91a97707617a4d927a26c5328b2439c5bedd6566c209f7"
+    },
+    {
+      "path": "crates/bsk-cli/skill/references/video.md",
+      "bytes": 4352,
+      "sha256": "133fd011edb741544022bda38b458df1d41aa69ce8df67fab5b0db569ab038a3"
+    },
+    {
+      "path": "crates/bsk-cli/src/skill_install/provenance.rs",
+      "bytes": 4189,
+      "sha256": "01786c1a78a13e5c1cc0cf21bfb4631882da1732d938d85712592fc4a492ee79"
+    },
+    {
+      "path": "packages/dsh-plugin-browserskill/LICENSE",
+      "bytes": 1064,
+      "sha256": "45426ad9507fe1b922121f5af6a4669096e721980b4426609a4384da410f5114"
+    },
+    {
+      "path": "packages/dsh-plugin-browserskill/skill/SKILL.md",
+      "bytes": 4372,
+      "sha256": "d20d68cae2d06117d5e9b6b5b770b321b3d0264e6781d76f550f97cacd034246"
+    },
+    {
+      "path": "packages/dsh-plugin-browserskill/skill/references/debugging.md",
+      "bytes": 7254,
+      "sha256": "7062d177dfd09127ff91935a0a47eb378a3a841d53d062021fb1e91cf4a85858"
+    },
+    {
+      "path": "packages/dsh-plugin-browserskill/skill/references/help-and-recovery.md",
+      "bytes": 3067,
+      "sha256": "0ee16a5a3cd64e16aac4ef81fd2e77853aca74f448eb8554b8fdf75f84a361cd"
+    },
+    {
+      "path": "packages/dsh-plugin-browserskill/skill/references/interaction-details.md",
+      "bytes": 3117,
+      "sha256": "9253356de6bff7ec4f578e5c86a7b58bc28c00fe3685c9c8e8ba0533c9f07871"
+    },
+    {
+      "path": "packages/dsh-plugin-browserskill/skill/references/screenshots-and-canvas.md",
+      "bytes": 966,
+      "sha256": "87ca277d9f8bbb25cbecb8c2d8f20d52b622701819e9fd4c34c06250dca32f35"
+    },
+    {
+      "path": "packages/dsh-plugin-browserskill/skill/references/tabs-and-profiles.md",
+      "bytes": 1487,
+      "sha256": "362361b171db6d8bc777371f01571ebcf5936012c7efd4932ea5f831af00d496"
+    },
+    {
+      "path": "packages/dsh-plugin-browserskill/skill/references/video.md",
+      "bytes": 4702,
+      "sha256": "dd9c0b800852168adb5f1cbebe9d1f827a2b655caac11e30932bfdb5747a8d80"
+    }
+  ],
+  "skills": [
+    {
+      "path": "crates/bsk-cli/skill/SKILL.md",
+      "bytes": 6952,
+      "sha256": "a338f79a6eef3cd7f05e3d565c589b942b424da564c62af99e5c3aac8f072d66",
+      "directory": "crates/bsk-cli/skill",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/dsh-plugin-browserskill/skill/SKILL.md",
+      "bytes": 4372,
+      "sha256": "d20d68cae2d06117d5e9b6b5b770b321b3d0264e6781d76f550f97cacd034246",
+      "directory": "packages/dsh-plugin-browserskill/skill",
+      "status": "snapshot_only"
+    }
+  ],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

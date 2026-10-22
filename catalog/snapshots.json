@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:59:07.326061+00:00",
+  "updated_at": "2026-10-22T15:59:25.627202+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -142,6 +142,14 @@
       "commits": [
         "82af4062e29e128910afa8622c866f4b99a4d23d"
       ]
+    },
+    {
+      "repository": "Tencent/BrowserSkill",
+      "ok": true,
+      "commits": [
+        "6214e3d6a3d74eaf39c0202c4f182b5755974da9",
+        "71e7b3c2ac67c34e7947a838df95f4e45724e796"
+      ]
     }
   ],
   "versions": [
@@ -171,6 +179,24 @@
       "archive_sha256": "8490e29a15d962a9182a4f48a222321fb54f18f0b12d306491121d771e1fa54b",
       "skills_count": 44,
       "archive_file_count": 13501
+    },
+    {
+      "repository": "Tencent/BrowserSkill",
+      "commit": "6214e3d6a3d74eaf39c0202c4f182b5755974da9",
+      "captured_at": "2026-10-22T15:59:24.792190+00:00",
+      "archive_bytes": 3999928,
+      "archive_sha256": "c7dc085ee00436c14c01dc6b4f5a712e10893f1e03982c7ddd6e0be9a86c64bb",
+      "skills_count": 2,
+      "archive_file_count": 1139
+    },
+    {
+      "repository": "Tencent/BrowserSkill",
+      "commit": "71e7b3c2ac67c34e7947a838df95f4e45724e796",
+      "captured_at": "2026-10-22T15:59:25.526854+00:00",
+      "archive_bytes": 4094656,
+      "archive_sha256": "a614ffd9fbfef994420b3b82dd81d403d22960c32b91c1d14ead7e1883e91c37",
+      "skills_count": 2,
+      "archive_file_count": 1172
     },
     {
       "repository": "TencentCloudBase/CloudBase-AI-Toolkit",
@@ -389,7 +415,7 @@
       "archive_file_count": 3766
     }
   ],
-  "repositories": 19,
-  "skill_paths_across_versions": 6154,
-  "bytes": 2048229032
+  "repositories": 20,
+  "skill_paths_across_versions": 6158,
+  "bytes": 2056323616
 }
