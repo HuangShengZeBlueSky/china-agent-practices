@@ -1,0 +1,3730 @@
+{
+  "repository": "Tencent-RTC/agent-skills",
+  "commit": "55a6bcf643acb4104105359ed0a1d194bdee7696",
+  "captured_at": "2026-10-22T15:59:30.960768+00:00",
+  "source_ids": [
+    "tencent-rtc-agent-skills"
+  ],
+  "license_notes": [
+    "MIT"
+  ],
+  "archive_url": "https://codeload.github.com/Tencent-RTC/agent-skills/tar.gz/55a6bcf643acb4104105359ed0a1d194bdee7696",
+  "archive_sha256": "6fc88d2583b7c59a253b8180e9a44679a4d127a897d87cbde9a8d3789a63ebc7",
+  "archive_bytes": 3076054,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 3076054,
+      "sha256": "6fc88d2583b7c59a253b8180e9a44679a4d127a897d87cbde9a8d3789a63ebc7"
+    }
+  ],
+  "archive_file_count": 1171,
+  "skills_count": 13,
+  "files": [
+    {
+      "path": ".claude/skills/trtc-eval/EVAL_AUTORUN_ARCHITECTURE.md",
+      "bytes": 24642,
+      "sha256": "04dbc3bdeaad92db668b0d77d224ac123fbc452dc8158102ab73eb7e8242348c"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/EVAL_AUTORUN_FLOWS.md",
+      "bytes": 32666,
+      "sha256": "39735cc999eea94b7b27c9799c8627cb7a49dd1f0f3cf35e0ff164474c94634b"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/README.md",
+      "bytes": 21216,
+      "sha256": "dcb45816cd5f37418e500f37841295508acbb584a23332483563ae00c31b8ec3"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/SKILL.md",
+      "bytes": 19926,
+      "sha256": "0f8d2f917a715375afe0cdbb046d12e73073c43af511f87c1df5fe7cc3397c79"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/bootstrap.sh",
+      "bytes": 6507,
+      "sha256": "c2023bd7ab932cfa67ad879bd7c7e4840837e963778dc37fbfb3cb2ed10876c7"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/config.example.json",
+      "bytes": 149,
+      "sha256": "80b248ffacd0f805ca5f3c6b3afeee0402ebdd5cc011d807966b72e53863e32a"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/docs/DATA_FLOW_DIAGRAMS.md",
+      "bytes": 37809,
+      "sha256": "99a43a45b6a24bf2cc1ba274d5d4eabc602f4b9bc037cdfbf635ba3e9b169fdd"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/docs/INVESTIGATION_SUMMARY.md",
+      "bytes": 10716,
+      "sha256": "f098f93c93cfb2696550280c4808149a0ff0367cea0760a32020b29bdfb3a293"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/docs/QUICK_REFERENCE.md",
+      "bytes": 5092,
+      "sha256": "771ba1ce087f0648fb4110505d606bc5aa009b39121856b89328e6705829f99b"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/docs/SCORING_ANALYSIS.md",
+      "bytes": 18098,
+      "sha256": "94bcbac22c66c1319b86a6dd707adaaaa74a029897481e935b590138c3852b68"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/docs/quality-self-check.md",
+      "bytes": 1866,
+      "sha256": "a10ae994aa3532c61a7cb02960e90237e6184bb925fa647101fbc23bf02e6dc6"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/docs/troubleshooting.md",
+      "bytes": 1655,
+      "sha256": "85cef38f52bb7f6ddd87e1d409128112191594a5a33f67e69447bf8bc20ce6e0"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/prompts/ai_driver_system_prompt.md",
+      "bytes": 7283,
+      "sha256": "99cb7a36bd1b5bcc64403669f1ea972d10ff09500d2bcf2180f16fc2ac8abf77"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/__init__.py",
+      "bytes": 28,
+      "sha256": "1f59a83e4d3cfedd55562a014c8aee5dfc013df5d675c52b6cf626a4a96edbc9"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/case_runner_orchestrator.py",
+      "bytes": 17130,
+      "sha256": "2595af70763430c8447e7622aead20da0d572c0ee8b4c66d2f48c52d1285a381"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/demo_runner.py",
+      "bytes": 8077,
+      "sha256": "9ef9e2e727f16f7012e8a672273aef6440cdf50816b06ba58b070acaa63982d2"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/evaluator.py",
+      "bytes": 5289,
+      "sha256": "af512a8cd234cb3508351b8a4d34a2494ae7eb1acdc3009f7ec44a170f989e5b"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/__init__.py",
+      "bytes": 22,
+      "sha256": "ec33c5ad7e1946cca1861f0d154f79414b29dce63683809f2235d95fb26e994a"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/builder.py",
+      "bytes": 398,
+      "sha256": "fbca111047d4ef92abf9a9e02e8236ff765253ad6b77cb3725acdcd24985d39b"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/cli_driver.py",
+      "bytes": 1569,
+      "sha256": "09f53a34b226c266cc8466a22af5be435db296d07dc8a756ce0d08dcb804b820"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/code_injector.py",
+      "bytes": 39995,
+      "sha256": "f8fe53475bb39dea2cec0cdffdb988b7b4216204d2ee4a5d494729439ba41650"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/creds_normalizer.py",
+      "bytes": 10093,
+      "sha256": "aad978d831a3c5722072f19012622ffd7997289d1c0dc991b1c89e479055e9fa"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/dep_installer.py",
+      "bytes": 6883,
+      "sha256": "5751fa6035d92446a5bffcf202be5ece5c1678c939b7856423f746b37c247fc6"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/device_picker.py",
+      "bytes": 2854,
+      "sha256": "9de609b5a33f72371d243ac68d60ea815cbd92bcc0eb71a27cb2b5d8bb3506c1"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/eval_config.py",
+      "bytes": 6196,
+      "sha256": "607c161e243ddccb26b2b252d5044567d7f77a30431e9c73cbcaabdb34a31cfc"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/file_naming.py",
+      "bytes": 9879,
+      "sha256": "8ab9a446d8bc77a734a311dcb6cd17972f706051ace7268ae348b87344e04f33"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/flow_codegen.py",
+      "bytes": 22493,
+      "sha256": "f4e6978eebe377020f50b3513a7f632b96f223f251d6d54b1864eea0b755b7df"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/launcher.py",
+      "bytes": 612,
+      "sha256": "88009b10e122c384d31ea7ca9f20f1d2fa4fa6dec7d054d5b0fcf45d74e51b45"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/log_parsers/__init__.py",
+      "bytes": 22,
+      "sha256": "db772dbb7fb48d8ee3633142356fdec201e43d5f195c258c5db1b1cd4aba9042"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/log_parsers/logcat_parser.py",
+      "bytes": 1684,
+      "sha256": "fba59a673c9ef02440eeba45cbaffae7b117f46943f780def4ee44043918032c"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/log_parsers/puppeteer_parser.py",
+      "bytes": 7128,
+      "sha256": "6e20f28a882b96e76ff00a9ea18cefb9308299ce811ad4b4548480aa6025d0b2"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/log_parsers/syslog_parser.py",
+      "bytes": 1989,
+      "sha256": "a0c128d8396ded546d6f8f4cb7f6602de0e406e7f1f025c1d8f7a8e4fe03a2f4"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/platforms/__init__.py",
+      "bytes": 587,
+      "sha256": "9f6e6fb1bd82530de3ba4aba144182980e1898a97630e7b74ebb5a8f14d59567"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/platforms/android.py",
+      "bytes": 3199,
+      "sha256": "ddae612c8864606ad55e4eb053132ae957f138d2932687177d39f92100ca8520"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/platforms/base.py",
+      "bytes": 2229,
+      "sha256": "23423259d12b9b3cd00ee03a8bafa162ef2eaf24fcec761ec6013b450691000c"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/platforms/ios.py",
+      "bytes": 9412,
+      "sha256": "a9005ed5afceeb4f55a09c9452fff2c13b93ad6a948e42508e31fb38e1a679ed"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/platforms/web.py",
+      "bytes": 3050,
+      "sha256": "9e47f0a2f2bfa1c8b53c54295b67acad289866003c1fcc3a985ca2f53980ddc3"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/schemas.py",
+      "bytes": 14608,
+      "sha256": "8037fd5825095532a40e493afb3d27e28a18319ffd33acae1ee0f926ba5f7121"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/template_fetcher.py",
+      "bytes": 1668,
+      "sha256": "d4a2d92d3970bb2e12a8a6fbe79be155e414ce0a2692b998a0462200c39ebaae"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/lib/web_profile.py",
+      "bytes": 6913,
+      "sha256": "cb2a14f7475567f4c03827dd400041d263372682ffb206da58e41dee871ac8de"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/log-bridge.mjs",
+      "bytes": 22866,
+      "sha256": "1dce4c42f6a40921c198a69a333546fedf87b9ca861a3b220fcb0e514421292f"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/log_streamer.py",
+      "bytes": 4480,
+      "sha256": "28cfd15755f65be73edee1200cc01887d26df7f63967980bf53d8b98fc859c5c"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/package-lock.json",
+      "bytes": 43368,
+      "sha256": "bb21dd5849876baaf90449c8cb2996cc423fb7d1125e114c1386559c34feca42"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/package.json",
+      "bytes": 281,
+      "sha256": "9a0963e487fc792225cff498db7eb0f72e830b426c4327e893e887d90f26f7e8"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/report.py",
+      "bytes": 8663,
+      "sha256": "eeb7b020d09eeaa62785244c52d3880ddc62b3546a3403614c8e6efb28ad3e95"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/requirements.txt",
+      "bytes": 49,
+      "sha256": "e206405f237fce138325df5fde393b911a56dafe0680bcf49ec8bdf38ecf0e39"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/run_ai.py",
+      "bytes": 6759,
+      "sha256": "33ab2853879c603df5f249216d56b6f122cf0b2b56d0cbad671df4a0f85cca44"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/runtime_monitor.py",
+      "bytes": 16921,
+      "sha256": "63eaa867f37cf1326178ce91dd6cacc919e06061fc2825e07feb754b5caf76ee"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/selfcheck.py",
+      "bytes": 22661,
+      "sha256": "35271e38f70c25f31198cead5b1e7b83a04a1c038a090586337544560e904da2"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/stats_trigger.py",
+      "bytes": 2077,
+      "sha256": "ac658934ed8517a3fbdefbd9a4dc1f978cf0d62a0329ea7eac1c701978e62ff4"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/tools/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/scripts/tools/migrate_flows_to_dsl.py",
+      "bytes": 23529,
+      "sha256": "e87eab0a15feaf2ed49d4350f9a1c2a28073dc0d0ca6b3bfe294bb5e2cfbcc5f"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/benchmark/cases.json",
+      "bytes": 51899,
+      "sha256": "8c1501a8dec2f7ad485b8e9aad2b5763fdaf33be8b4ba1fdc34ded03a1a7cddb"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/benchmark/schema.json",
+      "bytes": 2312,
+      "sha256": "048afb4c67de4be9fd40058d3f0803a0d04335447ff2016b7164b132d51e7dca"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/unit/fixtures/sample_logcat.txt",
+      "bytes": 426,
+      "sha256": "d94af16722f21b213b95f39b08e7ba856c08732a04a10710fecc3addd779a0aa"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/unit/fixtures/sample_puppeteer_console.json",
+      "bytes": 463,
+      "sha256": "9c5e9b71ccfb5ae6704377f963f2f60880aca71b65f10fbfaec64571d37f1879"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/unit/fixtures/sample_syslog.txt",
+      "bytes": 420,
+      "sha256": "a52bfc16fc226815626b8683a24c1a6f7c77286ab124d3bddc8c9deb1e2d52ec"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/unit/test_creds_normalizer.py",
+      "bytes": 6150,
+      "sha256": "dd6b60823d5889943900ee9dac24d2540ee63036ddf7537a0fd3f69eddc97033"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/unit/test_dynamic_web.py",
+      "bytes": 5462,
+      "sha256": "5a650afd90a3d6724e3c78d594bf17f2d9a98c1f1adad55c6de56b7f16003533"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/unit/test_fingerprint.py",
+      "bytes": 7342,
+      "sha256": "f7ec7776e1f5fd21ffefa3a272b0833b11361dc730a374784186b76840a1d4ae"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/unit/test_flow_codegen.py",
+      "bytes": 10335,
+      "sha256": "a921a3e81cb3adec256e472c5da52c4cdd12abf3c7e20698524dd9fd603de440"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/unit/test_log_parsers.py",
+      "bytes": 1491,
+      "sha256": "c34d1f05feccd00a80652150ade3300a1e99c6774031474c1c4e6b9d536681e5"
+    },
+    {
+      "path": ".claude/skills/trtc-eval/tests/unit/test_orchestrator.py",
+      "bytes": 6268,
+      "sha256": "b63ce1b523f95abbfed68b00d621ebe91b7ce2822ac8ee6441c98a646846b790"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1068,
+      "sha256": "cb177342f780ec7449d8eb3d04414e30685dc6835668b50758edbc10c7f0c7a0"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8490,
+      "sha256": "fbb461e93a0b0c68096689370214a29e50e5aa0d28363486aec46e3608977317"
+    },
+    {
+      "path": "README.zh.md",
+      "bytes": 7441,
+      "sha256": "31c72b506445d7598b755e67fc68ea650da04cdc78003e1a97830bee0629ddec"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/.gitignore",
+      "bytes": 1198,
+      "sha256": "f56e3701a3c03d19426243317be352d386dc191bb03c8825959efe12a50576d0"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/README.ja.md",
+      "bytes": 7193,
+      "sha256": "127f7121e00bd9c6b917a6ccb8b5af43d89acaff6fb6ff4728d7c64be09bd375"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/README.md",
+      "bytes": 6625,
+      "sha256": "ee71c892d72f527f5fa710b9d6e8185c75d5be58a4cd7e6f816ca9bf719a650d"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/README.zh-CN.md",
+      "bytes": 6266,
+      "sha256": "df9e2307fdb29c04025db3449ef57a8f0403ba0d1eedc1422e33f94498d8178b"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/SKILL.md",
+      "bytes": 32964,
+      "sha256": "91a8d81a469ddabaca51acc79ead9877cc4e059be38801eac8b4735fef0b4e0f"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/auto_adapters/integration_templates/custom-learning-kb-sample.md",
+      "bytes": 2356,
+      "sha256": "3ce3ff0c8c07a41b733571af687d37da5fc43ad29b7872cc7fe11f2ce295e4ef"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/auto_adapters/integration_templates/generic-integration.md",
+      "bytes": 3737,
+      "sha256": "058fe6ebe478bdb3ff54679948e3295fc7d5d07c5c88b7332840914a677f86f7"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/auto_adapters/manifest.yaml",
+      "bytes": 1021,
+      "sha256": "571e017624fd05fb11fa431d626dfc315ba48889f6d2092e8e2571d9df4bddd0"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/auto_adapters/python/README.md",
+      "bytes": 1302,
+      "sha256": "60509defc504b53a5e2a4f1ac7880045ba47ef43c16773dc02a3849306aa8f7c"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/auto_adapters/python/coach_client.py.tpl",
+      "bytes": 6711,
+      "sha256": "579bdd17be8ab01fba611a158da1c5a806f07cf9808e82858c4bae270dbb6cc5"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/auto_adapters/web/README.md",
+      "bytes": 2005,
+      "sha256": "a73378ce59c11f122759bc194e92de93e55d760ba8787b874d4fdcd642c55a0a"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/auto_adapters/web/oral-coach-client.js.tpl",
+      "bytes": 7885,
+      "sha256": "44e85397690df6478ffda1c1dc06b43d42d0339050101c309636a1dddf12f23b"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/ability-report/manifest.yaml",
+      "bytes": 2198,
+      "sha256": "ceb92cd79b71ed054c7bde99edbe020fb291d22f5b384b00953303f8db7d1ba0"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/ability-report/src/__init__.py",
+      "bytes": 58,
+      "sha256": "ac9ab2de83819a7c03fc66b15624b56b28a45f11ec77c43e2de024590bf35a31"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/ability-report/src/adapters/__init__.py",
+      "bytes": 49,
+      "sha256": "b44e6e05eba7971af4d7f91ef911d78fe36d7c0b383b745522afb80093a87fe5"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/ability-report/src/adapters/default.py",
+      "bytes": 8902,
+      "sha256": "58359f316b27e336bad78c96ae4993fcff0c9e926af0726718e137fccb9d084c"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/ability-report/src/handler.py",
+      "bytes": 1423,
+      "sha256": "6fdd1267982417ad4f3570cc91d53f50ac42e6d4091de74cb229227448e10dee"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/ability-report/src/router.py",
+      "bytes": 657,
+      "sha256": "4149f326c24755d54474770cc24e98c66a726757d3c289fa662c081c2d0605da"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/.env.example",
+      "bytes": 2549,
+      "sha256": "0842e8f1b5ae75bd120707e12cbb45e19d90b34d1a1fa615ce6deb672020f4db"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/manifest.yaml",
+      "bytes": 2568,
+      "sha256": "80b722c43f23a19d9b186bd480559de3125e79b6e78ceb9b51a6909dc6c362f8"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/requirements.txt",
+      "bytes": 117,
+      "sha256": "8b4d5b3807fb8b68d730011bf2cc0d23ce6adb9fc5ab182eeba672153e0cc84f"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/TLSSigAPIv2.py",
+      "bytes": 16022,
+      "sha256": "0594c343ceb9e579154721025c5167bb88301c35551e6c58c7661155060f9150"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/__init__.py",
+      "bytes": 64,
+      "sha256": "d90720fc7306b47a733213a4a2f02dbc7f4cb38fc21041a22000b198d38d37ae"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/_capability_loader.py",
+      "bytes": 8282,
+      "sha256": "32f8394b3d5d28f21a7b9af5e8b15fb9a7b3eb328fdfe2d7162f90ff85ebdb34"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/agent.py",
+      "bytes": 9299,
+      "sha256": "85381c6a0acb790c252b074875652cbdda291061eb3a3bc95fe9fbd08e101889"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/config.py",
+      "bytes": 5377,
+      "sha256": "580a79e44b7b0f7d28b5baa62f3d94f92f502546606efeb98b7759108745d499"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/core/__init__.py",
+      "bytes": 67,
+      "sha256": "d68e1eb2554f2a7e2cceca83ecd1af1648c120404bef756d1a8f867f1325dcca"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/core/report_llm.py",
+      "bytes": 5742,
+      "sha256": "41df25f3a4bdddbe3ac88b643d10ba0e30cc365349ed4704a588d0e012614942"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/health.py",
+      "bytes": 1257,
+      "sha256": "48379477574f094e660e383401d233bcb294a9b9db164c8a8880cf17d5b06d63"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/server.py",
+      "bytes": 7967,
+      "sha256": "76de2a440925fd1e8833433168c664dfe23a83fe903c2c697a2389e7aa634261"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/trtc_client.py",
+      "bytes": 3808,
+      "sha256": "25089607a1c7ba6735e2d715a9f529d33fedc58231fe12b5595357bd4442af5f"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/conversation-core/src/usersig.py",
+      "bytes": 1314,
+      "sha256": "485dbb1ece7113a4da37a79cc203b9088f8039a498e2c8f626fbf9dc64e1539e"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/custom-learning-kb/manifest.yaml",
+      "bytes": 3058,
+      "sha256": "3ce4bb323a595eaba5dd618ed0ef76268a7d2231697aaf2f27087635d9162862"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/custom-learning-kb/src/__init__.py",
+      "bytes": 118,
+      "sha256": "d6b6c0b3d560d34996403110b4fe92ca0a4e7d391194b5e7aab3a00fd6211081"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/custom-learning-kb/src/adapters/__init__.py",
+      "bytes": 49,
+      "sha256": "b44e6e05eba7971af4d7f91ef911d78fe36d7c0b383b745522afb80093a87fe5"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/custom-learning-kb/src/adapters/clients.py",
+      "bytes": 5770,
+      "sha256": "dc5ebea71008d90bccece4146d59316b5cfce5672aa9858233e7a99840183852"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/custom-learning-kb/src/ports.py",
+      "bytes": 1631,
+      "sha256": "de5ee22efc93b63187318e91ae0efc539ba88132a5933fc95606184b5bcdec67"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/custom-learning-kb/src/router.py",
+      "bytes": 927,
+      "sha256": "94f5d7d33a142d44bfd5072837f932d08888ace3f4fd5fa19f898899d1e5c91b"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/quick-correct/manifest.yaml",
+      "bytes": 1910,
+      "sha256": "d6decdcbb9138024c19dcac29696af149790afb29a867dca16d54d563a7466fe"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/quick-correct/src/__init__.py",
+      "bytes": 57,
+      "sha256": "c2096cb9556db849d3626f8d6a6b3e0a8c250acf909f3f9b05ff4dffd98b069d"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/quick-correct/src/adapters/__init__.py",
+      "bytes": 49,
+      "sha256": "b44e6e05eba7971af4d7f91ef911d78fe36d7c0b383b745522afb80093a87fe5"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/quick-correct/src/adapters/default.py",
+      "bytes": 6009,
+      "sha256": "d29657364549867256657dc6b8510da70e3909e73bb86cc02787c54b7291fb05"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/quick-correct/src/handler.py",
+      "bytes": 1338,
+      "sha256": "557849b6e3584e9dc2e68d404516ba84e9dd8d284f2f49975f6c54d8c8291730"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/quick-correct/src/router.py",
+      "bytes": 683,
+      "sha256": "f3760672f6b33587917ebccba94fe9557770053341ce2712ce63d4e350da738d"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/reply-suggestion/manifest.yaml",
+      "bytes": 1832,
+      "sha256": "728c42e68639b4ba75aee125116f9d1d21f13c742d71c6d2771a7f0ea507ac55"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/reply-suggestion/src/__init__.py",
+      "bytes": 60,
+      "sha256": "51ea38bd632a32d44074a03fb06f2710d98a23218918484dc9e5508176e48ea8"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/reply-suggestion/src/adapters/__init__.py",
+      "bytes": 49,
+      "sha256": "b44e6e05eba7971af4d7f91ef911d78fe36d7c0b383b745522afb80093a87fe5"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/reply-suggestion/src/adapters/default.py",
+      "bytes": 3852,
+      "sha256": "d31357377688590ba41b2a2bd41fdd17a73deda808f99848aa517bb0214a5570"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/reply-suggestion/src/handler.py",
+      "bytes": 1415,
+      "sha256": "c7792766941329992695ae19ab620f4ad1ddd6b3c502d86064ef62384e6f4a9f"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/reply-suggestion/src/router.py",
+      "bytes": 650,
+      "sha256": "26a41ed6531d68ca0a5da0603be92882481336df96286d7e35e24c0eb2b568f1"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/data/practice-scenarios.json",
+      "bytes": 19199,
+      "sha256": "4e8d9269854e2e72338e4b57affa4b92568989348347f578c5ac88b60c98dbfc"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/manifest.yaml",
+      "bytes": 2729,
+      "sha256": "567316d0877f5264076a7d36ed1cb91bd12329fb59b73ba788903973eab42fef"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/src/__init__.py",
+      "bytes": 61,
+      "sha256": "b0b64a9bce78fb7088fa8d79d7bc66bd0bff178670a10dfcd578f43b9e69dbf2"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/src/adapters/__init__.py",
+      "bytes": 49,
+      "sha256": "b44e6e05eba7971af4d7f91ef911d78fe36d7c0b383b745522afb80093a87fe5"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/src/adapters/default.py",
+      "bytes": 5925,
+      "sha256": "c2ec57e0397051500c20b708743b917d530beac4880efa093a863a6d93cd7266"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/src/compose.py",
+      "bytes": 6713,
+      "sha256": "ed8571059f0f707994aa4bd5abf88d1d2ed0a489c1167530fe8e5fd52600c6ff"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/src/defaults.py",
+      "bytes": 8005,
+      "sha256": "8f07f6ea72a4bc20ccdcce8df2325fbd88beb24fa8c0b7c5038c354d001d94dc"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/src/handler.py",
+      "bytes": 1139,
+      "sha256": "37417d7f36b6a08a1d0cddea7ffcb0c6b9fe0a684facf20a6b58e18a0f2ec8fa"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/src/router.py",
+      "bytes": 713,
+      "sha256": "ab38faa8a6e2d4f0fbc9cccadc135d95513bc56cd961476ff953dd61f4848fed"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/capabilities/scenario-roleplay/src/scenario_source.py",
+      "bytes": 7165,
+      "sha256": "d6fe8a4135dd2c3ee50895192734ac428823d5aebe83fa239fa8152562e0cb6d"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/references/design-specs.md",
+      "bytes": 1647,
+      "sha256": "400fc0abb021d8b78aacd3555df756c853662702b6ee80a2867eab9e10e3909c"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/references/evaluator-port.md",
+      "bytes": 2864,
+      "sha256": "e7036fb7e5a60e90448ad512b670fe5b33d20392f9d7037a0f6e01bfb7b45413"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/scenarios/speaking-coach/recipe.yaml",
+      "bytes": 4000,
+      "sha256": "1cdcbbe7edda2e7f99f3e0e527514d22930270dfda05fce1aab70ff890f8ca88"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/scenarios/speaking-coach/ui/coach.html",
+      "bytes": 111764,
+      "sha256": "9c4b96362a3db3862b040bf3b067b70f31787147987e6a57e7da3de6e1de6cf0"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/scenarios/speaking-coach/ui/i18n.js",
+      "bytes": 33348,
+      "sha256": "84ff5cf44ff56e9e30f30b5e389559aee1c927a66b5130c13e69bdde6b507846"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/scenarios/speaking-coach/ui/practice-scenarios.json",
+      "bytes": 19199,
+      "sha256": "4e8d9269854e2e72338e4b57affa4b92568989348347f578c5ac88b60c98dbfc"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/scripts/add-capability.py",
+      "bytes": 11285,
+      "sha256": "853ccb78e3b62bd615fa3656b1a784c30f270e56a1b55c5f48995cf03014291f"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/scripts/verify-credentials.py",
+      "bytes": 3419,
+      "sha256": "843e2fddefd162c2674d052e57f827d3f4082aea5b46acd53a135639dac989ed"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/start.sh",
+      "bytes": 2307,
+      "sha256": "a70105e3c4d5d6c57ffc588a1c032c5bbb962b81ca626160ef8498d1be99e380"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/triggers.yaml",
+      "bytes": 829,
+      "sha256": "c84b1a39ee13ccc1a61e46af9eca42efa6dd160d2d32a0afb4c554d654e89440"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/.gitignore",
+      "bytes": 398,
+      "sha256": "65d23a0e6140ba3b76edb8e360edf19e8315ceda5c13f1891fc5a15358c35a43"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/README.ja.md",
+      "bytes": 15173,
+      "sha256": "682681ccaa62a8322ed22b7569074b4f6ac16e442e601f8f96c3f0b2f8a87a20"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/README.md",
+      "bytes": 12511,
+      "sha256": "5d0c998001cf65d4e4ca8751dc5e6594b6b213cb6ae328131e431666100b96c2"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/README.zh-CN.md",
+      "bytes": 11926,
+      "sha256": "c3259ad5565bf4825535d43232266d0f2454c19c4b87cf6c3322f110db15faee"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/SKILL.md",
+      "bytes": 40593,
+      "sha256": "5c682853eb8bccd7162c3dae0c7184014dcf5fb4e2d38d315c0ea383e6c74062"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/auto_adapters/integration_templates/generic-rest-api.md",
+      "bytes": 3790,
+      "sha256": "612f19686abb560266590c9994f911e467079cafcf03a529020f7a360dc27aa8"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/auto_adapters/integration_templates/room-owner-authz-note.md",
+      "bytes": 2643,
+      "sha256": "c8b37184e2e11983fabf331068191877828418de5f3c831b503293bec4ca46dd"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/auto_adapters/manifest.yaml",
+      "bytes": 2863,
+      "sha256": "2ef03904618c42f0ecc825e1f755c9418624813ee0b78d94158cd8aa289ceb55"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/auto_adapters/python/README.md",
+      "bytes": 710,
+      "sha256": "4b1fa487bcf72b0cd4589c5a23c96350b5ce52359aae2531dfc8b74734b142f8"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/auto_adapters/python/fastapi_reverse_proxy.py.tpl",
+      "bytes": 3532,
+      "sha256": "2fa8281db87d6ad8f8bb2f6f915dc95b2a60f6c1598175a0bb58f8f77d4255d7"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/.env.example",
+      "bytes": 449,
+      "sha256": "c7c8e6202cb092247b487adedb17bffa89b56382d895d6836d652ec2f33049ab"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/frontend/silent-listener.ts",
+      "bytes": 3019,
+      "sha256": "087dd894de471d4eebda3d051b0596b5f301af3fd63f521a6f726f74ad8a84d8"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/manifest.yaml",
+      "bytes": 4123,
+      "sha256": "5620a0584f932fa93b96831d0c36f58c668e3d93ac19839a0eb2713c49b776b8"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/requirements.txt",
+      "bytes": 107,
+      "sha256": "630343fd175dfe9412bbe7bdc62628ca1017a70593c37e79e8606164528040fd"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/src/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/src/_capability_loader.py",
+      "bytes": 3212,
+      "sha256": "efef4956fc1e29766e562277d4ef6bef88392d275fd20bc4901611c60787bfa2"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/src/agent.py",
+      "bytes": 5943,
+      "sha256": "56e164fe011ff8b34d0a2b730f44d04746d5163eeb146e9885be9cc6598ee9d4"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/src/credentials.py",
+      "bytes": 3365,
+      "sha256": "a87b449ed97f493b8ec8ddb56f44e4de8c8d0369faaa22754d1179d4e7e8c5a8"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/src/health.py",
+      "bytes": 10744,
+      "sha256": "5dc9a9fc4a235b11449434ebc25c571739a5da9c9f4992fa7f756f67381b3ffe"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/src/log_filter.py",
+      "bytes": 1063,
+      "sha256": "f4436ca29bde52147e40b744ec409a175e763f92c2eaadf753b10e6a2d8ac360"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/src/server.py",
+      "bytes": 10323,
+      "sha256": "50b2e2a77d6028be7191c9bd993535c79dac106f50fd64cc7d9ff17f6e7aedc1"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/src/trtc_client.py",
+      "bytes": 8204,
+      "sha256": "9f83d8f7dfa6a4702f94dfe894feaaefff1d3537482fd3cd72f01e5d3a75833a"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/conversation-core/src/usersig.py",
+      "bytes": 1837,
+      "sha256": "69633f2e2bb8ac35a50cf302ff47be101f8108cb4313d8674454e21f9268fa42"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/meeting-ops/README.md",
+      "bytes": 2216,
+      "sha256": "749c233fbb40b384f3c342a2a6bc02f3616610d3082e6dc9f5f99e771f017ee6"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/meeting-ops/manifest.yaml",
+      "bytes": 3484,
+      "sha256": "8e16829d61a3f591db7db0d1459b69206b3d4c93f9a9023cb53095c924f8a150"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/meeting-ops/src/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/meeting-ops/src/fanout.py",
+      "bytes": 6741,
+      "sha256": "0205b659216506d56b1b3a564d7d6ba4739efec64e72ea9742706b223151426e"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/meeting-ops/src/router.py",
+      "bytes": 3023,
+      "sha256": "19c8f670d74994dae16a4438783adf6461d46b24aa977b4e0732208b7879dbbb"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/realtime-translation/frontend/subtitle-parser.ts",
+      "bytes": 4686,
+      "sha256": "31f5f6eb59f0341d836ab26061e60333f40b099bbbc73bcbb87047be8c045eef"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/realtime-translation/manifest.yaml",
+      "bytes": 3284,
+      "sha256": "baf3344e9922bdc4f6177ed61e335d85f916898e99eb4f865eaa5acd39098fb1"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/realtime-translation/src/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/realtime-translation/src/modes.py",
+      "bytes": 3135,
+      "sha256": "3130d7cc4fb76092538fcbcee6cb9872848a3cfc933c9935be3cab14d16769f3"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/realtime-translation/src/router.py",
+      "bytes": 2742,
+      "sha256": "e90ce7aab956993f44f9e40ec4ee85ba9ec85c4acaf3272a51000d3e4c2e0e8c"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/capabilities/realtime-translation/src/service.py",
+      "bytes": 3160,
+      "sha256": "fc5e632a1deb3e8a689350bc2d9114d821e88a9a8c43b6e80cff774f4e99d454"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/README.md",
+      "bytes": 1785,
+      "sha256": "f414f3d257b4dbc6025cc0e4eb24ce140ad2a1b04ae5fe25530daf502e84933e"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/backend/app/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/backend/app/server.py",
+      "bytes": 12517,
+      "sha256": "d8b4933d4bb647e807ec39090141fb498a819d7246ce6b35764e417970e3b335"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/backend/requirements.txt",
+      "bytes": 104,
+      "sha256": "940121ce5701d6432bc753986a422873b633259952eb81628a07a0b4b472a0cf"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/backend/start.sh",
+      "bytes": 1055,
+      "sha256": "19fd703a1ebf3102a7385a6cec8885e189507c374d9ec3fb65e262ba98fe4a9e"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/recipe.yaml",
+      "bytes": 3176,
+      "sha256": "991e7f1d9a8273ef1e924ab5b6ab37bcd4af66a57921925315d341dc140b6331"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/.gitignore",
+      "bytes": 88,
+      "sha256": "879a97104514b2a9979a47a88d8cbc66bb71037b3873b7479f27c4e667b70b38"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/index.html",
+      "bytes": 397,
+      "sha256": "101f5aeb58bbd5ea18a01d1e7727f5061fa09bf353716cb1fa3bcebf57aadc66"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/legacy/index.html",
+      "bytes": 40619,
+      "sha256": "f4ed3ef57026793e6b6daa785acaf55f5bb8757714b981d543a2332d366c9c81"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/package-lock.json",
+      "bytes": 157957,
+      "sha256": "976ecfcc6d9f313ecc9f41d6d6f9867bf9ac8f85548244218c1a1b0081ea9116"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/package.json",
+      "bytes": 921,
+      "sha256": "d820c9710042fef8cefa413927197cc78cd9074724688e5c2a8c27ca934499cc"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/postcss.config.js",
+      "bytes": 80,
+      "sha256": "190c877db466995bf1482f4a16abd06e04a89ede3119341e2a86ff96e1737b27"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/App.vue",
+      "bytes": 568,
+      "sha256": "12e8fa034a46549219263e0570960237bd71d17504d9f4a9d37c2a457c928eba"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/api/backend.ts",
+      "bytes": 2596,
+      "sha256": "284636d1a8d4c67803494caa31d09d5c65c020bca6cd55f2f402946da1186893"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/SetupScreen.vue",
+      "bytes": 10223,
+      "sha256": "553dc2e93196d574585b86019d9b67aac0331405877e16326e48a49dd13764b3"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/SummaryScreen.vue",
+      "bytes": 5692,
+      "sha256": "5e718f41e801c2be3180474b602caae8a7ec79946c3afbda0e9a23e951c80b1e"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/conference/ChatPanel.vue",
+      "bytes": 5114,
+      "sha256": "b725410d31177be58973d41e0863ca541d3aa81b8ab88f1d9cabea5941ec58a3"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/conference/ConferenceRoom.vue",
+      "bytes": 12680,
+      "sha256": "9ffd925780529f230a5b5d85d1cfb91ec1a4a1338896365943eddbf30752625d"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/conference/ParticipantViewUI.vue",
+      "bytes": 5120,
+      "sha256": "248b0015440b02c4cb1bd1775542ef8278b3f90f3f59ba4df54e6234097a288b"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/conference/PeoplePanel.vue",
+      "bytes": 6349,
+      "sha256": "88de5f1b656ca52e5512d23c3b38b8c93062900940769a43b0766f2637817c07"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/conference/SidePanel.vue",
+      "bytes": 1957,
+      "sha256": "1063dc2fa28cbf3bdd66c4941a04476a15d8ad35745376882c8f9460503385e6"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/conference/Toolbar.vue",
+      "bytes": 10614,
+      "sha256": "ea866d1020644c5ccbd28cf9e4108161a1d9de89a2b8d6c4a00673b3e2901983"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/conference/TopBar.vue",
+      "bytes": 8169,
+      "sha256": "d54482b6e725312b8214f902cc907b2d131d259a47736b1c386d54c7c3bf58d8"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/components/conference/TranscriptPanel.vue",
+      "bytes": 6052,
+      "sha256": "732969123b1cf2cb6938d4c0a5b30cbca5fbe10d0566792a9940932f42669dd2"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/composables/useAiInterpreter.ts",
+      "bytes": 8043,
+      "sha256": "580a8b01368f635dda4a3bcdebcdaf524dab0c7870ce9fa1abd8e0bd0e1b76bb"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/composables/useConference.ts",
+      "bytes": 3194,
+      "sha256": "831087203f66cb9c7b9e523b1e1f44fa0fa24442e20b49aca6e224db3fe686a5"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/env.d.ts",
+      "bytes": 186,
+      "sha256": "cb3a8a70a87f0b1872244cd0bbe5bb5ddd602d820b7766a4d515b04eab8c40c7"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/main.ts",
+      "bytes": 111,
+      "sha256": "0d42fb6bb74a51d647f20a0cd2bcdcc7b89b146f4cdfbf6f1f7b640e7e036119"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/store.ts",
+      "bytes": 2457,
+      "sha256": "2a288658e322e47c1946430f1b9e424f46c6743d11845920914bcd2b2c9cb597"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/src/style.css",
+      "bytes": 297,
+      "sha256": "303217e0c6195a43f7e56cded21bc6dc5167efa0d8750caaa7b880efd1cb00ce"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/tailwind.config.js",
+      "bytes": 761,
+      "sha256": "212f1a160ba1bb3ba6d9a8987471040f7ee76e61d40c5f000fe876e263938f3d"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/tsconfig.json",
+      "bytes": 685,
+      "sha256": "a9930ad0b9fb7093b9b0a001234a211e8fe412966e99a1586e17829170938768"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/tsconfig.node.json",
+      "bytes": 213,
+      "sha256": "9e2abb169ea87b7190613a1d4da57ca608463a453bd4231fa3aeee5e308370dd"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scenarios/meeting-interpreter/ui/vite.config.ts",
+      "bytes": 737,
+      "sha256": "33515c749e34be97ee0c6f175d99cec4fd19784152c59d802ed4a2926721a8c5"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scripts/add-capability.py",
+      "bytes": 6590,
+      "sha256": "12b3a299d75d8ee1c2b632896ff42a3cc7b961df5bebbdcadf88c478be65671b"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scripts/deploy-demo.sh",
+      "bytes": 2360,
+      "sha256": "31ba197793f7c3e9a5c7f832c6d4c1daabd9452ca593f43c558b793444176e51"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scripts/lib/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scripts/lib/credential_validators.py",
+      "bytes": 5185,
+      "sha256": "88b96037e94bd7a853da384cf32fcba1f8500eb9dde509d0540bd2b78c73cb14"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scripts/lib/manifest_resolver.py",
+      "bytes": 2019,
+      "sha256": "3610f983e705a2f722e22b2ad581fee68ac706940f830b81f6acd6c39cdbb883"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scripts/lib/stack_detector.py",
+      "bytes": 1568,
+      "sha256": "4f7306cc6de8431107229d30d6ac24a3716c611446ce34cb68b5439a3da51628"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scripts/post-install-patch.py",
+      "bytes": 3001,
+      "sha256": "f7e292cb58bbaede1b12ade22a1fd05e3116e6fa25082f8bf8bab81b12884810"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/scripts/verify-credentials.py",
+      "bytes": 2790,
+      "sha256": "aa6233b1adab69269d7981f818beb10ddd87951f3d332ef46eddc32adb37b3f5"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/start.sh",
+      "bytes": 3702,
+      "sha256": "ccdf6e01cbf36394ebfb481271c54e6eb1625c174cbe60b4b7eab0a32bf1419f"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/triggers.yaml",
+      "bytes": 803,
+      "sha256": "5ec690f60c117ba25e966881f0e9ccc3ef27c594edcff3b683d836e2e99d53b6"
+    },
+    {
+      "path": "skills/trtc-ai-service/README.ja.md",
+      "bytes": 14333,
+      "sha256": "a23e9c3e2ac9d0d43a5eca0f0637f7b729b35b05eacce547eb792b35104ee91f"
+    },
+    {
+      "path": "skills/trtc-ai-service/README.md",
+      "bytes": 11151,
+      "sha256": "ce0acf0e0c9bfd6750bf5083f4673fd1331be73df5e516993883c84868dc49bf"
+    },
+    {
+      "path": "skills/trtc-ai-service/README.zh-CN.md",
+      "bytes": 10403,
+      "sha256": "314eb567822dbc787fdf896134167c441500bbe0f994aedec847b9190b070e24"
+    },
+    {
+      "path": "skills/trtc-ai-service/SKILL.md",
+      "bytes": 57229,
+      "sha256": "c6569a29a0076c063e130d07eaeef3b53f663e8f1ecd6fd011ba7a670d6ebb5c"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/README.md",
+      "bytes": 1791,
+      "sha256": "2a9c3aa6f79e55d33a61abd3b775c980831f8e78e5f802cd5cc6c353ef79dafb"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/frontend-spa/README.md",
+      "bytes": 1233,
+      "sha256": "ad73e201f4792f9f559d1a1ef173edcd923c2670876be0b79f65eb71667ec7c0"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/frontend-spa/angular/voice-agent.component.ts.tpl",
+      "bytes": 3907,
+      "sha256": "c45481316c05adcae1c415aa26a31ce7e9eb5690c52a144c9c88664132a3b84a"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/frontend-spa/manifest.yaml",
+      "bytes": 2039,
+      "sha256": "0056628d7e0963049615e74fa94b3fa5bf71a61ce06daca223601778f0bef21c"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/frontend-spa/react/VoiceAgent.tsx.tpl",
+      "bytes": 4337,
+      "sha256": "1f7b53b555d010357cccf61be16ca2551148acfa2a33041769bdd55b71002314"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/frontend-spa/vue/VoiceAgent.vue.tpl",
+      "bytes": 3608,
+      "sha256": "25b712ceaffd5a6a4c585e5682eded622fbeaec659f84b70746d8b93f1911ad8"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/integration_templates/generic-backend.md",
+      "bytes": 1890,
+      "sha256": "2996a2daabd12b66ccb2cfc6b437922c6f50f459e050b4821a54d63de94e56c7"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/integration_templates/generic-frontend.md",
+      "bytes": 1575,
+      "sha256": "7fb346d03827b9f28d7201197847eab37550721030b2c693c3a8d17395bfbca3"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/integration_templates/generic-rest-api.md",
+      "bytes": 2541,
+      "sha256": "7ad9233c7da8af6b636dd4fde0b4bfb98245d3b844281023a52a4ce04717ed2c"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/java-backend/README.md",
+      "bytes": 875,
+      "sha256": "07b3d53483250640bdab5d3c3dee1ac08956c2dee421b6eae4ad1d01a355026a"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/java-backend/manifest.yaml",
+      "bytes": 1072,
+      "sha256": "23b562af12b9c25edf3925a95dcfdc46dcd4e64b9442839c484fd563a41c3360"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/java-backend/quarkus/VoiceAgentFilter.java.tpl",
+      "bytes": 2468,
+      "sha256": "233886b70d8442b833671d5eb18af323e00b90aa05214e72180f63bfda01b9b0"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/java-backend/springboot/VoiceAgentFilter.java.tpl",
+      "bytes": 3574,
+      "sha256": "732638c9094b7b17582859820eebb26e8f10a2993a3916651e0015999700ea84"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/manifest.yaml",
+      "bytes": 1590,
+      "sha256": "2f1f8f8174d15747c5ca19837f3de5b3a0dee10e41e7fed58ce7388dc6a10cb8"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/node-backend/README.md",
+      "bytes": 1243,
+      "sha256": "255ab12362a1dc0b28b8eaef507cdf2fac1e1cef34ef78a79624e1286b28c294"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/node-backend/express.js.tpl",
+      "bytes": 1689,
+      "sha256": "608265cccc0e7a47d456fd2528f27f4a1cfd2c77c630e42196049cc48fef68ee"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/node-backend/fastify.js.tpl",
+      "bytes": 1073,
+      "sha256": "c7ec9ccc86cb74f25b36c9d2d5aec29c9fd972f884f41778d9d5615e6325c519"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/node-backend/koa.js.tpl",
+      "bytes": 1225,
+      "sha256": "3bd5186ba5944ab5d3627af8704f68677d587a239a6436bb8a1692210899dd63"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/node-backend/manifest.yaml",
+      "bytes": 1517,
+      "sha256": "38c85adbabcfd394e9cbd58f394de8de138691f87fd7722f791ddff0734fedcd"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/python-backend/README.md",
+      "bytes": 911,
+      "sha256": "d4908ddc295aab97d26efe5ec25e96ec3ffb4e83ddbdb30271371ddd82988306"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/python-backend/django.py.tpl",
+      "bytes": 1193,
+      "sha256": "5febbebe6af59d3b003b3ed785c9bea306dffacb3ebb1d83978aeba5e0a22d68"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/python-backend/fastapi.py.tpl",
+      "bytes": 1310,
+      "sha256": "12d13af2268883f5ed9fb0563d13ed371b011aba2dfc49cc606f11d683fe24ca"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/python-backend/flask.py.tpl",
+      "bytes": 1108,
+      "sha256": "1b3561c0fd0c12b17758ab4e2f1b822fb91ada6100c8128b004b6cfb8764c1af"
+    },
+    {
+      "path": "skills/trtc-ai-service/auto_adapters/python-backend/manifest.yaml",
+      "bytes": 1267,
+      "sha256": "b1730665d0aa5403cddb5a8f06c1f486f23f7c3a57393209d687726bedc39000"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/__init__.py",
+      "bytes": 1217,
+      "sha256": "de88a301c7e7906a0551b40b64f8db6b44a624af4e6bad448d61f8ba658c8d05"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/.env.example",
+      "bytes": 1001,
+      "sha256": "0de5bc344a2a092c1d0d9629052db2e1b7b3ab04bf65fe2f9739271b73d02b61"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/INTEGRATION.md",
+      "bytes": 5928,
+      "sha256": "45602c6e2f9865549fe69fbcf3ba481f46a47b7dd536f5132aa4d33cc4d8c1dd"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/INTERFACE_ADAPT.md",
+      "bytes": 4598,
+      "sha256": "19c7e346e4d931ec0447650709b6dfb352c6e6e2313b985229785594bfb339c7"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/QUICK_START.md",
+      "bytes": 1983,
+      "sha256": "304dd8cbb8ed8d0f7164628ce92274b9c4fde474c1661b84838f099ff825ac84"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/manifest.yaml",
+      "bytes": 9626,
+      "sha256": "d0c8b2ff616c83678583cccf9a5120136e5f0eeb73da14afeaf5d895c804f60c"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/requirements.txt",
+      "bytes": 109,
+      "sha256": "c9b9c213a20b6006a1c869e6e287393b996ace7478a3b6f6c2c3f1ada93b3bf9"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/__init__.py",
+      "bytes": 402,
+      "sha256": "6a804cf621cf72d836a28d71b7bfa4571629d11439479d43544f1ef78dcdf4ae"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/_capability_loader.py",
+      "bytes": 7743,
+      "sha256": "493eb4c31885ee78c25aa2f410aa7d7758c0ad1418cda8226717608590af6437"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/agent.py",
+      "bytes": 9590,
+      "sha256": "bc2a780d57bf3ae105961732e236a98e40fc505e55a1bbfd367297ac7869402a"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/credentials.py",
+      "bytes": 3976,
+      "sha256": "603edb3052e4ff10454ea270714e3481185f3a81fee51a0e1e49ef68d41d8ddb"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/health.py",
+      "bytes": 13609,
+      "sha256": "5cd3945f96c0ba3f9fe667ca00b45204dae3fa31d028bee90890c16cf2480334"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/log_filter.py",
+      "bytes": 2454,
+      "sha256": "6e0433ad48a2145cfc94077648b8a1058fe49a4d4ee9972494ef940f3edb5ed3"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/modality.py",
+      "bytes": 4109,
+      "sha256": "5975a1e28b5ddf350dac6bde831f2012dbb3dabd8d593589233c47611a527be2"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/server.py",
+      "bytes": 11738,
+      "sha256": "ee75e596e01f451a5d2cbc5d3e5388b2d027086eb8fdb8781c3aead8cc9d17bb"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/trtc_client.py",
+      "bytes": 12515,
+      "sha256": "855027dcd5a667bdda976f39ff3451c2cec258670f4d086bab18de388a510841"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/src/usersig.py",
+      "bytes": 2616,
+      "sha256": "ed9df7e232fb294bc18eee9e888337de9aa8c92401be82abdd32b7de35559ccc"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/tests/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/tests/test_skeleton.py",
+      "bytes": 7601,
+      "sha256": "fafbfff574e6bc38b89948c656c03a06cfedd7ff3f3a8c7777a47b6963107fba"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/web-demo/README.md",
+      "bytes": 1868,
+      "sha256": "de8728d3086638fa60525cab84fa9a8e1a38ac0c8cc28c31615c1cc3deb9eea8"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/web-demo/app.js",
+      "bytes": 14262,
+      "sha256": "a2434c4d11b7318550ec2d0325ffc28f881766656024c4f354395c51d4a4c2cd"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/web-demo/index.html",
+      "bytes": 2638,
+      "sha256": "52a9beb11d29cd68bd795d0751823bd9dd4ea090bec5c99da290430264001fef"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/conversation-core/web-demo/styles.css",
+      "bytes": 4197,
+      "sha256": "9dbe8acb1e6274b15a4a3f359515ab25213ec241dd9e9aecfd514a2bb3116eb4"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/digital-human/README.md",
+      "bytes": 1221,
+      "sha256": "a81907d5feade64cf2ad3ed8eb0d619bff6aa0ab1d270e9e8c6cba389056b046"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/digital-human/manifest.yaml",
+      "bytes": 2281,
+      "sha256": "1eea9c61dc780196eccf96a7d7b4cfa1b5d9ab490b8cacb2f8891a0dd6e071a0"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/digital-human/src/__init__.py",
+      "bytes": 108,
+      "sha256": "d40f059ce0ff04a34f631c5d9857e07b4444ea32ac71b43018e45ca7692b9024"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/digital-human/src/router.py",
+      "bytes": 1345,
+      "sha256": "1e5533ee83110f96d60eb35bb4b0c6df9ab3eecab8e1165c03fc9eb587a6476c"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/INTERFACE_ADAPT.md",
+      "bytes": 11000,
+      "sha256": "df825b929243759094fb9c35df752f91b8c65e0ce341f9b8acee2a407f956811"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/README.md",
+      "bytes": 1557,
+      "sha256": "5aff7cbca8214d05e0a4693ff189a9c47d0d522d2d07b17a42a66e201062199f"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/manifest.yaml",
+      "bytes": 8612,
+      "sha256": "00dbe531defb4ccda5feebfc1b7c3b686205fd0aec80b41020aba762904f886d"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/__init__.py",
+      "bytes": 102,
+      "sha256": "7c2b98eb8e4d605b009ef6b7ce53e9bbff19dc645a8c38da3b79d7a2c7aabda0"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/adapters/__init__.py",
+      "bytes": 210,
+      "sha256": "dfcdd4680f8e344539c20aa9583b034baef97aa4203ab572433ef9004c1db6e3"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/adapters/default_rest.py",
+      "bytes": 8438,
+      "sha256": "5f376696a5b63694390c2f069fb9b3d4211fb5312fb73a2ced0816047c2a7996"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/adapters/factory.py",
+      "bytes": 2906,
+      "sha256": "c35d48376aa50d281b9ad63a74ff979dac6c1e944810a7559b12a818b9206455"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/adapters/local_queue.py",
+      "bytes": 9663,
+      "sha256": "a4cb279ff03c3ef58253012ab8ec94de76697ebe907a8f23e4aa73e1be612ac3"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/adapters/mock.py",
+      "bytes": 5156,
+      "sha256": "24ec7eb6246742c3cef6b6a52d858fc779b80976e2eb0c91f7fc665969e729fc"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/core/__init__.py",
+      "bytes": 560,
+      "sha256": "7953b437117eef2ec869ede52ec38bc51351df1b57b9645d9caca5b0419231e9"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/core/intent_detector.py",
+      "bytes": 2514,
+      "sha256": "15aa04bcf41fd500bacbaf4e4f5e387be409b5e25db19eb709dcc39609808935"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/core/models.py",
+      "bytes": 5392,
+      "sha256": "886fddcb59b936185683cbd4cbc0a77b397795f123c45f56574b866f168d1a3d"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/core/service.py",
+      "bytes": 7795,
+      "sha256": "a488c38eea68b4189258be4a9b61b7798d8e02c49481653f06b3320f1b79650c"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/feedback_store.py",
+      "bytes": 1804,
+      "sha256": "30ab2e27747dd19333deec2eb8d49fe55d946c592c6de1056540be855538f9c5"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/ports/__init__.py",
+      "bytes": 114,
+      "sha256": "ce35aec12ab6ee9d89cbfb6d3b6841e03fedab6b22df4474d03eee9b7ddd84a3"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/ports/handoff_client.py",
+      "bytes": 3084,
+      "sha256": "f6e3dae022cf6826ce7a7bb2a990da9e6643fda56a8f79e44dc35d35ad5eb7c8"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/queue.py",
+      "bytes": 2066,
+      "sha256": "cb671599757b1313da332ff26a975a10930c24a94ce18d86f165972f88d8ce77"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/router.py",
+      "bytes": 7014,
+      "sha256": "15a96113efcf7d13f2e94a73ee49e0e9c4eb79943b9d62b3d5fb305531638ed3"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/summary_link.py",
+      "bytes": 3327,
+      "sha256": "7f8ed6a5d2893ee6845e3b31e05490915b0b44ee7404e2a600f453eff79a2c81"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/human-handoff/src/trigger.py",
+      "bytes": 986,
+      "sha256": "53edb86077652df34556493e8190e5d24f38f3396a3ec5606c7cbdc55dc1d325"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/INTERFACE_ADAPT.md",
+      "bytes": 8506,
+      "sha256": "279d6243f39e686965023c72bb65c1e3279d3477372fbb2267173f15b8b6452b"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/README.md",
+      "bytes": 1320,
+      "sha256": "6cb39a1ff3a7025e755b06fc25beecff36b6c4305ddd01b65a2909a14fa85e7c"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/data/faq.json",
+      "bytes": 858,
+      "sha256": "f7cf4ef5721d56e57aadd777b71ac5eaca6906feba83c3dba28e9dc58d27947f"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/manifest.yaml",
+      "bytes": 7588,
+      "sha256": "e115e0521e6281d86ab22b68d0af8913c2c4edf0d0d53f5228230e3c4e4abeb0"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/__init__.py",
+      "bytes": 297,
+      "sha256": "dd1ad9dc9932814f76d3f5a6232d5cd270d7a5955daddf56484ebc4d4bc2bc26"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/adapters/__init__.py",
+      "bytes": 211,
+      "sha256": "dbe21b30797784af07bd52fb7fa17d406e4e023f5c5e2a5c135722a3ec0dbbdf"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/adapters/default_rest.py",
+      "bytes": 6805,
+      "sha256": "f44811316dd6dcc80929f40549ddf9a5aed76b9117177ee9cf3893a4fbd7ad4a"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/adapters/factory.py",
+      "bytes": 2696,
+      "sha256": "525918804cf72e7a8ffbda1ecee2575b421fe506d6126954a9cbed4d84ca6e02"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/adapters/local_json.py",
+      "bytes": 5933,
+      "sha256": "aafd4ccdb34b3aaafe9a9db230812811758ee51506effa6d4a7205ca481394f9"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/adapters/mock.py",
+      "bytes": 3614,
+      "sha256": "6d36e6f8209897a2ac88bb8d1a2e958ef7a00a895652b8eb685ae0b75f9ff686"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/core/__init__.py",
+      "bytes": 294,
+      "sha256": "3b2e86ea2ebc4c725d1bf6be804754a1b1cec644f351c992cd2dd881b2996073"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/core/models.py",
+      "bytes": 2218,
+      "sha256": "d32e1892b2997390a7a4e1f436bf371c6e3fc72397f436ad13f9cc3ff8195047"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/core/scoring.py",
+      "bytes": 1931,
+      "sha256": "fd8fb87ad7a30264c7cfb15a3b89f4161f36f60bf5d841d5a3812fc5b83e51cd"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/core/service.py",
+      "bytes": 2500,
+      "sha256": "180dcc19a6f49ca7fea0c5ff83bb6fbdb19b6cf62d336f73f619e75a3bf550e1"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/ports/__init__.py",
+      "bytes": 122,
+      "sha256": "6bf85a7edaae7b8da4cdaa6e13b47b51d524eef5bbb8178b44538996159f14df"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/ports/kb_client.py",
+      "bytes": 2203,
+      "sha256": "430366a83f9a5275e08ffc197a42a7dd28793e95f89f71b2b1b4e497b6e711b3"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/retriever.py",
+      "bytes": 1946,
+      "sha256": "13dd4daafefd7695cbb0f09f75507cfd5232f5270961f92ab0f58767d089243a"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/knowledge-base/src/router.py",
+      "bytes": 2413,
+      "sha256": "fe9adcd8114438fe29d96f3b7dd11d6814ec4a6ebc3d87b70da9a979446c4c63"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/INTERFACE_ADAPT.md",
+      "bytes": 3808,
+      "sha256": "e98848102f0e71ee6e0009ebb22ccde51364818eeda37bd012a5c2eaf1b819a2"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/README.md",
+      "bytes": 1522,
+      "sha256": "d11a5d1ce8ca19f40369b3fd8f9453b657843a100d362b3366505c44793bb20a"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/data/test_session.json",
+      "bytes": 371,
+      "sha256": "8a194a00ba545024cca5ccf4488d45b8e8bf0976bedd1c648a502ad79268aa4c"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/manifest.yaml",
+      "bytes": 6694,
+      "sha256": "551d69bd6018a6f469dc282f20746b653c8eaa1758cb87cc09c4bfdf3079759e"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/__init__.py",
+      "bytes": 95,
+      "sha256": "05e75dae07bb3e4f0229f078f4f7a69b6ce4c88ad4b70e4affebc0564cc857df"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/adapters/__init__.py",
+      "bytes": 147,
+      "sha256": "526e89c329ef5a940a4043c39f52bd78e4cb7a34988a17ce42d764951910b696"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/adapters/base.py",
+      "bytes": 1198,
+      "sha256": "568ede16929a5a16a6a7351eaeb99189dc523558661e0ba4135a63ed5ee13232"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/adapters/default_rest.py",
+      "bytes": 2688,
+      "sha256": "c1cd88b77f0d18bd3521b0d097cf7aec333ee83ac042f5cb038ff047afa4f7b2"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/adapters/factory.py",
+      "bytes": 1767,
+      "sha256": "47ae0d753da5e0516103147db2be4e7e19353b5aa5bf88a8dec7b630c61987a5"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/adapters/local_json.py",
+      "bytes": 1327,
+      "sha256": "e7d641e853292af4f906c2dba313ad66c55a7f69a46229dc852dc49a21bd6e21"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/adapters/mock.py",
+      "bytes": 834,
+      "sha256": "d46478fc9473d4e4246dbf90bcff1940dc7c37382c3304a31ffa2270cf3f58fb"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/recorder.py",
+      "bytes": 6656,
+      "sha256": "c6f40ad554e61977d450f15e951d299ef360ad0490b4a21620498cc4b6d23f78"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/router.py",
+      "bytes": 3162,
+      "sha256": "c5a94b0a0c7bf15407461977c7d499d40a0535fd16c5934fce02636396c3a055"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/session-summary/src/summarizer.py",
+      "bytes": 6069,
+      "sha256": "1eff3b7d1823ff5b9a76a33134bc4c334baf34c85873890b169509b7b6deed1c"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/INTERFACE_ADAPT.md",
+      "bytes": 5271,
+      "sha256": "2e214bbad13cd1951d36e4d236b0a32bfbc3cccac0d9f10380ddc9f28e7a6e77"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/README.md",
+      "bytes": 1594,
+      "sha256": "29d8dd806a8c7e3f558b94b30859e63c15bd7037317d4559307cfebad9f763ac"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/data/tools.yaml",
+      "bytes": 2211,
+      "sha256": "c07b5accfd61badb4b14147fcc378c970039831935be4280be5322bef5d99290"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/examples/__init__.py",
+      "bytes": 53,
+      "sha256": "bffdfd2243381f80b82d97846e9f5daba77b3c6d9f377b34b254aa4264a32a03"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/examples/local_tools.py",
+      "bytes": 4264,
+      "sha256": "a308e446fa35f742e2e96d2f8b53ac39541e24b25e7af2c209b572c3d04564a3"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/manifest.yaml",
+      "bytes": 6330,
+      "sha256": "01e75ef2bcccb0c5899e0b7ed12c8857c43e1da27cdcbb3da0b6a74ac87df882"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/src/__init__.py",
+      "bytes": 298,
+      "sha256": "76952b8b66963cc8f096b1dcb1b314cc619b4c07dd0dd39757c74a8568dfb558"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/src/dispatcher.py",
+      "bytes": 1684,
+      "sha256": "d8d9e020769bdfe6cad12c6eb728bdff222ef3ad74a52b228826f4ae810615eb"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/src/registry.py",
+      "bytes": 8187,
+      "sha256": "f876ef14792357b5b07d62170724acce8de1744dfa8424143387e72819deb382"
+    },
+    {
+      "path": "skills/trtc-ai-service/capabilities/tool-calling/src/router.py",
+      "bytes": 1543,
+      "sha256": "dca3a14ada095df5aad41b617c4e56f4d4ff8b5833de3c80462febbdfa925483"
+    },
+    {
+      "path": "skills/trtc-ai-service/references/business-contract-spec.md",
+      "bytes": 10587,
+      "sha256": "84d6a234dd3f98fa8d750e1eba84f5ac5573c50640115cad69ce3ee7119e1ca9"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/custom-builder/README.md",
+      "bytes": 4099,
+      "sha256": "e233d17e3e33c4145b9c0c5d20d2839d7d5045db610254eb67fb2bdfe182e651"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/custom-builder/output-templates/recipe.yaml.j2",
+      "bytes": 7833,
+      "sha256": "4dfbc7dd4bb93d9fa5f9f709020c93771cff2ec6ff1c99fbfd90787919431fde"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/custom-builder/prompts/q1-business-scenario.md",
+      "bytes": 1910,
+      "sha256": "719679a8624c83f1b959e46772ad074b2a758213d64e634c658f3c90d4ef6f9c"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/custom-builder/prompts/q2-io-modality.md",
+      "bytes": 2345,
+      "sha256": "bfb40d3aec150946d1dd8548128c5fb8f6d21788277182353ab4b5495e4a9194"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/custom-builder/prompts/q3-ui-form.md",
+      "bytes": 2281,
+      "sha256": "7601de1cf40d2ca87ebc209565ba4b82c4365141b69e04a412a6d8cc882fca51"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/custom-builder/prompts/q4-capabilities.md",
+      "bytes": 2773,
+      "sha256": "caaa76588745ce0253945230afabdde4640a3a29ac65fece848be558d4de9a68"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/README.md",
+      "bytes": 6143,
+      "sha256": "579b96717dadbcedece74eab5950d41a56a33839505ebe6b3ee74f82836a2f8b"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/recipe.yaml",
+      "bytes": 7977,
+      "sha256": "ca445f99b7216ed09a1ba0ef7b1858fd4a0b31224b41c65fb2b5377bf7ded1b5"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/sample-data/README.md",
+      "bytes": 1159,
+      "sha256": "20be8ba76e6b48091d800e8bfe405c1ba3cc1220ececbb155b8cda0440130386"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/sample-data/faq-sample.json",
+      "bytes": 2416,
+      "sha256": "f140e4ee2cd87972718edcfb524dd9fc91f93fc772bad5e68667e92b6029d2fb"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/system-prompt.template.md",
+      "bytes": 5296,
+      "sha256": "f1c74a3c7948775b421ae1b326118b260d4799311cd7b28a1818e8ee7a2cf7d5"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/admin-board/app.js",
+      "bytes": 13897,
+      "sha256": "67b7c32647c175977357b241995910dc3a8a4d9daa6f86c4eab1baebe1b1c602"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/admin-board/index.html",
+      "bytes": 5403,
+      "sha256": "89ab48e6a8c347be400ab564a9438020d4d6654781afe3a7539c42124164caa6"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/admin-board/styles.css",
+      "bytes": 13906,
+      "sha256": "a2cc04e4c88fb4d24b33365c7e73c193a6e3af06f7c99b7b09e3040b8e0720e6"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/admin-board/tokens.css",
+      "bytes": 2397,
+      "sha256": "32f46e719768795b429b5326de072466ca038f07ae6d83fd40f8a93875ad850d"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/design-system/DESIGN_GUIDELINES.md",
+      "bytes": 15070,
+      "sha256": "ffb43bdd206ee4a0c0d6e172dfbd0414ecbb42099d3404417cc14fe5aec3f612"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/voice-customer-service/README.md",
+      "bytes": 4460,
+      "sha256": "b5c99bb786ea2155a8035a4c339be665510137c196512a0f6de1f48757e89b1c"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/voice-customer-service/app.js",
+      "bytes": 50353,
+      "sha256": "3dbf0378201c9fd19238bd0ec57661a314a63bffffb04902ece67fae00878ca1"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/voice-customer-service/data.js",
+      "bytes": 3397,
+      "sha256": "214abec8b0b866352e7da0c99c4a853e975fd6af56261eb902cc87705a7c1a48"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/voice-customer-service/index.html",
+      "bytes": 11936,
+      "sha256": "1499ce777ee380af3cdeb80459fb4b1765762d2d083577c689c7d27bbd19154f"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/voice-customer-service/mock-shop.json",
+      "bytes": 3237,
+      "sha256": "51c79e1ec314b23899467af6eb1d4ab82574bf9629625500ffeabc3bb97d70d6"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/voice-customer-service/styles.css",
+      "bytes": 25736,
+      "sha256": "2e1ec425d693a158bf34acc163cbbae453ba6473d7ff82ecfbadac10a8494b24"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/voice-customer-service/tokens.css",
+      "bytes": 2397,
+      "sha256": "32f46e719768795b429b5326de072466ca038f07ae6d83fd40f8a93875ad850d"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/widget-floating/agent-link.js",
+      "bytes": 11482,
+      "sha256": "d09dd33000d421c52490083da3172fe2193e60029e3a9bfc8bde86d866346796"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/widget-floating/app.js",
+      "bytes": 18043,
+      "sha256": "52200a2fe21d0a8bfac6d3f16c10009d570480c3611b1588be43867489a7ebde"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/widget-floating/index.html",
+      "bytes": 7377,
+      "sha256": "0c6d8f6dfeff32d8e43c0ff36f80aa318ce28323f9aa658d77f15b030512d6dc"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/widget-floating/styles.css",
+      "bytes": 13837,
+      "sha256": "d1821b5ebb2fed0463d7ce468338c1a6988a5c3ea17f5fd60a6ada75ac8224da"
+    },
+    {
+      "path": "skills/trtc-ai-service/scenarios/customer-service/ui/widget-floating/tokens.css",
+      "bytes": 1717,
+      "sha256": "665cc0aea51323a89c3ba46a60b80ad605aa1f16c9faf65461ca5c4bab7d3a56"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/add-capability.py",
+      "bytes": 13140,
+      "sha256": "12564f156d8c197d61b2f4b7b995f93571a03c451c948a5e46fbb7ddfe4012f2"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/contract-adapt.py",
+      "bytes": 11967,
+      "sha256": "ea57a1cf6865e76ee2407530fd26f2ca43fddd1f0e79b5e90263292995b1c2f5"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/detect-stack.py",
+      "bytes": 1145,
+      "sha256": "e3520c01d97fac6490affed83f1c5bc63ca00f25e13e398cd7de04d1078a00aa"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/__init__.py",
+      "bytes": 879,
+      "sha256": "a1140ad602c578e3f1f86c19d7c837002e00063931f07f2dec9b81f5538b3eb6"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/adapter_codegen.py",
+      "bytes": 20822,
+      "sha256": "e0c44edb0b58b6102022eff18ebe5503c3202e901ccdace4579978dda7713bcb"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/arbitrator.py",
+      "bytes": 5700,
+      "sha256": "ca7d6d6dd5b612519941d395a073c9ef9c2086087b2b3aac69ebb0305fd2addc"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/contract_resolver.py",
+      "bytes": 20002,
+      "sha256": "b8fabed018ebf7e935d86a04634b80aae6a7a4680e7c47bf9ee865ece38a27ca"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/credential_validators.py",
+      "bytes": 9383,
+      "sha256": "ea9be04cf94c517126af046d65126842c43b2923125ef8ff3e634fac6b71a1d6"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/curl_parser.py",
+      "bytes": 10818,
+      "sha256": "db12d7f9e284fe687c527d792aad046f2266ce2a7f8377a802e069c111c8760b"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/degrader.py",
+      "bytes": 5392,
+      "sha256": "cd77d60dd0e2dce4dfc7d0b42def59fafef7c525a64a48f02d951284b042fba5"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/injector.py",
+      "bytes": 13153,
+      "sha256": "9dd8b7d6a3847da41b871e124f74d0364b8c77a710a39e762db4c4f207474561"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/manifest_resolver.py",
+      "bytes": 10839,
+      "sha256": "905f86448c47bbddb74633bb20a773dfab0e42b335fad4171384b748f84e2d6f"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/openapi_parser.py",
+      "bytes": 11267,
+      "sha256": "bcfaeaa9186d7a98e4436b9ba590999b7e6ec159f7eaf7f492f99456d06b7671"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/stack_detector.py",
+      "bytes": 4349,
+      "sha256": "ff026d23c4094ab86614d84bce81fb3a3b8f89bddb98229f07ac2ad07719f8e8"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/lib/tokens_compile.py",
+      "bytes": 7887,
+      "sha256": "53f13fefdddaa005c2b0b533a59fca444c7e45b592b876a97b2917e1747387ab"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/post-install-patch.py",
+      "bytes": 9121,
+      "sha256": "1c3386e8e291232e730e205b85e82455e1b5496ae3581601d4a10ff7ef5a78c4"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/setup-credentials.py",
+      "bytes": 15148,
+      "sha256": "3d15a004961213c8c27e4a0b161dfc4282fb11d132b01c926ba0e21368670b6d"
+    },
+    {
+      "path": "skills/trtc-ai-service/scripts/verify-credentials.py",
+      "bytes": 3790,
+      "sha256": "79d465795748b26e63fe9bd4c3e2f99be4979ce815540eacc1d861aa312d2754"
+    },
+    {
+      "path": "skills/trtc-ai-service/start.sh",
+      "bytes": 5110,
+      "sha256": "344751a2d18aee994f4eff7e1eda21176d5eea8cf5afc0ccc59b9a1c0cd1c57b"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/__init__.py",
+      "bytes": 77,
+      "sha256": "0f9f5c3afbae38583ffae6c997220524c3dd3e38d3941670d71ef064ecd25fbf"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/test_arbitrator.py",
+      "bytes": 2361,
+      "sha256": "8cf9c089225e981352f8165efd1a1fbd371e5fa0f9d7b03bcaef3450bb685e91"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/test_capability_overlay.py",
+      "bytes": 3539,
+      "sha256": "d94e45a84a86eb8329ffbaba9c472d5de23efa7e2de02d272274a56f4550db9e"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/test_contract_resolver.py",
+      "bytes": 7261,
+      "sha256": "ce3ee5ceee73e729220ee2ce8cc6e031e1b1afc98c6e3f8a4c72f63d703c7cd4"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/test_handoff_ports.py",
+      "bytes": 8358,
+      "sha256": "eec08ad5d2d389d878ada7e63a1107d16da76e00f01d73e1e6e71b7962f2bc87"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/test_kb_ports.py",
+      "bytes": 7036,
+      "sha256": "e34e2bdce14827b10598b1d78c5c814623d6001c748ded87fee9640b4b017d0e"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/test_manifest_resolver.py",
+      "bytes": 3733,
+      "sha256": "165fe36697164377f4f436422368d00f16904efbceaba9cf566caa59dc74d6fe"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/test_recipe_assembly.py",
+      "bytes": 7138,
+      "sha256": "2c97681a31a684c7571e5401fe5629be1266df1ba2140fb9ed4947202f45f400"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/test_stack_and_degrader.py",
+      "bytes": 3796,
+      "sha256": "702da4e4fca0f8239616266f194fd02812a7b4e3ee96001189447d8ce2333187"
+    },
+    {
+      "path": "skills/trtc-ai-service/tests/test_verify_credentials.py",
+      "bytes": 11776,
+      "sha256": "261cedcab09851a6faae40e9aed09867c77f2a798f93ae3c555df75c022f9ae7"
+    },
+    {
+      "path": "skills/trtc-ai-service/triggers.yaml",
+      "bytes": 961,
+      "sha256": "3a5dd239d59130f2c73220fb3e221a58e2eb3351835f0fc93c272bdd4c2af6d8"
+    },
+    {
+      "path": "skills/trtc-call/SKILL.md",
+      "bytes": 13709,
+      "sha256": "293a7ad47bb645a81880d85e73181a82fdfe3c16601cb106fa007291968a6316"
+    },
+    {
+      "path": "skills/trtc-call/flows/basic-call.md",
+      "bytes": 48165,
+      "sha256": "ec2e0151e8c73c144322295132c6bce21ffe8c1e19fb76c17c202430b424421c"
+    },
+    {
+      "path": "skills/trtc-call/flows/demo-experience.md",
+      "bytes": 6186,
+      "sha256": "dd9c0ee41f5491a16e95eaf2dfcbec559849ce4c4543bfd41550367d400d613c"
+    },
+    {
+      "path": "skills/trtc-call/flows/troubleshoot.md",
+      "bytes": 4415,
+      "sha256": "5ced7ac802146dfaad091a6cc4820a143b5503b81e4e5769adf4fb9cb57beed2"
+    },
+    {
+      "path": "skills/trtc-call/playbooks/capability-catalog.md",
+      "bytes": 6661,
+      "sha256": "3af9dcc9169e762571a9653c3ee2f6498ed9c58d0a868d0249b8075d06ebbd02"
+    },
+    {
+      "path": "skills/trtc-call/playbooks/embed-in-app-backend.md",
+      "bytes": 1810,
+      "sha256": "4f6bf992af120eb10042478d3c6982b6c0f8a68859c2068f8a537fc23d703250"
+    },
+    {
+      "path": "skills/trtc-call/playbooks/embed-in-app-local-dev.md",
+      "bytes": 11028,
+      "sha256": "55b5357417c6cb9365e15ac46085f17e1d7510fb32acdcea4d39bea315198b0f"
+    },
+    {
+      "path": "skills/trtc-call/playbooks/integration-reference.md",
+      "bytes": 10259,
+      "sha256": "7245c3edfbed4698c1bac352cee491d17faecdd382db7ebafb42206d21fd8d29"
+    },
+    {
+      "path": "skills/trtc-call/playbooks/optional-tweaks.md",
+      "bytes": 10111,
+      "sha256": "1086a65d8048f047c82e5f3ff609aadb56304d802d9222ac28f599540fec48d0"
+    },
+    {
+      "path": "skills/trtc-call/templates/lib/debug/generate_test_user_sig.dart",
+      "bytes": 3887,
+      "sha256": "10b4b6750ffd3eaf9669f137995ea393c8e1b78efbf705d18cebf94db66018c8"
+    },
+    {
+      "path": "skills/trtc-call/templates/lib/trtc_call/call_auth_lifecycle.dart",
+      "bytes": 2247,
+      "sha256": "61793c99a1a69e4addfb2e770ad6eaf5934da57a3e1ee2876dc87abbcea7e472"
+    },
+    {
+      "path": "skills/trtc-call/templates/lib/trtc_call/call_button.dart",
+      "bytes": 4352,
+      "sha256": "b1cef6ae9ff67c82e5570d1c0624c2e7edb753797a4593175d046b21c1d1fb73"
+    },
+    {
+      "path": "skills/trtc-call/templates/lib/trtc_call/call_observer.dart",
+      "bytes": 2103,
+      "sha256": "0ecf3216d5943b360931a2058d57ba1377ecb2ea47ccce971de9c21ae187cc0a"
+    },
+    {
+      "path": "skills/trtc-call/templates/lib/trtc_call/call_service.dart",
+      "bytes": 5405,
+      "sha256": "ca6a5ee61d6a37e85d008c625c52e21cfd163db4004201d8110a16fa534a2c73"
+    },
+    {
+      "path": "skills/trtc-call/templates/lib/trtc_call/device_control.dart",
+      "bytes": 2525,
+      "sha256": "1bc7a70f9aaa938e63d7d59f6b6137a89f432764b7140870cfc751c75f363510"
+    },
+    {
+      "path": "skills/trtc-call/templates/lib/trtc_call/group_call.dart",
+      "bytes": 2494,
+      "sha256": "8203121dc41853848c63ac3cae383e08a6384620173a00eafedde50ce05983b7"
+    },
+    {
+      "path": "skills/trtc-call/templates/lib/trtc_call/login_event_listener.dart",
+      "bytes": 7408,
+      "sha256": "33d5f438437636e11dc9bec866a99115d87bedd7aee3474fc7c9bed9db3f05bd"
+    },
+    {
+      "path": "skills/trtc-call/templates/lib/trtc_call/trtc_call_bootstrap.dart",
+      "bytes": 4829,
+      "sha256": "42c75f7dd101a555baf8678dc293795d0670f7a98165a9b8131fcf5bb36dc733"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/android/gradle-min-sdk.groovy",
+      "bytes": 248,
+      "sha256": "86efd3d572493f084f488248b77c4b5d10a9b8dfa47fed2ab21519ca3054f45b"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/android/manifest-audio.xml",
+      "bytes": 128,
+      "sha256": "6e289813bdc0e5e65875089b8b36dd868c6769f9fffa568da9229ec6f7cae2ae"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/android/manifest-camera.xml",
+      "bytes": 60,
+      "sha256": "437070bc261a5c1b2d96cd6eb86bc3ac7fde347ef806999681b93293d32be2bb"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/auth-lifecycle/create-backend.dart",
+      "bytes": 180,
+      "sha256": "659b8224ab579c954f9e25f378ec4862fdb28cbc45a626b9b78a9e7f467bde6a"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/auth-lifecycle/create-local-dev.dart",
+      "bytes": 195,
+      "sha256": "713e0add4f2c7deb6a50b72f3d471467b952eb11d69402f0ab97624c4dbb0b86"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/auth-lifecycle/sanitize-user-id.dart",
+      "bytes": 536,
+      "sha256": "2f8d91ef33cb8bb3ab79462bea968635ac2052ede821e213decbe4530faa21c7"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/auth-lifecycle/sync-user.dart",
+      "bytes": 67,
+      "sha256": "112e6a0360fd5840a242864b27d0f640a9ec4da089804629225ece28fc57b14a"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/go-router/import.dart",
+      "bytes": 63,
+      "sha256": "533993b541e92c29f3ecfba8767ffeb3aefb9908ee4710ad606a115dcaa233a8"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/go-router/observers.dart",
+      "bytes": 43,
+      "sha256": "ba96199ba0449031a6628954ebd033e2ea27b8a4795bde9885267fd5bd8bf51b"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/ios/info-plist-audio.xml",
+      "bytes": 94,
+      "sha256": "50cb52f6756b7176110dc4ec4051f0e54656bcab32d29b20d74e6c00a6566fb1"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/ios/info-plist-camera.xml",
+      "bytes": 96,
+      "sha256": "edba1b85d64fb460a0fd0b67732f64aae37516a665d8fab195e034cbac079a9c"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/import-local-dev.dart",
+      "bytes": 89,
+      "sha256": "365018f4b76cac6d85c8effeb73425f5c30b45d3f5216774ccf206b71cd454d6"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/import.dart",
+      "bytes": 45,
+      "sha256": "ca3714ac5b79577b21cc9a7dcc829e6fca4d099fca3c08f0f2effa4bd4fb92cb"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/materialapp-params.dart",
+      "bytes": 535,
+      "sha256": "7cf40cc5a02db4f844be54eddd4a9ca08bfda731e715bba8cbc042e33c18dd87"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/materialapp-router-params.dart",
+      "bytes": 201,
+      "sha256": "16981d06dcb752417845b5b074a49d836e434fa7e83688a293cc1d5e0a62e76c"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/myapp-constructor-params-router.dart",
+      "bytes": 29,
+      "sha256": "200503572803960e2655c4abe3ec902d5c8dd70c58c5e1f920616c646ed6aff3"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/myapp-constructor-params.dart",
+      "bytes": 58,
+      "sha256": "6a5def25686c3df2d9846ef2b53b4976d6ae5fb9a3d5e05a15c8a64be25f3330"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/myapp-fields-router.dart",
+      "bytes": 58,
+      "sha256": "f0290195ebdc16a09a0a68916b07add5b7c78cf0d0b910a00b9205c22611f386"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/myapp-fields.dart",
+      "bytes": 103,
+      "sha256": "b2060f62c361d558ae9121e7d22d69d26e5d90e8305ec2dfbbfa003017bc96cf"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/runapp-backend.dart",
+      "bytes": 263,
+      "sha256": "7d0fa0c9ae57c5f50266ce9e03466106d57f090e8e06bc5ccc792916a4722ee9"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/runapp-local-dev-router.dart",
+      "bytes": 555,
+      "sha256": "c457b27e244ff78e05db3a65b3a8cd6b76361634b6bf0a3b903ed1d7548ccca4"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/main-dart/runapp-local-dev.dart",
+      "bytes": 601,
+      "sha256": "7ce51a562cf5aa4f95f744c99eaeb486801a9c9b886df1ad156410fa3701e539"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/pubspec/local-dev.yaml",
+      "bytes": 17,
+      "sha256": "4fb864c1c3db881954bd928f37bbe617301e59bb5a4764633e0cbbfd71ea0b31"
+    },
+    {
+      "path": "skills/trtc-call/templates/snippets/pubspec/shared.yaml",
+      "bytes": 72,
+      "sha256": "f49cbd2cd6093d03dccd0ac49e2866311da265656f433f34dd181387f9a7ab22"
+    },
+    {
+      "path": "skills/trtc-call/tools/apply_plan.py",
+      "bytes": 21524,
+      "sha256": "c82090549bca1f04abcd8fe2d19f1e4f9a17af18ed8cef3af22ce6f8b034d7cd"
+    },
+    {
+      "path": "skills/trtc-call/tools/project_probe.py",
+      "bytes": 21421,
+      "sha256": "a63e2cc5a1b0430bb403574c43fa47b3a104c2fe609a2fed1571e734e61680d9"
+    },
+    {
+      "path": "skills/trtc-call/tools/verify_embed_in_app.py",
+      "bytes": 33303,
+      "sha256": "19fdc0f643fe5d2f7433313bc4e832da669e3a3969c0a5b35a6a6c732ec94f75"
+    },
+    {
+      "path": "skills/trtc-chat-android/SKILL.md",
+      "bytes": 13635,
+      "sha256": "f98218728d94677427425bd9d8ff5b56c55df729bc41f11d420cde23ace1acb1"
+    },
+    {
+      "path": "skills/trtc-chat-android/references/boundaries.md",
+      "bytes": 4950,
+      "sha256": "d598dd688147c098143da7799ebdb5a569cd636ecadce21b2e47a1935ae62a09"
+    },
+    {
+      "path": "skills/trtc-chat-android/references/constraints.md",
+      "bytes": 6435,
+      "sha256": "efd900fc007f75cfe43e0b9abed5f2905daa55cfa9021f99a609d81dd97d1067"
+    },
+    {
+      "path": "skills/trtc-chat-android/references/customization.md",
+      "bytes": 11251,
+      "sha256": "f21ef940e16a36c5bc0b6c3919db9a64d01a0e4108d555142de60b064bc164a5"
+    },
+    {
+      "path": "skills/trtc-chat-android/references/demo-data.md",
+      "bytes": 8934,
+      "sha256": "f1f202b5ec6fd32cd6c33fda88562b2c4ddec980b71f0fd83c2e7c181eddf268"
+    },
+    {
+      "path": "skills/trtc-chat-android/references/integration.md",
+      "bytes": 22973,
+      "sha256": "68b09dc91dfddb3850993265c530e8ffc1f39ff638e9eb9ad6eb8a517751a7ff"
+    },
+    {
+      "path": "skills/trtc-chat-android/references/troubleshooting.md",
+      "bytes": 16416,
+      "sha256": "083612dffd9f28809b6511f674d17a7d5317ac86dd15d5bd8a52f68be7306a78"
+    },
+    {
+      "path": "skills/trtc-chat-android/scripts/SeedDemoData.java",
+      "bytes": 46562,
+      "sha256": "3ee4eaa05d4dedd7108616cc7c6d3650a81ad8912e87f1ad551a216ebc237a71"
+    },
+    {
+      "path": "skills/trtc-chat-android/scripts/seed_demo_data.js",
+      "bytes": 26448,
+      "sha256": "6bad703acdcc37e54493e1ea1334a88f35f357d48e9c39c9cbaccf6b81da066f"
+    },
+    {
+      "path": "skills/trtc-chat-android/scripts/seed_demo_data.py",
+      "bytes": 28526,
+      "sha256": "a5d1eef706bec8f990309b157d1e2e5efefc9b814e9fd28be89676f8fff1ac9c"
+    },
+    {
+      "path": "skills/trtc-chat/.docs-query.yaml",
+      "bytes": 293,
+      "sha256": "a97d028af03892c2576ff1d64205bfdd4ed5354413817cfdbca27ca7f9aecdb4"
+    },
+    {
+      "path": "skills/trtc-chat/SKILL.md",
+      "bytes": 7430,
+      "sha256": "b5072421a395c7852948f6f88539845beb46c6b120e37638d138e7717997de20"
+    },
+    {
+      "path": "skills/trtc-chat/docs/SKILL.md",
+      "bytes": 1660,
+      "sha256": "22de576029c8793449ee11c716155aaae79bbbb817b1b2af19c97005febb8768"
+    },
+    {
+      "path": "skills/trtc-chat/flows/maintenance.md",
+      "bytes": 557,
+      "sha256": "0a51e60653215222c5f15f13d533827169ef4e472541d21de8289443f8c7bf52"
+    },
+    {
+      "path": "skills/trtc-chat/flows/onboarding.md",
+      "bytes": 2690,
+      "sha256": "e844782e5a4a8f4fac51ce04eaaefb7aebfaa833c5743a00a1d3e9034bdac40d"
+    },
+    {
+      "path": "skills/trtc-chat/references/01-detect-project.md",
+      "bytes": 5700,
+      "sha256": "98b74a0834b4d4419bca2acb356fd576d0616607e9131c2861df0dc50d6980d5"
+    },
+    {
+      "path": "skills/trtc-chat/references/02-path-a-questions.md",
+      "bytes": 8872,
+      "sha256": "c5af3fdda921e2cc90831228a922e70ee0c892451fd9debe1f9669f4ef672fb9"
+    },
+    {
+      "path": "skills/trtc-chat/references/02-path-a-scaffold-template.md",
+      "bytes": 1492,
+      "sha256": "f00d0fc21852e93d85bcf0432998a9596b23fc987193af42ed23b27f7372fb8e"
+    },
+    {
+      "path": "skills/trtc-chat/references/02-path-a-script.md",
+      "bytes": 14419,
+      "sha256": "55a23fee46dd34ee904e79c96637dc110e4c12a4fc46db80432c59e08e8587ca"
+    },
+    {
+      "path": "skills/trtc-chat/references/02-path-a-templates.md",
+      "bytes": 4955,
+      "sha256": "59a202118ffc49cd390fce93b66b3c5ede02fead41db3a5db048f57d15a51a93"
+    },
+    {
+      "path": "skills/trtc-chat/references/03-path-b-script.md",
+      "bytes": 9491,
+      "sha256": "40128727c0e941ea683ddfe537264b8bb3bb9da37f07944dd6ebec672f589836"
+    },
+    {
+      "path": "skills/trtc-chat/references/04-path-c-script.md",
+      "bytes": 4599,
+      "sha256": "e975e90224ccdf32b0c76e36e356b596a8bbe125599c35f25ac5f6d408a0167b"
+    },
+    {
+      "path": "skills/trtc-chat/references/04-uikit-redirect.md",
+      "bytes": 1308,
+      "sha256": "66c29b927da97b023ba0e49bf1de8c2097a09c1b10509f0bccda1065e379aa57"
+    },
+    {
+      "path": "skills/trtc-chat/references/05-path-d-script.md",
+      "bytes": 38509,
+      "sha256": "e648fa4f3408f1c45b104bdcdd06ad4ee342e856cef26a3fd302a761ac71d56a"
+    },
+    {
+      "path": "skills/trtc-chat/references/05-slice-loading.md",
+      "bytes": 5584,
+      "sha256": "e48a9c53b6594a016075eedbb828051eae5e219640af7e1b23594548387bd8e6"
+    },
+    {
+      "path": "skills/trtc-chat/references/06-a-defensive-coding.md",
+      "bytes": 5098,
+      "sha256": "5810ac1fb573db2ff54fea8bddf814b6f37422a15c31233c9a90897341f62698"
+    },
+    {
+      "path": "skills/trtc-chat/references/06-hard-rules.md",
+      "bytes": 10253,
+      "sha256": "0c738fb72009dddfcb87196b038707a93d89c4c09df83a02998eae702af295ac"
+    },
+    {
+      "path": "skills/trtc-chat/references/08-state-config.md",
+      "bytes": 9440,
+      "sha256": "ef424c3f04a7cc9dc7ff7e37b9b015d99b3d1434075687afd2bf166e83329425"
+    },
+    {
+      "path": "skills/trtc-chat/references/09-troubleshoot.md",
+      "bytes": 4609,
+      "sha256": "2e96a844356a1f92dbd099dffd4ea9c3df688b5c4d7d499463e3f10dec18f533"
+    },
+    {
+      "path": "skills/trtc-chat/references/10-references-index.md",
+      "bytes": 5190,
+      "sha256": "3091a8e27b1915e6fa0e778f9a532d646f677ce81a54efae6ffd6ac1c6a0579c"
+    },
+    {
+      "path": "skills/trtc-chat/references/11-what-to-do-next-template.md",
+      "bytes": 11755,
+      "sha256": "c19d259f076fc4943022600f73abaa07701121a63cb1edaacfd2307f778e4434"
+    },
+    {
+      "path": "skills/trtc-chat/references/12-page-composition.md",
+      "bytes": 3909,
+      "sha256": "21b9111adeb3ffc03ea635be4cf1c49baaea32f63d32aacb5d80c5fd560bda2c"
+    },
+    {
+      "path": "skills/trtc-chat/references/13-reporting.md",
+      "bytes": 6277,
+      "sha256": "80d5c160f06edde218dccc3dd35659ce11982397327bc3b3a76367f49b744b2f"
+    },
+    {
+      "path": "skills/trtc-chat/references/14-official-docs.md",
+      "bytes": 8871,
+      "sha256": "9fdc846735fe64640df86054f246ca141e0f748363f9b91ea712dc1fbcbb9cba"
+    },
+    {
+      "path": "skills/trtc-chat/references/execution-units.yaml",
+      "bytes": 806,
+      "sha256": "324cee22b8b93644d8ffd32ed99f1878534121740d626c4c65b8e4dc97d18c8c"
+    },
+    {
+      "path": "skills/trtc-chat/references/vue3.md",
+      "bytes": 4986,
+      "sha256": "f4d3fe1b9f2b6017ed86a24289a136743f50e430316f28bbe35981e4f531f606"
+    },
+    {
+      "path": "skills/trtc-chat/tests/test_chat_bundle_contract.py",
+      "bytes": 12815,
+      "sha256": "a208b025d3bba0e7b93a02ba0126444e63700a8f4cd85ddc1a29302452ae8b61"
+    },
+    {
+      "path": "skills/trtc-chat/tools/__init__.py",
+      "bytes": 227,
+      "sha256": "21f1dfa7a22af86961dd78eb7bfcb451670c8b312c521734dfb77f7cf26449f7"
+    },
+    {
+      "path": "skills/trtc-chat/tools/_delegate.py",
+      "bytes": 1375,
+      "sha256": "beb47cfc02835769eded5acb82b727779cc743a735b2ec1920e6044071128504"
+    },
+    {
+      "path": "skills/trtc-chat/tools/flow.py",
+      "bytes": 224,
+      "sha256": "6f4cb4490e6fc136fad906a37c57c83f1ec7c6baa2a8b0f4015403dfe1b25d06"
+    },
+    {
+      "path": "skills/trtc-chat/tools/kb.py",
+      "bytes": 223,
+      "sha256": "658c0d41939bb73df286e266afa66943be09535509373d918e65f72e8a63c12d"
+    },
+    {
+      "path": "skills/trtc-chat/tools/reporting.py",
+      "bytes": 379,
+      "sha256": "c0bb3a46d09b3a0e137891185a029cb008cb44203fb3b038ff9ec9de947e1670"
+    },
+    {
+      "path": "skills/trtc-chat/tools/session.py",
+      "bytes": 233,
+      "sha256": "fcdd8f4aa7fc37280c91f0fa73b23c8e666c4dcbe534fcc98a4e7984dbf42bc7"
+    },
+    {
+      "path": "skills/trtc-conference/SKILL.md",
+      "bytes": 16192,
+      "sha256": "ae4668f04d86208903146afe4babac70856f1686ce69ba8e7b28728d1fac814a"
+    },
+    {
+      "path": "skills/trtc-conference/flows/onboarding.md",
+      "bytes": 9691,
+      "sha256": "54d23497a6f9828c7ca01abe626f732994dafd1a1544cfae2da44eea247d9c44"
+    },
+    {
+      "path": "skills/trtc-conference/flows/topic.md",
+      "bytes": 27643,
+      "sha256": "b25868cb5da3119c587a52adfca4043c6261d338b384d78ff33e6d80f9b4937b"
+    },
+    {
+      "path": "skills/trtc-conference/flows/troubleshoot.md",
+      "bytes": 4745,
+      "sha256": "23eb2986e1b20ab20d0a0c22edb13433c084ef5112b78a01f46172071ce32cfe"
+    },
+    {
+      "path": "skills/trtc-conference/hooks/pretooluse_require_business_decisions.py",
+      "bytes": 7223,
+      "sha256": "dbae7fd31cacd9208633e88f47edadb0d5c5c2350868c1ed572214a769dbed73"
+    },
+    {
+      "path": "skills/trtc-conference/playbooks/medical-quickstart.md",
+      "bytes": 2683,
+      "sha256": "2385809b9379f183efec3f9414ef364de1a8bba2ca7590098e610f19422a6575"
+    },
+    {
+      "path": "skills/trtc-conference/playbooks/official-roomkit.md",
+      "bytes": 4813,
+      "sha256": "72ed3bfc17ba373cb33a55e989e340bf041b3437aae354bd7d31a202967afc33"
+    },
+    {
+      "path": "skills/trtc-conference/references/execution-units.yaml",
+      "bytes": 1609,
+      "sha256": "46e49ac6e43c41c91944987670152f936eb5bcde8edee472cc1f9411a27f64ec"
+    },
+    {
+      "path": "skills/trtc-conference/references/local-usersig/basic-info-config.ts",
+      "bytes": 1187,
+      "sha256": "5c70576e6b869701ca0ab1b6ce7a9f8f1923cf4a35945a33009af9a4c760c4a3"
+    },
+    {
+      "path": "skills/trtc-conference/references/local-usersig/lib-generate-test-usersig-es.min.d.ts",
+      "bytes": 162,
+      "sha256": "005b7030fcddd4e4f7daf053e5370ce87a200a521929a88b6dbc40f419cfed92"
+    },
+    {
+      "path": "skills/trtc-conference/references/local-usersig/lib-generate-test-usersig-es.min.js",
+      "bytes": 150683,
+      "sha256": "64ada79767b5d68dff79d1b00fd2d38181dba4f8f3b63912beaa020a10cbf5d7"
+    },
+    {
+      "path": "skills/trtc-conference/references/usersig-handling.md",
+      "bytes": 5253,
+      "sha256": "14fef00c870a939510523b4a5a1419c8a05e3fd25c8bd619c3db50db6d9fbacd"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/.gitignore",
+      "bytes": 30,
+      "sha256": "1b796d1e0d098711f436f6b54956daa0aa66ab919b5c0b50e19a81dffc8c3d95"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/docs/backend-contract.zh-CN.md",
+      "bytes": 3440,
+      "sha256": "a1a2d874f3697ddd4ada137e29d42c27f58a8547a27d22cee84a1cda8c54be8e"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/docs/integration.zh-CN.md",
+      "bytes": 4764,
+      "sha256": "d2f03f2746ecfe0e135c5a6561bf7be051f2cf1fbbee77eae9718d5ecfe20b99"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/docs/theme.zh-CN.md",
+      "bytes": 2685,
+      "sha256": "c26407542d21c4d6a5d1568019da2da8cabd4b062c2a9796fac495f2a93af056"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/index.html",
+      "bytes": 302,
+      "sha256": "3053de0f99c512754dfebcaa4857d361c1408ac94ff5c5bb33f2c677eac0760e"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/package.json",
+      "bytes": 724,
+      "sha256": "980aeb373e35fc5fd39c69e74bf297df91ee1de04f19788d43366e6467412bd5"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/postcss.config.js",
+      "bytes": 72,
+      "sha256": "323d21314f4ee8f2a44c196b2a0cfc87b98144ac5eae429c1749dd5a4da9da1f"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/App.vue",
+      "bytes": 549,
+      "sha256": "04bc4d4bc17ae2484fed63978c34826f810776aba6380281bb1e66b9fa95e674"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/ConsultationManagePanel.vue",
+      "bytes": 25202,
+      "sha256": "3fe8a7c6c487121ee554157e307e943d5896051d4461c91769561aa26344380b"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/LanguageSwitch.vue",
+      "bytes": 2758,
+      "sha256": "d09e33999883c17b0b181417b7ad1d3c00011ed2775c44635f461e55cac0b82c"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/LoadingSpinner.vue",
+      "bytes": 182,
+      "sha256": "50b358f9642c735dbca1aff22286715b9dad89fee782d52c582eb94c984edf4d"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/MedicalAlert.vue",
+      "bytes": 943,
+      "sha256": "28fc0219cce97ddfc1afc0c0020498eeae391aab163b70f40372c5e4db7c7d6b"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/MedicalBusinessPanel.vue",
+      "bytes": 5468,
+      "sha256": "548ffdbbbc6063f206619f167c5eef8efa95f18c2f23105223088385ea09944b"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/MedicalButton.vue",
+      "bytes": 1509,
+      "sha256": "fce3f35fb5b3763716207f48d8ea7902a813b1e13e39f584794087699a5b560c"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/MedicalConfirmDialog.vue",
+      "bytes": 1824,
+      "sha256": "61cde331320af07ffef8c3aaa0079bc5c86df8e9483fe46b72ba58bb86024e1e"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/MedicalDataPanel.vue",
+      "bytes": 6362,
+      "sha256": "3318d152b2d70a6d50ede1dea0ce67d77af7168ecb807eb87c6f2c355924c8a8"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/MedicalRecordPanel.vue",
+      "bytes": 9741,
+      "sha256": "6a31a14e11339ad9a936041557efb2ef923602f439ae70d442a25b51813cdcfa"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/components/PrescriptionPanel.vue",
+      "bytes": 13009,
+      "sha256": "eef4c42f455b4a74317c3f38059703a68aa33cb21733a1660c5ec45dff3d1c85"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/config/basic-info-config.ts",
+      "bytes": 715,
+      "sha256": "b6b0c68933d9655cd7e97ab083d52ab05297249957824d31f64aedff98a003d8"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/config/lib-generate-test-usersig-es.min.d.ts",
+      "bytes": 162,
+      "sha256": "005b7030fcddd4e4f7daf053e5370ce87a200a521929a88b6dbc40f419cfed92"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/config/lib-generate-test-usersig-es.min.js",
+      "bytes": 150683,
+      "sha256": "64ada79767b5d68dff79d1b00fd2d38181dba4f8f3b63912beaa020a10cbf5d7"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/config/runtime-config.ts",
+      "bytes": 499,
+      "sha256": "d4f6d13640cf0fc0d6a49ef9efcf124b8d151515af7e0867d860795165245be5"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/env.d.ts",
+      "bytes": 751,
+      "sha256": "f13d6f50692706267a51fb57edb89d3aee281edbb35b6daed5ae8e098ff30740"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/components/ConsultationChatPanel.vue",
+      "bytes": 4267,
+      "sha256": "697bcb515bd5be3fdb052c6b09d2876a4ad63041dfa0956dda936772e915efe0"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/components/ConsultationMembersPanel.vue",
+      "bytes": 8855,
+      "sha256": "12891b431f9ca3932e14a908ec46ddea4b9ac23b2bb375350bee580f9a8cc43e"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/components/ConsultationTranscriptionPanel.vue",
+      "bytes": 5209,
+      "sha256": "3b8827097989dd13a1b5668bfd7b5d5099a9068f25907e382239e161d640a878"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/components/ConsultationVideoStage.vue",
+      "bytes": 3657,
+      "sha256": "cea66e74805717bc8d45015673c44a768f225f9c69aa6429ea8d4c8a4c6f78f7"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/components/InviteDoctorDialog.vue",
+      "bytes": 4809,
+      "sha256": "dcf2f98c1bae9ebcc3144e87b4ee739f3738d12907f144dec6d201e0827aeb54"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/components/KickMemberConfirmDialog.vue",
+      "bytes": 1646,
+      "sha256": "ef8b92d155e5d0253b8aa4ff590bdbce8b51e184d2cfb79680a860ecd59673dc"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/types.ts",
+      "bytes": 1516,
+      "sha256": "dc2a414ff6f8766f796843a4bf6d44d93835d48e8d0e891b569ebb5f4ca419f1"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/useConsultationChat.ts",
+      "bytes": 2639,
+      "sha256": "1edd0adf3cbcb3e353cbbb3fedbf0bfbafa8bd012bd007cf80f9b6f6564f82e2"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/useConsultationDevices.ts",
+      "bytes": 1385,
+      "sha256": "291a6c4fed74b498f9ae25472e90a183fa3eb9ef9501c5bd7e6d76372af0c646"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/useConsultationParticipants.ts",
+      "bytes": 3517,
+      "sha256": "b1c8f2f9b74de6f29161cf58ec63481cc4d75b7ba41d92c57cecad3417a64b5e"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/useConsultationPermissions.ts",
+      "bytes": 735,
+      "sha256": "a0e2a28060ff2aeb1677c432a60e5c21091c1a5ba6df34f6115bdfeaa9d34736"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/features/consultation/utils.ts",
+      "bytes": 2025,
+      "sha256": "fed29dcbf89a77f2ccc2eac3ee1782489f0c852ace1203a09b9440e7497da0b6"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/i18n/en-US/index.ts",
+      "bytes": 29969,
+      "sha256": "215513c73d2e9d1bce7f91547da19e337dd51e704bd7a316f446cf5fd08fa283"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/i18n/index.ts",
+      "bytes": 555,
+      "sha256": "ae9128a5a8115a7185110c652427090ad06372a536023d0e62da7c9805105ecf"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/i18n/medicalTranslate.ts",
+      "bytes": 3571,
+      "sha256": "dccd213a71fa88818ade4fd877fef34b9e81e1f6925301392d75e3c1963c5ff5"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/i18n/state.ts",
+      "bytes": 1430,
+      "sha256": "55a15e2d532f7d2a5b58acbce1bafdb42e80ec58858297f7fa307d46b74d3ae1"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/i18n/zh-CN/index.ts",
+      "bytes": 27838,
+      "sha256": "496318971c5842055a7f4e68b5e2078df79e3c3476629cc4f01c875070064f08"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/main.ts",
+      "bytes": 300,
+      "sha256": "5dab2fe9ef17f5b9bd0cd5d2dab70f2f3d7d1f9aacc8054ab085db0a50f8db32"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/mock/appointments.ts",
+      "bytes": 2897,
+      "sha256": "bfdff5312ce3e1fd629e5704db9dd270ee260d827d7e59bd9a9ec83e22eeacdc"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/mock/users.ts",
+      "bytes": 2028,
+      "sha256": "409546f6c3c5394acc20e4b04d9589f1fe3258e5951aa228002077d37e224b99"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/router/index.ts",
+      "bytes": 1511,
+      "sha256": "ef7782d676a0b4d176d29fc6d62d4a9c96d60c5faca224d64a8edd383ef5664d"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/services/adapters/index.ts",
+      "bytes": 1076,
+      "sha256": "4420c07157c7f453417011d27ba2db17ea958fa2701abaec7478564f4e61bd1d"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/services/adapters/integration/appointmentService.ts",
+      "bytes": 2540,
+      "sha256": "b3bad0d5e7f86491ea5cd1a8393598798accca2276f6303a0f43330ba482a423"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/services/adapters/integration/authService.ts",
+      "bytes": 1078,
+      "sha256": "5ef1952f09b4b12533fc934dd7aa8ea104f314555b37bdd489d5a1747ace5fad"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/services/adapters/integration/launchContext.ts",
+      "bytes": 1008,
+      "sha256": "a8502ff3112b6a4510d685400c634365bd29aebb7b1bbda8053d5e651daaedce"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/services/adapters/integration/userService.ts",
+      "bytes": 718,
+      "sha256": "62000335e625a6665319c5da20be0e4cc75480cc28968dc2b9e973291588855b"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/services/adapters/mock/appointmentService.ts",
+      "bytes": 1452,
+      "sha256": "ceebeddf23ab44f2d88ae5a216728a9ce4e9cf846e52edc943c40fcccdd3d1d5"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/services/adapters/mock/authService.ts",
+      "bytes": 813,
+      "sha256": "f415968aa6a0b656aff82ffe6096c9e92242bbb79d86d23c4558a78b922b3afe"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/services/adapters/mock/userService.ts",
+      "bytes": 1592,
+      "sha256": "ad84056ff6853c8a3f4c1710f8cdf323fbd7daa0ef5fc75ecfcbed02a82ff19a"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/services/adapters/types.ts",
+      "bytes": 3419,
+      "sha256": "ab3da263cfc650ca2f8ad4b3b8539cb9c08134d409b202ab034898e4274c278d"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/shared/icons.ts",
+      "bytes": 605,
+      "sha256": "86d6dff48841165f4e569893ee1437487295aa3ddf7220e56043ec769c13e9d0"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/styles/index.css",
+      "bytes": 2145,
+      "sha256": "0bebb379d6abaefdb54be6e2a23d20c226400cad1dd5dec5490320bcc286decc"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/styles/tailwind.css",
+      "bytes": 72,
+      "sha256": "408dc4c934281eba4ad454c80d208943fa9c9a05957094da4b0a7b95301ed881"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/styles/theme.css",
+      "bytes": 5853,
+      "sha256": "ff1f49e2d1aeb3887c99fa0b370812b5ee20b1d570301893c26ed7e1baba7275"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/utils/auth.ts",
+      "bytes": 1208,
+      "sha256": "98fd62f837017b84a1b27d34c2f163833b983adb659607995edec96601bd2b24"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/utils/format.ts",
+      "bytes": 1123,
+      "sha256": "e96f2c8159853896f42b8438d9041d86e8dba9ec1f81d129328190a44b0bc592"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/utils/navigation.ts",
+      "bytes": 360,
+      "sha256": "54b16b38b1fb451aedf63fab1e99818e00bb34a2d0110f9c60d8fb102ca1a125"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/utils/session.ts",
+      "bytes": 650,
+      "sha256": "3513002af6e5279e51cc0182755ba5fbefb6f4766b4d345cdbc2662954d15df0"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/views/DoctorConsultationView.vue",
+      "bytes": 27578,
+      "sha256": "c1c0b59ae760289a468c1c9710ec34f5774b396821f727aee76bb27fb372d27b"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/views/DoctorDashboardView.vue",
+      "bytes": 24483,
+      "sha256": "63a129ee9a03efbdabe44febd406f2917064f342a33b6a60ac9008ba4e89bee9"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/views/LoginView.vue",
+      "bytes": 16520,
+      "sha256": "ee7d8f257c27194cdf80db7e7784a1bdef7f641869bb9ec462f5f62dcd32c11e"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/views/PatientConsultationFinishedView.vue",
+      "bytes": 7016,
+      "sha256": "2aebdad3a4d21eb7bbe429dbdd0ee25092a238b507452cc858e7cc03183cb41c"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/views/PatientConsultationView.vue",
+      "bytes": 32573,
+      "sha256": "cb5b13d440f3929a141d332619c4b202065b3d164e03dc0d6503720bd6b78661"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/views/PatientSelectDoctorView.vue",
+      "bytes": 11140,
+      "sha256": "f9d6edec594b88fc067d002dcef9f17f3fdb745253a75b9f2a8acf72bf1b8ed2"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/src/views/PatientWaitingView.vue",
+      "bytes": 17024,
+      "sha256": "eee6a4c423f139369b60b593af7057dbb7eec6f967bc0285a9b7b1f4405d2409"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/tsconfig.json",
+      "bytes": 535,
+      "sha256": "c878d1b83bfaee54bd9a6b6782cfcd0d20eab3da41df64a00ff6e1e26b3f905f"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/tsconfig.node.json",
+      "bytes": 145,
+      "sha256": "10f9074ee898789581312e6d6ce0cfee7443e09df4bb461cb2267d2037426577"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/vite.config.ts",
+      "bytes": 353,
+      "sha256": "7381ff12fc68afaa57b406b5c51e988f233d26096f707e54701d8bb93ff31282"
+    },
+    {
+      "path": "skills/trtc-conference/templates/medical-consultation/接入说明.md",
+      "bytes": 153,
+      "sha256": "6ba619c353719c4c60ab47a33a111831d0b92edc9c28b8684946db9e36d7faf4"
+    },
+    {
+      "path": "skills/trtc-conference/tests/test_conference_index_contract.py",
+      "bytes": 2062,
+      "sha256": "51617881dac68f5ef053c2dcf8cd6bb76a02c9df9a06073d57c5b972782a92b3"
+    },
+    {
+      "path": "skills/trtc-conference/tests/test_conference_onboarding_contract.py",
+      "bytes": 4399,
+      "sha256": "e00f72c6c2eb74b2c53bd57ca3f0bc5a84a036b88f69bdb2ad217b1e564b501b"
+    },
+    {
+      "path": "skills/trtc-conference/tests/test_conference_template_contract.py",
+      "bytes": 1062,
+      "sha256": "878343620486f35675a85e5ae4c59d4f8baca2dc05583e0a43a73b8a38911ee0"
+    },
+    {
+      "path": "skills/trtc-conference/tests/test_conference_topic_flow_contract.py",
+      "bytes": 6741,
+      "sha256": "f626fa5f225a01d757d633a1c0dd84bea4d0c793dbc30d93d5b719ec3d2aa7cc"
+    },
+    {
+      "path": "skills/trtc-conference/tools/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/trtc-conference/tools/apply_checks.py",
+      "bytes": 11701,
+      "sha256": "adaac874f6929b0e48f9af4ba1e80aa0c3be97b3d8940f4f82e34bf2bb379711"
+    },
+    {
+      "path": "skills/trtc-conference/verify_lib/.gitignore",
+      "bytes": 20,
+      "sha256": "fbe0d641579abc15b737c0b41c290928d54045653ceb0c75bfe4c506c8ac20ba"
+    },
+    {
+      "path": "skills/trtc-conference/verify_lib/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/trtc-conference/verify_lib/rule_parser.py",
+      "bytes": 9186,
+      "sha256": "f6b0b86bdd0feb0641f0ef69d08fe14db03b2b8e63d0265263a487b5dc0816d4"
+    },
+    {
+      "path": "skills/trtc-docs/SKILL.md",
+      "bytes": 10349,
+      "sha256": "72aa1b2df875a19f466064c870fb7a27233f5fab95a0ac9bbfc59678519b29b2"
+    },
+    {
+      "path": "skills/trtc-push/SKILL.md",
+      "bytes": 10518,
+      "sha256": "ec6053ba68c2ebf6aeb8c24b72b7b8bc238bf9c68d565880a9fd7767b0eb41d3"
+    },
+    {
+      "path": "skills/trtc-push/issues/ROUTER.json",
+      "bytes": 20431,
+      "sha256": "b5f53f342e92478ebf5c2c81ae4016cb3a493258b3aca4186ab9e00f93716970"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/android/error-codes.md",
+      "bytes": 6465,
+      "sha256": "03a725fb41be3e420cad51b976b7e4b094279e11533f7af6e3162630a167ec26"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/android/fcm-gms-domestic.md",
+      "bytes": 3093,
+      "sha256": "ab3b7a16d73aef8bc75b99baa2d6772369d2544d12aea74b7c82bc445542efb1"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/android/kill-process-offline.md",
+      "bytes": 2455,
+      "sha256": "6e8bd74b89c926b009429404b9c0fab992b0016469866b0ed43b2a79c5346f0d"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/android/message-category-limit.md",
+      "bytes": 2567,
+      "sha256": "434dad6c3664fd76507ed7df210a26815007f6cc0a0e88b9b67f786e19f4b54a"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/android/notification-click-jump.md",
+      "bytes": 1990,
+      "sha256": "46b73748ee8060ee5cbe25e284648efb8dbf105b54e6624fa7ed2c1e14902fae"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/android/oppo-channel-display.md",
+      "bytes": 2514,
+      "sha256": "40420961ee373b477b87a2e9b8420f06771cf613b9eb08921704e84fcae7f46e"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/android/proguard-release-stats.md",
+      "bytes": 1549,
+      "sha256": "ac2f51d157b39ddd5f3f99c6ff5412e126cab9fb2d2324e889e2029b649a46d2"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/android/vendor-huawei.md",
+      "bytes": 4350,
+      "sha256": "d9d77d53a9454ea85f276581b951bd6d2f975ca75735e6f262691958e1794dce"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/android/xiaomi-vivo-store-channel.md",
+      "bytes": 2286,
+      "sha256": "d2b09cadcaeac1a5a75da046987bfba284c5f23ed0ff2d31f6ce6589979c98a5"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/common/console-certificate-quota.md",
+      "bytes": 2213,
+      "sha256": "6ce2bd2311939ec05501a9d71dff7d84b24eea1afdbe343ac3e824c904d31fc7"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/common/console-validity-gate.md",
+      "bytes": 2759,
+      "sha256": "cb3e1baa17f5dea672154f66bb1571265f9581a212b0c678480acc65cda577dd"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/common/registration-binding.md",
+      "bytes": 3509,
+      "sha256": "5ce5e60a48b26235854f3afe14d867719daca6953bbc15940ac8ff18f0040034"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/common/timpush-only-registrationid.md",
+      "bytes": 1707,
+      "sha256": "83ed75b6661b4c5fd29744355dfd5508cc5ab9ca4379cedeac08ee8dd3a91209"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/harmonyos/click-ohmurl-crash.md",
+      "bytes": 1738,
+      "sha256": "b1dc85d9ba06c31d08f2646636d34518375d16864da73c724217148975ac264b"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/ios/aps-environment-3000.md",
+      "bytes": 2063,
+      "sha256": "94df727436cd74e35d46b7c68eaa8d3370eb98b206b4cc35642254c1c72aaa54"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/ios/atomicx-vs-timpush.md",
+      "bytes": 3340,
+      "sha256": "67406677ba05b16d2fe3086c55018c58c923412d680d0e0c4b83e430c2d5fe4a"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/ios/certificate-businessid.md",
+      "bytes": 3440,
+      "sha256": "a9b7c98569574d450538b81b6ae3e27d7d82ede6ded1fd9652ce45d3c85b488d"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/ios/device-token-binding.md",
+      "bytes": 2203,
+      "sha256": "3c2cbcdf1ce7be6ee35374f19bd5dbd656ad45f2a160866a4500d77230768588"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/ios/notification-click-ext.md",
+      "bytes": 3146,
+      "sha256": "48630f6687f9d48d5ba544542c42a59c4d6b84556e901182d5fd5215740fc87b"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/ios/p8-invalid-provider-token.md",
+      "bytes": 1845,
+      "sha256": "5b4801eedfa8b7f15a8d0d31f2d03c909cbbdb713325448ecbf04d7c10b18cf2"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/ios/stats-extension.md",
+      "bytes": 1828,
+      "sha256": "7c413e738f1b47d188051417c1d40baa28a64c309d33da428190531b7f6d60ef"
+    },
+    {
+      "path": "skills/trtc-push/issues/cards/ios/xcodegen-cocoapods-module.md",
+      "bytes": 2591,
+      "sha256": "38ab33fca06641ebcd783b5d57bbdb3e580aba0db017e660eadb4e0f405ff4c6"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/android/click-no-action.md",
+      "bytes": 2346,
+      "sha256": "2ea971961af9e0f91fdeb6d9ef3bd0efc9d48512941cb09f9c4b5be19969c3d3"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/android/delivered-not-displayed.md",
+      "bytes": 3842,
+      "sha256": "e339714600a0345bbf3b03a0b653c3c075793375a244206ffb09a4bee28472d2"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/android/offline-not-received.md",
+      "bytes": 4658,
+      "sha256": "a8f861931d16bb0125ad977f96edcd2feacbad578009b7b063d732abe0961b96"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/android/register-failed.md",
+      "bytes": 4506,
+      "sha256": "3f5cbb0e9800e6a06b73e7130db9c9136838c10a24ebded174ae36362306aa0e"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/android/vendor-not-received.md",
+      "bytes": 3837,
+      "sha256": "6c57a0783e3e731a147a29f09ae480546e802a240d4fafd23b10f602aed740ad"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/common/badge.md",
+      "bytes": 2513,
+      "sha256": "29d94184b3a7c019ee64b54443c0452a4a5ec487e05b38dbe0db9ed9de9acac5"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/common/console-product-limits.md",
+      "bytes": 3072,
+      "sha256": "64d652b142424d8a8410b01338faf0e123425a6e9aaa1d19cfb34318cb84ee05"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/common/server-api.md",
+      "bytes": 2815,
+      "sha256": "d5bd71888534e3b0276b844737f8532a5ad737be83dae375ed67b27bf049effb"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/cross-platform/flutter-push-troubleshoot.md",
+      "bytes": 2325,
+      "sha256": "b70e7c43eb62f85c61ec7252a26399e6ef7223ddaac6f53188abede1bea0baad"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/cross-platform/uniapp-integration.md",
+      "bytes": 2398,
+      "sha256": "5b9b5673d2c8baf6a64d989f245db51ebff3bed2a9c1ad9af57fbffc5fd890ad"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/harmonyos/offline-not-received.md",
+      "bytes": 4061,
+      "sha256": "5add7e9baeacc4f49f359685bc9d926d74ae83c2d2589b3a2082218a4803874a"
+    },
+    {
+      "path": "skills/trtc-push/issues/flows/ios/offline-not-received.md",
+      "bytes": 5229,
+      "sha256": "a6d5421b99c1b6f107b998fcdb06a1c801dc97003a7c5cf23d89dac1359af0e5"
+    },
+    {
+      "path": "skills/trtc-push/references/code-templates.md",
+      "bytes": 13185,
+      "sha256": "64edb191901a76503c71a4cc1c1459d659e8dade15ac3d1a824545ae6fba3dd6"
+    },
+    {
+      "path": "skills/trtc-push/references/hard-rules.md",
+      "bytes": 21140,
+      "sha256": "546c2eacace7a83e71f6c29efe5f7aed5c7028769a99b434f1d4aba414a91d3c"
+    },
+    {
+      "path": "skills/trtc-push/references/push-server-onboarding.md",
+      "bytes": 8014,
+      "sha256": "3fa0c3aa4f96b10a7075c8a1fd4c553ef9d90522aaa01b3f68dd1b800d59b7d8"
+    },
+    {
+      "path": "skills/trtc-push/references/timpush-sdk-api.md",
+      "bytes": 3618,
+      "sha256": "7aa09d09803a5d79c22d22c3df1893dbc0fcc5a810c88938e12ccc4142371ce3"
+    },
+    {
+      "path": "skills/trtc-push/references/workflow-protocol.md",
+      "bytes": 3991,
+      "sha256": "5487c80561f6c163b2c9f11920138795fe23524f5bc40e322c5f0818317d40ff"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/.gitignore",
+      "bytes": 113,
+      "sha256": "b4984a6344d3ffa93f89e93efb64f191b1dd557fc82bc471f0c1e359fdb3b993"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/SKILL.md",
+      "bytes": 6887,
+      "sha256": "5d9b2d8df3ef6025a39ae51b8c3182d938a4345a9e600a1af6c07dbc3559dcb0"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/agents/openai.yaml",
+      "bytes": 217,
+      "sha256": "e0ff5887d94ff3b367d2a78c98541257a7671831ae58b36f2ace2e9eed88c3d0"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/data/api/error-code.json",
+      "bytes": 176674,
+      "sha256": "c07e6df066a342ee6dda42f242caf4e92b3d96723dd37c4f9524958b36223402"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/data/api/log-rule.json",
+      "bytes": 393640,
+      "sha256": "f8a04c65c5245e82e371090fe4f4874cebe80a9f438128041e2f0b25470ada2c"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/data/api/timeline.json",
+      "bytes": 44332,
+      "sha256": "5b921774a4354553d048a362b8c0a485392294fe1c49cc9df8332538489b1836"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/package.json",
+      "bytes": 83,
+      "sha256": "9de84ff65c90f991d46b9d1e55a4387b3e3d4f9ad76eebda03cee176ed0dc3ee"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/audio-troubleshooting.md",
+      "bytes": 6423,
+      "sha256": "30bd5367da799bc05a20ec1eeec764ea8a161f2743834f52f1e929b2188629b4"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/collection-checklist.md",
+      "bytes": 2360,
+      "sha256": "010731aa68295a665a32c127079c1a0a658eb5f32667483da09ae41dfd9e444c"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/im-xlog-patterns.md",
+      "bytes": 9875,
+      "sha256": "3ef379cb33a804ebf223e2301fe6fb9a631cfb2b29048021a51638f8c710abbb"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/index.md",
+      "bytes": 1372,
+      "sha256": "f012e7a1bc9e9fae04e33a38be3b7ce2080687568ac1e418919837c1c57ccd04"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/log-path-guide.md",
+      "bytes": 3703,
+      "sha256": "35a2fb5ab49e2e23f164a1c709d48a499e8c3c6e93f3fd46ac4c2f527317c13f"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/miniprogram-log-patterns.md",
+      "bytes": 22967,
+      "sha256": "cf64f02b82b3644fbbf6b4cedd9059dd53edf32db10a1f6c1d8349e102fc16d5"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/native-log-patterns.md",
+      "bytes": 19831,
+      "sha256": "cddd9eebf568966ecdc091bb005ce7044184ea982351449a67cf89cb1e4ef33a"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/sdk-crash-analysis.md",
+      "bytes": 6847,
+      "sha256": "09c7aa2ee2820038659f2226a194559f349650d9097d6f604dcb6491b5369990"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/trtc-analysis-playbook.md",
+      "bytes": 58062,
+      "sha256": "7d18717f8c8646fa13cdc7705d945d60a353965a95ad8f5b3296499f112c9059"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/trtc-audio-diagnostics.md",
+      "bytes": 21035,
+      "sha256": "fb394e76d24d5ea99a36686c19a67281f1640ec17fd09563776fcb27342d7847"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/trtc-deep-log-patterns.md",
+      "bytes": 76845,
+      "sha256": "16b2c14083eab2c231b8ad6541d79c10cf1324d4b191a4c2b12bfcaec952db3f"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/trtc-event-id-mapping.md",
+      "bytes": 9021,
+      "sha256": "f269f1b3481b279e46c72cdf4f801dc15d5a5b1cbfdadade4730db28187780b8"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/trtc-known-issues.md",
+      "bytes": 51887,
+      "sha256": "0bd185fd593e27504e2e60968905bf072544b282283198b72bfe571b2f20c21d"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/trtc-product-concepts.md",
+      "bytes": 11224,
+      "sha256": "0203a8e097a3dc33685f84da891b0a1fc78071d2b3bdbe245bac133845499a0c"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/trtc-screen-share-diagnostics.md",
+      "bytes": 17762,
+      "sha256": "9955c8bc7074703ea79294f39e52d18c5a8e32284d886d56d3348f1b885a96a4"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/trtc-sdk-versions.md",
+      "bytes": 11133,
+      "sha256": "5a80253e9d89b43c5ad6a9464867791de26c06b7099f88e05f6746dd3a17ebb0"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/references/web-log-patterns.md",
+      "bytes": 23967,
+      "sha256": "dddfcb9483975600539d6a51b430d31f8f6d6d2a053eef8e76e8771b0ba4c213"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/analyze-local.js",
+      "bytes": 9418,
+      "sha256": "a2a63e251425a7680bdece4ab021c63e60ac16f52bc18a86ba8a95058a611109"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/evidence.js",
+      "bytes": 3309,
+      "sha256": "34b8bf944e01d652285cc0c4238dd75836f7f3701e7050cfd7d30e22dc0ff3a4"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/aho-corasick.js",
+      "bytes": 3937,
+      "sha256": "354543ba8c3c3c57ffa50be47672af736cc4a46097d8e0aedb2efa712ce66fda"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/args.js",
+      "bytes": 1780,
+      "sha256": "d3148566dbba5fb3c5dadc658a7a8ef7f282ec8da9473d95729c673c4be65568"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/decoder.js",
+      "bytes": 2563,
+      "sha256": "b485b4d742ce8a58438f0dbbd82b56a89acf9299180b69d5301c38f15875ef47"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/decoder.test.js",
+      "bytes": 1109,
+      "sha256": "68cf2810ce2e9f9d1df6c5a7474bd7edb84509748a442c21bcb1dc01832e8d93"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/reg-prefilter.js",
+      "bytes": 2624,
+      "sha256": "e5d8959357d46d02ffe90c18ba518d221520229877d5990924dc09b9befaac8b"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/reg-room.js",
+      "bytes": 2106,
+      "sha256": "d8e1d98b645fcf04ddd51a89a06d051149ae952e5227d4c313fe2980199b0299"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/roominfo.js",
+      "bytes": 5426,
+      "sha256": "640db9f1d30b42ed7330418531c118cfdd3552210c5c2c3ecbade92208a594aa"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/safe-output.js",
+      "bytes": 4182,
+      "sha256": "b2b1786b37b82aade66b31d82673a301d9cd568aa78ff7b54c914adfa15507d1"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/safe-output.test.js",
+      "bytes": 1727,
+      "sha256": "2d74c4fd54bf4d50f1715752e98a78ce961f68172fbd89c9a2248555c664e053"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/timeline-worker.js",
+      "bytes": 415,
+      "sha256": "408ca0e1da40e7db3d46f2aa87e86b5ed606fdc171d2bda8c76001980be3b78f"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/timeline.js",
+      "bytes": 19831,
+      "sha256": "07691f8b29f267eb3b46802ba01434aa793f9072ff47d07eeea90a10c1539b3d"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/lib/tpl-func.js",
+      "bytes": 13818,
+      "sha256": "99ac5e156c1f838f0f789b2d5b68016a6ae990887c66577509c26243a5f1952a"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/timeline.js",
+      "bytes": 8793,
+      "sha256": "ec543b5aba60a82dfbabf874897030575539c3cb8d8b86ea0dbb0f6378914dea"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/scripts/timeline.test.js",
+      "bytes": 1837,
+      "sha256": "6393d228594b778916509a2cf5c765e11e2e24017b7687619baeb71e90673eba"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/vendor/art-template/LICENSE",
+      "bytes": 1073,
+      "sha256": "3f66b8ac295b005ac84d731e87a7987945dc54851947d6d68a01f941a23c6a78"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/vendor/art-template/lib/template-web.js",
+      "bytes": 17323,
+      "sha256": "e608874c1ea0d7c3d94bc7e272310b83f9ff7fa6ac4cc08ba7b234c4aad9eb19"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/vendor/art-template/package.json",
+      "bytes": 1505,
+      "sha256": "11b171f90b9168d02982c92ccaaa8776584737657dbe24dae60e3028dbfcb84c"
+    },
+    {
+      "path": "skills/trtc/.package-version",
+      "bytes": 6,
+      "sha256": "cc52f678848b814373757b460383bf61960e4943c203735adde0a350b3e50989"
+    },
+    {
+      "path": "skills/trtc/SKILL.md",
+      "bytes": 29431,
+      "sha256": "2497324d8d7caaf95435bc4519e89980df50468c3ace5d753dbb1c7a4ed12ca7"
+    },
+    {
+      "path": "skills/trtc/flows/collect-sdkappid.md",
+      "bytes": 8639,
+      "sha256": "e054f9ac5018b2145a165ca54af637b671d4cf5655594cc9079f8bc37858682a"
+    },
+    {
+      "path": "skills/trtc/hooks/gate_slice_read.py",
+      "bytes": 4700,
+      "sha256": "0cf3c2b920cff95d240a0e9867c3d5d333d6cbd59ded2eaf74cf122f98707a8d"
+    },
+    {
+      "path": "skills/trtc/hooks/gate_slice_write.py",
+      "bytes": 5797,
+      "sha256": "6a2b542372f12db1a2ae097ed53bccaab731a5b2bc04d61424e99f14655c435a"
+    },
+    {
+      "path": "skills/trtc/hooks/stop_require_apply_evidence.py",
+      "bytes": 3770,
+      "sha256": "e7708eabab72cb1ff64edd79ad1692e2f9e7d83bba5848b584919db1645045f4"
+    },
+    {
+      "path": "skills/trtc/hooks/topic_phase_gate.py",
+      "bytes": 4442,
+      "sha256": "7128b33b76031432585c1c9972af9faa1b0a5297ee95933d41a6709f1d2ecbb0"
+    },
+    {
+      "path": "skills/trtc/room-builder/assets/local-usersig/basic-info-config.ts",
+      "bytes": 1185,
+      "sha256": "ae51aba78b9d9e170131cbde9185e4e1ef156ce50525a80741313d8637b85424"
+    },
+    {
+      "path": "skills/trtc/room-builder/assets/local-usersig/lib-generate-test-usersig-es.min.d.ts",
+      "bytes": 162,
+      "sha256": "005b7030fcddd4e4f7daf053e5370ce87a200a521929a88b6dbc40f419cfed92"
+    },
+    {
+      "path": "skills/trtc/room-builder/assets/local-usersig/lib-generate-test-usersig-es.min.js",
+      "bytes": 150683,
+      "sha256": "64ada79767b5d68dff79d1b00fd2d38181dba4f8f3b63912beaa020a10cbf5d7"
+    },
+    {
+      "path": "skills/trtc/runtime/README.md",
+      "bytes": 4496,
+      "sha256": "b17df5836eb5f30ede3b886fa9fed7f8485b5c8df60de4e9c91e6e641a7f3474"
+    },
+    {
+      "path": "skills/trtc/runtime/REPORTING.md",
+      "bytes": 38465,
+      "sha256": "a8bf857ed3071abd2c08ac895ee45df7393a39c8d6fd79101cb6b104a2da13b0"
+    },
+    {
+      "path": "skills/trtc/runtime/RUNTIME.md",
+      "bytes": 9212,
+      "sha256": "7995248d6f6f3d2315b65cc5a55eb4fab7decde347b9bf56bf84d87e5043e583"
+    },
+    {
+      "path": "skills/trtc/runtime/adapters/claude.js",
+      "bytes": 621,
+      "sha256": "14d67e656bc5076d798e1c2593466f5d5460ae6a2e9410bbe031a02817259e3b"
+    },
+    {
+      "path": "skills/trtc/runtime/adapters/codebuddy.js",
+      "bytes": 2479,
+      "sha256": "5bad91104ba560cbec3f719bda5c95b73239a9cd1df5fb530062718a5fc43cb3"
+    },
+    {
+      "path": "skills/trtc/runtime/adapters/codex.js",
+      "bytes": 742,
+      "sha256": "8074c8faf1aa0efd831b6068879e06d251b87134ab0c1b2dce357c7223d89144"
+    },
+    {
+      "path": "skills/trtc/runtime/adapters/cursor.js",
+      "bytes": 936,
+      "sha256": "6221807daccf16aaabe2454175e1653672e1f4e14c386d09ee4a9631523600cd"
+    },
+    {
+      "path": "skills/trtc/runtime/adapters/gemini.js",
+      "bytes": 231,
+      "sha256": "f6a07f768f6414bd34cb9fee4202522656c9e3f02e97b7750cb980947169092e"
+    },
+    {
+      "path": "skills/trtc/runtime/adapters/metadata.js",
+      "bytes": 1218,
+      "sha256": "c4a9e049f57af07c50f81e3daf8a2d736b532249c1a381495a8504578067b93a"
+    },
+    {
+      "path": "skills/trtc/runtime/continuation-notice.js",
+      "bytes": 2121,
+      "sha256": "ef1673ad312e23085c74f134ec3dd8a0d1d9cf518ce70185b2a3d7855c5834d0"
+    },
+    {
+      "path": "skills/trtc/runtime/continuation-notice.json",
+      "bytes": 2030,
+      "sha256": "2ecda9fe5785a1b20f4ad0fd7281677289fd1d59e874bdc2e9b5f93ed147a0ed"
+    },
+    {
+      "path": "skills/trtc/runtime/continuation-notice.md",
+      "bytes": 578,
+      "sha256": "bc30dadad5a1f1c3d89a1103d958e3bc25d75c20579ea73fd428f02283679cf0"
+    },
+    {
+      "path": "skills/trtc/runtime/control.js",
+      "bytes": 54712,
+      "sha256": "09bbf90e01f3fa86adc7460dc2e414b5453ac30c740323a7e799ef8bb528d208"
+    },
+    {
+      "path": "skills/trtc/runtime/hook-activation.js",
+      "bytes": 4474,
+      "sha256": "80e93fcd14610431e863246096d8e96cf6e09224d20d2a866d3bf2d4e803749a"
+    },
+    {
+      "path": "skills/trtc/runtime/identity.js",
+      "bytes": 28860,
+      "sha256": "6fb076f72427f1beb9d4065e0395d43037c8bd1d2ee47fd66597d8b4bac5bdbd"
+    },
+    {
+      "path": "skills/trtc/runtime/lib/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/trtc/runtime/lib/platforms.py",
+      "bytes": 6835,
+      "sha256": "a851506681fce415c3bc5857f9b8ab71f41ee4b28830ac68b6dbd5657825bbbf"
+    },
+    {
+      "path": "skills/trtc/runtime/normalize-hook.js",
+      "bytes": 5541,
+      "sha256": "5cdd5e9d703df75f080eed193665cb3035a94fd0e4cee8c5d2115554ee2064f5"
+    },
+    {
+      "path": "skills/trtc/runtime/notice-locale.js",
+      "bytes": 3835,
+      "sha256": "aad6ebe3abaaf166ce06ab97a949a5d7e4b065f2909d813b07211efc371d11e8"
+    },
+    {
+      "path": "skills/trtc/runtime/outbox.js",
+      "bytes": 102737,
+      "sha256": "a1b90315ba4caf53bcf57cf05132a9028019121f2f35f2adb27c0a184646ef98"
+    },
+    {
+      "path": "skills/trtc/runtime/package-lock.json",
+      "bytes": 43415,
+      "sha256": "876a17cb4807fe58660026b8d8cbd6fa9540218aa6c3a380f54aca7e01561736"
+    },
+    {
+      "path": "skills/trtc/runtime/package.json",
+      "bytes": 297,
+      "sha256": "6cb792d6af49d48002794e4fdf2d00a7a28ed86e87560eb0e18f58c73d3ba7bd"
+    },
+    {
+      "path": "skills/trtc/runtime/preference.js",
+      "bytes": 51686,
+      "sha256": "3ac87fabaff5034b377632722ece5b21cfd349510317d89123d2b8eaa4f774d6"
+    },
+    {
+      "path": "skills/trtc/runtime/project-state.js",
+      "bytes": 1569,
+      "sha256": "f9bfe72cfe120021f400bcd84f4c63688ec1e39c5009e001bb3039ead9f0ad6f"
+    },
+    {
+      "path": "skills/trtc/runtime/redact.js",
+      "bytes": 15009,
+      "sha256": "131afc08873aa15de6da0c855e6808212a5a46a4ee3bb8403a276d5aa96f4aca"
+    },
+    {
+      "path": "skills/trtc/runtime/schema.js",
+      "bytes": 9127,
+      "sha256": "cbbf9883175170dff6122efdf2e2bfa255d8904f3186a10acda1e4330a5728c6"
+    },
+    {
+      "path": "skills/trtc/runtime/sdkappid-cache.js",
+      "bytes": 3533,
+      "sha256": "fe0d7f3b6d3dcc92340008f710ad5d45b3e3b0b22ddf119b191670b18c23f193"
+    },
+    {
+      "path": "skills/trtc/runtime/sdkappid-resolver-web.cjs",
+      "bytes": 3422927,
+      "sha256": "cab75cfe399b660d6c6d5c362f6cc9d12aab5b3bfbaf31690d62cc04f9c7431c"
+    },
+    {
+      "path": "skills/trtc/runtime/sdkappid-resolver-web.js",
+      "bytes": 26049,
+      "sha256": "f07f976a9a84d8dd01dcb8c9d4d0ab9052c6fc0fb535169acc5e66e92bf6679c"
+    },
+    {
+      "path": "skills/trtc/runtime/sdkappid-resolver.js",
+      "bytes": 57084,
+      "sha256": "e1a96f12459531600a703e12ed77c7cb9e84f33202f15f7b81a6ad9404b1a518"
+    },
+    {
+      "path": "skills/trtc/runtime/sender.js",
+      "bytes": 33596,
+      "sha256": "5963686bb5230ab34c5337946a1fd3a4ec70c17c6126770ecf206f527bd4a127"
+    },
+    {
+      "path": "skills/trtc/runtime/session-context.js",
+      "bytes": 21585,
+      "sha256": "0044fa69224d4a4d8f63f1823f492fe25e15f34a5145b5d255efe751206bc127"
+    },
+    {
+      "path": "skills/trtc/runtime/state.js",
+      "bytes": 14574,
+      "sha256": "cafba671ae5d99b68743886e94abf826f000526b37e6add3f9d1f7c37d5d302c"
+    },
+    {
+      "path": "skills/trtc/runtime/stop-hook-dispatcher.cjs",
+      "bytes": 7829,
+      "sha256": "a7e220d31067c4c793c383f298fe3a02647054239cd5f5196f009eac8f925878"
+    },
+    {
+      "path": "skills/trtc/runtime/telemetry-bridge.mjs",
+      "bytes": 11726,
+      "sha256": "8de523b1432b76a269f3901abdd185215af6fa400e15a1f6cb606ab36d8f0b05"
+    },
+    {
+      "path": "skills/trtc/runtime/telemetry.cjs",
+      "bytes": 464178,
+      "sha256": "04e120b9ff0604301ff0791d668857a169d1c2f6d31065cdc8f8676bdd8d3d3b"
+    },
+    {
+      "path": "skills/trtc/runtime/telemetry.js",
+      "bytes": 226857,
+      "sha256": "35d28f913e3e2504a8fadf4a23b6049ad5883d6865217fccc8cced09927cf5e0"
+    },
+    {
+      "path": "skills/trtc/runtime/telemetry_collector.py",
+      "bytes": 9696,
+      "sha256": "e1424d7a934e4062ab1eac0bff6aa0b039dc21117870f4833d957883399efb18"
+    },
+    {
+      "path": "skills/trtc/runtime/usersig-handling.md",
+      "bytes": 4515,
+      "sha256": "06119d0407c59648bf43d667cd0fc32d48c15a12ec829b9e7064ceae3ced1c7e"
+    },
+    {
+      "path": "skills/trtc/tools/STATE-MACHINE-GUIDE.md",
+      "bytes": 9238,
+      "sha256": "fe2cafda6750fe025122b3cba307c7e4fd2d54c4c6628634f9554423cbdd1e82"
+    },
+    {
+      "path": "skills/trtc/tools/__init__.py",
+      "bytes": 36,
+      "sha256": "fca768d7fbc3ae47c39c731c33eb29bb1c5af0cc9c702d032297dcb19c952db6"
+    },
+    {
+      "path": "skills/trtc/tools/apply.py",
+      "bytes": 21698,
+      "sha256": "3d83079a5f3510e694f5e6d6f533bba270d423ec9998b219a84909af2f141558"
+    },
+    {
+      "path": "skills/trtc/tools/docs.py",
+      "bytes": 25598,
+      "sha256": "e9c32082a6a810536874a29d65ec0e116dc4e0ded434c5da2d66ea8cebffda57"
+    },
+    {
+      "path": "skills/trtc/tools/docsbot.py",
+      "bytes": 4980,
+      "sha256": "fa2e78d2f7a3da4475e24776216ea903aef3542399acf13b759cb504a2b7f942"
+    },
+    {
+      "path": "skills/trtc/tools/entry/render_ai_instructions.py",
+      "bytes": 10697,
+      "sha256": "decb2d350eee72fa5405e497ce2b77109dfa5697d2bf7550452599dbcdab2993"
+    },
+    {
+      "path": "skills/trtc/tools/finalize_session.py",
+      "bytes": 3656,
+      "sha256": "6b6c9067fe8191a563dc93ebc59de55617ffa76923baadf3b4403c8c0d000ab1"
+    },
+    {
+      "path": "skills/trtc/tools/flow.py",
+      "bytes": 41612,
+      "sha256": "7644f6813c7ee1a69b94d431b03b7b54acfb0e0c51f63ec0c6b5b2183e6d44cc"
+    },
+    {
+      "path": "skills/trtc/tools/init_slice_queue.py",
+      "bytes": 3585,
+      "sha256": "f951fbab2cd96d4bdf22b579a15bd669f59363ce53ac83b9e1302a1db6d74121"
+    },
+    {
+      "path": "skills/trtc/tools/kb.py",
+      "bytes": 3885,
+      "sha256": "64506ef3d1f12120119b6e8bf24249ef7307f8195ba8dc4e90fcc1ffd6d17bda"
+    },
+    {
+      "path": "skills/trtc/tools/next_slice.py",
+      "bytes": 5374,
+      "sha256": "18b1212eabe2c94a2d484e120246331dbab58652bbad0bf71a0ba2cff150249f"
+    },
+    {
+      "path": "skills/trtc/tools/query_classifier.py",
+      "bytes": 12886,
+      "sha256": "d21d79d4daba69ab7faf1ecfe595e0d8312e5ab5ea81d13b96ccb2e9666fb993"
+    },
+    {
+      "path": "skills/trtc/tools/reporting.py",
+      "bytes": 67851,
+      "sha256": "d63659b58ae3df8559e801a4b933b3b08b88f7de009cf1489b6f33f3cfc575cc"
+    },
+    {
+      "path": "skills/trtc/tools/reporting_v2.py",
+      "bytes": 302,
+      "sha256": "74c59bb226bdb162afd1380fa714a2cb19c5a856b3a7c14acdb60d5ce7fbe608"
+    },
+    {
+      "path": "skills/trtc/tools/search.py",
+      "bytes": 29142,
+      "sha256": "a0fce312ab0103f5aebcafe73c6d91e0bb240536dfb474c2c736129967e574a2"
+    },
+    {
+      "path": "skills/trtc/tools/session.py",
+      "bytes": 49201,
+      "sha256": "69ee5b21fe892522ab857c777d22f9fe18e59183ec30fc310d21f0bd2e9ba162"
+    },
+    {
+      "path": "skills/trtc/tools/state_machine.py",
+      "bytes": 24519,
+      "sha256": "e8901ed7c61a2a53ebab6d218af6a7bab2b3ecc3daae5c6621e4251d8b6c3682"
+    }
+  ],
+  "skills": [
+    {
+      "path": ".claude/skills/trtc-eval/SKILL.md",
+      "bytes": 19926,
+      "sha256": "0f8d2f917a715375afe0cdbb046d12e73073c43af511f87c1df5fe7cc3397c79",
+      "directory": ".claude/skills/trtc-eval",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-ai-oral-coach/SKILL.md",
+      "bytes": 32964,
+      "sha256": "91a8d81a469ddabaca51acc79ead9877cc4e059be38801eac8b4735fef0b4e0f",
+      "directory": "skills/trtc-ai-oral-coach",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-ai-realtime-interpreter/SKILL.md",
+      "bytes": 40593,
+      "sha256": "5c682853eb8bccd7162c3dae0c7184014dcf5fb4e2d38d315c0ea383e6c74062",
+      "directory": "skills/trtc-ai-realtime-interpreter",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-ai-service/SKILL.md",
+      "bytes": 57229,
+      "sha256": "c6569a29a0076c063e130d07eaeef3b53f663e8f1ecd6fd011ba7a670d6ebb5c",
+      "directory": "skills/trtc-ai-service",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-call/SKILL.md",
+      "bytes": 13709,
+      "sha256": "293a7ad47bb645a81880d85e73181a82fdfe3c16601cb106fa007291968a6316",
+      "directory": "skills/trtc-call",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-chat-android/SKILL.md",
+      "bytes": 13635,
+      "sha256": "f98218728d94677427425bd9d8ff5b56c55df729bc41f11d420cde23ace1acb1",
+      "directory": "skills/trtc-chat-android",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-chat/SKILL.md",
+      "bytes": 7430,
+      "sha256": "b5072421a395c7852948f6f88539845beb46c6b120e37638d138e7717997de20",
+      "directory": "skills/trtc-chat",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-chat/docs/SKILL.md",
+      "bytes": 1660,
+      "sha256": "22de576029c8793449ee11c716155aaae79bbbb817b1b2af19c97005febb8768",
+      "directory": "skills/trtc-chat/docs",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-conference/SKILL.md",
+      "bytes": 16192,
+      "sha256": "ae4668f04d86208903146afe4babac70856f1686ce69ba8e7b28728d1fac814a",
+      "directory": "skills/trtc-conference",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-docs/SKILL.md",
+      "bytes": 10349,
+      "sha256": "72aa1b2df875a19f466064c870fb7a27233f5fab95a0ac9bbfc59678519b29b2",
+      "directory": "skills/trtc-docs",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-push/SKILL.md",
+      "bytes": 10518,
+      "sha256": "ec6053ba68c2ebf6aeb8c24b72b7b8bc238bf9c68d565880a9fd7767b0eb41d3",
+      "directory": "skills/trtc-push",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc-sdk-log-analysis/SKILL.md",
+      "bytes": 6887,
+      "sha256": "5d9b2d8df3ef6025a39ae51b8c3182d938a4345a9e600a1af6c07dbc3559dcb0",
+      "directory": "skills/trtc-sdk-log-analysis",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/trtc/SKILL.md",
+      "bytes": 29431,
+      "sha256": "2497324d8d7caaf95435bc4519e89980df50468c3ace5d753dbb1c7a4ed12ca7",
+      "directory": "skills/trtc",
+      "status": "snapshot_only"
+    }
+  ],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

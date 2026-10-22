@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:59:25.627202+00:00",
+  "updated_at": "2026-10-22T15:59:31.063215+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -150,6 +150,13 @@
         "6214e3d6a3d74eaf39c0202c4f182b5755974da9",
         "71e7b3c2ac67c34e7947a838df95f4e45724e796"
       ]
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "ok": true,
+      "commits": [
+        "55a6bcf643acb4104105359ed0a1d194bdee7696"
+      ]
     }
   ],
   "versions": [
@@ -197,6 +204,15 @@
       "archive_sha256": "a614ffd9fbfef994420b3b82dd81d403d22960c32b91c1d14ead7e1883e91c37",
       "skills_count": 2,
       "archive_file_count": 1172
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "55a6bcf643acb4104105359ed0a1d194bdee7696",
+      "captured_at": "2026-10-22T15:59:30.960768+00:00",
+      "archive_bytes": 3076054,
+      "archive_sha256": "6fc88d2583b7c59a253b8180e9a44679a4d127a897d87cbde9a8d3789a63ebc7",
+      "skills_count": 13,
+      "archive_file_count": 1171
     },
     {
       "repository": "TencentCloudBase/CloudBase-AI-Toolkit",
@@ -415,7 +431,7 @@
       "archive_file_count": 3766
     }
   ],
-  "repositories": 20,
-  "skill_paths_across_versions": 6158,
-  "bytes": 2056323616
+  "repositories": 21,
+  "skill_paths_across_versions": 6171,
+  "bytes": 2059399670
 }
