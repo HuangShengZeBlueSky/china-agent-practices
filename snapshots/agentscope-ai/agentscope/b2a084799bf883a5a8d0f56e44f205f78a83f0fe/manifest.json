@@ -1,0 +1,63 @@
+{
+  "repository": "agentscope-ai/agentscope",
+  "commit": "b2a084799bf883a5a8d0f56e44f205f78a83f0fe",
+  "captured_at": "2026-10-22T15:56:34.097444+00:00",
+  "source_ids": [
+    "alibaba-agentscope"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/agentscope-ai/agentscope/tar.gz/b2a084799bf883a5a8d0f56e44f205f78a83f0fe",
+  "archive_sha256": "3b9ca63362bfa507f4416481c5287c1a33bd418c612b53b853adf5b4c914adfe",
+  "archive_bytes": 8143090,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8143090,
+      "sha256": "3b9ca63362bfa507f4416481c5287c1a33bd418c612b53b853adf5b4c914adfe"
+    }
+  ],
+  "archive_file_count": 1391,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 20637,
+      "sha256": "4186bcadf358c60080060309769db6b2a352720d7353d827bb574c600fee9913"
+    },
+    {
+      "path": "README.md",
+      "bytes": 14755,
+      "sha256": "ec9928a31c1d1168f28adc0db95d3cc33482db7704c523a51d131247e295c5a7"
+    },
+    {
+      "path": "README_zh.md",
+      "bytes": 14598,
+      "sha256": "4b5bc62239631ec20141027858eed13c9274f9244b2e4fd2e3545fefbd5aa778"
+    },
+    {
+      "path": "src/agentscope/agent/_agent.py",
+      "bytes": 156679,
+      "sha256": "587591ea97c1eae2c1aff3336f37216f7d14a757895aa6706be26e9c012b8915"
+    },
+    {
+      "path": "src/agentscope/skill/_local_loader.py",
+      "bytes": 5813,
+      "sha256": "ee3193e862a70ffb0ab32e303f73d144237e8f7fcd11216ace3e68e534a97520"
+    },
+    {
+      "path": "src/agentscope/tool/_builtin/_skill.py",
+      "bytes": 4029,
+      "sha256": "66ad7aee59386a14a8f458b0753aae8153b79962be1474248a80f73e21f292e9"
+    },
+    {
+      "path": "src/agentscope/tool/_toolkit.py",
+      "bytes": 25072,
+      "sha256": "c8271335631e470acef4f0dc47a93660767bd1bf28f57ca3b40ec04bc2ac01c0"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

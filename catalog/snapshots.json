@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:56:29.085749+00:00",
+  "updated_at": "2026-10-22T15:56:35.086308+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -45,6 +45,14 @@
       "commits": [
         "31a4d36d123688581a9e9744427272b33ce940e0"
       ]
+    },
+    {
+      "repository": "agentscope-ai/agentscope",
+      "ok": true,
+      "commits": [
+        "b2a084799bf883a5a8d0f56e44f205f78a83f0fe",
+        "ed357feb78a45ff02df155bb5610eab9bf543832"
+      ]
     }
   ],
   "versions": [
@@ -74,6 +82,24 @@
       "archive_sha256": "8490e29a15d962a9182a4f48a222321fb54f18f0b12d306491121d771e1fa54b",
       "skills_count": 44,
       "archive_file_count": 13501
+    },
+    {
+      "repository": "agentscope-ai/agentscope",
+      "commit": "b2a084799bf883a5a8d0f56e44f205f78a83f0fe",
+      "captured_at": "2026-10-22T15:56:34.097444+00:00",
+      "archive_bytes": 8143090,
+      "archive_sha256": "3b9ca63362bfa507f4416481c5287c1a33bd418c612b53b853adf5b4c914adfe",
+      "skills_count": 0,
+      "archive_file_count": 1391
+    },
+    {
+      "repository": "agentscope-ai/agentscope",
+      "commit": "ed357feb78a45ff02df155bb5610eab9bf543832",
+      "captured_at": "2026-10-22T15:56:34.985679+00:00",
+      "archive_bytes": 8148294,
+      "archive_sha256": "097631414e7b8cb6b0e7995302d88307728227df415d1c4e4a98c38504bcbdbe",
+      "skills_count": 0,
+      "archive_file_count": 1392
     },
     {
       "repository": "ahang1598/doubao-workbuddy-qwenwork-skills",
@@ -121,7 +147,7 @@
       "archive_file_count": 3669
     }
   ],
-  "repositories": 6,
+  "repositories": 7,
   "skill_paths_across_versions": 5709,
-  "bytes": 1382765090
+  "bytes": 1399056474
 }
