@@ -1,0 +1,268 @@
+{
+  "repository": "MoonshotAI/kimi-cli",
+  "commit": "9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82",
+  "captured_at": "2026-10-22T15:59:39.510865+00:00",
+  "source_ids": [
+    "moonshot-kimi-cli-legacy"
+  ],
+  "license_notes": [
+    "Apache-2.0；NOTICE 标明 skill-creator 复用了 OpenAI Codex 的 Apache-2.0 材料"
+  ],
+  "archive_url": "https://codeload.github.com/MoonshotAI/kimi-cli/tar.gz/9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82",
+  "archive_sha256": "763102306bb67634f49e4e940d68be8b52b67b4f919c42c991383be2408617e8",
+  "archive_bytes": 10522491,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "2e0ed1f60fa63a799be8bce1e1cacad3f0574dc45bb4575afa1e278c407a3e98"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 2133883,
+      "sha256": "2ff1be7b052157456e3e2743d3e15f56fc391937215f36a88833a72d21a37b54"
+    }
+  ],
+  "archive_file_count": 1172,
+  "skills_count": 12,
+  "files": [
+    {
+      "path": ".agents/skills/codex-worker/SKILL.md",
+      "bytes": 5016,
+      "sha256": "3abb4cf9cf6bea74ba6fb6bdb63f69b455d21fd58dc3b6df200c44188e0dd556"
+    },
+    {
+      "path": ".agents/skills/feature-smoke-test/SKILL.md",
+      "bytes": 6779,
+      "sha256": "6de1f5bacdcbb63bcdf25b330669e8bce38af6fb8b8eaa2db634aa5f705e0451"
+    },
+    {
+      "path": ".agents/skills/feature-smoke-test/references/prompt-patterns.md",
+      "bytes": 2277,
+      "sha256": "e8acb28d102552f6ac0d050f0b6b41213ad4703418fd9d31190b374c95783e4d"
+    },
+    {
+      "path": ".agents/skills/feature-smoke-test/scripts/inspect_session.py",
+      "bytes": 11262,
+      "sha256": "d8d9f3384cc6e850ac0a2faf2d75b1fde458229f10dff8564da7aa3217c80ae9"
+    },
+    {
+      "path": ".agents/skills/gen-changelog/SKILL.md",
+      "bytes": 3738,
+      "sha256": "b86b8687f7bdcc743123cb16d3c9b42f198c60241368b1033d64c4cb8cf5c135"
+    },
+    {
+      "path": ".agents/skills/gen-docs/SKILL.md",
+      "bytes": 766,
+      "sha256": "ba0ff2c8ae18a357f0323c32f044bf7ff851bce0d5cb445e3bf7e65206f4f9ef"
+    },
+    {
+      "path": ".agents/skills/gen-rust/SKILL.md",
+      "bytes": 3445,
+      "sha256": "b1022de0b0bb74d7bb9c05592a3198b8e802b2460bec9ddd9e9f430efe03b193"
+    },
+    {
+      "path": ".agents/skills/pull-request/SKILL.md",
+      "bytes": 605,
+      "sha256": "1b9a9548b639931500b50f9ad259a39b9378b990167135317d6f7fe9edb2d87a"
+    },
+    {
+      "path": ".agents/skills/release/SKILL.md",
+      "bytes": 5571,
+      "sha256": "edd62f63fda15cdd47a6f852c6fdfc3faed48b9197d44631cb2ca7e31c8347a2"
+    },
+    {
+      "path": ".agents/skills/translate-docs/SKILL.md",
+      "bytes": 790,
+      "sha256": "f69fac00dd3d7572776d2b7039350b73bb15ba9c7812aa56c742b8f4458a2942"
+    },
+    {
+      "path": ".agents/skills/worktree-status/SKILL.md",
+      "bytes": 4261,
+      "sha256": "9f70d73ad88cbc1d3db3671643ef8ef836cd0824544153deb13cde9b4de6dca7"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "NOTICE",
+      "bytes": 408,
+      "sha256": "6bdd9ca6fd120dcd6ba5e16bf2bacc01f42781fd2d9754ec934c5db05fcdc395"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7982,
+      "sha256": "2775bc6253bc2a0366140cd0697dce62f82797ce3ff66ee1d3336bb60a379784"
+    },
+    {
+      "path": "examples/sample-plugin/SKILL.md",
+      "bytes": 640,
+      "sha256": "5f9e5cdde81eabd996664d8d6af1dd3ed7ee9b626608958787b8630acf9f6d73"
+    },
+    {
+      "path": "examples/sample-plugin/plugin.json",
+      "bytes": 1178,
+      "sha256": "817487b267ad9d694ddf715e0855ebb7f91c20f4f726ae855529621354400b5c"
+    },
+    {
+      "path": "examples/sample-plugin/scripts/calc.ts",
+      "bytes": 762,
+      "sha256": "cd17d3186242ecf876c85897790fdab62db7c3061111f1b980771b0118bc3702"
+    },
+    {
+      "path": "examples/sample-plugin/scripts/greet.py",
+      "bytes": 475,
+      "sha256": "4007fd476941bee3456bf94ac7f8549cab44aeb8ba1ed6982d6c2cbeabbe3df7"
+    },
+    {
+      "path": "packages/kaos/LICENSE",
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "packages/kaos/NOTICE",
+      "bytes": 118,
+      "sha256": "015d40c00963ac94b04e76f58ed8312ff9ac98e0173ff236a386270eb836de09"
+    },
+    {
+      "path": "packages/kosong/LICENSE",
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "packages/kosong/NOTICE",
+      "bytes": 118,
+      "sha256": "887843653ab8ecfde62922d7773f8ff5e985afeed6273aab9fefc8d86d36cb2d"
+    },
+    {
+      "path": "sdks/kimi-sdk/LICENSE",
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "sdks/kimi-sdk/NOTICE",
+      "bytes": 121,
+      "sha256": "bbbc0d2ec6378929f9a61601d33693f9b0f8f8abc76b89e14eb9ea93bcf2ac86"
+    },
+    {
+      "path": "src/kimi_cli/agents/default/system.md",
+      "bytes": 14305,
+      "sha256": "7b5d21fe914df1449ccd543c7625612a78c58a63e45421fc4970dd68d38cc641"
+    },
+    {
+      "path": "src/kimi_cli/skill/__init__.py",
+      "bytes": 25436,
+      "sha256": "887dfc32fd076ef1a6b0d1beeadc26f6c8db2ca7b253227bd6881afdbcbb36f8"
+    },
+    {
+      "path": "src/kimi_cli/skills/kimi-cli-help/SKILL.md",
+      "bytes": 2018,
+      "sha256": "60f47984db74f82d889f6a6e24642c695154d65dc0e85c6ef2473d65ea83ec16"
+    },
+    {
+      "path": "src/kimi_cli/skills/skill-creator/SKILL.md",
+      "bytes": 18120,
+      "sha256": "a1e284de076c1a707c39414222712b049469ef6fb72edc8ecf41c641155dbb8c"
+    },
+    {
+      "path": "src/kimi_cli/soul/agent.py",
+      "bytes": 20290,
+      "sha256": "47d4d2cada5bc00e3330c46f03cf4f91d020316323395ff2251d0176ac33500a"
+    },
+    {
+      "path": "src/kimi_cli/soul/kimisoul.py",
+      "bytes": 84207,
+      "sha256": "779e722966727741df2994dae7036aff877431cdfe6d27ce075816a12ae3240f"
+    }
+  ],
+  "skills": [
+    {
+      "path": ".agents/skills/codex-worker/SKILL.md",
+      "bytes": 5016,
+      "sha256": "3abb4cf9cf6bea74ba6fb6bdb63f69b455d21fd58dc3b6df200c44188e0dd556",
+      "directory": ".agents/skills/codex-worker",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".agents/skills/feature-smoke-test/SKILL.md",
+      "bytes": 6779,
+      "sha256": "6de1f5bacdcbb63bcdf25b330669e8bce38af6fb8b8eaa2db634aa5f705e0451",
+      "directory": ".agents/skills/feature-smoke-test",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".agents/skills/gen-changelog/SKILL.md",
+      "bytes": 3738,
+      "sha256": "b86b8687f7bdcc743123cb16d3c9b42f198c60241368b1033d64c4cb8cf5c135",
+      "directory": ".agents/skills/gen-changelog",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".agents/skills/gen-docs/SKILL.md",
+      "bytes": 766,
+      "sha256": "ba0ff2c8ae18a357f0323c32f044bf7ff851bce0d5cb445e3bf7e65206f4f9ef",
+      "directory": ".agents/skills/gen-docs",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".agents/skills/gen-rust/SKILL.md",
+      "bytes": 3445,
+      "sha256": "b1022de0b0bb74d7bb9c05592a3198b8e802b2460bec9ddd9e9f430efe03b193",
+      "directory": ".agents/skills/gen-rust",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".agents/skills/pull-request/SKILL.md",
+      "bytes": 605,
+      "sha256": "1b9a9548b639931500b50f9ad259a39b9378b990167135317d6f7fe9edb2d87a",
+      "directory": ".agents/skills/pull-request",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".agents/skills/release/SKILL.md",
+      "bytes": 5571,
+      "sha256": "edd62f63fda15cdd47a6f852c6fdfc3faed48b9197d44631cb2ca7e31c8347a2",
+      "directory": ".agents/skills/release",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".agents/skills/translate-docs/SKILL.md",
+      "bytes": 790,
+      "sha256": "f69fac00dd3d7572776d2b7039350b73bb15ba9c7812aa56c742b8f4458a2942",
+      "directory": ".agents/skills/translate-docs",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".agents/skills/worktree-status/SKILL.md",
+      "bytes": 4261,
+      "sha256": "9f70d73ad88cbc1d3db3671643ef8ef836cd0824544153deb13cde9b4de6dca7",
+      "directory": ".agents/skills/worktree-status",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "examples/sample-plugin/SKILL.md",
+      "bytes": 640,
+      "sha256": "5f9e5cdde81eabd996664d8d6af1dd3ed7ee9b626608958787b8630acf9f6d73",
+      "directory": "examples/sample-plugin",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "src/kimi_cli/skills/kimi-cli-help/SKILL.md",
+      "bytes": 2018,
+      "sha256": "60f47984db74f82d889f6a6e24642c695154d65dc0e85c6ef2473d65ea83ec16",
+      "directory": "src/kimi_cli/skills/kimi-cli-help",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "src/kimi_cli/skills/skill-creator/SKILL.md",
+      "bytes": 18120,
+      "sha256": "a1e284de076c1a707c39414222712b049469ef6fb72edc8ecf41c641155dbb8c",
+      "directory": "src/kimi_cli/skills/skill-creator",
+      "status": "snapshot_only"
+    }
+  ],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

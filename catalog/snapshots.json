@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:59:35.389091+00:00",
+  "updated_at": "2026-10-22T15:59:39.618427+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -164,9 +164,25 @@
       "commits": [
         "a051f06f7944d24ade04bea27735f430b19a8298"
       ]
+    },
+    {
+      "repository": "MoonshotAI/kimi-cli",
+      "ok": true,
+      "commits": [
+        "9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82"
+      ]
     }
   ],
   "versions": [
+    {
+      "repository": "MoonshotAI/kimi-cli",
+      "commit": "9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82",
+      "captured_at": "2026-10-22T15:59:39.510865+00:00",
+      "archive_bytes": 10522491,
+      "archive_sha256": "763102306bb67634f49e4e940d68be8b52b67b4f919c42c991383be2408617e8",
+      "skills_count": 12,
+      "archive_file_count": 1172
+    },
     {
       "repository": "QwenLM/Qwen-Agent",
       "commit": "31a4d36d123688581a9e9744427272b33ce940e0",
@@ -447,7 +463,7 @@
       "archive_file_count": 3766
     }
   ],
-  "repositories": 22,
-  "skill_paths_across_versions": 6173,
-  "bytes": 2060402202
+  "repositories": 23,
+  "skill_paths_across_versions": 6185,
+  "bytes": 2070924693
 }
