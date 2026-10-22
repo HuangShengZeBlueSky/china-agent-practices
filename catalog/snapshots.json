@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:57:27.628265+00:00",
+  "updated_at": "2026-10-22T15:57:40.898478+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -75,6 +75,13 @@
       "commits": [
         "4170e756504d70d8324c2ac18a5afdd770a99dc9",
         "0ab5913b250d565b35bff3828dae438939cb1acd"
+      ]
+    },
+    {
+      "repository": "meituan-longcat/vitabench",
+      "ok": true,
+      "commits": [
+        "742e240855bf8686a0842360749d5ea970ea3987"
       ]
     }
   ],
@@ -197,6 +204,15 @@
       "archive_file_count": 3669
     },
     {
+      "repository": "meituan-longcat/vitabench",
+      "commit": "742e240855bf8686a0842360749d5ea970ea3987",
+      "captured_at": "2026-10-22T15:57:40.798360+00:00",
+      "archive_bytes": 5656535,
+      "archive_sha256": "a6f4a898382e5da4944332b5e438e5c903083bb960749c4dbc18b750631a266f",
+      "skills_count": 0,
+      "archive_file_count": 105
+    },
+    {
       "repository": "openJiuwen-ai/agent-core",
       "commit": "0ab5913b250d565b35bff3828dae438939cb1acd",
       "captured_at": "2026-10-22T15:57:27.517498+00:00",
@@ -215,7 +231,7 @@
       "archive_file_count": 7880
     }
   ],
-  "repositories": 10,
+  "repositories": 11,
   "skill_paths_across_versions": 6059,
-  "bytes": 1652288217
+  "bytes": 1657944752
 }

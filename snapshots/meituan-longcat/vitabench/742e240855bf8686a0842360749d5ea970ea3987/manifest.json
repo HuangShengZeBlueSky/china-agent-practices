@@ -1,0 +1,68 @@
+{
+  "repository": "meituan-longcat/vitabench",
+  "commit": "742e240855bf8686a0842360749d5ea970ea3987",
+  "captured_at": "2026-10-22T15:57:40.798360+00:00",
+  "source_ids": [
+    "meituan-vitabench-tools"
+  ],
+  "license_notes": [
+    "MIT；保留 Sierra Research 与 Meituan 版权"
+  ],
+  "archive_url": "https://codeload.github.com/meituan-longcat/vitabench/tar.gz/742e240855bf8686a0842360749d5ea970ea3987",
+  "archive_sha256": "a6f4a898382e5da4944332b5e438e5c903083bb960749c4dbc18b750631a266f",
+  "archive_bytes": 5656535,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 5656535,
+      "sha256": "a6f4a898382e5da4944332b5e438e5c903083bb960749c4dbc18b750631a266f"
+    }
+  ],
+  "archive_file_count": 105,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1099,
+      "sha256": "08da3ef45b685007c851f1f16b911d8a078360559dcb0aad3bcbd1162ee6c238"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8995,
+      "sha256": "e219e18fd98ff7edc005fe15d16cfbbc0413e904a912b397904437d0987073d4"
+    },
+    {
+      "path": "src/vita/agent/llm_agent.py",
+      "bytes": 7217,
+      "sha256": "284a19a2401c12d954e3305cc1de8d87a1f26324162437859c11d84c767cdfe4"
+    },
+    {
+      "path": "src/vita/domains/delivery/tools_schema.py",
+      "bytes": 15836,
+      "sha256": "f9e1f9c335068d111e946fbcff43fac7ba300c185853fc7f8bdf9106e12b583a"
+    },
+    {
+      "path": "src/vita/environment/environment.py",
+      "bytes": 12031,
+      "sha256": "723ea51a7c3fd2577b79528ff1e1b028fae01e081aa169d1d00da5d25ff9204b"
+    },
+    {
+      "path": "src/vita/environment/tool.py",
+      "bytes": 8715,
+      "sha256": "03d17785ec7aab043a84b8f4de3ba30ac2c42acc2c6bd3407c3491fd34b0edb8"
+    },
+    {
+      "path": "src/vita/prompts/agent_system_prompt.yaml",
+      "bytes": 1592,
+      "sha256": "9620480d1e6657d4d4c76ed699daa782d192f32a9b731c6d51a88667df523ed3"
+    },
+    {
+      "path": "src/vita/prompts/full_trajectory_eval_template.yaml",
+      "bytes": 7145,
+      "sha256": "762f1a3bdc310b3a08fd4f9c7382045db27a306b0900d38d667e11f79cd20c65"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
