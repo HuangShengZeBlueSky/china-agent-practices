@@ -1,0 +1,78 @@
+{
+  "repository": "bytedance/UI-TARS-desktop",
+  "commit": "3ac2cb8d946d78d5ff92ad17b318eaafa18c178c",
+  "captured_at": "2026-10-22T15:58:24.248273+00:00",
+  "source_ids": [
+    "bytedance-ui-tars-desktop"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/bytedance/UI-TARS-desktop/tar.gz/3ac2cb8d946d78d5ff92ad17b318eaafa18c178c",
+  "archive_sha256": "3b073aa6f7ad345641753796470513205b821171af639724a75112672e4592eb",
+  "archive_bytes": 32534937,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "515bbaa0227f63c1cddb1ac149e0c70abc49d90e7a2be3c24a51f3f622f34ddc"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 8388608,
+      "sha256": "c8d10545b68afa9cbf7c318b90a65de63e538049988f04f3c15845ce271b3ad9"
+    },
+    {
+      "path": "source.tar.gz.part0002",
+      "bytes": 8388608,
+      "sha256": "11729a56aca2383284e36c79a86e8b2eb776922914d1fb2448228f6d76d02acc"
+    },
+    {
+      "path": "source.tar.gz.part0003",
+      "bytes": 7369113,
+      "sha256": "9afdfd0118e62ed58f06496e717cf521b6a49fab3b23472a9f320febaf147aee"
+    }
+  ],
+  "archive_file_count": 3190,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "README.md",
+      "bytes": 16262,
+      "sha256": "0f05aa4f447d43439f6b3f4ab179cbe1e59d170eaf6c0684fa9c2eb0872e5985"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "bytes": 15510,
+      "sha256": "ee9c9a80b191a5b9ed58dc9d00b507f40078e9f987332ff397902b43d0ed71e6"
+    },
+    {
+      "path": "multimodal/gui-agent/agent-sdk/src/GUIAgent.ts",
+      "bytes": 6465,
+      "sha256": "6d4deef312826f0fb536f1b811f85c414e34bd8b12064d9f31bc7df3e648151e"
+    },
+    {
+      "path": "multimodal/gui-agent/agent-sdk/src/ToolCallEngine.ts",
+      "bytes": 7215,
+      "sha256": "bad9201dd559bcb7e1fb5a86a89a4d18de90d5918b27e3de4367761104cb526d"
+    },
+    {
+      "path": "multimodal/gui-agent/agent-sdk/src/prompts.ts",
+      "bytes": 24084,
+      "sha256": "45e6ef27ffbc669d3f6c667840446aaa72a8b0e890b52857798e41fc6183ed79"
+    },
+    {
+      "path": "multimodal/tarko/llm-client/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

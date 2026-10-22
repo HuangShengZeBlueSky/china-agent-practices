@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:58:11.730904+00:00",
+  "updated_at": "2026-10-22T15:58:24.345578+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -113,6 +113,13 @@
         "d4012c4b24f9b5ee14236a8214c82815de5b5214",
         "66508d7522015ab6582105130da691e2803eba0d"
       ]
+    },
+    {
+      "repository": "bytedance/UI-TARS-desktop",
+      "ok": true,
+      "commits": [
+        "3ac2cb8d946d78d5ff92ad17b318eaafa18c178c"
+      ]
     }
   ],
   "versions": [
@@ -216,6 +223,15 @@
       "archive_file_count": 1233
     },
     {
+      "repository": "bytedance/UI-TARS-desktop",
+      "commit": "3ac2cb8d946d78d5ff92ad17b318eaafa18c178c",
+      "captured_at": "2026-10-22T15:58:24.248273+00:00",
+      "archive_bytes": 32534937,
+      "archive_sha256": "3b073aa6f7ad345641753796470513205b821171af639724a75112672e4592eb",
+      "skills_count": 0,
+      "archive_file_count": 3190
+    },
+    {
       "repository": "bytedance/deer-flow",
       "commit": "66508d7522015ab6582105130da691e2803eba0d",
       "captured_at": "2026-10-22T15:58:11.630871+00:00",
@@ -315,7 +331,7 @@
       "archive_file_count": 7880
     }
   ],
-  "repositories": 15,
+  "repositories": 16,
   "skill_paths_across_versions": 6125,
-  "bytes": 1761120827
+  "bytes": 1793655764
 }
