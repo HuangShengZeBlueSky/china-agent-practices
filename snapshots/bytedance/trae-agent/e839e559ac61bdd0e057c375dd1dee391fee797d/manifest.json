@@ -1,0 +1,68 @@
+{
+  "repository": "bytedance/trae-agent",
+  "commit": "e839e559ac61bdd0e057c375dd1dee391fee797d",
+  "captured_at": "2026-10-22T15:50:50.301035+00:00",
+  "source_ids": [
+    "bytedance-trae-agent"
+  ],
+  "license_notes": [
+    "MIT"
+  ],
+  "archive_url": "https://codeload.github.com/bytedance/trae-agent/tar.gz/e839e559ac61bdd0e057c375dd1dee391fee797d",
+  "archive_sha256": "4d5e918ca543d983fd07c5cdee5802de65fb37e05209151e47eac5de59a268a3",
+  "archive_bytes": 4402468,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 4402468,
+      "sha256": "4d5e918ca543d983fd07c5cdee5802de65fb37e05209151e47eac5de59a268a3"
+    }
+  ],
+  "archive_file_count": 134,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1084,
+      "sha256": "89e0d148344772c3931992a8370b7315034bb9ce49a7d183e3fafa2a6632367f"
+    },
+    {
+      "path": "README.md",
+      "bytes": 10238,
+      "sha256": "6ff2b6c84def1b93ffa8f754b949fdf12a9d3c5d77644984d3a81f3f5b197089"
+    },
+    {
+      "path": "trae_agent/agent/base_agent.py",
+      "bytes": 13609,
+      "sha256": "4b279d7a05f19f32c7834aa485cf055f7ec2f9bf778b639d0720560102098142"
+    },
+    {
+      "path": "trae_agent/agent/trae_agent.py",
+      "bytes": 10248,
+      "sha256": "9ab3474d499d044064a0feae0806fee2058ee4f3dd141331f562c33b65ad1170"
+    },
+    {
+      "path": "trae_agent/prompt/agent_prompt.py",
+      "bytes": 3860,
+      "sha256": "7fe1a0c72a6ed3b5346f6083dd35c78f4c3eb13094525c745b39f1cda4090b68"
+    },
+    {
+      "path": "trae_agent/tools/base.py",
+      "bytes": 7668,
+      "sha256": "79cb55c7457bc4c29d01d6932ad0eeadf113dc3890649de6d4f51a62d8181975"
+    },
+    {
+      "path": "trae_agent/tools/task_done_tool.py",
+      "bytes": 1022,
+      "sha256": "b96ff2f64930680eb5b552a5b4b08e73a04337f058d8d176099d2870dc40e906"
+    },
+    {
+      "path": "trae_agent/utils/llm_clients/llm_client.py",
+      "bytes": 3070,
+      "sha256": "6d2ffe87ef6e6278d597a9b42b95b25452fe0a08bcb3961c491e2f656e778b5e"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
