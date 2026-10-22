@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:50:41.822470+00:00",
+  "updated_at": "2026-10-22T15:50:46.276110+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -8,9 +8,25 @@
       "commits": [
         "017b19a793ad71794a02887ede04757f3d82e10d"
       ]
+    },
+    {
+      "repository": "cloudwego/eino",
+      "ok": true,
+      "commits": [
+        "0a5ca53b9d3bf7b661dccc863465ec568a421eea"
+      ]
     }
   ],
   "versions": [
+    {
+      "repository": "cloudwego/eino",
+      "commit": "0a5ca53b9d3bf7b661dccc863465ec568a421eea",
+      "captured_at": "2026-10-22T15:50:46.274431+00:00",
+      "archive_bytes": 5104712,
+      "archive_sha256": "ad2f771d1f60d7ee527ab2fc4b9176024e3b13efda2a37eb8e5c98e127a685bf",
+      "skills_count": 0,
+      "archive_file_count": 462
+    },
     {
       "repository": "larksuite/cli",
       "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
@@ -21,7 +37,7 @@
       "archive_file_count": 3669
     }
   ],
-  "repositories": 1,
+  "repositories": 2,
   "skill_paths_across_versions": 37,
-  "bytes": 7142542
+  "bytes": 12247254
 }

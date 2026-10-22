@@ -1,0 +1,58 @@
+{
+  "repository": "cloudwego/eino",
+  "commit": "0a5ca53b9d3bf7b661dccc863465ec568a421eea",
+  "captured_at": "2026-10-22T15:50:46.274431+00:00",
+  "source_ids": [
+    "bytedance-eino-skills"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/cloudwego/eino/tar.gz/0a5ca53b9d3bf7b661dccc863465ec568a421eea",
+  "archive_sha256": "ad2f771d1f60d7ee527ab2fc4b9176024e3b13efda2a37eb8e5c98e127a685bf",
+  "archive_bytes": 5104712,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 5104712,
+      "sha256": "ad2f771d1f60d7ee527ab2fc4b9176024e3b13efda2a37eb8e5c98e127a685bf"
+    }
+  ],
+  "archive_file_count": 462,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE-APACHE",
+      "bytes": 10174,
+      "sha256": "69849221bfb90053de2134ef5e6d540287b4b98062326492f1f96f5da685524b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8607,
+      "sha256": "60e64e0006d6098650c5f966500ca1b6f5b61481ff832a0e0ca49784362935b9"
+    },
+    {
+      "path": "README.zh_CN.md",
+      "bytes": 8045,
+      "sha256": "f0a8bf83b6c3c76a9153f42507818786ecb3766c69c2ebe57b790a54f257497c"
+    },
+    {
+      "path": "adk/middlewares/skill/filesystem_backend.go",
+      "bytes": 5021,
+      "sha256": "3233d5d8d81ce44dac3e037dba7e225481e62f740bb49921058f8bf700001bed"
+    },
+    {
+      "path": "adk/middlewares/skill/prompt.go",
+      "bytes": 6289,
+      "sha256": "aeb4101d6b7ce706c89314fcb82a154cb70b17d6276f7e89d7c9c2e99a4b7d18"
+    },
+    {
+      "path": "adk/middlewares/skill/skill.go",
+      "bytes": 23247,
+      "sha256": "4b664a3a7a22581e5ed468851a4776d37f9be67f7520089f534d3e55bb0c36a3"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

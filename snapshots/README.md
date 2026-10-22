@@ -6,6 +6,7 @@
 
 | 来源 | 固定提交 | 技能路径 | 完整归档字节 | 本地原文与清单 |
 | --- | --- | ---: | ---: | --- |
+| cloudwego/eino | 0a5ca53b9d3b | 0 | 5104712 | [全部原文](cloudwego/eino/0a5ca53b9d3bf7b661dccc863465ec568a421eea/files) · [清单](cloudwego/eino/0a5ca53b9d3bf7b661dccc863465ec568a421eea/manifest.json) |
 | larksuite/cli | 017b19a793ad | 37 | 7142542 | [全部原文](larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files) · [清单](larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/manifest.json) |
 
 ## 本轮失败
