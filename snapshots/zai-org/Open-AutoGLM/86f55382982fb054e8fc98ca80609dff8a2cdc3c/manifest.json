@@ -1,0 +1,63 @@
+{
+  "repository": "zai-org/Open-AutoGLM",
+  "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+  "captured_at": "2026-10-22T15:59:53.193422+00:00",
+  "source_ids": [
+    "zhipu-open-autoglm"
+  ],
+  "license_notes": [
+    "Apache-2.0；README 另链接 resources/privacy_policy.txt 使用规范，模型与第三方组件须分别核对"
+  ],
+  "archive_url": "https://codeload.github.com/zai-org/Open-AutoGLM/tar.gz/86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+  "archive_sha256": "b45f17b4e985055026b74cba25b42f3d953d1ddb03edb663c3e659ef15ff5cd8",
+  "archive_bytes": 5702477,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 5702477,
+      "sha256": "b45f17b4e985055026b74cba25b42f3d953d1ddb03edb663c3e659ef15ff5cd8"
+    }
+  ],
+  "archive_file_count": 89,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11342,
+      "sha256": "af69329b4667040c498cc87dfcc165db1f5f9452fe2ad3024ad7eef63d467666"
+    },
+    {
+      "path": "README.md",
+      "bytes": 33041,
+      "sha256": "de9c289c418218d40cdf1731775158af771d010266d7ea2aa398f2dc91f22acc"
+    },
+    {
+      "path": "README_coding_agent.md",
+      "bytes": 9545,
+      "sha256": "3a929bdcd7a18d78fc04ac70e1e517520f17af5b219620f43ba612fcf1020076"
+    },
+    {
+      "path": "README_en.md",
+      "bytes": 34528,
+      "sha256": "b65b8d1d14c4e07ba623ad6d26763ee2c72d78db7d8ea653322193b090323029"
+    },
+    {
+      "path": "phone_agent/actions/handler.py",
+      "bytes": 15602,
+      "sha256": "1553261c277f768e013737cfa6e9bc5a952e197d10725b4147d2efd30164160a"
+    },
+    {
+      "path": "phone_agent/agent.py",
+      "bytes": 8161,
+      "sha256": "686f1f11064b89ff0ea4f604ece20045bb77cd8183f0953e3da910c0878cab1f"
+    },
+    {
+      "path": "resources/privacy_policy.txt",
+      "bytes": 12830,
+      "sha256": "18743704b20ab96fa22258d7f8ef35c704d8b9fb825110a0d0a0343e5ba6d751"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

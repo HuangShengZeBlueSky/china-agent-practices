@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:59:49.897948+00:00",
+  "updated_at": "2026-10-22T15:59:53.293808+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -184,6 +184,13 @@
       "ok": true,
       "commits": [
         "0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a"
+      ]
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "ok": true,
+      "commits": [
+        "86f55382982fb054e8fc98ca80609dff8a2cdc3c"
       ]
     }
   ],
@@ -493,9 +500,18 @@
       "archive_sha256": "8b3a6909bed305c852d29994a8c73a84a6fda8abd84f911f5731a2223ec6d9cd",
       "skills_count": 2,
       "archive_file_count": 3766
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "captured_at": "2026-10-22T15:59:53.193422+00:00",
+      "archive_bytes": 5702477,
+      "archive_sha256": "b45f17b4e985055026b74cba25b42f3d953d1ddb03edb663c3e659ef15ff5cd8",
+      "skills_count": 0,
+      "archive_file_count": 89
     }
   ],
-  "repositories": 25,
+  "repositories": 26,
   "skill_paths_across_versions": 6208,
-  "bytes": 2076219013
+  "bytes": 2081921490
 }
