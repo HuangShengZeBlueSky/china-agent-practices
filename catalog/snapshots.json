@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T16:00:04.240207+00:00",
+  "updated_at": "2026-10-22T16:00:12.928296+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -205,6 +205,13 @@
       "ok": true,
       "commits": [
         "3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c"
+      ]
+    },
+    {
+      "repository": "netease-youdao/LobsterAI",
+      "ok": true,
+      "commits": [
+        "b649d5c80f25887e6d0c1ff04024150f7476da5d"
       ]
     }
   ],
@@ -498,6 +505,15 @@
       "archive_file_count": 105
     },
     {
+      "repository": "netease-youdao/LobsterAI",
+      "commit": "b649d5c80f25887e6d0c1ff04024150f7476da5d",
+      "captured_at": "2026-10-22T16:00:12.823215+00:00",
+      "archive_bytes": 58700305,
+      "archive_sha256": "feba12386ce6450198b761f8ed0748b67cfe03bb1925e7ace1c81a89ed6676b6",
+      "skills_count": 27,
+      "archive_file_count": 3828
+    },
+    {
       "repository": "openJiuwen-ai/agent-core",
       "commit": "0ab5913b250d565b35bff3828dae438939cb1acd",
       "captured_at": "2026-10-22T15:57:27.517498+00:00",
@@ -543,7 +559,7 @@
       "archive_file_count": 89
     }
   ],
-  "repositories": 28,
-  "skill_paths_across_versions": 6208,
-  "bytes": 2111155560
+  "repositories": 29,
+  "skill_paths_across_versions": 6235,
+  "bytes": 2169855865
 }
