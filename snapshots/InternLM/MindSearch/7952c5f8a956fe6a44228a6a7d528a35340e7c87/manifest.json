@@ -1,0 +1,58 @@
+{
+  "repository": "InternLM/MindSearch",
+  "commit": "7952c5f8a956fe6a44228a6a7d528a35340e7c87",
+  "captured_at": "2026-10-22T16:00:30.052799+00:00",
+  "source_ids": [
+    "shanghai-ai-mindsearch"
+  ],
+  "license_notes": [
+    "Apache-2.0；LICENSE 明列 Shanghai AI Laboratory 版权"
+  ],
+  "archive_url": "https://codeload.github.com/InternLM/MindSearch/tar.gz/7952c5f8a956fe6a44228a6a7d528a35340e7c87",
+  "archive_sha256": "2eb3642f035e750e2f8e20f221b27350e2acb435593239663ae6f76dfe114bb5",
+  "archive_bytes": 4434035,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 4434035,
+      "sha256": "2eb3642f035e750e2f8e20f221b27350e2acb435593239663ae6f76dfe114bb5"
+    }
+  ],
+  "archive_file_count": 157,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11353,
+      "sha256": "9424a68484e9164bb9d81d71283c60dd79adb54af73e5222b008bbfe220e4a50"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5120,
+      "sha256": "e5fc5a4e441b1e870e3b754d9430aa090395b97417a2e308400705f3c06f05f1"
+    },
+    {
+      "path": "README_zh-CN.md",
+      "bytes": 4788,
+      "sha256": "d59f5e1e20de23fce96771e04670dd0d2d8681296feac856ea045bf960255ae5"
+    },
+    {
+      "path": "mindsearch/agent/graph.py",
+      "bytes": 11768,
+      "sha256": "ef42f61fbfef47e60dbecfd30865ad1bf0557889c78eaca75579763c242319ac"
+    },
+    {
+      "path": "mindsearch/agent/mindsearch_agent.py",
+      "bytes": 9163,
+      "sha256": "45c8730acb0e9427137184573edec24edbeb92375c3b62746da7826d640cfc51"
+    },
+    {
+      "path": "mindsearch/agent/mindsearch_prompt.py",
+      "bytes": 14101,
+      "sha256": "ddebd293252f7077b0da6b9bb4850e385d3ba18296214116acffbb7ac9d081c3"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

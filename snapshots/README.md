@@ -6,6 +6,7 @@
 
 | 来源 | 固定提交 | 技能路径 | 完整归档字节 | 本地原文与清单 |
 | --- | --- | ---: | ---: | --- |
+| InternLM/MindSearch | 7952c5f8a956 | 0 | 4434035 | [全部原文](InternLM/MindSearch/7952c5f8a956fe6a44228a6a7d528a35340e7c87/files) · [清单](InternLM/MindSearch/7952c5f8a956fe6a44228a6a7d528a35340e7c87/manifest.json) |
 | InternLM/lagent | 0ab2e2f55047 | 0 | 206582 | [全部原文](InternLM/lagent/0ab2e2f550477884743cd63fbca7bc4aa7b00290/files) · [清单](InternLM/lagent/0ab2e2f550477884743cd63fbca7bc4aa7b00290/manifest.json) |
 | KwaiKEG/KwaiAgents | 3504ab8a00a3 | 0 | 8167776 | [全部原文](KwaiKEG/KwaiAgents/3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c/files) · [清单](KwaiKEG/KwaiAgents/3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c/manifest.json) |
 | MiniMax-AI/MiniMax-MCP | 0856b9aef8a9 | 0 | 132167 | [全部原文](MiniMax-AI/MiniMax-MCP/0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a/files) · [清单](MiniMax-AI/MiniMax-MCP/0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a/manifest.json) |
