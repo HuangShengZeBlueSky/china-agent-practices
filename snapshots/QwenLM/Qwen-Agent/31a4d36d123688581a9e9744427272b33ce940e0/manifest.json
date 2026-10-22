@@ -1,0 +1,83 @@
+{
+  "repository": "QwenLM/Qwen-Agent",
+  "commit": "31a4d36d123688581a9e9744427272b33ce940e0",
+  "captured_at": "2026-10-22T15:56:28.988003+00:00",
+  "source_ids": [
+    "alibaba-qwen-agent"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/QwenLM/Qwen-Agent/tar.gz/31a4d36d123688581a9e9744427272b33ce940e0",
+  "archive_sha256": "f1f66be2e6df783146d9ab87660b4655c3ce400f25d7de1eff215e681d3d0fec",
+  "archive_bytes": 16882337,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "8b40f6e240f0de1523f08252fb477b24df4b5fb3e64feb8d514af29487dd07c0"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 8388608,
+      "sha256": "e287cf597046a3ff078c8ef1a72974db508ebff977d352774922491c5a95d3ea"
+    },
+    {
+      "path": "source.tar.gz.part0002",
+      "bytes": 105121,
+      "sha256": "c44676a4d21377595ebdbeb3e1d2b68440d9cb699c7c2fc2ebad57374a913901"
+    }
+  ],
+  "archive_file_count": 417,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "README.md",
+      "bytes": 15159,
+      "sha256": "3918a61ddbd3b0fbc64e3a5ea0b20d663c5520f0d0effad43b10d831e6d61d8a"
+    },
+    {
+      "path": "README_CN.md",
+      "bytes": 14162,
+      "sha256": "6f9d7e290ebea4d7c07bf0d60d3255bf7884cf3e24d0acfb34f101ecee00a2f4"
+    },
+    {
+      "path": "qwen_agent/agent.py",
+      "bytes": 11230,
+      "sha256": "56e20befee3bda299d380e23e620ed9ed9e45cf4cadb755acea67d712ba36ec9"
+    },
+    {
+      "path": "qwen_agent/agents/assistant.py",
+      "bytes": 6407,
+      "sha256": "d69505e07d97a04d87b228479df1115fe52eeb721a3256d3a2cd4fa4ff16bb99"
+    },
+    {
+      "path": "qwen_agent/agents/fncall_agent.py",
+      "bytes": 5812,
+      "sha256": "21de0e5ccc054ea33e63586192843d466d6e4de4f8a4adfe34f3519f61851ec6"
+    },
+    {
+      "path": "qwen_agent/llm/fncall_prompts/nous_fncall_prompt.py",
+      "bytes": 14248,
+      "sha256": "98f8b9a7d4b5141b7c9df475b9026e23fcf245b3789ab3a711599af38ab1efba"
+    },
+    {
+      "path": "qwen_agent/llm/function_calling.py",
+      "bytes": 9215,
+      "sha256": "880f1bfa1544f8701f402d6a1dced24948a2390ba9a3067ee929848f5eb0fef7"
+    },
+    {
+      "path": "qwen_agent/tools/base.py",
+      "bytes": 7793,
+      "sha256": "e699832d780199c28082c5d117ca362f2cdeca020dddf1f636845b1f91d4ba95"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

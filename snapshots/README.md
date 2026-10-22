@@ -6,6 +6,7 @@
 
 | 来源 | 固定提交 | 技能路径 | 完整归档字节 | 本地原文与清单 |
 | --- | --- | ---: | ---: | --- |
+| QwenLM/Qwen-Agent | 31a4d36d1236 | 0 | 16882337 | [全部原文](QwenLM/Qwen-Agent/31a4d36d123688581a9e9744427272b33ce940e0/files) · [清单](QwenLM/Qwen-Agent/31a4d36d123688581a9e9744427272b33ce940e0/manifest.json) |
 | QwenLM/qwen-code | 2050db87ef62 | 44 | 72839391 | [全部原文](QwenLM/qwen-code/2050db87ef62143f3fbca3113edb59f1a0e25da3/files) · [清单](QwenLM/qwen-code/2050db87ef62143f3fbca3113edb59f1a0e25da3/manifest.json) |
 | QwenLM/qwen-code | 461be87304c7 | 44 | 71843648 | [全部原文](QwenLM/qwen-code/461be87304c7b3b5d64b701207c49f236515d5fd/files) · [清单](QwenLM/qwen-code/461be87304c7b3b5d64b701207c49f236515d5fd/manifest.json) |
 | ahang1598/doubao-workbuddy-qwenwork-skills | 1c9239cc9058 | 2792 | 602252273 | [全部原文](ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/files) · [清单](ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/manifest.json) |

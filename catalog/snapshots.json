@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:56:04.209855+00:00",
+  "updated_at": "2026-10-22T15:56:29.085749+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -38,9 +38,25 @@
         "461be87304c7b3b5d64b701207c49f236515d5fd",
         "2050db87ef62143f3fbca3113edb59f1a0e25da3"
       ]
+    },
+    {
+      "repository": "QwenLM/Qwen-Agent",
+      "ok": true,
+      "commits": [
+        "31a4d36d123688581a9e9744427272b33ce940e0"
+      ]
     }
   ],
   "versions": [
+    {
+      "repository": "QwenLM/Qwen-Agent",
+      "commit": "31a4d36d123688581a9e9744427272b33ce940e0",
+      "captured_at": "2026-10-22T15:56:28.988003+00:00",
+      "archive_bytes": 16882337,
+      "archive_sha256": "f1f66be2e6df783146d9ab87660b4655c3ce400f25d7de1eff215e681d3d0fec",
+      "skills_count": 0,
+      "archive_file_count": 417
+    },
     {
       "repository": "QwenLM/qwen-code",
       "commit": "2050db87ef62143f3fbca3113edb59f1a0e25da3",
@@ -105,7 +121,7 @@
       "archive_file_count": 3669
     }
   ],
-  "repositories": 5,
+  "repositories": 6,
   "skill_paths_across_versions": 5709,
-  "bytes": 1365882753
+  "bytes": 1382765090
 }
