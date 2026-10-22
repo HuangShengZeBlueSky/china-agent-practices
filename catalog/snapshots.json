@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:59:53.293808+00:00",
+  "updated_at": "2026-10-22T15:59:58.412009+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -191,6 +191,13 @@
       "ok": true,
       "commits": [
         "86f55382982fb054e8fc98ca80609dff8a2cdc3c"
+      ]
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "ok": true,
+      "commits": [
+        "2417e0b8b636d941ad5fb14c59b20dddfef5375d"
       ]
     }
   ],
@@ -448,6 +455,15 @@
       "archive_file_count": 3757
     },
     {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "captured_at": "2026-10-22T15:59:58.310261+00:00",
+      "archive_bytes": 21066294,
+      "archive_sha256": "5727b2ec9d3678872707fbbb90ab09d357e58b918c0abaf0d662b065a2d1bee5",
+      "skills_count": 0,
+      "archive_file_count": 548
+    },
+    {
       "repository": "larksuite/cli",
       "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
       "captured_at": "2026-10-22T15:50:41.817368+00:00",
@@ -511,7 +527,7 @@
       "archive_file_count": 89
     }
   ],
-  "repositories": 26,
+  "repositories": 27,
   "skill_paths_across_versions": 6208,
-  "bytes": 2081921490
+  "bytes": 2102987784
 }

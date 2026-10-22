@@ -34,6 +34,7 @@
 | coze-dev/coze-loop | 95dc2eebbc10 | 0 | 8299244 | [全部原文](coze-dev/coze-loop/95dc2eebbc100b929c102d90111bb94fad41e500/files) · [清单](coze-dev/coze-loop/95dc2eebbc100b929c102d90111bb94fad41e500/manifest.json) |
 | coze-dev/coze-studio | fefb05ff27be | 0 | 22816886 | [全部原文](coze-dev/coze-studio/fefb05ff27be1da939612fbf9faf5db62583b8ae/files) · [清单](coze-dev/coze-studio/fefb05ff27be1da939612fbf9faf5db62583b8ae/manifest.json) |
 | inclusionAI/AWorld | 82af4062e29e | 25 | 112196860 | [全部原文](inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files) · [清单](inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/manifest.json) |
+| jd-opensource/joyagent-jdgenie | 2417e0b8b636 | 0 | 21066294 | [全部原文](jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files) · [清单](jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/manifest.json) |
 | larksuite/cli | 017b19a793ad | 37 | 7142542 | [全部原文](larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files) · [清单](larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/manifest.json) |
 | meituan-longcat/vitabench | 742e240855bf | 0 | 5656535 | [全部原文](meituan-longcat/vitabench/742e240855bf8686a0842360749d5ea970ea3987/files) · [清单](meituan-longcat/vitabench/742e240855bf8686a0842360749d5ea970ea3987/manifest.json) |
 | openJiuwen-ai/agent-core | 0ab5913b250d | 29 | 37025904 | [全部原文](openJiuwen-ai/agent-core/0ab5913b250d565b35bff3828dae438939cb1acd/files) · [清单](openJiuwen-ai/agent-core/0ab5913b250d565b35bff3828dae438939cb1acd/manifest.json) |

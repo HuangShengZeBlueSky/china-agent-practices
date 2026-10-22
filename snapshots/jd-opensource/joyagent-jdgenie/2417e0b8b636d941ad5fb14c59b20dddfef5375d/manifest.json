@@ -1,0 +1,88 @@
+{
+  "repository": "jd-opensource/joyagent-jdgenie",
+  "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+  "captured_at": "2026-10-22T15:59:58.310261+00:00",
+  "source_ids": [
+    "jd-joyagent-jdgenie"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/jd-opensource/joyagent-jdgenie/tar.gz/2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+  "archive_sha256": "5727b2ec9d3678872707fbbb90ab09d357e58b918c0abaf0d662b065a2d1bee5",
+  "archive_bytes": 21066294,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "7033439fed5f3c8064c7d4cdf4890e0e0d51f4ad9ce60f5447f5b3aad5d76bae"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 8388608,
+      "sha256": "7771726662b70ec2cd35618c8aa145fc165de6dd0d32b78b3ac1d18c06e9223f"
+    },
+    {
+      "path": "source.tar.gz.part0002",
+      "bytes": 4289078,
+      "sha256": "288c54a0b4fcc655a04b9ac3d3bcd14043bf945db0a948a208ecc5efb1987c56"
+    }
+  ],
+  "archive_file_count": 548,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 10292,
+      "sha256": "e359035ed218e1da4cd009b72242f1531ba3001a66d1217bda8c556749c00835"
+    },
+    {
+      "path": "NOTICE-Third Party",
+      "bytes": 34181,
+      "sha256": "a521d0e5ee6973fc1fdad624a0696530916c679fe3f832922bd5ccd0dfcc3ea1"
+    },
+    {
+      "path": "README.md",
+      "bytes": 21104,
+      "sha256": "be98aa2744f6c8b377f9321330b1f1efa2214b8ca0567d0bceca1f1f6f719ff0"
+    },
+    {
+      "path": "README_DataAgent.md",
+      "bytes": 8505,
+      "sha256": "d171ff0707c435b68add3dcbfffe00dc007a0942c06d6f0d2865a52ae6822adc"
+    },
+    {
+      "path": "README_EN.md",
+      "bytes": 20344,
+      "sha256": "b7c69252e054a8c430eec48b36da4a843a9b8e1688dcf23af54653aa9dc8a987"
+    },
+    {
+      "path": "README_mrag.md",
+      "bytes": 5414,
+      "sha256": "ca8d11bb8c3a1d63aa8c303558ee5322b649a43a0df34d6fa1fe366fe3c609f5"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/BaseAgent.java",
+      "bytes": 5159,
+      "sha256": "67a464057976dc041f0852f89d584d43ab92d28ca95196e9e5ac68259e84711f"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/ExecutorAgent.java",
+      "bytes": 8788,
+      "sha256": "44df1978063f292f36617a850f2c3f7caf5853dd7214312d29772a0064feb7ec"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/PlanningAgent.java",
+      "bytes": 8447,
+      "sha256": "731cd8067bb56cbec7f1c50fbdf7816d94a47eda9ff4b1c86b330e43c45d0904"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/tool/common/PlanningTool.java",
+      "bytes": 7497,
+      "sha256": "bf60af7744666ad38b6bee23233f753e49b42c90ad24394920d03d2f2cb4e8bb"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
