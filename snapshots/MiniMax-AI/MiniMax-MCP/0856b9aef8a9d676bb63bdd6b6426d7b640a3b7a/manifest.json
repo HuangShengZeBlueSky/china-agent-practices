@@ -1,0 +1,53 @@
+{
+  "repository": "MiniMax-AI/MiniMax-MCP",
+  "commit": "0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a",
+  "captured_at": "2026-10-22T15:59:49.795204+00:00",
+  "source_ids": [
+    "minimax-mcp-media"
+  ],
+  "license_notes": [
+    "MIT"
+  ],
+  "archive_url": "https://codeload.github.com/MiniMax-AI/MiniMax-MCP/tar.gz/0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a",
+  "archive_sha256": "4a63a217e61e452b919cbf44ab0f0fa079dcb0c459b5c6e9532fde39f886bdf3",
+  "archive_bytes": 132167,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 132167,
+      "sha256": "4a63a217e61e452b919cbf44ab0f0fa079dcb0c459b5c6e9532fde39f886bdf3"
+    }
+  ],
+  "archive_file_count": 33,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "a9138c01f3c22641ac8f8fe2f3ec75de0b4a0494ff81e8da43b3cc2091935ac3"
+    },
+    {
+      "path": "README-CN.md",
+      "bytes": 11992,
+      "sha256": "e9c0b6ad26de688f37e7689cdfef1327806d10a051212627fd303e158cbe85dc"
+    },
+    {
+      "path": "README.md",
+      "bytes": 11969,
+      "sha256": "46fd66aa807a33554aff71cdd308b86e15e58cb07682883beba2f12cc93f0619"
+    },
+    {
+      "path": "minimax_mcp/client.py",
+      "bytes": 3675,
+      "sha256": "08d4116a20e8a652ceb9e2b6f58b1e7cdfe464b14baff05977e08b4b05b66be3"
+    },
+    {
+      "path": "minimax_mcp/server.py",
+      "bytes": 26731,
+      "sha256": "7a8cf05181e4c0a0b0fa2190fee7a598df732dd5ed17eb35d492ce29b9be349b"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
