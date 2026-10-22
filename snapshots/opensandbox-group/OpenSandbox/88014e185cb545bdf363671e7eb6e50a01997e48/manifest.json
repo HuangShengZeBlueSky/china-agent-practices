@@ -1,0 +1,153 @@
+{
+  "repository": "opensandbox-group/OpenSandbox",
+  "commit": "88014e185cb545bdf363671e7eb6e50a01997e48",
+  "captured_at": "2026-10-22T15:58:43.656500+00:00",
+  "source_ids": [
+    "alibaba-opensandbox"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/opensandbox-group/OpenSandbox/tar.gz/88014e185cb545bdf363671e7eb6e50a01997e48",
+  "archive_sha256": "8b3a6909bed305c852d29994a8c73a84a6fda8abd84f911f5731a2223ec6d9cd",
+  "archive_bytes": 69705217,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "497f10676067a3ebd706559b8ad69e14b10d6e00dee447a1cbdf1c3ae58d4aad"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 8388608,
+      "sha256": "92931e7ccb824b810c8b5e8c8ae94271bc175796369c060c380ecd91134cb7a8"
+    },
+    {
+      "path": "source.tar.gz.part0002",
+      "bytes": 8388608,
+      "sha256": "6f8773801cc6ae9bbf124b4565e1a48fbe10276f93974f5b8ff9a9806a80acda"
+    },
+    {
+      "path": "source.tar.gz.part0003",
+      "bytes": 8388608,
+      "sha256": "a4e81764aa0d4a38a8a86d7a9ac9e37d8ca7fc6385195685080c840024b8a253"
+    },
+    {
+      "path": "source.tar.gz.part0004",
+      "bytes": 8388608,
+      "sha256": "7ba3b6e635e288f4167f4e476653e3ceb0a42432f8120a6368964cf6d185248f"
+    },
+    {
+      "path": "source.tar.gz.part0005",
+      "bytes": 8388608,
+      "sha256": "95fbc6f2450e82e8982ecba71f122a30172cd3c0618ea82be304fc9e23a13df3"
+    },
+    {
+      "path": "source.tar.gz.part0006",
+      "bytes": 8388608,
+      "sha256": "cd0427019e6f0947078fd00cc1ac147c47a13fa37f78a84a1d46ab59e88cae0a"
+    },
+    {
+      "path": "source.tar.gz.part0007",
+      "bytes": 8388608,
+      "sha256": "dce807166290e77a4b0e14d13d31e313f5a45004e9b57bde5ce49816e4715cb0"
+    },
+    {
+      "path": "source.tar.gz.part0008",
+      "bytes": 2596353,
+      "sha256": "06f05445b63a842747a4bded0dd22a8ebfb0fa77649324c54bd61a31f58a0fc6"
+    }
+  ],
+  "archive_file_count": 3766,
+  "skills_count": 2,
+  "files": [
+    {
+      "path": ".agents/skills/opensandbox-release-notes/SKILL.md",
+      "bytes": 16145,
+      "sha256": "63c10819290692922aecce190e660458f69702d37dad9bd01fe6031e511f0af3"
+    },
+    {
+      "path": ".agents/skills/opensandbox-release-notes/package.json",
+      "bytes": 298,
+      "sha256": "dbec0ebdd9ca1e0e4d3a23a0a189bed66e6b6eb7f8c538b251baa91073488e26"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11324,
+      "sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a"
+    },
+    {
+      "path": "README.md",
+      "bytes": 11403,
+      "sha256": "a5b1b229fef6cb9112fa79886cc9c90d7bdcd17138143715290753ff984ec275"
+    },
+    {
+      "path": "cli/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "cli/src/opensandbox_cli/skills/opensandbox-command-execution.md",
+      "bytes": 7568,
+      "sha256": "1d4716816695bfc758f0c1f198c1c075a6dd6342e4e13ff4965cf6153df23932"
+    },
+    {
+      "path": "sdks/code-interpreter/python/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "sdks/mcp/sandbox/python/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "sdks/sandbox/kotlin/LICENSE",
+      "bytes": 10947,
+      "sha256": "4458503dd48e88c4e0b945fb252a08b93c40ec757309b8ffa7c594dfa1e35104"
+    },
+    {
+      "path": "sdks/sandbox/python/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "sdks/sandbox/python/src/opensandbox/adapters/command_adapter.py",
+      "bytes": 15539,
+      "sha256": "c2a16d45ea4df89f8f2442d8c30eed0fd0c91fc79688408c75249df50fed71fc"
+    },
+    {
+      "path": "sdks/sandbox/python/src/opensandbox/services/command.py",
+      "bytes": 5972,
+      "sha256": "7025f4276ac08678edab83516d54400cbf390f87c64dfcf57cf47a5bcfd72427"
+    },
+    {
+      "path": "server/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "skills/troubleshoot-sandbox/SKILL.md",
+      "bytes": 4585,
+      "sha256": "124583a5487509e8f5856ace1da0ca068065539870e0d55c622e2fc79c814fb4"
+    }
+  ],
+  "skills": [
+    {
+      "path": ".agents/skills/opensandbox-release-notes/SKILL.md",
+      "bytes": 16145,
+      "sha256": "63c10819290692922aecce190e660458f69702d37dad9bd01fe6031e511f0af3",
+      "directory": ".agents/skills/opensandbox-release-notes",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "skills/troubleshoot-sandbox/SKILL.md",
+      "bytes": 4585,
+      "sha256": "124583a5487509e8f5856ace1da0ca068065539870e0d55c622e2fc79c814fb4",
+      "directory": "skills/troubleshoot-sandbox",
+      "status": "snapshot_only"
+    }
+  ],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

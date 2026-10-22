@@ -30,6 +30,8 @@
 | meituan-longcat/vitabench | 742e240855bf | 0 | 5656535 | [全部原文](meituan-longcat/vitabench/742e240855bf8686a0842360749d5ea970ea3987/files) · [清单](meituan-longcat/vitabench/742e240855bf8686a0842360749d5ea970ea3987/manifest.json) |
 | openJiuwen-ai/agent-core | 0ab5913b250d | 29 | 37025904 | [全部原文](openJiuwen-ai/agent-core/0ab5913b250d565b35bff3828dae438939cb1acd/files) · [清单](openJiuwen-ai/agent-core/0ab5913b250d565b35bff3828dae438939cb1acd/manifest.json) |
 | openJiuwen-ai/agent-core | 4170e756504d | 29 | 36897896 | [全部原文](openJiuwen-ai/agent-core/4170e756504d70d8324c2ac18a5afdd770a99dc9/files) · [清单](openJiuwen-ai/agent-core/4170e756504d70d8324c2ac18a5afdd770a99dc9/manifest.json) |
+| opensandbox-group/OpenSandbox | 62d3e59d1079 | 2 | 69596147 | [全部原文](opensandbox-group/OpenSandbox/62d3e59d10796154b88510f39fca8438eb99dd58/files) · [清单](opensandbox-group/OpenSandbox/62d3e59d10796154b88510f39fca8438eb99dd58/manifest.json) |
+| opensandbox-group/OpenSandbox | 88014e185cb5 | 2 | 69705217 | [全部原文](opensandbox-group/OpenSandbox/88014e185cb545bdf363671e7eb6e50a01997e48/files) · [清单](opensandbox-group/OpenSandbox/88014e185cb545bdf363671e7eb6e50a01997e48/manifest.json) |
 
 ## 本轮失败
 

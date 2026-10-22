@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:58:30.767852+00:00",
+  "updated_at": "2026-10-22T15:58:43.757813+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -126,6 +126,14 @@
       "ok": true,
       "commits": [
         "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5"
+      ]
+    },
+    {
+      "repository": "opensandbox-group/OpenSandbox",
+      "ok": true,
+      "commits": [
+        "62d3e59d10796154b88510f39fca8438eb99dd58",
+        "88014e185cb545bdf363671e7eb6e50a01997e48"
       ]
     }
   ],
@@ -345,9 +353,27 @@
       "archive_sha256": "a7a7ba499c64f68840794d1e7db5c6c6ee51e222f4b4750c42679e8949ca4c9a",
       "skills_count": 29,
       "archive_file_count": 7880
+    },
+    {
+      "repository": "opensandbox-group/OpenSandbox",
+      "commit": "62d3e59d10796154b88510f39fca8438eb99dd58",
+      "captured_at": "2026-10-22T15:58:38.704355+00:00",
+      "archive_bytes": 69596147,
+      "archive_sha256": "0305406e39e30fd61291909e18e0db5323920df74138b5a0e4ebe7ce848a9ed3",
+      "skills_count": 2,
+      "archive_file_count": 3749
+    },
+    {
+      "repository": "opensandbox-group/OpenSandbox",
+      "commit": "88014e185cb545bdf363671e7eb6e50a01997e48",
+      "captured_at": "2026-10-22T15:58:43.656500+00:00",
+      "archive_bytes": 69705217,
+      "archive_sha256": "8b3a6909bed305c852d29994a8c73a84a6fda8abd84f911f5731a2223ec6d9cd",
+      "skills_count": 2,
+      "archive_file_count": 3766
     }
   ],
-  "repositories": 17,
-  "skill_paths_across_versions": 6125,
-  "bytes": 1796730808
+  "repositories": 18,
+  "skill_paths_across_versions": 6129,
+  "bytes": 1936032172
 }
