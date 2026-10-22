@@ -1,0 +1,68 @@
+{
+  "repository": "KwaiKEG/KwaiAgents",
+  "commit": "3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c",
+  "captured_at": "2026-10-22T16:00:04.138077+00:00",
+  "source_ids": [
+    "kuaishou-kwaiagents-lite"
+  ],
+  "license_notes": [
+    "CC-BY-NC-SA-4.0（主 LICENSE.txt，含非商业与相同方式共享条件）"
+  ],
+  "archive_url": "https://codeload.github.com/KwaiKEG/KwaiAgents/tar.gz/3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c",
+  "archive_sha256": "24c9015f0ec36e06c41cc2b47140cdd6f39ce34f2ee09a4f6df22849829e3d1b",
+  "archive_bytes": 8167776,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8167776,
+      "sha256": "24c9015f0ec36e06c41cc2b47140cdd6f39ce34f2ee09a4f6df22849829e3d1b"
+    }
+  ],
+  "archive_file_count": 49,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE.txt",
+      "bytes": 20848,
+      "sha256": "9e502ba75fd0fd30cea5497b438a4bc12f07f02bc932a7a6041fd6a18b8f46a0"
+    },
+    {
+      "path": "README.md",
+      "bytes": 12701,
+      "sha256": "27b6d57c0e8c67b9cdb264953f35982c277ccd961013a671d0db1c5b4496f7d0"
+    },
+    {
+      "path": "README_JA.md",
+      "bytes": 14426,
+      "sha256": "ec4ea916174438956b2ea3e4fdf56d06aac8945fcadc0a6f0fa69382d2e645bc"
+    },
+    {
+      "path": "README_ZH.md",
+      "bytes": 11581,
+      "sha256": "25766dd06fce2a0f53c0145ebd9d78fbb88833ef8c77a6164b53fe16f5206a18"
+    },
+    {
+      "path": "benchmark/benchmark_eval.py",
+      "bytes": 23245,
+      "sha256": "67ff409411dd89de37e7fa7a95044d0c0c1b2b83b7a3594915319e3832af5b3c"
+    },
+    {
+      "path": "kwaiagents/agents/kagent.py",
+      "bytes": 11276,
+      "sha256": "af5569232acfeca902492f348687c79f63ea61697172c484e6ca3f72f0d120cf"
+    },
+    {
+      "path": "kwaiagents/agents/prompts.py",
+      "bytes": 8779,
+      "sha256": "9e4a3bd3a5c15c2c340b2f4c2aab3194d1f5498ffddcff0e33b34e17c1326111"
+    },
+    {
+      "path": "kwaiagents/utils/function_utils.py",
+      "bytes": 876,
+      "sha256": "49d12ef5dfbc0f3a4b85bb5d31214ea97a3ee5eb1fdb2efe6e186bd04d250f2d"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

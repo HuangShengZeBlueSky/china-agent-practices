@@ -6,6 +6,7 @@
 
 | 来源 | 固定提交 | 技能路径 | 完整归档字节 | 本地原文与清单 |
 | --- | --- | ---: | ---: | --- |
+| KwaiKEG/KwaiAgents | 3504ab8a00a3 | 0 | 8167776 | [全部原文](KwaiKEG/KwaiAgents/3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c/files) · [清单](KwaiKEG/KwaiAgents/3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c/manifest.json) |
 | MiniMax-AI/MiniMax-MCP | 0856b9aef8a9 | 0 | 132167 | [全部原文](MiniMax-AI/MiniMax-MCP/0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a/files) · [清单](MiniMax-AI/MiniMax-MCP/0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a/manifest.json) |
 | MiniMax-AI/skills | 60aaae52bb2a | 23 | 5162153 | [全部原文](MiniMax-AI/skills/60aaae52bb2af8162732751a4332f62a5fef518b/files) · [清单](MiniMax-AI/skills/60aaae52bb2af8162732751a4332f62a5fef518b/manifest.json) |
 | MoonshotAI/kimi-cli | 9ab1286b8fe4 | 12 | 10522491 | [全部原文](MoonshotAI/kimi-cli/9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82/files) · [清单](MoonshotAI/kimi-cli/9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82/manifest.json) |
