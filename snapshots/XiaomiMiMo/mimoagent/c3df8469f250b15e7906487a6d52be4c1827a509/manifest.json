@@ -1,0 +1,63 @@
+{
+  "repository": "XiaomiMiMo/mimoagent",
+  "commit": "c3df8469f250b15e7906487a6d52be4c1827a509",
+  "captured_at": "2026-10-22T15:57:44.921227+00:00",
+  "source_ids": [
+    "xiaomi-mimoagent"
+  ],
+  "license_notes": [
+    "MIT；NOTICE 列明上游与第三方工具的独立许可"
+  ],
+  "archive_url": "https://codeload.github.com/XiaomiMiMo/mimoagent/tar.gz/c3df8469f250b15e7906487a6d52be4c1827a509",
+  "archive_sha256": "2762c898983d76581a710ee78d41ddb2f96d0e2c080a78ad39207623f2c24f00",
+  "archive_bytes": 601286,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 601286,
+      "sha256": "2762c898983d76581a710ee78d41ddb2f96d0e2c080a78ad39207623f2c24f00"
+    }
+  ],
+  "archive_file_count": 311,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE.md",
+      "bytes": 1150,
+      "sha256": "32bd919b8f54478499e6a57281bdf6136be6fe4e4e8ded0a66307470dc49d076"
+    },
+    {
+      "path": "NOTICE",
+      "bytes": 1997,
+      "sha256": "cdeaae4f380399e12a6dcb5fa02af0d69c050ccf18b2f9de040c3aee6264aecf"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7692,
+      "sha256": "f57226245a46b352859e88b2af17c7d8982c3dce1c087b40958ebdb3e6f7201e"
+    },
+    {
+      "path": "example_configs/default-bash-only.yaml",
+      "bytes": 1157,
+      "sha256": "5f74b954ea154a17be5db06e243c1395e97ed9984d48c0c69f5edb0231860f3f"
+    },
+    {
+      "path": "src/mimoagent/agents/base.py",
+      "bytes": 14937,
+      "sha256": "170460f61bf1873f79d8a98eb8fc3be7202b0accd093cd7db50cbb52d207fbdc"
+    },
+    {
+      "path": "src/mimoagent/agents/default.py",
+      "bytes": 15820,
+      "sha256": "fc63928efbcd18afff018cdfe884ffc5a18ccafc3151bd0c359ab62c2156de23"
+    },
+    {
+      "path": "src/mimoagent/tools/bash.py",
+      "bytes": 5674,
+      "sha256": "c1c96ca3ea2623d16b5df475a1fef6740d65b7d2d89e3be46c05f097c5324987"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
