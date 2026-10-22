@@ -1,0 +1,877 @@
+{
+  "repository": "openJiuwen-ai/agent-core",
+  "commit": "4170e756504d70d8324c2ac18a5afdd770a99dc9",
+  "captured_at": "2026-10-22T15:57:21.506989+00:00",
+  "source_ids": [
+    "huawei-openjiuwen-skills"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/openJiuwen-ai/agent-core/tar.gz/4170e756504d70d8324c2ac18a5afdd770a99dc9",
+  "archive_sha256": "a7a7ba499c64f68840794d1e7db5c6c6ee51e222f4b4750c42679e8949ca4c9a",
+  "archive_bytes": 36897896,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "e0fccec91426810ed0a03de64183d645045c706995209d4541b4b894f0e446bc"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 8388608,
+      "sha256": "b9c02d24a6dc4d3700abef96d0044255079f4858091e8db7d48e3c19f33e8fa0"
+    },
+    {
+      "path": "source.tar.gz.part0002",
+      "bytes": 8388608,
+      "sha256": "8381d46bb9d3a5e1d5f8b7edfba87c2d3a371cd5ec281cc7336f1fe2d557e216"
+    },
+    {
+      "path": "source.tar.gz.part0003",
+      "bytes": 8388608,
+      "sha256": "f5cdba317c1820f5b00367932e604b16e6cf1b49a770a7885a95b6d320b8a88e"
+    },
+    {
+      "path": "source.tar.gz.part0004",
+      "bytes": 3343464,
+      "sha256": "dd0f2abd7e36827138326f5b396ae9ca4dd932f976f17ca9c5e11fe16743b42d"
+    }
+  ],
+  "archive_file_count": 7880,
+  "skills_count": 29,
+  "files": [
+    {
+      "path": ".claude/skills/harness-provider-integration/SKILL.md",
+      "bytes": 15240,
+      "sha256": "ca05dc6076fd431f7cf653c71b4ae9a5e6b5e0536f729dfe844fc38333eb0884"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/capabilities.md",
+      "bytes": 5249,
+      "sha256": "1b0368f66ebf295c9f38b731a92956bd637e590a41b424f2c84c4e3b403cf19e"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/mapping.md",
+      "bytes": 5665,
+      "sha256": "05f7296ee33ae3bb6ff1441e6fb115a276dd4974bbb35b39cc0248cc7dfcd5e1"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/mode-acp.md",
+      "bytes": 7367,
+      "sha256": "127de6ab717664276d3412363eb6f84cf038584f92da7c1cedd389562af34c4b"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/mode-native.md",
+      "bytes": 5819,
+      "sha256": "dbf2f4e8215971337f33eb01e7090b91e421b5dd1139a51b97440330871b5119"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/mode-oneshot.md",
+      "bytes": 4927,
+      "sha256": "c267957cea119e4ff15be4bca796df2d8672907dea2941fb9ff9a93e0c123144"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/mode-sdk.md",
+      "bytes": 4663,
+      "sha256": "65996bf0b3144bbfd3c8f2697ebc3d40532fb4cb649e8402c68a94776a8095ad"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/observation.md",
+      "bytes": 6102,
+      "sha256": "ba1c0213fe4cfa2d003ba7d552f47ff5f9c6850dfef3779d76ad0b51f014652e"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/packaging.md",
+      "bytes": 10917,
+      "sha256": "78729ec42cec58fae817552f697c39f4e0a9617f88640f6bef21076750e9f869"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/recon.md",
+      "bytes": 12068,
+      "sha256": "bb46636b8aaf494ac1b7ef0765067137cf7e412a0fec178080169792cabe1fd1"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/references/testing.md",
+      "bytes": 5366,
+      "sha256": "1ec4f6a5206f393ca388179acd909ef53e49d47d346fd6e764406476f85079f6"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/scripts/build_runtime.py",
+      "bytes": 20332,
+      "sha256": "03be7979033d4b7cecdd4dcf73f1dc8e4ea508de5c8926a8cdf93a9ca1f87769"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/scripts/scaffold.py",
+      "bytes": 16111,
+      "sha256": "f3bf3d8fcb60629b1ace57146b04805398f65286a35a96463aff0ae206133b41"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/acp/config.py.tmpl",
+      "bytes": 8494,
+      "sha256": "f388a80bd4ef025bfaf81497004d0a0ec39d0cf31db1cff7995c79819d7f750d"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/acp/failure_classifier.py.tmpl",
+      "bytes": 5202,
+      "sha256": "d2244a257bddcc31b07f2257701ff68636ac7c4b65a8315a3e70a3371c75addf"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/acp/fake_agent.py.tmpl",
+      "bytes": 11156,
+      "sha256": "fd83776f5a3a82accbb58a3c71c536e6b10e052c5a808bcce9eb200d98976aa5"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/acp/harness.py.tmpl",
+      "bytes": 38612,
+      "sha256": "8643ad3a7b142590e265bd1e2f5df369ae9d0de60aaf835db8c640aa02d47e48"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/acp/mapping.py.tmpl",
+      "bytes": 19739,
+      "sha256": "5343324897b3799fe1c153af38edb4f56c8118315a2b1b0425d1e638664adfd3"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/acp/rpc.py.tmpl",
+      "bytes": 8765,
+      "sha256": "3ff7828d0cf14360aab62c2418d8ee57782db3ca73c99a4f19801e3f81fbb15c"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/acp/test_harness.py.tmpl",
+      "bytes": 33502,
+      "sha256": "c235c29cf45aa9bbae2434b7aae63402613aa2bdbcecab3303152d6233bd0f77"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/cli/bundled.py.tmpl",
+      "bytes": 4959,
+      "sha256": "1f8b4ec8765ea98dcecaa2f7c3f7b9b9cbbff0bc516167c5bba684f6c4da2d22"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/cli/process.py.tmpl",
+      "bytes": 8367,
+      "sha256": "8488611ea9076151912bad80b9a561d6265efcf09791c8c621538445758c0459"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/common/__init__.py.tmpl",
+      "bytes": 549,
+      "sha256": "643aa28879d3a9a92eac6c1611b1ea0d9ec275b88e99ddbe9cf5708b541e6b85"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/common/failure_classifier.py.tmpl",
+      "bytes": 4741,
+      "sha256": "0a69d449e9e88e5cf99ad30792a67e625575ab5e2929db8585f86dbdd3ef0340"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/common/mapping.py.tmpl",
+      "bytes": 13628,
+      "sha256": "dba8b266ca76bb16fd086f1d5fb11104fb057746889b9bccec29c96a391b04fe"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/common/provider.py.tmpl",
+      "bytes": 3517,
+      "sha256": "66068823e953868a1fd8e7e8b47767feae219a7971cff81d4b9c459b040c44ef"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/e2e/test_e2e.py.tmpl",
+      "bytes": 3612,
+      "sha256": "119e3b7b91425d087ce58e31a21896492c79d4710ebcc16bf89995b61d744fd3"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/oneshot/config.py.tmpl",
+      "bytes": 5403,
+      "sha256": "22bf14821ee02e9f43c306a06dfac69bb313b20fa79f4065f7be04bb6aecae33"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/oneshot/fake_cli.py.tmpl",
+      "bytes": 3430,
+      "sha256": "99cbd4d741840c71c7ffd4c139140c3796b6853b2e4b8720ba0528069faf2305"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/oneshot/harness.py.tmpl",
+      "bytes": 12852,
+      "sha256": "5b8e7c6d7fa7c87ed1251916dbd66f9a998713957bf80186329f4093a556a830"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/oneshot/test_harness.py.tmpl",
+      "bytes": 14898,
+      "sha256": "af0fa8b0d4079727ab8424125cb35aba779ccd97e5f51b3eca4cb027d596dd53"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/package/AGENTS.md.tmpl",
+      "bytes": 2660,
+      "sha256": "412f26bd81d8b2a968ab5a89c5cebc845f68ed6f9b79a650c5d5a49680898d1a"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/package/README.md.tmpl",
+      "bytes": 1771,
+      "sha256": "fa348a1e638cf31ad20ebaf8d002fba3a89c2ed166a6c3db520e1fd3959f37b1"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/package/conftest.py.tmpl",
+      "bytes": 420,
+      "sha256": "405bb6038e22d705d4d5c6a1faf7d152243be09137c478c234c9a421cc824dfe"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/package/contract.py.tmpl",
+      "bytes": 16709,
+      "sha256": "e16deb8c490716a39459c180c038f566e5306b4e540060b425e662c1e11b3362"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/package/gitignore.tmpl",
+      "bytes": 142,
+      "sha256": "b8f6d5c3c003768fd964ee8ec7d00783686b2e927f7a424ac2589f7249644b90"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/package/pyproject.toml.tmpl",
+      "bytes": 847,
+      "sha256": "dc31177a7fead27240c6342e03ac1290ff4e0ddb7eca226a475b34ef85c64cdb"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/package/test_registration.py.tmpl",
+      "bytes": 3537,
+      "sha256": "1b5e81ee4eb9de69e59c67d818394b8730b5aad4b1d7e298d81f807b72a12b9c"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/sdk/config.py.tmpl",
+      "bytes": 4400,
+      "sha256": "a82e871081908bc4d719d5c49882040d81f54edec721e1dac70767aa04dcb5d9"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/sdk/harness.py.tmpl",
+      "bytes": 14446,
+      "sha256": "d3ca71e8142c5221d217d144a3f06b5f2e2b13ed3672c2dd4a370b2dc4aafad3"
+    },
+    {
+      "path": ".claude/skills/harness-provider-integration/templates/sdk/test_harness.py.tmpl",
+      "bytes": 15952,
+      "sha256": "a3a99beb98356579fd2e70d66d55349a50e1dd39610039019145308422905afb"
+    },
+    {
+      "path": ".claude/skills/python-patterns/SKILL.md",
+      "bytes": 8333,
+      "sha256": "345522bb762bf9b1ebbd91301d1984a5fbcaca0c0341f0b4cd3751c3c01308b2"
+    },
+    {
+      "path": ".claude/skills/python-testing/SKILL.md",
+      "bytes": 9079,
+      "sha256": "9e7c6db70e0800c28b1c847f03f712997fe035a9cee26df4b068f6287ddc1e5f"
+    },
+    {
+      "path": ".claude/skills/security-review/SKILL.md",
+      "bytes": 6979,
+      "sha256": "e55a0a7f2fd3a842c346edb73ee972b7ac12d9528211c8ca42676dfd57d71675"
+    },
+    {
+      "path": ".claude/skills/security-review/checklist.md",
+      "bytes": 3674,
+      "sha256": "538aadc5ba82dab49989118494acbc330a561a46efce874d111c4277c2927383"
+    },
+    {
+      "path": ".claude/skills/verification-loop/SKILL.md",
+      "bytes": 3284,
+      "sha256": "393e78dd75108a98a28922c58028d6b09c8586caf2edca5c803c46e5b137bd3f"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "README.md",
+      "bytes": 9978,
+      "sha256": "f2a46360f85fb8d6110180b52477f8d3826abfbf59fbff2facfacc2380c7546d"
+    },
+    {
+      "path": "README.zh.md",
+      "bytes": 8298,
+      "sha256": "7d038e62d1149bc2dc211e2b146f639b462dc4bc22f624242028e8a3588f5254"
+    },
+    {
+      "path": "docs/zh/2.开发指南/API文档/openjiuwen.core/skills/openjiuwen_skills.md",
+      "bytes": 10872,
+      "sha256": "8a0040ba9cc602717d4c0b8af8697111682fd785bd93e23a67e6425befdcf533"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/SKILL.md",
+      "bytes": 3190,
+      "sha256": "8f9eb577cf4e6c2905c40a6216982ed31882ef6547f11d008442dffbb438b7a5"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/booking destination.png",
+      "bytes": 171736,
+      "sha256": "23ecd9790e4bd8db1950fa82927839c6d0bb38901c66421f5aded65b8fe5ccf7"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/booking_date.png",
+      "bytes": 180852,
+      "sha256": "8b155df255b40aa5f0fd44c4c601589d9200f183b06d3accb833b40896bc8181"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/booking_hotel_details.png",
+      "bytes": 1549866,
+      "sha256": "323024f8310912cb1f9a9a5f9681915d70060ee8244d8edb97b34452d5097031"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/booking_hotel_facilities.png",
+      "bytes": 712321,
+      "sha256": "a8836b934da77e221bfa7af8b8d8021d01aa77c0294570497fb5b709e9d15ce3"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/booking_hotel_price.png",
+      "bytes": 291540,
+      "sha256": "caf7603721672cde273f9bb7a4dc1eb0332620f91ba00c85c30a9f3361173612"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/booking_hotel_review.png",
+      "bytes": 232628,
+      "sha256": "fb25ea4308251ff91cdce0e25b9a8962abfd54e3a310c58ba150b08d640907b5"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/booking_landing.png",
+      "bytes": 280209,
+      "sha256": "6e4a23096da7c012e63bef7ed9d7a25ba669589aca00369c6da3051b9b9e5f60"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/booking_occupcancy.png",
+      "bytes": 131375,
+      "sha256": "2b0de325d68254b0c7de3e617c5cba1394c3856dfe424786fa7361716ec2ce7d"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/booking_search_result.png",
+      "bytes": 689174,
+      "sha256": "a3c5065bae43de5796f1ff715686f2351b4ad894870b75345b14285809a7e555"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/google_page.png",
+      "bytes": 678898,
+      "sha256": "b87a049d44eb7b2e5cea805dcf6c4e52c7153bfb2cd466f905f0128901305a4c"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/google_search.png",
+      "bytes": 197067,
+      "sha256": "3a8282f436f987ae76764d408c635b38223d8f749efc95d116556b2508e67bc2"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/images/home_screen.png",
+      "bytes": 1487558,
+      "sha256": "8fb5e73b25766c670b925254a84cc46f7e20cf12080b5cfa223752b116581287"
+    },
+    {
+      "path": "examples/mobile_gui/skills/github-com/SKILL.md",
+      "bytes": 7069,
+      "sha256": "3e649a3d85fea17cebcf10e9f5ef776a83ccfaf572ea7c87da4515cc66dea561"
+    },
+    {
+      "path": "examples/mobile_gui/skills/github-com/images/github_bottom.png",
+      "bytes": 349670,
+      "sha256": "3e097e7c087b3257a700b5ef2d236872e74927eb4443058109cf2d953df3d514"
+    },
+    {
+      "path": "examples/mobile_gui/skills/github-com/images/github_desktop_button.png",
+      "bytes": 269854,
+      "sha256": "dd1225efee2082a23fb66d4b47286902c6eed0b3a3c076c4d396a83bdbc0d75d"
+    },
+    {
+      "path": "examples/mobile_gui/skills/github-com/images/github_desktop_site.png",
+      "bytes": 578744,
+      "sha256": "45f38ccb94abc0c12071c6b4ba043660567890bfdf851e43ce687ef274276f6a"
+    },
+    {
+      "path": "examples/mobile_gui/skills/github-com/images/github_landing_page.png",
+      "bytes": 283991,
+      "sha256": "d8ae70e3c32d9c7a8d02cacd89bbc821bf90834e5e845327fd0456931f2f0e4c"
+    },
+    {
+      "path": "examples/mobile_gui/skills/github-com/images/github_landing_scrolled.png",
+      "bytes": 476656,
+      "sha256": "95d1e9796da4699d9cbd15352b72165ff17e33a704324afa2fba121304575d5a"
+    },
+    {
+      "path": "examples/mobile_gui/skills/github-com/images/github_readme_download.png",
+      "bytes": 429280,
+      "sha256": "8cfa3ae1ea83796891611ae7fff3e8c67748d63b3984a18d96b18405c0a32e02"
+    },
+    {
+      "path": "examples/mobile_gui/skills/github-com/images/github_readme_file.png",
+      "bytes": 394386,
+      "sha256": "6327b20a97d9cc70050094873f85eeaa1227f1c9f9bc4e2d9c99e50813bd1ab5"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/SKILL.md",
+      "bytes": 6818,
+      "sha256": "40c14086fe013203d01b0eb1ba35411bfb2b1fe896e84ad576ae3789ee5bf9da"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/images/alarm_date.png",
+      "bytes": 198389,
+      "sha256": "32b31fa8eb55d1a9318c880a0a03e50a76230a7e5ff76bc17a2668b2c3b70717"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/images/alarm_landing_page.png",
+      "bytes": 159050,
+      "sha256": "b3f0707eceab385aa3776154242b949fcd0883e1c6eee2e904b988315a699647"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/images/alarm_time.png",
+      "bytes": 189152,
+      "sha256": "2d70babdfc81d4b869c89fde9db08ff50f0c442b8556fe23f95db7d6335213b9"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/images/calendar_landing_page.png",
+      "bytes": 225719,
+      "sha256": "36869247690490022ba1e628bf98311410af6d7ddce5bc1b30bd4b6bc8ef4871"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/images/calendar_schedule.png",
+      "bytes": 398085,
+      "sha256": "8ee3ed659dffab725ac2474ade088cd12e4ffb79c85bc305ebfd15e2be1a45e9"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/images/calendar_schedule_detail.png",
+      "bytes": 135993,
+      "sha256": "21014bc8404fecae25eb12bce76e107cc3f736f82f9634fa1924dbc61b1d5a80"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/images/calendar_search.png",
+      "bytes": 115296,
+      "sha256": "4aefde89082a0672badf5d23a289f11d50b276824541ea2ab640aa441b2ab4ad"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/images/calendar_view_option.png",
+      "bytes": 236307,
+      "sha256": "653cc83a58b1af0a220749a83ffc3e16eb03be2749db66399df7ef123cb398a3"
+    },
+    {
+      "path": "openjiuwen/core/single_agent/agents/react_agent.py",
+      "bytes": 156719,
+      "sha256": "9eb94f85ecd9dab4713e31bf7ec67fe98e7cfec4de6339000925fa3f9f55992d"
+    },
+    {
+      "path": "openjiuwen/core/single_agent/skills/skill_manager.py",
+      "bytes": 10005,
+      "sha256": "f86387fa5148eb85d10a47ab8a6ecfe60ac09432e5405c8a28d8a1e4c655e9c4"
+    },
+    {
+      "path": "openjiuwen/core/single_agent/skills/skill_util.py",
+      "bytes": 4350,
+      "sha256": "da76b1593f6436007fd1e4ed1311835d7c5e14aaae30487209c700097293ae18"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_creator/skills/skill_omni_creation/SKILL.md",
+      "bytes": 8036,
+      "sha256": "2e95ff859579fab546d596bb84ec07752342e5c3e0afb12d2ca5001bcc6a79de"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_creator/skills/skill_omni_creation/scripts/common.py",
+      "bytes": 11526,
+      "sha256": "70315c641aeb28290f1a3071c5974e9f05e4fe6bbda8044c0f53acdd2b7dbbee"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_creator/skills/skill_omni_creation/scripts/stage_01_scrape.py",
+      "bytes": 19630,
+      "sha256": "74f5b2df80248e5bb1df88b3cc952748f5e94fbd3e97be85adccd28435589e41"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_creator/skills/skill_omni_creation/scripts/stage_02_download.py",
+      "bytes": 3820,
+      "sha256": "7a2e5364ee3dab6ac242c018a6886358d4173e988fab6192281101ac377d8a7d"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_creator/skills/skill_omni_creation/scripts/stage_03_filter.py",
+      "bytes": 6109,
+      "sha256": "1b9529db7864308f7debc89829e5ac4b31596236cb0b5ba3d3783bd7301ff65e"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_creator/skills/skill_omni_creation/scripts/stage_04_save.py",
+      "bytes": 2556,
+      "sha256": "cd50c447e18828639dedd3a188850d563e5c9d7589f92694e8eae283df35f525"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_creator/skills/skill_omni_creation/scripts/stage_05_generate.py",
+      "bytes": 3567,
+      "sha256": "e04f15630bfa5bfb76fb73461fc7e172327b607aa550e907c8bfe93aa89c9585"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_evaluator/skills/skill_eval_pipeline/SKILL.md",
+      "bytes": 7617,
+      "sha256": "59cdb012472f503213f27a264b7dcc41b8c945b927164b7e6e33de29dca32a2e"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_evaluator/skills/skill_judge/SKILL.md",
+      "bytes": 21746,
+      "sha256": "ab13eae0ac72e47e7763041605187ee72e3252ece54c31f79875ccd825b469ad"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_evaluator/skills/skill_safety_judge/SKILL.md",
+      "bytes": 14046,
+      "sha256": "d1791f9046f21710a28c40ea5bf94a941913709ce605d20d08946a62314c188d"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_evaluator/skills/skill_tester/SKILL.md",
+      "bytes": 11882,
+      "sha256": "f25bef43884d2b4416266ffd177aaf003a97a91a1a397ad887162bdae44c7b93"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_evaluator/skills/skill_tester/scripts/run_eval_query.py",
+      "bytes": 7310,
+      "sha256": "5c67ab012cdf803b6c67c4747a2857c0b0bf844d06a58f228bcd0e2529532dd9"
+    },
+    {
+      "path": "openjiuwen/harness/moa/NOTICE",
+      "bytes": 1309,
+      "sha256": "14592aa7521bc98863f15142a421ac45344b28172c12991da0cb19c9118bf031"
+    },
+    {
+      "path": "openjiuwen/harness/moa/skills/consult-reference-models/SKILL.md",
+      "bytes": 3915,
+      "sha256": "42b47b5bdcb213a1089f834c8a2acee100c8eca784ec98f2b09fe7520cd76492"
+    },
+    {
+      "path": "openjiuwen/harness/tools/worktree/notice.py",
+      "bytes": 1204,
+      "sha256": "56b661cbe08e7912b94968b1dc45bd2259c7087f4299f3482bb45adf4e8ed4c9"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure/SKILL.md",
+      "bytes": 11797,
+      "sha256": "bce89756faab6532ea0a9287621e81660646df92338ffee4b318ba1509163354"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure/scripts/attempt_drawio.py",
+      "bytes": 3256,
+      "sha256": "8a5125b64005f25cba1188af68e9d6485e5d9ecb1ac4be9d4a9c086491a1c910"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure/scripts/check_figure_script.py",
+      "bytes": 3490,
+      "sha256": "de8fc75c5814849ce75eda182bcbc6982ed4f03ae5a448615495d25943565891"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure/scripts/check_method_figure_spec.py",
+      "bytes": 2275,
+      "sha256": "025f978bace7023eda12f6d403932daf1b8ce21a5c0e1a8b0543dfa0dcf434d7"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure/scripts/extract_headings.py",
+      "bytes": 1504,
+      "sha256": "f8137341f460fe9ffaf229335b1e20d52c71f4bfd5f2b88eb3d0fd6d79ffda6b"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure/scripts/insert_method_figure.py",
+      "bytes": 3477,
+      "sha256": "b862dbf1f1447a513551c0bc171a8927f5b0354a25b8b9f576320b836ccc196d"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure/scripts/promote_figure.py",
+      "bytes": 1211,
+      "sha256": "d8ef9a081cf7531a8f8a92c6800c2c8bcc34c2c63200d1e65628bbef5f0ebd3e"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure/scripts/render_method_figure.py",
+      "bytes": 11152,
+      "sha256": "585b1f7fdf1ce9ca20a764f9ae04b5604da2c2352aa705dc7721f084d593b0b1"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-latex/SKILL.md",
+      "bytes": 1865,
+      "sha256": "a659b92a300d97321ff089d41b6175320f1c32f4a926cbefe5252c1bf07d07a4"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-latex/assets/neurips_2025.sty",
+      "bytes": 13023,
+      "sha256": "67a960f35da6fecb5a0ce0202fa400459f4c8bb6c294f1a3fdd82fbbd39244c2"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-latex/scripts/compile.py",
+      "bytes": 5096,
+      "sha256": "14f722985325c0a649c0292556412d67de203895f8947e67da8efbbdf145d404"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-latex/scripts/preflight.py",
+      "bytes": 1802,
+      "sha256": "0b078c9962f4b09eb133c5285106a20803d1829d650a6d0918b28ff1dca09733"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-plan/SKILL.md",
+      "bytes": 1398,
+      "sha256": "24b02d1474ff93173e1e1e5e754f8d5875a7a8423b33d8a19c9f63d7a1640d16"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-review/SKILL.md",
+      "bytes": 5847,
+      "sha256": "df37648c01f9b61866b58e4dff7ccc95c6adc513429fa953e38f067a84df8beb"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-review/scripts/check_citations.py",
+      "bytes": 1959,
+      "sha256": "8bf739da8c3b48d397eeec3bf5e7c47bd0a1dac998eab1836b88ce08aa15999f"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-review/scripts/lint_check.py",
+      "bytes": 3455,
+      "sha256": "e80b6935c080a8b2f75bff962d9ff91e54c4f1fbe252608a32ac0e11fc439ee0"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-write/SKILL.md",
+      "bytes": 6911,
+      "sha256": "353a716f0d50defa47aa7c65f8d3aad546b4c844f4284ac0b1c5ca3b95623d20"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/assess/SKILL.md",
+      "bytes": 4711,
+      "sha256": "84840a6442a3006be3b28c3660689f88c16d50631ee56f4a18fab256b23e89fd"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/commit/SKILL.md",
+      "bytes": 1318,
+      "sha256": "946dbdadc80393093477fe4fde68a4e0901ec4ecd56e8073c9d234fdea02101f"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/communicate/SKILL.md",
+      "bytes": 4102,
+      "sha256": "c77d7f1a2d8215e9e3be26b04ebe98f74ce13c6e3a046a2b223ffbccbb8a290f"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/design_ext/SKILL.md",
+      "bytes": 10285,
+      "sha256": "644a377a0dca24c215949c490ecb3f0367afbb4dfe9fb3d3b2d16352d7dabafb"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/implement/SKILL.md",
+      "bytes": 3680,
+      "sha256": "34c169e2e5fa947c8b41f62cf6e869d39af44f86140ee134dd9ae11bb77d2a7f"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/implement_ext/SKILL.md",
+      "bytes": 15675,
+      "sha256": "955adf903e7fe175c8a0a860bee2f4cd3e9872544ca473ca3738708eba51aaea"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/plan/SKILL.md",
+      "bytes": 2233,
+      "sha256": "ba2039e324da7559e28fdadc1096012a0b79163fe680d038557772c83fa3e5f0"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/select_pipeline/SKILL.md",
+      "bytes": 1059,
+      "sha256": "30dc11bc15ae3d3de8a5a6241b663b85a847e51c90922d6897ef7bfc2f4e8060"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/verify/SKILL.md",
+      "bytes": 1865,
+      "sha256": "009c4de60b9e2d88eaa57c47e59edda242a46f34cece36a0de3e495bcca73884"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/verify_ext/SKILL.md",
+      "bytes": 8826,
+      "sha256": "ede4355d365c66b17d22f1d3b82aa097a0dcebe5243cf05128da6ee9594020ec"
+    }
+  ],
+  "skills": [
+    {
+      "path": ".claude/skills/harness-provider-integration/SKILL.md",
+      "bytes": 15240,
+      "sha256": "ca05dc6076fd431f7cf653c71b4ae9a5e6b5e0536f729dfe844fc38333eb0884",
+      "directory": ".claude/skills/harness-provider-integration",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".claude/skills/python-patterns/SKILL.md",
+      "bytes": 8333,
+      "sha256": "345522bb762bf9b1ebbd91301d1984a5fbcaca0c0341f0b4cd3751c3c01308b2",
+      "directory": ".claude/skills/python-patterns",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".claude/skills/python-testing/SKILL.md",
+      "bytes": 9079,
+      "sha256": "9e7c6db70e0800c28b1c847f03f712997fe035a9cee26df4b068f6287ddc1e5f",
+      "directory": ".claude/skills/python-testing",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".claude/skills/security-review/SKILL.md",
+      "bytes": 6979,
+      "sha256": "e55a0a7f2fd3a842c346edb73ee972b7ac12d9528211c8ca42676dfd57d71675",
+      "directory": ".claude/skills/security-review",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".claude/skills/verification-loop/SKILL.md",
+      "bytes": 3284,
+      "sha256": "393e78dd75108a98a28922c58028d6b09c8586caf2edca5c803c46e5b137bd3f",
+      "directory": ".claude/skills/verification-loop",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "examples/mobile_gui/skills/booking-dot-com/SKILL.md",
+      "bytes": 3190,
+      "sha256": "8f9eb577cf4e6c2905c40a6216982ed31882ef6547f11d008442dffbb438b7a5",
+      "directory": "examples/mobile_gui/skills/booking-dot-com",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "examples/mobile_gui/skills/github-com/SKILL.md",
+      "bytes": 7069,
+      "sha256": "3e649a3d85fea17cebcf10e9f5ef776a83ccfaf572ea7c87da4515cc66dea561",
+      "directory": "examples/mobile_gui/skills/github-com",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "examples/mobile_gui/skills/scheduling/SKILL.md",
+      "bytes": 6818,
+      "sha256": "40c14086fe013203d01b0eb1ba35411bfb2b1fe896e84ad576ae3789ee5bf9da",
+      "directory": "examples/mobile_gui/skills/scheduling",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_creator/skills/skill_omni_creation/SKILL.md",
+      "bytes": 8036,
+      "sha256": "2e95ff859579fab546d596bb84ec07752342e5c3e0afb12d2ca5001bcc6a79de",
+      "directory": "openjiuwen/dev_tools/skill_creator/skills/skill_omni_creation",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_evaluator/skills/skill_eval_pipeline/SKILL.md",
+      "bytes": 7617,
+      "sha256": "59cdb012472f503213f27a264b7dcc41b8c945b927164b7e6e33de29dca32a2e",
+      "directory": "openjiuwen/dev_tools/skill_evaluator/skills/skill_eval_pipeline",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_evaluator/skills/skill_judge/SKILL.md",
+      "bytes": 21746,
+      "sha256": "ab13eae0ac72e47e7763041605187ee72e3252ece54c31f79875ccd825b469ad",
+      "directory": "openjiuwen/dev_tools/skill_evaluator/skills/skill_judge",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_evaluator/skills/skill_safety_judge/SKILL.md",
+      "bytes": 14046,
+      "sha256": "d1791f9046f21710a28c40ea5bf94a941913709ce605d20d08946a62314c188d",
+      "directory": "openjiuwen/dev_tools/skill_evaluator/skills/skill_safety_judge",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/dev_tools/skill_evaluator/skills/skill_tester/SKILL.md",
+      "bytes": 11882,
+      "sha256": "f25bef43884d2b4416266ffd177aaf003a97a91a1a397ad887162bdae44c7b93",
+      "directory": "openjiuwen/dev_tools/skill_evaluator/skills/skill_tester",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/harness/moa/skills/consult-reference-models/SKILL.md",
+      "bytes": 3915,
+      "sha256": "42b47b5bdcb213a1089f834c8a2acee100c8eca784ec98f2b09fe7520cd76492",
+      "directory": "openjiuwen/harness/moa/skills/consult-reference-models",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure/SKILL.md",
+      "bytes": 11797,
+      "sha256": "bce89756faab6532ea0a9287621e81660646df92338ffee4b318ba1509163354",
+      "directory": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-figure",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-latex/SKILL.md",
+      "bytes": 1865,
+      "sha256": "a659b92a300d97321ff089d41b6175320f1c32f4a926cbefe5252c1bf07d07a4",
+      "directory": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-latex",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-plan/SKILL.md",
+      "bytes": 1398,
+      "sha256": "24b02d1474ff93173e1e1e5e754f8d5875a7a8423b33d8a19c9f63d7a1640d16",
+      "directory": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-plan",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-review/SKILL.md",
+      "bytes": 5847,
+      "sha256": "df37648c01f9b61866b58e4dff7ccc95c6adc513429fa953e38f067a84df8beb",
+      "directory": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-review",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-write/SKILL.md",
+      "bytes": 6911,
+      "sha256": "353a716f0d50defa47aa7c65f8d3aad546b4c844f4284ac0b1c5ca3b95623d20",
+      "directory": "openjiuwen/rsi/artifact_rsi/paper_opt/auto_research/modules/reporting/skills/ts-write",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/assess/SKILL.md",
+      "bytes": 4711,
+      "sha256": "84840a6442a3006be3b28c3660689f88c16d50631ee56f4a18fab256b23e89fd",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/assess",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/commit/SKILL.md",
+      "bytes": 1318,
+      "sha256": "946dbdadc80393093477fe4fde68a4e0901ec4ecd56e8073c9d234fdea02101f",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/commit",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/communicate/SKILL.md",
+      "bytes": 4102,
+      "sha256": "c77d7f1a2d8215e9e3be26b04ebe98f74ce13c6e3a046a2b223ffbccbb8a290f",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/communicate",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/design_ext/SKILL.md",
+      "bytes": 10285,
+      "sha256": "644a377a0dca24c215949c490ecb3f0367afbb4dfe9fb3d3b2d16352d7dabafb",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/design_ext",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/implement/SKILL.md",
+      "bytes": 3680,
+      "sha256": "34c169e2e5fa947c8b41f62cf6e869d39af44f86140ee134dd9ae11bb77d2a7f",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/implement",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/implement_ext/SKILL.md",
+      "bytes": 15675,
+      "sha256": "955adf903e7fe175c8a0a860bee2f4cd3e9872544ca473ca3738708eba51aaea",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/implement_ext",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/plan/SKILL.md",
+      "bytes": 2233,
+      "sha256": "ba2039e324da7559e28fdadc1096012a0b79163fe680d038557772c83fa3e5f0",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/plan",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/select_pipeline/SKILL.md",
+      "bytes": 1059,
+      "sha256": "30dc11bc15ae3d3de8a5a6241b663b85a847e51c90922d6897ef7bfc2f4e8060",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/select_pipeline",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/verify/SKILL.md",
+      "bytes": 1865,
+      "sha256": "009c4de60b9e2d88eaa57c47e59edda242a46f34cece36a0de3e495bcca73884",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/verify",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "openjiuwen/rsi/harness_rsi/auto_harness/skills/verify_ext/SKILL.md",
+      "bytes": 8826,
+      "sha256": "ede4355d365c66b17d22f1d3b82aa097a0dcebe5243cf05128da6ee9594020ec",
+      "directory": "openjiuwen/rsi/harness_rsi/auto_harness/skills/verify_ext",
+      "status": "snapshot_only"
+    }
+  ],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

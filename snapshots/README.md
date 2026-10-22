@@ -19,6 +19,8 @@
 | bytedance/trae-agent | e839e559ac61 | 0 | 4402468 | [全部原文](bytedance/trae-agent/e839e559ac61bdd0e057c375dd1dee391fee797d/files) · [清单](bytedance/trae-agent/e839e559ac61bdd0e057c375dd1dee391fee797d/manifest.json) |
 | cloudwego/eino | 0a5ca53b9d3b | 0 | 5104712 | [全部原文](cloudwego/eino/0a5ca53b9d3bf7b661dccc863465ec568a421eea/files) · [清单](cloudwego/eino/0a5ca53b9d3bf7b661dccc863465ec568a421eea/manifest.json) |
 | larksuite/cli | 017b19a793ad | 37 | 7142542 | [全部原文](larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files) · [清单](larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/manifest.json) |
+| openJiuwen-ai/agent-core | 0ab5913b250d | 29 | 37025904 | [全部原文](openJiuwen-ai/agent-core/0ab5913b250d565b35bff3828dae438939cb1acd/files) · [清单](openJiuwen-ai/agent-core/0ab5913b250d565b35bff3828dae438939cb1acd/manifest.json) |
+| openJiuwen-ai/agent-core | 4170e756504d | 29 | 36897896 | [全部原文](openJiuwen-ai/agent-core/4170e756504d70d8324c2ac18a5afdd770a99dc9/files) · [清单](openJiuwen-ai/agent-core/4170e756504d70d8324c2ac18a5afdd770a99dc9/manifest.json) |
 
 ## 本轮失败
 
