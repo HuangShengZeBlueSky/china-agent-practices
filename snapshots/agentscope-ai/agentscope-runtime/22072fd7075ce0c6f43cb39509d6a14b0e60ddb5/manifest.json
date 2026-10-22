@@ -1,0 +1,58 @@
+{
+  "repository": "agentscope-ai/agentscope-runtime",
+  "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+  "captured_at": "2026-10-22T15:58:30.666299+00:00",
+  "source_ids": [
+    "alibaba-agentscope-runtime"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/agentscope-ai/agentscope-runtime/tar.gz/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+  "archive_sha256": "a37508e1820a8798189705df6f47ed09af1288bf4ab42ff1fab50b8a0886975b",
+  "archive_bytes": 3075044,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 3075044,
+      "sha256": "a37508e1820a8798189705df6f47ed09af1288bf4ab42ff1fab50b8a0886975b"
+    }
+  ],
+  "archive_file_count": 777,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11337,
+      "sha256": "dcc7240d38224c9d04e9cc68f0579a985544162c33dd7256b2b8ae4ed449cf16"
+    },
+    {
+      "path": "README.md",
+      "bytes": 47901,
+      "sha256": "6f4107bbc9cf7595624ab068b8914b4704466f73a403ea06fa33fe4ee04be22b"
+    },
+    {
+      "path": "README_zh.md",
+      "bytes": 47317,
+      "sha256": "b9a0303ffd7e04c618e4dd5384b0a21e7e91d73a8cc9850568059bd54ed68654"
+    },
+    {
+      "path": "src/agentscope_runtime/adapters/agentscope/tool/sandbox_tool.py",
+      "bytes": 2002,
+      "sha256": "6a6c2d9a1b425c3c3d4d53143458856a436c7e3de9a787e5947081117cef4841"
+    },
+    {
+      "path": "src/agentscope_runtime/engine/app/agent_app.py",
+      "bytes": 32293,
+      "sha256": "a037f055fe2af00129efff69ffef83e43cf6b43b95b942610a860999410ad6b8"
+    },
+    {
+      "path": "src/agentscope_runtime/sandbox/box/mobile/adbmcp/LICENSE",
+      "bytes": 1107,
+      "sha256": "7a2a8bfc6a5c8f367a8ba6c2ecee7d9819d7e6f47f90bbfa1df69989fd879c54"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}

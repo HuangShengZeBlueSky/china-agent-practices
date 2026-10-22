@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T15:58:24.345578+00:00",
+  "updated_at": "2026-10-22T15:58:30.767852+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -120,6 +120,13 @@
       "commits": [
         "3ac2cb8d946d78d5ff92ad17b318eaafa18c178c"
       ]
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "ok": true,
+      "commits": [
+        "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5"
+      ]
     }
   ],
   "versions": [
@@ -194,6 +201,15 @@
       "archive_sha256": "097631414e7b8cb6b0e7995302d88307728227df415d1c4e4a98c38504bcbdbe",
       "skills_count": 0,
       "archive_file_count": 1392
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "captured_at": "2026-10-22T15:58:30.666299+00:00",
+      "archive_bytes": 3075044,
+      "archive_sha256": "a37508e1820a8798189705df6f47ed09af1288bf4ab42ff1fab50b8a0886975b",
+      "skills_count": 0,
+      "archive_file_count": 777
     },
     {
       "repository": "ahang1598/doubao-workbuddy-qwenwork-skills",
@@ -331,7 +347,7 @@
       "archive_file_count": 7880
     }
   ],
-  "repositories": 16,
+  "repositories": 17,
   "skill_paths_across_versions": 6125,
-  "bytes": 1793655764
+  "bytes": 1796730808
 }
