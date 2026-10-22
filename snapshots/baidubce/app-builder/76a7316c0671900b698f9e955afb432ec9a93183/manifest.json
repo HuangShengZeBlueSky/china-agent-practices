@@ -1,0 +1,73 @@
+{
+  "repository": "baidubce/app-builder",
+  "commit": "76a7316c0671900b698f9e955afb432ec9a93183",
+  "captured_at": "2026-10-22T15:57:10.229272+00:00",
+  "source_ids": [
+    "baidu-appbuilder"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/baidubce/app-builder/tar.gz/76a7316c0671900b698f9e955afb432ec9a93183",
+  "archive_sha256": "e6bbfa19b96e87042ff31d501bd1b3d07cf62344fa381115db3e07ebce99ad4d",
+  "archive_bytes": 33838831,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "e1dd4282c78b4a0c814da14a18eb887bc0b0d7fd55376142e0b0c1e0b2968318"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 8388608,
+      "sha256": "8f976843a466c66bd888fa71b2ad529f4a0ae067714e5591cff1bf11fc3a9efd"
+    },
+    {
+      "path": "source.tar.gz.part0002",
+      "bytes": 8388608,
+      "sha256": "874c36bf501e2ccafe43262677ac7192f02e91bb6e827b5fed7938633a96f123"
+    },
+    {
+      "path": "source.tar.gz.part0003",
+      "bytes": 8388608,
+      "sha256": "327e65c2f200bba99d6b78c0751cf481155507395ab939bb5979917c5b34fe54"
+    },
+    {
+      "path": "source.tar.gz.part0004",
+      "bytes": 284399,
+      "sha256": "6eba5ec4855fcb4f0d11ac507401a3d5c1e2e60fc637fed7a10196a5f1a11d7d"
+    }
+  ],
+  "archive_file_count": 1233,
+  "skills_count": 0,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11366,
+      "sha256": "5441c128de858675382b9b8dc9c73bf77e65f9ab4161cfc66de4f505c0dcfa0b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 20444,
+      "sha256": "c2dd54a5b9c13f77f9e3a25062a27d5e552fd6386c78b86a6c6b349467af6c77"
+    },
+    {
+      "path": "python/core/console/appbuilder_client/event_handler.py",
+      "bytes": 16480,
+      "sha256": "add3cceed6683107f5293344327e4335e112faeebbfeaa9510bd5b31ce7d8bf9"
+    },
+    {
+      "path": "python/tests/test_appbuilder_client_toolcall.py",
+      "bytes": 6302,
+      "sha256": "7cc2e62e01204c4c9cf27740c78500b18ab1d6fa90d7213224c7a2379686ac28"
+    },
+    {
+      "path": "python/tests/test_appbuilder_client_toolcall_event_handler_error.py",
+      "bytes": 3570,
+      "sha256": "a85d7891edeb00a2a5033b9880be54af42c85ffd84a0bf3646af1cf182d737c5"
+    }
+  ],
+  "skills": [],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
