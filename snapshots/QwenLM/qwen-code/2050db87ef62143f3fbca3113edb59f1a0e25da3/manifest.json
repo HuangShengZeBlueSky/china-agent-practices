@@ -1,0 +1,1017 @@
+{
+  "repository": "QwenLM/qwen-code",
+  "commit": "2050db87ef62143f3fbca3113edb59f1a0e25da3",
+  "captured_at": "2026-10-22T15:56:04.097858+00:00",
+  "source_ids": [
+    "alibaba-qwen-code"
+  ],
+  "license_notes": [
+    "Apache-2.0"
+  ],
+  "archive_url": "https://codeload.github.com/QwenLM/qwen-code/tar.gz/2050db87ef62143f3fbca3113edb59f1a0e25da3",
+  "archive_sha256": "4419eb8ee5ea9c98ae53004f5145705b79e2694f486b8f12945f8315b5aa1125",
+  "archive_bytes": 72839391,
+  "archive_parts": [
+    {
+      "path": "source.tar.gz.part0000",
+      "bytes": 8388608,
+      "sha256": "f7774f07b24870a697ae9d712533e709297f4f9069d97c14a380f65c7f8cdc6a"
+    },
+    {
+      "path": "source.tar.gz.part0001",
+      "bytes": 8388608,
+      "sha256": "46acc1d4640e8014c96b62c4331f4ae31f10d9828268c619a37af0274dfd608b"
+    },
+    {
+      "path": "source.tar.gz.part0002",
+      "bytes": 8388608,
+      "sha256": "9b113deecc8a6bf8bad41e1a1536444fc229938ab9d72cb87b7c6dfd8fb2f20f"
+    },
+    {
+      "path": "source.tar.gz.part0003",
+      "bytes": 8388608,
+      "sha256": "32faeef9cc7d4d48bd76f83ca8a1e10216452a4af88934a4d212566b5ce4ad21"
+    },
+    {
+      "path": "source.tar.gz.part0004",
+      "bytes": 8388608,
+      "sha256": "8e163974153e74be44d0e959bcf9693862a2e9fa56b6f1fa06cc9bd76f80cd38"
+    },
+    {
+      "path": "source.tar.gz.part0005",
+      "bytes": 8388608,
+      "sha256": "61a0b0e7228c53944b7f342b933bb2aae0e62e5b62519e9084ba8064080fb2b9"
+    },
+    {
+      "path": "source.tar.gz.part0006",
+      "bytes": 8388608,
+      "sha256": "be3a678ad30f4ad17c10b5fbfd9c8997c118e8ebde4e83aeea147367a09756c7"
+    },
+    {
+      "path": "source.tar.gz.part0007",
+      "bytes": 8388608,
+      "sha256": "7ae617226b6005e11075c31515112d0a8c807fa4bcd1e260a853c8901359fdfe"
+    },
+    {
+      "path": "source.tar.gz.part0008",
+      "bytes": 5730527,
+      "sha256": "f5a426407ee768ac33b1b4aadc42ed81b4214128ad7a96b53ff5c44df442e66e"
+    }
+  ],
+  "archive_file_count": 13698,
+  "skills_count": 44,
+  "files": [
+    {
+      "path": ".qwen/skills/agent-reproduce-align/SKILL.md",
+      "bytes": 4297,
+      "sha256": "1bb5376710ae20ea5e4a9a866f64186c18122be7cd74b91554b72aa3e00c032a"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-align/references/alignment-workflow.md",
+      "bytes": 2409,
+      "sha256": "4626bb96e0bfe3ba8bd8e8d4854e7e4aaa7d5f4501941cdabe58d10a13186b5d"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-align/scripts/compare_traces.py",
+      "bytes": 6099,
+      "sha256": "5e12e09d8640b6998e62ab4c8fa06d65ae06654d6342fd762c336cd95a318c25"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-align/scripts/normalize_trace.py",
+      "bytes": 7962,
+      "sha256": "705b8119fcd37cb17db1276089947d28f176fd5af53a21c94fe4561d6c33c26e"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-align/scripts/run_pair_capture.sh",
+      "bytes": 3780,
+      "sha256": "1e53c47ac893b7ae69c949b2b7e41242d3259b2a7990598ed7a30a04c6e75a76"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-feature/SKILL.md",
+      "bytes": 5826,
+      "sha256": "958e5d3cdcdb3b82c19babadb59234a0bc9096a665cb660347d5e1770f30975e"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-feature/references/capture-workflow.md",
+      "bytes": 5138,
+      "sha256": "16353205273d2dc771d82a7e3a0079323613d0aca706fe7d9e73acf761dea70a"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-feature/scripts/capture_state.py",
+      "bytes": 18299,
+      "sha256": "02913018341df1ae1aaaade0484e37d2dea7731adb119f51277d39ef4ead77ef"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-feature/scripts/llm_dump.py",
+      "bytes": 5936,
+      "sha256": "08f7078e566871ee5f0359d5334c50ba9aafda107c1121a31dcdbd60a8570f12"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-feature/scripts/run_tmux_capture.sh",
+      "bytes": 1040,
+      "sha256": "7b75cdf727abf8ba62cae724c6fdafa298b2e4194c68e494ce5e4e03b8c12576"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-feature/scripts/run_with_mitm.sh",
+      "bytes": 3786,
+      "sha256": "02ca5702de3eb129cf033b44460c3a9063cf85f4f3b27e773d09af465e246d11"
+    },
+    {
+      "path": ".qwen/skills/autofix/SKILL.md",
+      "bytes": 42075,
+      "sha256": "b3fb5d7d287eae2aa42f2075ea9d92f762d3cd38fc03cad82570ec4b5797d7be"
+    },
+    {
+      "path": ".qwen/skills/autofix/scripts/run-agent.mjs",
+      "bytes": 29642,
+      "sha256": "117760f3220dd022e2982e0c904e5b52e3226c61fe0c23651f68dc42a8447496"
+    },
+    {
+      "path": ".qwen/skills/bugfix/SKILL.md",
+      "bytes": 3491,
+      "sha256": "06d9ce6ee6aad9fdba009e8bfd35471ecbf2b0953c0e34f04f7a2531bc558233"
+    },
+    {
+      "path": ".qwen/skills/ci-flaky-patrol/SKILL.md",
+      "bytes": 3232,
+      "sha256": "0d3c4d456fb369a188dddfd872701c02ab844dd71f2438d0273027d03b27a711"
+    },
+    {
+      "path": ".qwen/skills/codegraph/SKILL.md",
+      "bytes": 37147,
+      "sha256": "06c2be5949acb8d77e5b013314ad3f6e001894f765d464ddb38f1073cb33f5d0"
+    },
+    {
+      "path": ".qwen/skills/codegraph/bug-analysis.md",
+      "bytes": 7889,
+      "sha256": "30bf286c5cebb7474234050fb6d2addf57db3bccf6d3fb62bf90a89bf09f0b27"
+    },
+    {
+      "path": ".qwen/skills/codegraph/evals/evals.json",
+      "bytes": 1341,
+      "sha256": "d5d7d19bcb8ba6c5fa0d5fd48757a1fc63fada2c320a9a0aa7313967be600ea3"
+    },
+    {
+      "path": ".qwen/skills/codegraph/patterns.md",
+      "bytes": 4279,
+      "sha256": "c884d4c0e46d0748208a9c0877d89bcb78d6997866c3b6350692bbee07617718"
+    },
+    {
+      "path": ".qwen/skills/codegraph/pr-analysis.md",
+      "bytes": 20586,
+      "sha256": "1c4810e85a25635bd6a7cb6691da42b42479eab7e24ee2363ed26e9ee66265d7"
+    },
+    {
+      "path": ".qwen/skills/codegraph/schema.md",
+      "bytes": 5672,
+      "sha256": "8209b557d252d18edab3ef7c9be4690075c63085fbc2b6b97802785b5e4de5df"
+    },
+    {
+      "path": ".qwen/skills/create-issue/SKILL.md",
+      "bytes": 2148,
+      "sha256": "5e2975e11519428db0c8c38c561bfaba980e2254995d833742e4241cd0637c14"
+    },
+    {
+      "path": ".qwen/skills/deflake/SKILL.md",
+      "bytes": 3431,
+      "sha256": "f2aba9cc5a37fe7813857218d79b1034c61513950ed6df0a45026e0fdd36da18"
+    },
+    {
+      "path": ".qwen/skills/docs-audit-and-refresh/SKILL.md",
+      "bytes": 3770,
+      "sha256": "dc961ab124638b33ae737759fa1dd0dfadc144371cccb91fd2e955a602d76f38"
+    },
+    {
+      "path": ".qwen/skills/docs-audit-and-refresh/references/audit-checklist.md",
+      "bytes": 2494,
+      "sha256": "952222ac476efe26d5cb39ed7234465f057d772b3658e8e0ddba368cfa1b7784"
+    },
+    {
+      "path": ".qwen/skills/docs-update-from-diff/SKILL.md",
+      "bytes": 4269,
+      "sha256": "70c14226e4b2d630ea50408c43bdd657a2525cc4c438d509d2949cfb896fe43a"
+    },
+    {
+      "path": ".qwen/skills/docs-update-from-diff/references/docs-surface.md",
+      "bytes": 2924,
+      "sha256": "28406272783bd80d58595df3efff4ab00e43a89d06f772f56429da641cb59564"
+    },
+    {
+      "path": ".qwen/skills/e2e-testing/SKILL.md",
+      "bytes": 8354,
+      "sha256": "35430d4c5d727ddb7b191c80f4953f0e2ee32180982bb6d15582e4fed3b407ff"
+    },
+    {
+      "path": ".qwen/skills/e2e-testing/references/mcp-testing.md",
+      "bytes": 2137,
+      "sha256": "3a54c09b15386124618f57dc1f819e6d1c8a02238cb54443d99b57ecd46cf6b1"
+    },
+    {
+      "path": ".qwen/skills/e2e-testing/references/mock-openai-server.md",
+      "bytes": 5469,
+      "sha256": "59c8fcf0dfdaf49cb037d5d170d73e9c8c552b7adec5b47146ef4f60142ab4bd"
+    },
+    {
+      "path": ".qwen/skills/e2e-testing/scripts/mcp-test-server.js",
+      "bytes": 3101,
+      "sha256": "811181b3ec7aebf97b0b964aab4005f35130cb0505f8bbc7802b4639d1a0ee9a"
+    },
+    {
+      "path": ".qwen/skills/e2e-testing/scripts/mock-openai-server.js",
+      "bytes": 7911,
+      "sha256": "d17d944a8da6c1e2574727f026bbabfdd119873471e407959d7e95f667d0baca"
+    },
+    {
+      "path": ".qwen/skills/e2e-testing/scripts/token-stats.py",
+      "bytes": 2268,
+      "sha256": "c4e122d2a7d02426cdc63e4bc14c0b6df0c7cd78481498d0c0e892942039f52d"
+    },
+    {
+      "path": ".qwen/skills/feat-dev/SKILL.md",
+      "bytes": 4867,
+      "sha256": "04c0e9df733e4c9fbc57b54986cda661f7956505835fd29c4bf8ab0dc6d9eef1"
+    },
+    {
+      "path": ".qwen/skills/find-simplifications/SKILL.md",
+      "bytes": 44910,
+      "sha256": "01b412cd50b5a07c058c48a94b9c82192cdebf53bc1ee2f6d0cab849ebee0432"
+    },
+    {
+      "path": ".qwen/skills/find-simplifications/references/land.md",
+      "bytes": 10869,
+      "sha256": "03ee0bbcf39172d94d8495318b79e4f160750cd33cc812e6c7d53c29318f00ab"
+    },
+    {
+      "path": ".qwen/skills/find-simplifications/references/survey.md",
+      "bytes": 21798,
+      "sha256": "6aece55d20c5ad3b04c232926c600f13fce116af52cc9bc0658e64e4ad2d59f5"
+    },
+    {
+      "path": ".qwen/skills/memory-leak-debug/SKILL.md",
+      "bytes": 5294,
+      "sha256": "b1e8fda9850f1cb9e413c7683f9b8abd67982cbceb162198d7b7eae99557f647"
+    },
+    {
+      "path": ".qwen/skills/memory-leak-debug/examples/react-reconciler-performance-measure-leak.md",
+      "bytes": 1643,
+      "sha256": "035f1936f8e9a9d1ec9fac4a50134bbcfd5bd2410d837f66a6bb44219cb63de4"
+    },
+    {
+      "path": ".qwen/skills/memory-leak-debug/scripts/find-leaf-node.sh",
+      "bytes": 405,
+      "sha256": "0914c58d9ff8590959e10983bd1120ce72a77b590c0420e03b704981ca46f1dc"
+    },
+    {
+      "path": ".qwen/skills/prepare-pr/SKILL.md",
+      "bytes": 2159,
+      "sha256": "9c2e522b1cad98c2f8fca5ba4702ba762d945189ee46a94d3333997e525d59dd"
+    },
+    {
+      "path": ".qwen/skills/qwen-code-claw/SKILL.md",
+      "bytes": 7826,
+      "sha256": "611fdba616acd089ef2e2d76d7eda420ff39ff6da7b28292f633b54397830379"
+    },
+    {
+      "path": ".qwen/skills/repo-hygiene/SKILL.md",
+      "bytes": 6721,
+      "sha256": "d390eb934dfb05802cf13ffc85a043127def07809b20bd6285321fe3daaf4405"
+    },
+    {
+      "path": ".qwen/skills/repo-hygiene/references/fix.md",
+      "bytes": 3853,
+      "sha256": "c3f35d5530ed58cd31b6a5f86d980a6a4c527cb74e803655361c98189783f0aa"
+    },
+    {
+      "path": ".qwen/skills/repo-hygiene/references/scan.md",
+      "bytes": 11133,
+      "sha256": "64e80d8dfedc73843d8807d9b599f1841bf6c1126eb889363a86b3acca42482a"
+    },
+    {
+      "path": ".qwen/skills/repo-hygiene/scripts/run-agent.mjs",
+      "bytes": 6871,
+      "sha256": "a64cc10e99b41b197053d5d66aeabc24576c405eafcb8a7bf18f600a7355323d"
+    },
+    {
+      "path": ".qwen/skills/structured-debugging/SKILL.md",
+      "bytes": 8084,
+      "sha256": "def8114708dc9ebff4c3e9a1b579d4abbc412ff8a91884987e2e48c0fae49a5e"
+    },
+    {
+      "path": ".qwen/skills/structured-debugging/examples/headless-bg-agent-empty-stdout.md",
+      "bytes": 2689,
+      "sha256": "38a73ee81e9eb3f40ff02280a998ed13238b6c5ce36b8f77d7a74bcf2977267e"
+    },
+    {
+      "path": ".qwen/skills/terminal-capture/SKILL.md",
+      "bytes": 8105,
+      "sha256": "2ffffaa3a041ce764326a85bdbd8fa70146f824b78fcfa50b45782c2b54a790b"
+    },
+    {
+      "path": ".qwen/skills/tmux-real-user-testing/SKILL.md",
+      "bytes": 9111,
+      "sha256": "67195ffad73660ba0227ac9c597df9d0fb4f2ea9473949dec90168016586b22b"
+    },
+    {
+      "path": ".qwen/skills/tmux-real-user-testing/scripts/tmux-real-user-log.sh",
+      "bytes": 3664,
+      "sha256": "d48aa394aaf95ad0ba654f4d25a99e4e288d5ebffa60462e9a387110ed1fd832"
+    },
+    {
+      "path": ".qwen/skills/triage/SKILL.md",
+      "bytes": 7080,
+      "sha256": "de8e14a69b45b9d33f81430c5f5b1f0cf1cd5443738d3cf311605f72037b8c7d"
+    },
+    {
+      "path": ".qwen/skills/triage/references/issue-workflow.md",
+      "bytes": 5165,
+      "sha256": "263dd8a8025e5d850dba3da1d552ce404864e2f6161fa0dbbfb7acabf6e48f79"
+    },
+    {
+      "path": ".qwen/skills/triage/references/pr-workflow.md",
+      "bytes": 69044,
+      "sha256": "ee1248df544412b0a61c3b1bebbb513f8be9c97f4aeecf0ba90c400d0121b57d"
+    },
+    {
+      "path": ".qwen/skills/verify-pr/SKILL.md",
+      "bytes": 92194,
+      "sha256": "ec865331e032c03787296e1febfc9a48cdc427c95370d4e2ac643d2e988282ae"
+    },
+    {
+      "path": ".qwen/skills/verify-pr/references/android.md",
+      "bytes": 12897,
+      "sha256": "b8070b2ad7315c3fd375822d798c1fe36af3f401920da6affbc9d8b73f1646b7"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11361,
+      "sha256": "55367b61ccd2a016a0159ad886bd66a3ee6cb5e873d0c75c803c897dd245b075"
+    },
+    {
+      "path": "README.md",
+      "bytes": 12277,
+      "sha256": "4a0ebab59ff1b820bcc4456fa8c44e1c8593d7fef26a6183c7c18aa36c6b1966"
+    },
+    {
+      "path": "docs/design/2026-09-18-resident-tool-prompt-assembly.zh-CN.md",
+      "bytes": 24484,
+      "sha256": "c6f7e3e0ed7a52139ffed81d5fa87415b6cc11677baa72ce39df4babdc1d5778"
+    },
+    {
+      "path": "integrations/generated-ui/skills/generated-ui/SKILL.md",
+      "bytes": 10993,
+      "sha256": "c5b135c415e44168b35986143968fff04a8a02a682d52ab62042794249024e1d"
+    },
+    {
+      "path": "integrations/test-failure-explorer/skills/test-failure-explorer/SKILL.md",
+      "bytes": 5593,
+      "sha256": "889399a03f607124988507d9aa8c4a0cfefabf1f1f209ab2eb144dac7937b0a4"
+    },
+    {
+      "path": "packages/browser-use/LICENSE",
+      "bytes": 11361,
+      "sha256": "55367b61ccd2a016a0159ad886bd66a3ee6cb5e873d0c75c803c897dd245b075"
+    },
+    {
+      "path": "packages/browser-use/NOTICE",
+      "bytes": 379,
+      "sha256": "7b07bce24dab20c5567965f71892666e91f1787f2da5328b836447ef7f8e48f6"
+    },
+    {
+      "path": "packages/cli/src/commands/extensions/examples/skills/skills/synonyms/SKILL.md",
+      "bytes": 1860,
+      "sha256": "b46efbcc0db9d6c5a5d72893fcf49eccba43f266ecf7b82aed0c44be9b4ec588"
+    },
+    {
+      "path": "packages/cli/src/commands/extensions/examples/starter/skills/synonyms/SKILL.md",
+      "bytes": 1860,
+      "sha256": "b46efbcc0db9d6c5a5d72893fcf49eccba43f266ecf7b82aed0c44be9b4ec588"
+    },
+    {
+      "path": "packages/core/src/core/prompts.ts",
+      "bytes": 92759,
+      "sha256": "c374956129b735a9660deb22751b23f61c9844ae2d4a618268a73af515a1e8ad"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/agent-delegation/SKILL.md",
+      "bytes": 3393,
+      "sha256": "e8c396feb979b0c35b9aea8b22f68b5b6d0ca04873283b47f3b10a13e7f5fc89"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/agent-delegation/SKILL.test.ts",
+      "bytes": 19253,
+      "sha256": "1302e041b943f6ea8347b7af7d1e5d4ccbdeed874aaadb8107a251326ad37cde"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/batch-api/SKILL.md",
+      "bytes": 8943,
+      "sha256": "a0baeb1fd338bc4967407ffafb99c15b1d25c316dfbfbea4e7169bb964a7b27b"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/batch-api/SKILL.test.ts",
+      "bytes": 4158,
+      "sha256": "4d8d8a0420b412516643046a9c79b457052420852dff559ea248ef9ed89b9ffc"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/batch/SKILL.md",
+      "bytes": 9299,
+      "sha256": "e4ae993514eb87aa2dbf5b44d69336279287d00c0c9aa6c0a59b183527ae5ab2"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/coordinate/SKILL.md",
+      "bytes": 3980,
+      "sha256": "0574d33ab74e84a6d8d65e4766459a4ac38c45cc05e422178319e9b535c7e255"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/dataviz/SKILL.md",
+      "bytes": 2055,
+      "sha256": "1c9c7f32c9c3fc60ffb513ae40b81fc948bcd2caa20ecd2a0d2c2272ebff8a4b"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/dataviz/references/anti-patterns.md",
+      "bytes": 574,
+      "sha256": "7e3727e79b4898ac93701ba8d4b18d7f5dd0a7a1972781e19e90c8b1ba80568b"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/dataviz/references/choosing-a-form.md",
+      "bytes": 1223,
+      "sha256": "392220df69fe7a3c2ec1ceb75b606ece3884adbd04616d9b5ac796d50d0085bf"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/dataviz/references/palette.md",
+      "bytes": 1565,
+      "sha256": "4ff614bcc470db679fe9a4d097c726a1524466ba5236cbb5f8781bda5a744a3a"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/dataviz/scripts/validate_palette.js",
+      "bytes": 8702,
+      "sha256": "b20ac29cb6529960482d4253ba60b899dfafc4b45ba24aa0a8284e9ab6b1028b"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/dataviz/scripts/validate_palette.test.js",
+      "bytes": 5605,
+      "sha256": "0d6679257424cad5bd2f77f93984de00772fa64d871427d5799924e9d6acd22d"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/extension-creator/SKILL.md",
+      "bytes": 20070,
+      "sha256": "dd8584149a186e87629edfd2059c46a76fdd5ef52767e77e89027238c58fa5fc"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/goal-draft/SKILL.md",
+      "bytes": 14009,
+      "sha256": "903669b518d850f23ac09a661392291916a2fcc733902c7f49868aa94726b124"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/goal-draft/SKILL.test.ts",
+      "bytes": 15040,
+      "sha256": "6af60d2037a94cd2f32487e1b3f51be2968ad1b0c4f38587e36f9a4538032feb"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/loop/SKILL.md",
+      "bytes": 10176,
+      "sha256": "fdccdc2f4de729046ba10219b0b191237f7aa42d924f44e5ce0e3c8000773c04"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/loop/SKILL.test.ts",
+      "bytes": 4626,
+      "sha256": "7acb18570d464f7657d472b9d4fbb406c251d0af5dd7b4b5ef2de488c0789f1f"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/loop/autonomous-loop.test.ts",
+      "bytes": 1983,
+      "sha256": "f365487ae2440ad81020272cb1b8cef23411b1f55e76f8414fe60c88e8e9d504"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/loop/autonomous-loop.ts",
+      "bytes": 8418,
+      "sha256": "34c6dae889612d0e3b017ca55f173dabbd9fb23cc7379f86a5a10a97a892657b"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/loop/loop-task-file.test.ts",
+      "bytes": 28902,
+      "sha256": "a20f59ba10f0f1359f257471d339d2074026f758047826c1d3af82cd4f82e3d2"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/loop/loop-task-file.ts",
+      "bytes": 16404,
+      "sha256": "be7a0d42b801d92ad44cbd5c71d8c75a0453b6364550bb9e171292e91b72223d"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/loop/loop-tick-resolver.test.ts",
+      "bytes": 35282,
+      "sha256": "c7c3fa8e5b0c15d4aec1598affc23a1bbc89535af9f639969ebfe924cf8c9a43"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/loop/loop-tick-resolver.ts",
+      "bytes": 20005,
+      "sha256": "b06850ebb1c7362c94fdb59e79c76d27b47d6548eebc22c27f20c4ee48e46901"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/new-app/SKILL.md",
+      "bytes": 4543,
+      "sha256": "3acd7a4998d76516e3ccea9d2765fe95e3b39311e3b2b2b6dc82bc5df71f1a24"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/qc-helper/SKILL.md",
+      "bytes": 11702,
+      "sha256": "b67b6681660f4646056c07b5e719c02eea8065d1a5ee9162381efd1d5cda1d1a"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/review/DESIGN.md",
+      "bytes": 257141,
+      "sha256": "042bfe98d9f83a6cd439b449078280b76b05d3c8362ecaeaa4669a0d3d34306d"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/review/SKILL.md",
+      "bytes": 405472,
+      "sha256": "cddd5c274eb137c80e116934b508ddacfe4858a33b1084837696557dad671040"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/review/SKILL.test.ts",
+      "bytes": 116553,
+      "sha256": "fabb0af07e745fdb8cf7c94a6ae1c598d4020617550d2448396d3b7686a70585"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/review/references/aone.md",
+      "bytes": 8239,
+      "sha256": "70d577304ce7818e8a05dc999526defe6bcfc274a972dacae573af85ebc95e13"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/review/references/persistence.md",
+      "bytes": 30137,
+      "sha256": "63ada0fedad995acb6af23b1e49ad67d49d5f17449e272fe4e997fedd0838814"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/review/references/posting.md",
+      "bytes": 63801,
+      "sha256": "32d491884ba6197d4c6f5e9b1d8ab06f98a37e36061748dfa7b2833a7e1b9fca"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/simplify/SKILL.md",
+      "bytes": 5246,
+      "sha256": "739a6293f0c32fe987738bee69ad36a9eef1eb1cb436661698ca80cd669a279a"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/stuck/SKILL.md",
+      "bytes": 12182,
+      "sha256": "e2132440ee668993a79f51ad8c2d4169fb5b8e33d49c98f1ff4ea0391599e6cd"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/workflow-authoring/SKILL.md",
+      "bytes": 27834,
+      "sha256": "b0fb6b662f3c61d63b789ba256440266f118c84d72443ab69204d1029fb39146"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/workflow-authoring/SKILL.test.ts",
+      "bytes": 22785,
+      "sha256": "149597d96ff5222dad8e3f38240200be5a36a6d04054632ed8f6a69bad050e72"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/workflow-creator/SKILL.md",
+      "bytes": 3690,
+      "sha256": "d6fc99924c94118c192b332763905562c0aaf26d43d6e5c1dc98e9a2fa862faf"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/workflow-creator/SKILL.test.ts",
+      "bytes": 1557,
+      "sha256": "2ad72bc8ff5e61e41af551ce4d32b248004e22fba66f42cd06ccba2235b11b37"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/zvec-grep-install/SKILL.md",
+      "bytes": 2260,
+      "sha256": "25314b5241bd482d2fe61c16e794123bc92251bde2ec59498a960cc7b418f39f"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/zvec-grep-install/SKILL.test.ts",
+      "bytes": 2812,
+      "sha256": "56516baed0d50ddc03027dc64f6ca25388badf3c116c31b75e5f63875713e9de"
+    },
+    {
+      "path": "packages/core/src/tools/skill-utils.ts",
+      "bytes": 21098,
+      "sha256": "f55dfe85733075122d0c4431bf8ff8fd59c0969eda13a5f90d2a6c0c29e58992"
+    },
+    {
+      "path": "packages/core/src/tools/skill.ts",
+      "bytes": 38498,
+      "sha256": "9e7c4d6765b51199fbc5de924b15110f7143208bcd52547d186dffb9334d1bb7"
+    },
+    {
+      "path": "packages/core/vendor/ripgrep/COPYING",
+      "bytes": 126,
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f"
+    },
+    {
+      "path": "packages/cua-driver/rust/Skills/cua-driver/BROWSER.md",
+      "bytes": 21383,
+      "sha256": "009ba8bc3c251778c8fd793e64fbae548fb6dbf54220fc2ec501478ec88b05e8"
+    },
+    {
+      "path": "packages/cua-driver/rust/Skills/cua-driver/EMBEDDING.md",
+      "bytes": 27518,
+      "sha256": "23e42d1bde09c2391767130c83344b292e5b52b6fc6ef7dc6d374d32c9aa0238"
+    },
+    {
+      "path": "packages/cua-driver/rust/Skills/cua-driver/LINUX.md",
+      "bytes": 12944,
+      "sha256": "c6ec9cbf5115f4c3c13e11e538319fed95512c2b3fd55bdf0674ff8b39640bbb"
+    },
+    {
+      "path": "packages/cua-driver/rust/Skills/cua-driver/MACOS.md",
+      "bytes": 30878,
+      "sha256": "926d99a98d2aeb945cdb4d34af4d73d46976ea6b6e909f7864310a2f2b777736"
+    },
+    {
+      "path": "packages/cua-driver/rust/Skills/cua-driver/README.md",
+      "bytes": 4159,
+      "sha256": "811eb2aac7e74ecfe416c8240e4d0e0be23530ec17bb4abcc9caf06c369af760"
+    },
+    {
+      "path": "packages/cua-driver/rust/Skills/cua-driver/RECORDING.md",
+      "bytes": 6873,
+      "sha256": "cb621b60387e43173c1dedead9dfb65f0dbaebc36fd2258a5c3f73a6d4954151"
+    },
+    {
+      "path": "packages/cua-driver/rust/Skills/cua-driver/SKILL.md",
+      "bytes": 65359,
+      "sha256": "f84b08d2fcc1d9379125f6f250d01896905d8271033e3b38be7a5dde8812cfa7"
+    },
+    {
+      "path": "packages/cua-driver/rust/Skills/cua-driver/WINDOWS.md",
+      "bytes": 50186,
+      "sha256": "93cce61a7da80f0189323c3de8e9a875318db6e3e3ca7ef56a83ba999bbf574e"
+    },
+    {
+      "path": "packages/cua-driver/typescript/LICENSE.md",
+      "bytes": 1069,
+      "sha256": "c0779290c1d4783169aa3dbfb55feb505e563ef8a004bbf55298ceffcfbda8d9"
+    },
+    {
+      "path": "packages/cua-driver/typescript/NOTICE.md",
+      "bytes": 612,
+      "sha256": "7feb22a97c227f3c9ecb257e7bece88951d50e9a1109a5f8e554f448facb786e"
+    },
+    {
+      "path": "packages/desktop/.agents/skills/desktop-brand-builder/SKILL.md",
+      "bytes": 8585,
+      "sha256": "be6f24d9f286e8021b5ce08c6f58a5fe76a92e9aeb1e6b30721a1443ac26da2d"
+    },
+    {
+      "path": "packages/desktop/.agents/skills/desktop-brand-builder/scripts/brand-create.mjs",
+      "bytes": 13540,
+      "sha256": "40d3bfe770960b440de6fed6bfdf2054d8680046b140d5f2f0d1974ce2b6cf6a"
+    },
+    {
+      "path": "packages/desktop/NOTICE",
+      "bytes": 227,
+      "sha256": "63ec46cba8da7cf6c99dc6faef3d96f23e79bb42423f67c5d3fde86dc004d67c"
+    },
+    {
+      "path": "packages/mobile-mcp/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "packages/node-repl/LICENSE",
+      "bytes": 11362,
+      "sha256": "6ad909ab730416ad472f9153fa1d3679321012883c1c6d38f803aab402e40a40"
+    },
+    {
+      "path": "packages/sdk-java/qwencode/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "packages/vscode-ide-companion/LICENSE",
+      "bytes": 11340,
+      "sha256": "09d2d564b15d1a8be7713524b27aa8b10e55ae7cd8aeaf1e04e6059adda0de10"
+    },
+    {
+      "path": "packages/vscode-ide-companion/NOTICES.txt",
+      "bytes": 1680850,
+      "sha256": "16b5ae476e7045c6cf4d68542b2eff65077ed39734a03c313ec27b0364e58625"
+    },
+    {
+      "path": "packages/web-shell/NOTICES.txt",
+      "bytes": 185403,
+      "sha256": "5560d575aa9313a581246798b654b721a48b0314dc481ef0c77fc36cfa8a7999"
+    },
+    {
+      "path": "packages/zed-extension/LICENSE",
+      "bytes": 1067,
+      "sha256": "9f3b2411510682736508ab90b6ca7654600c847a953c9f3e5ceee42e044d18a2"
+    }
+  ],
+  "skills": [
+    {
+      "path": ".qwen/skills/agent-reproduce-align/SKILL.md",
+      "bytes": 4297,
+      "sha256": "1bb5376710ae20ea5e4a9a866f64186c18122be7cd74b91554b72aa3e00c032a",
+      "directory": ".qwen/skills/agent-reproduce-align",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/agent-reproduce-feature/SKILL.md",
+      "bytes": 5826,
+      "sha256": "958e5d3cdcdb3b82c19babadb59234a0bc9096a665cb660347d5e1770f30975e",
+      "directory": ".qwen/skills/agent-reproduce-feature",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/autofix/SKILL.md",
+      "bytes": 42075,
+      "sha256": "b3fb5d7d287eae2aa42f2075ea9d92f762d3cd38fc03cad82570ec4b5797d7be",
+      "directory": ".qwen/skills/autofix",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/bugfix/SKILL.md",
+      "bytes": 3491,
+      "sha256": "06d9ce6ee6aad9fdba009e8bfd35471ecbf2b0953c0e34f04f7a2531bc558233",
+      "directory": ".qwen/skills/bugfix",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/ci-flaky-patrol/SKILL.md",
+      "bytes": 3232,
+      "sha256": "0d3c4d456fb369a188dddfd872701c02ab844dd71f2438d0273027d03b27a711",
+      "directory": ".qwen/skills/ci-flaky-patrol",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/codegraph/SKILL.md",
+      "bytes": 37147,
+      "sha256": "06c2be5949acb8d77e5b013314ad3f6e001894f765d464ddb38f1073cb33f5d0",
+      "directory": ".qwen/skills/codegraph",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/create-issue/SKILL.md",
+      "bytes": 2148,
+      "sha256": "5e2975e11519428db0c8c38c561bfaba980e2254995d833742e4241cd0637c14",
+      "directory": ".qwen/skills/create-issue",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/deflake/SKILL.md",
+      "bytes": 3431,
+      "sha256": "f2aba9cc5a37fe7813857218d79b1034c61513950ed6df0a45026e0fdd36da18",
+      "directory": ".qwen/skills/deflake",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/docs-audit-and-refresh/SKILL.md",
+      "bytes": 3770,
+      "sha256": "dc961ab124638b33ae737759fa1dd0dfadc144371cccb91fd2e955a602d76f38",
+      "directory": ".qwen/skills/docs-audit-and-refresh",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/docs-update-from-diff/SKILL.md",
+      "bytes": 4269,
+      "sha256": "70c14226e4b2d630ea50408c43bdd657a2525cc4c438d509d2949cfb896fe43a",
+      "directory": ".qwen/skills/docs-update-from-diff",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/e2e-testing/SKILL.md",
+      "bytes": 8354,
+      "sha256": "35430d4c5d727ddb7b191c80f4953f0e2ee32180982bb6d15582e4fed3b407ff",
+      "directory": ".qwen/skills/e2e-testing",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/feat-dev/SKILL.md",
+      "bytes": 4867,
+      "sha256": "04c0e9df733e4c9fbc57b54986cda661f7956505835fd29c4bf8ab0dc6d9eef1",
+      "directory": ".qwen/skills/feat-dev",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/find-simplifications/SKILL.md",
+      "bytes": 44910,
+      "sha256": "01b412cd50b5a07c058c48a94b9c82192cdebf53bc1ee2f6d0cab849ebee0432",
+      "directory": ".qwen/skills/find-simplifications",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/memory-leak-debug/SKILL.md",
+      "bytes": 5294,
+      "sha256": "b1e8fda9850f1cb9e413c7683f9b8abd67982cbceb162198d7b7eae99557f647",
+      "directory": ".qwen/skills/memory-leak-debug",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/prepare-pr/SKILL.md",
+      "bytes": 2159,
+      "sha256": "9c2e522b1cad98c2f8fca5ba4702ba762d945189ee46a94d3333997e525d59dd",
+      "directory": ".qwen/skills/prepare-pr",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/qwen-code-claw/SKILL.md",
+      "bytes": 7826,
+      "sha256": "611fdba616acd089ef2e2d76d7eda420ff39ff6da7b28292f633b54397830379",
+      "directory": ".qwen/skills/qwen-code-claw",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/repo-hygiene/SKILL.md",
+      "bytes": 6721,
+      "sha256": "d390eb934dfb05802cf13ffc85a043127def07809b20bd6285321fe3daaf4405",
+      "directory": ".qwen/skills/repo-hygiene",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/structured-debugging/SKILL.md",
+      "bytes": 8084,
+      "sha256": "def8114708dc9ebff4c3e9a1b579d4abbc412ff8a91884987e2e48c0fae49a5e",
+      "directory": ".qwen/skills/structured-debugging",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/terminal-capture/SKILL.md",
+      "bytes": 8105,
+      "sha256": "2ffffaa3a041ce764326a85bdbd8fa70146f824b78fcfa50b45782c2b54a790b",
+      "directory": ".qwen/skills/terminal-capture",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/tmux-real-user-testing/SKILL.md",
+      "bytes": 9111,
+      "sha256": "67195ffad73660ba0227ac9c597df9d0fb4f2ea9473949dec90168016586b22b",
+      "directory": ".qwen/skills/tmux-real-user-testing",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/triage/SKILL.md",
+      "bytes": 7080,
+      "sha256": "de8e14a69b45b9d33f81430c5f5b1f0cf1cd5443738d3cf311605f72037b8c7d",
+      "directory": ".qwen/skills/triage",
+      "status": "snapshot_only"
+    },
+    {
+      "path": ".qwen/skills/verify-pr/SKILL.md",
+      "bytes": 92194,
+      "sha256": "ec865331e032c03787296e1febfc9a48cdc427c95370d4e2ac643d2e988282ae",
+      "directory": ".qwen/skills/verify-pr",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "integrations/generated-ui/skills/generated-ui/SKILL.md",
+      "bytes": 10993,
+      "sha256": "c5b135c415e44168b35986143968fff04a8a02a682d52ab62042794249024e1d",
+      "directory": "integrations/generated-ui/skills/generated-ui",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "integrations/test-failure-explorer/skills/test-failure-explorer/SKILL.md",
+      "bytes": 5593,
+      "sha256": "889399a03f607124988507d9aa8c4a0cfefabf1f1f209ab2eb144dac7937b0a4",
+      "directory": "integrations/test-failure-explorer/skills/test-failure-explorer",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/cli/src/commands/extensions/examples/skills/skills/synonyms/SKILL.md",
+      "bytes": 1860,
+      "sha256": "b46efbcc0db9d6c5a5d72893fcf49eccba43f266ecf7b82aed0c44be9b4ec588",
+      "directory": "packages/cli/src/commands/extensions/examples/skills/skills/synonyms",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/cli/src/commands/extensions/examples/starter/skills/synonyms/SKILL.md",
+      "bytes": 1860,
+      "sha256": "b46efbcc0db9d6c5a5d72893fcf49eccba43f266ecf7b82aed0c44be9b4ec588",
+      "directory": "packages/cli/src/commands/extensions/examples/starter/skills/synonyms",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/agent-delegation/SKILL.md",
+      "bytes": 3393,
+      "sha256": "e8c396feb979b0c35b9aea8b22f68b5b6d0ca04873283b47f3b10a13e7f5fc89",
+      "directory": "packages/core/src/skills/bundled/agent-delegation",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/batch-api/SKILL.md",
+      "bytes": 8943,
+      "sha256": "a0baeb1fd338bc4967407ffafb99c15b1d25c316dfbfbea4e7169bb964a7b27b",
+      "directory": "packages/core/src/skills/bundled/batch-api",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/batch/SKILL.md",
+      "bytes": 9299,
+      "sha256": "e4ae993514eb87aa2dbf5b44d69336279287d00c0c9aa6c0a59b183527ae5ab2",
+      "directory": "packages/core/src/skills/bundled/batch",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/coordinate/SKILL.md",
+      "bytes": 3980,
+      "sha256": "0574d33ab74e84a6d8d65e4766459a4ac38c45cc05e422178319e9b535c7e255",
+      "directory": "packages/core/src/skills/bundled/coordinate",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/dataviz/SKILL.md",
+      "bytes": 2055,
+      "sha256": "1c9c7f32c9c3fc60ffb513ae40b81fc948bcd2caa20ecd2a0d2c2272ebff8a4b",
+      "directory": "packages/core/src/skills/bundled/dataviz",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/extension-creator/SKILL.md",
+      "bytes": 20070,
+      "sha256": "dd8584149a186e87629edfd2059c46a76fdd5ef52767e77e89027238c58fa5fc",
+      "directory": "packages/core/src/skills/bundled/extension-creator",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/goal-draft/SKILL.md",
+      "bytes": 14009,
+      "sha256": "903669b518d850f23ac09a661392291916a2fcc733902c7f49868aa94726b124",
+      "directory": "packages/core/src/skills/bundled/goal-draft",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/loop/SKILL.md",
+      "bytes": 10176,
+      "sha256": "fdccdc2f4de729046ba10219b0b191237f7aa42d924f44e5ce0e3c8000773c04",
+      "directory": "packages/core/src/skills/bundled/loop",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/new-app/SKILL.md",
+      "bytes": 4543,
+      "sha256": "3acd7a4998d76516e3ccea9d2765fe95e3b39311e3b2b2b6dc82bc5df71f1a24",
+      "directory": "packages/core/src/skills/bundled/new-app",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/qc-helper/SKILL.md",
+      "bytes": 11702,
+      "sha256": "b67b6681660f4646056c07b5e719c02eea8065d1a5ee9162381efd1d5cda1d1a",
+      "directory": "packages/core/src/skills/bundled/qc-helper",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/review/SKILL.md",
+      "bytes": 405472,
+      "sha256": "cddd5c274eb137c80e116934b508ddacfe4858a33b1084837696557dad671040",
+      "directory": "packages/core/src/skills/bundled/review",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/simplify/SKILL.md",
+      "bytes": 5246,
+      "sha256": "739a6293f0c32fe987738bee69ad36a9eef1eb1cb436661698ca80cd669a279a",
+      "directory": "packages/core/src/skills/bundled/simplify",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/stuck/SKILL.md",
+      "bytes": 12182,
+      "sha256": "e2132440ee668993a79f51ad8c2d4169fb5b8e33d49c98f1ff4ea0391599e6cd",
+      "directory": "packages/core/src/skills/bundled/stuck",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/workflow-authoring/SKILL.md",
+      "bytes": 27834,
+      "sha256": "b0fb6b662f3c61d63b789ba256440266f118c84d72443ab69204d1029fb39146",
+      "directory": "packages/core/src/skills/bundled/workflow-authoring",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/workflow-creator/SKILL.md",
+      "bytes": 3690,
+      "sha256": "d6fc99924c94118c192b332763905562c0aaf26d43d6e5c1dc98e9a2fa862faf",
+      "directory": "packages/core/src/skills/bundled/workflow-creator",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/core/src/skills/bundled/zvec-grep-install/SKILL.md",
+      "bytes": 2260,
+      "sha256": "25314b5241bd482d2fe61c16e794123bc92251bde2ec59498a960cc7b418f39f",
+      "directory": "packages/core/src/skills/bundled/zvec-grep-install",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/cua-driver/rust/Skills/cua-driver/SKILL.md",
+      "bytes": 65359,
+      "sha256": "f84b08d2fcc1d9379125f6f250d01896905d8271033e3b38be7a5dde8812cfa7",
+      "directory": "packages/cua-driver/rust/Skills/cua-driver",
+      "status": "snapshot_only"
+    },
+    {
+      "path": "packages/desktop/.agents/skills/desktop-brand-builder/SKILL.md",
+      "bytes": 8585,
+      "sha256": "be6f24d9f286e8021b5ce08c6f58a5fe76a92e9aeb1e6b30721a1443ac26da2d",
+      "directory": "packages/desktop/.agents/skills/desktop-brand-builder",
+      "status": "snapshot_only"
+    }
+  ],
+  "git_history_included": false,
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+}
