@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T00:29:55.184221+00:00",
+  "updated_at": "2026-10-23T00:29:56.940505+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -35,6 +35,13 @@
       "ok": true,
       "commits": [
         "461be87304c7b3b5d64b701207c49f236515d5fd"
+      ]
+    },
+    {
+      "repository": "QwenLM/Qwen-Agent",
+      "ok": true,
+      "commits": [
+        "31a4d36d123688581a9e9744427272b33ce940e0"
       ]
     }
   ],
