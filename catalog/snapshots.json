@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T00:30:10.699837+00:00",
+  "updated_at": "2026-10-23T00:30:12.363413+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -98,6 +98,13 @@
       "ok": true,
       "commits": [
         "95dc2eebbc100b929c102d90111bb94fad41e500"
+      ]
+    },
+    {
+      "repository": "bytedance/deer-flow",
+      "ok": true,
+      "commits": [
+        "d4012c4b24f9b5ee14236a8214c82815de5b5214"
       ]
     }
   ],
