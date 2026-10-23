@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T00:29:58.580475+00:00",
+  "updated_at": "2026-10-23T00:30:00.282649+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -49,6 +49,13 @@
       "ok": true,
       "commits": [
         "b2a084799bf883a5a8d0f56e44f205f78a83f0fe"
+      ]
+    },
+    {
+      "repository": "TencentCloudBase/CloudBase-AI-Toolkit",
+      "ok": true,
+      "commits": [
+        "f49b8d481373937b3c39012deef6cf5da829ef6e"
       ]
     }
   ],
