@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T00:30:09.072370+00:00",
+  "updated_at": "2026-10-23T00:30:10.699837+00:00",
   "scope": "catalog/sources.json 中全部 GitHub 来源；每个版本保留完整源码归档与所有 SKILL.md 所在目录。不是互联网全部技能。",
   "runs": [
     {
@@ -91,6 +91,13 @@
       "ok": true,
       "commits": [
         "fefb05ff27be1da939612fbf9faf5db62583b8ae"
+      ]
+    },
+    {
+      "repository": "coze-dev/coze-loop",
+      "ok": true,
+      "commits": [
+        "95dc2eebbc100b929c102d90111bb94fad41e500"
       ]
     }
   ],
