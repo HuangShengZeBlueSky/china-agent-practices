@@ -13,7 +13,7 @@ def git(*args):
 
 def commit_push(paths, message):
     """输入本仓成果路径；仅有变化时提交并推送 main；输出可追溯提交记录。"""
-    git('add', '--', *paths)
+    git('add', '--force', '--', *paths)
     if subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=ROOT).returncode:
         git('commit', '-m', message)
         git('push', 'origin', 'HEAD:main')
@@ -35,8 +35,11 @@ def main():
         if (ROOT / 'snapshots' / source['repository']).exists():
             paths.append('snapshots/' + source['repository'])
         commit_push(paths, '备份原文：' + source['repository'])
+    subprocess.run(['python3', 'scripts/verify_snapshots.py', '--repair'], cwd=ROOT, check=True)
+    commit_push(['snapshots', 'catalog/snapshot-verification.json'], '核对完整原文并恢复被忽略的依赖文件')
+    subprocess.run(['python3', 'scripts/build_dashboard.py'], cwd=ROOT, check=True)
     subprocess.run(['python3', 'scripts/build_original_library.py'], cwd=ROOT, check=True)
-    commit_push(['catalog/original-skills.json', 'dashboard/originals'], '生成全部已备份技能的原文阅读库')
+    commit_push(['catalog/original-skills.json', 'dashboard'], '生成全部原文阅读库与逐篇解读入口')
     raise SystemExit(0 if all(r['ok'] for r in results) else 1)
 
 

@@ -206,6 +206,7 @@ function openDocument(path, focus = "") {
     const resolved = new URL(href, `https://atlas.invalid/${activeDocument}`);
     const target = decodeURIComponent(resolved.pathname.slice(1));
     if (DATA.documents[target]) { link.dataset.doc = target; link.href = `#doc/${encodeURIComponent(target)}`; }
+    else if (target.startsWith("snapshots/")) { link.href = "originals/index.html?file=" + encodeURIComponent(target); link.target = "_blank"; link.rel = "noopener noreferrer"; }
     else if (target === "catalog/sources.json") { link.dataset.exportCatalog = "1"; link.href = "#catalog"; }
     else { link.removeAttribute("href"); link.title = "此相对路径可在完整研究包中打开"; }
   });
@@ -300,6 +301,9 @@ function initialize() {
   document.getElementById("source-dialog").addEventListener("close", () => { persistLearning(); if (state.view === "learning") renderLearning(); });
   window.addEventListener("pagehide", persistLearning);
   setView(location.hash.slice(1), false);
+  const requestedDoc = new URLSearchParams(location.search).get("doc");
+  if (requestedDoc && Object.hasOwn(DATA.documents, requestedDoc)) openDocument(requestedDoc);
 }
 
 initialize();
+

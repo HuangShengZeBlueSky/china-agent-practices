@@ -1,0 +1,37 @@
+[
+  {
+    "repository": "larksuite/cli",
+    "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+    "path": "skills/lark-shared/SKILL.md",
+    "note": "cases/original-reading-workbook.md",
+    "status": "入口已解读，未实跑"
+  },
+  {
+    "repository": "larksuite/cli",
+    "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+    "path": "skills/lark-base/SKILL.md",
+    "note": "cases/original-reading-workbook.md",
+    "status": "入口已解读，未实跑"
+  },
+  {
+    "repository": "larksuite/cli",
+    "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+    "path": "skills/lark-skill-maker/SKILL.md",
+    "note": "cases/original-reading-workbook.md",
+    "status": "入口已解读，未实跑"
+  },
+  {
+    "repository": "larksuite/cli",
+    "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+    "path": "skills/lark-workflow-standup-report/SKILL.md",
+    "note": "cases/original-reading-workbook.md",
+    "status": "入口已解读，未实跑"
+  },
+  {
+    "repository": "MiniMax-AI/skills",
+    "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+    "path": "skills/minimax-docx/SKILL.md",
+    "note": "cases/original-reading-workbook.md",
+    "status": "入口已解读，依赖未逐项审查，未实跑"
+  }
+]
