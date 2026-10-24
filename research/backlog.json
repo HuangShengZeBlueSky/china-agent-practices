@@ -1,0 +1,726 @@
+{
+  "scope_version": "2026-10-25.v1",
+  "scope_policy": "固定首轮主线；新材料记录增量，不静默改变验收分母",
+  "tasks": [
+    {
+      "id": "P0-01",
+      "phase": "P0",
+      "title": "建立研究方法、排期与模板",
+      "depends_on": [],
+      "status": "done",
+      "acceptance": "方法、排期、技术方案和论文模板可读且相互链接",
+      "evidence": [
+        "research/README.md",
+        "research/method.md",
+        "research/schedule.md"
+      ],
+      "open_questions": [],
+      "execution_status": "not_required"
+    },
+    {
+      "id": "P0-02",
+      "phase": "P0",
+      "title": "导入全部既有技能路径",
+      "depends_on": [],
+      "status": "done",
+      "acceptance": "6235 路径恰好一次归入 3085 内容组，阅读与依赖状态分开",
+      "evidence": [
+        "catalog/skill-study/index.json"
+      ],
+      "open_questions": [],
+      "execution_status": "not_required"
+    },
+    {
+      "id": "P0-03",
+      "phase": "P0",
+      "title": "启动规范与组件学习",
+      "depends_on": [],
+      "status": "done",
+      "acceptance": "组件概念、Skill 与 MCP 三份笔记，指定原文可校验",
+      "evidence": [
+        "research/solutions/component-map.md",
+        "research/solutions/skills-spec.md",
+        "research/solutions/mcp-versioned.md",
+        "research/originals/manifest.json"
+      ],
+      "open_questions": [],
+      "execution_status": "not_required"
+    },
+    {
+      "id": "P1-01",
+      "phase": "P1",
+      "title": "核查既有国内来源和迁移",
+      "depends_on": [
+        "P0-03"
+      ],
+      "status": "in_progress",
+      "acceptance": "31 仓库归属、当前入口、固定版本、维护状态与差距",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P1-02",
+      "phase": "P1",
+      "title": "海外大厂公开实现普查",
+      "depends_on": [
+        "P1-01"
+      ],
+      "status": "pending",
+      "acceptance": "至少20个项目/产品的一手入口；覆盖至少8个组织，来源性质明确",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P1-03",
+      "phase": "P1",
+      "title": "标准与社区对照",
+      "depends_on": [
+        "P1-02"
+      ],
+      "status": "pending",
+      "acceptance": "Skills、MCP、A2A、至少6个社区框架的职责与实现入口",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P1-04",
+      "phase": "P1",
+      "title": "论文广泛发现",
+      "depends_on": [
+        "P1-03"
+      ],
+      "status": "pending",
+      "acceptance": "至少25篇候选，时间/版本/方法/评测类型，经典与近90天材料兼顾",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P1-05",
+      "phase": "P1",
+      "title": "十类垂类来源地图",
+      "depends_on": [
+        "P1-04"
+      ],
+      "status": "pending",
+      "acceptance": "10类任务分别有原文入口、业务链、可见度和后续问题",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P1-06",
+      "phase": "P1",
+      "title": "新增来源备份与缺失审计",
+      "depends_on": [
+        "P1-05"
+      ],
+      "status": "pending",
+      "acceptance": "完整归档或明确节选；许可、哈希、版本；不能备份者有原因",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P1-07",
+      "phase": "P1",
+      "title": "覆盖复核与研究假设",
+      "depends_on": [
+        "P1-06"
+      ],
+      "status": "pending",
+      "acceptance": "中外/组件/垂类矩阵，空白检索记录，P2/P3方案列表，优先级",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-01",
+      "phase": "P2",
+      "title": "Skill 编写与触发",
+      "depends_on": [
+        "P1-07"
+      ],
+      "status": "pending",
+      "acceptance": "描述、适用条件、输入输出、两种实现对照与误触发案例",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-02",
+      "phase": "P2",
+      "title": "Skill 发现与渐进加载",
+      "depends_on": [
+        "P2-01"
+      ],
+      "status": "pending",
+      "acceptance": "宿主调用链、元数据/正文/依赖何时入上下文",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-03",
+      "phase": "P2",
+      "title": "Skill 依赖和版本兼容",
+      "depends_on": [
+        "P2-02"
+      ],
+      "status": "pending",
+      "acceptance": "脚本、参考、资产、环境、同入口不同依赖",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-04",
+      "phase": "P2",
+      "title": "Skill 生成与评估",
+      "depends_on": [
+        "P2-03"
+      ],
+      "status": "pending",
+      "acceptance": "创作流程、格式/触发/业务评估、失败样例",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-05",
+      "phase": "P2",
+      "title": "MCP 工具模式与结果",
+      "depends_on": [
+        "P2-04"
+      ],
+      "status": "pending",
+      "acceptance": "规范版本、输入输出模式、具体服务调用链",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-06",
+      "phase": "P2",
+      "title": "MCP 身份与授权",
+      "depends_on": [
+        "P2-05"
+      ],
+      "status": "pending",
+      "acceptance": "Host/Client/Server边界、凭据传递、可见证据",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-07",
+      "phase": "P2",
+      "title": "MCP 兼容与长任务",
+      "depends_on": [
+        "P2-06"
+      ],
+      "status": "pending",
+      "acceptance": "旧/新版本、传输、取消、异步任务、恢复边界",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-08",
+      "phase": "P2",
+      "title": "CLI 参数与发现",
+      "depends_on": [
+        "P2-07"
+      ],
+      "status": "pending",
+      "acceptance": "飞书与海外CLI的帮助、schema、JSON输出对照",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-09",
+      "phase": "P2",
+      "title": "CLI 错误与状态",
+      "depends_on": [
+        "P2-08"
+      ],
+      "status": "pending",
+      "acceptance": "退出码、分页、异步、部分成功、非幂等操作",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P2-10",
+      "phase": "P2",
+      "title": "Skill MCP CLI 综合方案",
+      "depends_on": [
+        "P2-09"
+      ],
+      "status": "pending",
+      "acceptance": "同业务操作两种入口、架构图与流程图、选择条件",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-01",
+      "phase": "P3",
+      "title": "Harness 主循环",
+      "depends_on": [
+        "P2-10"
+      ],
+      "status": "pending",
+      "acceptance": "模型请求、工具执行、事件、停止与预算",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-02",
+      "phase": "P3",
+      "title": "上下文装配与压缩",
+      "depends_on": [
+        "P3-01"
+      ],
+      "status": "pending",
+      "acceptance": "实际消息、检索、外置内容、恢复与遗漏",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-03",
+      "phase": "P3",
+      "title": "记忆与持久状态",
+      "depends_on": [
+        "P3-02"
+      ],
+      "status": "pending",
+      "acceptance": "会话、长期记忆、业务状态的不同持久边界",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-04",
+      "phase": "P3",
+      "title": "Goal 生命周期",
+      "depends_on": [
+        "P3-03"
+      ],
+      "status": "pending",
+      "acceptance": "目标、约束、成功谓词、变更、取消",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-05",
+      "phase": "P3",
+      "title": "Plan 与重规划",
+      "depends_on": [
+        "P3-04"
+      ],
+      "status": "pending",
+      "acceptance": "步骤依赖、状态、反馈、失效假设与修改",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-06",
+      "phase": "P3",
+      "title": "调度与长任务恢复",
+      "depends_on": [
+        "P3-05"
+      ],
+      "status": "pending",
+      "acceptance": "唤醒、断点、重试、幂等与重复工作",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-07",
+      "phase": "P3",
+      "title": "Subagent 委派",
+      "depends_on": [
+        "P3-06"
+      ],
+      "status": "pending",
+      "acceptance": "上下文隔离、任务/结果契约、取消和回收",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-08",
+      "phase": "P3",
+      "title": "Team 分工",
+      "depends_on": [
+        "P3-07"
+      ],
+      "status": "pending",
+      "acceptance": "角色、任务归属、共享状态、消息与冲突",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-09",
+      "phase": "P3",
+      "title": "协作汇总与复核",
+      "depends_on": [
+        "P3-08"
+      ],
+      "status": "pending",
+      "acceptance": "分支合并、证据追溯、不同意见、质量检查",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-10",
+      "phase": "P3",
+      "title": "沙箱与工具执行",
+      "depends_on": [
+        "P3-09"
+      ],
+      "status": "pending",
+      "acceptance": "进程、文件、网络、权限和异常",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-11",
+      "phase": "P3",
+      "title": "产物与验收",
+      "depends_on": [
+        "P3-10"
+      ],
+      "status": "pending",
+      "acceptance": "产物生命周期、可观察成功、验证器边界",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P3-12",
+      "phase": "P3",
+      "title": "国内外架构综合",
+      "depends_on": [
+        "P3-11"
+      ],
+      "status": "pending",
+      "acceptance": "至少12张方案卡及同问题跨实现比较",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P4-01",
+      "phase": "P4",
+      "title": "规划与工具论文全文",
+      "depends_on": [
+        "P3-12"
+      ],
+      "status": "pending",
+      "acceptance": "至少5篇，算法、附录、基线、代码或开放边界",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P4-02",
+      "phase": "P4",
+      "title": "协作与长任务论文全文",
+      "depends_on": [
+        "P4-01"
+      ],
+      "status": "pending",
+      "acceptance": "至少5篇，状态、成本、同预算及负面证据",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P4-03",
+      "phase": "P4",
+      "title": "技能记忆与改进论文全文",
+      "depends_on": [
+        "P4-02"
+      ],
+      "status": "pending",
+      "acceptance": "至少5篇，训练/推理改进区分，泛化与消融",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P4-04",
+      "phase": "P4",
+      "title": "评测与反证论文全文",
+      "depends_on": [
+        "P4-03"
+      ],
+      "status": "pending",
+      "acceptance": "至少5篇，环境、验证器、泄漏、故障与局限",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P4-05",
+      "phase": "P4",
+      "title": "论文到组件映射",
+      "depends_on": [
+        "P4-04"
+      ],
+      "status": "pending",
+      "acceptance": "至少20篇全文卡，每项可复用部件与迁移条件",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P5-01",
+      "phase": "P5",
+      "title": "编程 Agent",
+      "depends_on": [
+        "P4-05"
+      ],
+      "status": "pending",
+      "acceptance": "真实仓库任务链、工具、验收、两种路线",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P5-02",
+      "phase": "P5",
+      "title": "办公 Agent",
+      "depends_on": [
+        "P5-01"
+      ],
+      "status": "pending",
+      "acceptance": "飞书/文档/表格流程、对象、权限与业务完成",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P5-03",
+      "phase": "P5",
+      "title": "研究 Agent",
+      "depends_on": [
+        "P5-02"
+      ],
+      "status": "pending",
+      "acceptance": "检索、证据、引用与长任务接续",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P5-04",
+      "phase": "P5",
+      "title": "数据分析 Agent",
+      "depends_on": [
+        "P5-03"
+      ],
+      "status": "pending",
+      "acceptance": "数据契约、计算、可复查结果和错误",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P5-05",
+      "phase": "P5",
+      "title": "客服 Agent",
+      "depends_on": [
+        "P5-04"
+      ],
+      "status": "pending",
+      "acceptance": "工具状态、政策约束、交接和任务成功",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P5-06",
+      "phase": "P5",
+      "title": "运维 Agent",
+      "depends_on": [
+        "P5-05"
+      ],
+      "status": "pending",
+      "acceptance": "只读诊断、变更边界、回滚与可观察性",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P5-07",
+      "phase": "P5",
+      "title": "专业文档 Agent",
+      "depends_on": [
+        "P5-06"
+      ],
+      "status": "pending",
+      "acceptance": "法务/财务/医疗科研分别列业务约束和专业验收",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P5-08",
+      "phase": "P5",
+      "title": "多媒体 Agent",
+      "depends_on": [
+        "P5-07"
+      ],
+      "status": "pending",
+      "acceptance": "生成、编辑、资产、异步与质量评估",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P5-09",
+      "phase": "P5",
+      "title": "垂类比较",
+      "depends_on": [
+        "P5-08"
+      ],
+      "status": "pending",
+      "acceptance": "8份完整案例，至少两条路线或明确证据缺口",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P6-01",
+      "phase": "P6",
+      "title": "实验1：同业务CLI与MCP",
+      "depends_on": [
+        "P5-09"
+      ],
+      "status": "pending",
+      "acceptance": "固定假数据、成功/失败轨迹、接口差异",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P6-02",
+      "phase": "P6",
+      "title": "实验2：Skill触发与依赖",
+      "depends_on": [
+        "P6-01"
+      ],
+      "status": "pending",
+      "acceptance": "误触发、缺失引用、同入口不同依赖",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P6-03",
+      "phase": "P6",
+      "title": "实验3：Plan反馈与恢复",
+      "depends_on": [
+        "P6-02"
+      ],
+      "status": "pending",
+      "acceptance": "步骤失败后保持目标、修正计划的证据",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P6-04",
+      "phase": "P6",
+      "title": "实验4：跨会话检查点",
+      "depends_on": [
+        "P6-03"
+      ],
+      "status": "pending",
+      "acceptance": "故障注入、恢复后无漏项/重复写入",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P6-05",
+      "phase": "P6",
+      "title": "实验5：单执行者与协作",
+      "depends_on": [
+        "P6-04"
+      ],
+      "status": "pending",
+      "acceptance": "同输入/模型/预算对照，不预设多Agent更好",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P6-06",
+      "phase": "P6",
+      "title": "实验6：垂类小原型",
+      "depends_on": [
+        "P6-05"
+      ],
+      "status": "pending",
+      "acceptance": "可控端到端输入输出与验收；资源不足记阻塞",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P6-07",
+      "phase": "P6",
+      "title": "学习课程与组件手册",
+      "depends_on": [
+        "P6-06"
+      ],
+      "status": "pending",
+      "acceptance": "概念、原文、图、代码练习、反例、选择标准",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    },
+    {
+      "id": "P6-08",
+      "phase": "P6",
+      "title": "主线与全量研究收口",
+      "depends_on": [
+        "P6-07"
+      ],
+      "status": "pending",
+      "acceptance": "阶段验收、技能全量、未决项处理，不把阻塞当完成",
+      "evidence": [],
+      "open_questions": [],
+      "execution_status": "not_run"
+    }
+  ],
+  "ongoing_tracks": [
+    {
+      "id": "skills-all",
+      "status": "in_progress",
+      "queue": "catalog/skill-study/index.json",
+      "acceptance": "每个内容组有解读与方案图引用；每路径的依赖/宿主完成核对，等价复用有证据，实跑单列"
+    },
+    {
+      "id": "frontier-delta",
+      "status": "active",
+      "acceptance": "新增论文和版本有来源与影响分类，纳入下一轮需显式记范围"
+    }
+  ]
+}

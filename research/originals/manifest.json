@@ -1,0 +1,89 @@
+{
+  "scope": "指定文件原文快照；不表示两仓库完整备份",
+  "files": [
+    {
+      "repository": "agentskills/agentskills",
+      "commit": "69ef37e9424c0a7ea9dd2293b559e43ec8176379",
+      "path": "LICENSE",
+      "blob_sha": "a20f4476df158a57a68409015ea607c738856f57",
+      "local_path": "research/originals/agentskills/agentskills/69ef37e9424c0a7ea9dd2293b559e43ec8176379/LICENSE",
+      "bytes": 11344,
+      "sha256": "993da3f8d330d69108e521636555f7783ef81d46b904394c59ec5ff651331fe5",
+      "captured_on": "2026-10-25",
+      "verified_git_blob": true,
+      "scope": "selected_original_files_only"
+    },
+    {
+      "repository": "agentskills/agentskills",
+      "commit": "69ef37e9424c0a7ea9dd2293b559e43ec8176379",
+      "path": "docs/specification.mdx",
+      "blob_sha": "d9a2db099d905da8b879a5c6f996728073985279",
+      "local_path": "research/originals/agentskills/agentskills/69ef37e9424c0a7ea9dd2293b559e43ec8176379/docs/specification.mdx",
+      "bytes": 7166,
+      "sha256": "b9079c0c10b7930e8c6a20ff2bc10cda2a3343c55185120e3f1116a1a529b220",
+      "captured_on": "2026-10-25",
+      "verified_git_blob": true,
+      "scope": "selected_original_files_only"
+    },
+    {
+      "repository": "agentskills/agentskills",
+      "commit": "69ef37e9424c0a7ea9dd2293b559e43ec8176379",
+      "path": "skills-ref/src/skills_ref/validator.py",
+      "blob_sha": "22cf6f8ae5f905d780cb097c0938711cc37016a9",
+      "local_path": "research/originals/agentskills/agentskills/69ef37e9424c0a7ea9dd2293b559e43ec8176379/skills-ref/src/skills_ref/validator.py",
+      "bytes": 5154,
+      "sha256": "b5ee3d8537c83c959c31c2cb080a5227646ede5aea545f1ac835ed3c4645f6c5",
+      "captured_on": "2026-10-25",
+      "verified_git_blob": true,
+      "scope": "selected_original_files_only"
+    },
+    {
+      "repository": "agentskills/agentskills",
+      "commit": "69ef37e9424c0a7ea9dd2293b559e43ec8176379",
+      "path": "skills-ref/src/skills_ref/prompt.py",
+      "blob_sha": "3a7d714bf60745a04e025764e724e9043791b6e9",
+      "local_path": "research/originals/agentskills/agentskills/69ef37e9424c0a7ea9dd2293b559e43ec8176379/skills-ref/src/skills_ref/prompt.py",
+      "bytes": 1724,
+      "sha256": "8ed90a61685b84050a8fde32e63d5f3f04c205b05bfc5f8ef4bb2f101cc9cf15",
+      "captured_on": "2026-10-25",
+      "verified_git_blob": true,
+      "scope": "selected_original_files_only"
+    },
+    {
+      "repository": "modelcontextprotocol/modelcontextprotocol",
+      "commit": "dae694f61a31f7a3ec2af3aff709e11f70f61e48",
+      "path": "LICENSE",
+      "blob_sha": "4a93985763241755401a10678395303de4e720ba",
+      "local_path": "research/originals/modelcontextprotocol/modelcontextprotocol/dae694f61a31f7a3ec2af3aff709e11f70f61e48/LICENSE",
+      "bytes": 12227,
+      "sha256": "0382b0057770ca05e9c350a50aa3b1c1fea84da0bc81d723bf00b9aa841be58a",
+      "captured_on": "2026-10-25",
+      "verified_git_blob": true,
+      "scope": "selected_original_files_only"
+    },
+    {
+      "repository": "modelcontextprotocol/modelcontextprotocol",
+      "commit": "dae694f61a31f7a3ec2af3aff709e11f70f61e48",
+      "path": "docs/specification/2026-07-28/architecture/index.mdx",
+      "blob_sha": "ec180b8b443c423fecfe35ad6666d3a4e959cdd6",
+      "local_path": "research/originals/modelcontextprotocol/modelcontextprotocol/dae694f61a31f7a3ec2af3aff709e11f70f61e48/docs/specification/2026-07-28/architecture/index.mdx",
+      "bytes": 6195,
+      "sha256": "9037b342a1f23c056a564a48dda15b70e511dda6d09e96ab0e86f6f9086f9cc3",
+      "captured_on": "2026-10-25",
+      "verified_git_blob": true,
+      "scope": "selected_original_files_only"
+    },
+    {
+      "repository": "modelcontextprotocol/modelcontextprotocol",
+      "commit": "dae694f61a31f7a3ec2af3aff709e11f70f61e48",
+      "path": "docs/specification/2026-07-28/basic/versioning.mdx",
+      "blob_sha": "fcfea9f0a150923ffd6637ff53fadc8240eefedf",
+      "local_path": "research/originals/modelcontextprotocol/modelcontextprotocol/dae694f61a31f7a3ec2af3aff709e11f70f61e48/docs/specification/2026-07-28/basic/versioning.mdx",
+      "bytes": 11293,
+      "sha256": "bc02f271700bdecd88034f2d7801eb09110a71d65876487378d94e48dfeb90dc",
+      "captured_on": "2026-10-25",
+      "verified_git_blob": true,
+      "scope": "selected_original_files_only"
+    }
+  ]
+}

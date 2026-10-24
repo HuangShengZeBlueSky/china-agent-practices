@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "created_on": "2026-10-25",
+  "baseline_repository_commit": "febcdbe196c9b7303837aa77057b765327238f37",
+  "source_path": "catalog/original-skills.json",
+  "source_git_blob": "c693648be3dbd0326a4ee962c6e30ef782180f8f",
+  "source_local_sha256": "006814ee3a73e10edd00aeb0b6f1a349623df20a9af2ac48ede4fe11a0d58e64",
+  "scope": "全部既有路径；分组只证明入口字节相同，不证明依赖或宿主等价",
+  "baseline_stats": {
+    "repositories": 31,
+    "versions": 40,
+    "skill_paths": 6235,
+    "unique_skill_contents": 3085,
+    "archive_bytes": 2174496482
+  },
+  "content_groups": 3085,
+  "occurrences": 6235,
+  "entry_states": {
+    "not_read": 3080,
+    "prior_entry_read_only": 5
+  },
+  "shards": [
+    {
+      "path": "catalog/skill-study/groups-0.json",
+      "groups": 181,
+      "occurrences": 370
+    },
+    {
+      "path": "catalog/skill-study/groups-1.json",
+      "groups": 184,
+      "occurrences": 379
+    },
+    {
+      "path": "catalog/skill-study/groups-2.json",
+      "groups": 195,
+      "occurrences": 392
+    },
+    {
+      "path": "catalog/skill-study/groups-3.json",
+      "groups": 198,
+      "occurrences": 403
+    },
+    {
+      "path": "catalog/skill-study/groups-4.json",
+      "groups": 190,
+      "occurrences": 384
+    },
+    {
+      "path": "catalog/skill-study/groups-5.json",
+      "groups": 169,
+      "occurrences": 335
+    },
+    {
+      "path": "catalog/skill-study/groups-6.json",
+      "groups": 194,
+      "occurrences": 395
+    },
+    {
+      "path": "catalog/skill-study/groups-7.json",
+      "groups": 216,
+      "occurrences": 437
+    },
+    {
+      "path": "catalog/skill-study/groups-8.json",
+      "groups": 184,
+      "occurrences": 386
+    },
+    {
+      "path": "catalog/skill-study/groups-9.json",
+      "groups": 196,
+      "occurrences": 387
+    },
+    {
+      "path": "catalog/skill-study/groups-a.json",
+      "groups": 198,
+      "occurrences": 393
+    },
+    {
+      "path": "catalog/skill-study/groups-b.json",
+      "groups": 210,
+      "occurrences": 423
+    },
+    {
+      "path": "catalog/skill-study/groups-c.json",
+      "groups": 194,
+      "occurrences": 384
+    },
+    {
+      "path": "catalog/skill-study/groups-d.json",
+      "groups": 192,
+      "occurrences": 394
+    },
+    {
+      "path": "catalog/skill-study/groups-e.json",
+      "groups": 174,
+      "occurrences": 348
+    },
+    {
+      "path": "catalog/skill-study/groups-f.json",
+      "groups": 210,
+      "occurrences": 425
+    }
+  ]
+}

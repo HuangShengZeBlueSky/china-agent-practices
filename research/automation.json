@@ -1,0 +1,16 @@
+{
+  "status": "enabled",
+  "id": "6adcdef97efc81918d2e07a6e9da7b3a",
+  "title": "Agent 工程长期研究",
+  "timezone": "Asia/Shanghai",
+  "schedule": "BEGIN:VEVENT\nDTSTART;TZID=Asia/Shanghai:20261026T080000\nRRULE:FREQ=DAILY\nEND:VEVENT",
+  "timing_mode": "flexible_schedule",
+  "first_scheduled_date_local": "2026-10-26",
+  "last_run_time": null,
+  "next_run_time": null,
+  "created_at_reported": "2026-10-24T16:38:17.864192+00:00",
+  "recorded_on_local": "2026-10-25",
+  "has_executed": false,
+  "note": "任务已启用，尚未首次运行；flexible_schedule 为早上8点附近，一小时范围内。调度不保证固定模型、执行时长或必然提交成功。",
+  "prompt": "继续完成“全球 Agent 工程学习与原文研究”，按已沉淀方法和排期做实质工作，目标是学会中国、海外大厂、开源项目与前沿论文如何构建 Skill、MCP、CLI、Harness、Subagent、Team、Goal、Plan 和垂类 Agent。用户已授权长期逐步调研、原文备份、更新私有仓库；质量、广度、总结与可学习性优先。\n\n唯一持久主仓库为 HuangShengZeBlueSky/china-agent-practices：https://github.com/HuangShengZeBlueSky/china-agent-practices 。开始必须读取远端最新 AGENTS.md、research/README.md、research/method.md、research/schedule.md、research/progress.json、research/backlog.json 和上次日志，保留用户修改。不要依赖临时工作区或旧聊天摘要；如文件较大而 fetch_file 返回空内容，使用 GitHub blob 读取或已建立的小分片，空内容不能当没有任务。\n\n从最早尚未验收的阶段开始，先恢复进行中任务，再选择依赖满足的具体单元。阶段为 P1 国内外和垂类广泛地图，P2 Skill/MCP/CLI，P3 Harness及Goal/Plan/Subagent/Team，P4 论文全文与反证，P5 垂类完整案例，P6 综合比较与学习实践。可以提前阅读依赖资料，不能因计划日期到达就跳过未完成项。主线窗口为24周，技能长尾未完成则继续，不许到期假结项。\n\n同时推进 catalog/skill-study/index.json 中全部6235路径、3085入口内容组的逐项学习。读取索引所列分片，选少量可认真读完的组，保留每个 occurrence 的依赖和宿主状态。入口内容相同只复用入口解读；完整结论复用需要依赖清单、宿主与版本等价证据。5组历史入口阅读不算整包完成。原文目录为 snapshots/{owner}/{repo}/{commit}/files/{path}，manifest.json提供依赖与哈希。独立技术方案必须有两类图，等价副本可有据引用共同方案。\n\n研究必须搜索并读取一手官方文档、固定源码、作者论文/附录/代码和评测器。中英文检索，覆盖国内外及业务领域；社区材料仅供发现。关键结论追真实调用链：输入、上下文装配、模型决策、工具执行、状态回传、失败恢复、完成判定。保存许可范围内可取得的原文及依赖、版本、日期、哈希；节选与整仓归档分开，不能取得则记录缺口。搜索摘要或论文摘要只能登记候选，不能算全文解读。\n\n按 templates/technical-solution.md 交付中文方案卡：适用问题、真实输入输出、流程图、架构图、模块/状态归属、权限与副作用、错误和恢复、验收、替代实现、局限和学习练习。论文按 templates/paper-reading.md 拆算法、数据、基线、预算、消融、失败、验证器和可迁移部件。区分源码事实、官方承诺、作者报告、第三方归档和自己的推断；静态阅读、模拟、实跑、复现分别记证据。不要假称运行过系统或验证了收益。\n\n围绕同一问题做跨实现对照和反证，避免只收链接、列名词或泛泛摘要。每次完成可复核单元后将正文、来源、backlog、progress、技能分片和日期日志一起提交该私有GitHub仓库，读取远端确认成功。若提交失败，明确未发布并保留可恢复结果。GitHub新增文件不自动等于研究网站已部署。不要改访问权限、发送他人消息、购买API额度、启动模型训练或执行未知上游脚本；需要额外资源时先完成静态与可控部分，记录具体实验和障碍。\n\n周末额外核查覆盖矩阵、结论证据和真实吞吐，更新排期及剩余工作估算；新来源进入增量池，不静默改变冻结范围。未暴露模型/推理档位控制时，不得宣称已设置最高模型；以完整原文、比较、验证和复核落实最高研究质量。\n\n输出紧凑中文进展：实际完成内容、关键新认识、可点开的仓库成果、准确状态、下一步。全部主线验收、技能全量研究和未决事项处理完成后，提交自洽综合学习手册并停用本续研任务；仍有待办则持续接续，不把阻塞或日期到达当完成。"
+}

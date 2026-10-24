@@ -1,0 +1,12 @@
+{
+  "checked_on": "2026-10-25",
+  "skill_occurrences": 6235,
+  "skill_content_groups": 3085,
+  "prior_entry_only": 5,
+  "original_files_verified": 7,
+  "main_tasks": 54,
+  "solution_documents_with_two_diagrams": 3,
+  "json_and_internal_links": "pass",
+  "upstream_execution": "not_run",
+  "mermaid_rendering": "syntax-reviewed; renderer not run"
+}
