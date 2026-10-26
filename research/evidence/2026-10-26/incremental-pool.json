@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-26",
+  "changes_scope": false,
+  "version_candidates": [
+    {
+      "repository": "QwenLM/qwen-code",
+      "commit": "338f13366c1d86e586f7e0785942740da3503887",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    },
+    {
+      "repository": "agentscope-ai/agentscope",
+      "commit": "bdad647d2fee7d66597681ecd89e086b7800dd2a",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    },
+    {
+      "repository": "TencentCloudBase/CloudBase-AI-Toolkit",
+      "commit": "4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    },
+    {
+      "repository": "openJiuwen-ai/agent-core",
+      "commit": "046a869101cb895f1ac0ce6d2220111046fdea61",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    },
+    {
+      "repository": "coze-dev/coze-loop",
+      "commit": "434767e7da1c82aa7c34e7abee31a7293bd42861",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    },
+    {
+      "repository": "bytedance/deer-flow",
+      "commit": "ce0fa4c114226213e5e5799cc2fea43687dc4aba",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    },
+    {
+      "repository": "opensandbox-group/OpenSandbox",
+      "commit": "dc96a4698cefc59d0c7e8b393a44f1c795457f26",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    },
+    {
+      "repository": "Tencent/BrowserSkill",
+      "commit": "c0b8e5704a69aa93f6cdd40bbb286a9dd485d42b",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "ec0afda9a277c2f9fd5ab00bebbffbe49c1b3a8f",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    },
+    {
+      "repository": "netease-youdao/LobsterAI",
+      "commit": "cbbe6492a02684218376102f383569affeac4b2b",
+      "status": "metadata_checked_not_archived",
+      "next": "inspect diff and license, then versioned snapshot"
+    }
+  ],
+  "migration_candidates": [
+    {
+      "url": "https://github.com/MoonshotAI/kimi-code",
+      "status": "linked_by_official_legacy_readme_not_reviewed"
+    }
+  ]
+}

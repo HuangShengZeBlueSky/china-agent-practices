@@ -16,8 +16,9 @@
   "content_groups": 3085,
   "occurrences": 6235,
   "entry_states": {
-    "not_read": 3080,
-    "prior_entry_read_only": 5
+    "not_read": 3079,
+    "prior_entry_read_only": 5,
+    "entry_read": 1
   },
   "shards": [
     {
@@ -100,5 +101,6 @@
       "groups": 210,
       "occurrences": 425
     }
-  ]
+  ],
+  "updated_on": "2026-10-26"
 }

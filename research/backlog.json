@@ -55,9 +55,16 @@
       ],
       "status": "in_progress",
       "acceptance": "31 仓库归属、当前入口、固定版本、维护状态与差距",
-      "evidence": [],
-      "open_questions": [],
-      "execution_status": "not_run"
+      "evidence": [
+        "research/repository-audit-2026-10-26.md",
+        "research/evidence/2026-10-26/repository-audit.json"
+      ],
+      "open_questions": [
+        "逐项重新核验官方归属链和许可例外",
+        "十个新 HEAD 的变更影响与备份安排",
+        "Kimi 新实现和 AgentScope 迁移等价边界"
+      ],
+      "execution_status": "static_metadata_review"
     },
     {
       "id": "P1-02",
@@ -722,5 +729,6 @@
       "status": "active",
       "acceptance": "新增论文和版本有来源与影响分类，纳入下一轮需显式记范围"
     }
-  ]
+  ],
+  "updated_at": "2026-10-26"
 }

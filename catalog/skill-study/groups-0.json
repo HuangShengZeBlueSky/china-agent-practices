@@ -5282,9 +5282,9 @@
     },
     {
       "content_id": "0f1aea17fc21aaeb1cc17270d6de7de97780c3a9f53f98f668ce318f91f1a1f7",
-      "entry_status": "not_read",
-      "analysis_file": null,
-      "solution_file": null,
+      "entry_status": "entry_read",
+      "analysis_file": "research/solutions/lark-doc-routing-and-validation.md",
+      "solution_file": "research/solutions/lark-doc-routing-and-validation.md",
       "occurrences": [
         {
           "source_id": "ee17e67c6f9a2c6c302862ac",
@@ -5292,11 +5292,17 @@
           "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
           "path": "skills/lark-doc/SKILL.md",
           "prior_reading": null,
-          "dependency_status": "not_checked",
-          "host_status": "not_checked",
-          "review_status": "pending",
+          "dependency_status": "partially_reviewed",
+          "host_status": "requirements_read_not_verified",
+          "review_status": "in_progress",
           "execution_status": "not_run",
-          "equivalence_evidence": null
+          "equivalence_evidence": null,
+          "evidence_file": "research/evidence/2026-10-26/lark-code/manifest.json",
+          "open_questions": [
+            "remaining 40 lark-doc directory files",
+            "cross-skill references and FileIO injection",
+            "shared/doc path contract conflict"
+          ]
         }
       ]
     },

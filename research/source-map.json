@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-25",
+  "updated_at": "2026-10-26",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -15,7 +15,15 @@
       "analysis": "cases/bytedance-lark.md",
       "question": "把业务快捷命令、标准 API 与通用调用分层，配合权限、风险和结果契约。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "017b19a793ad71794a02887ede04757f3d82e10d",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-bytedance-lark-official-skills",
@@ -30,7 +38,15 @@
       "analysis": "cases/bytedance-lark.md",
       "question": "先解析真实业务对象，再按依赖执行；把技能路由与详细操作参考分开。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "017b19a793ad71794a02887ede04757f3d82e10d",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-bytedance-eino-skills",
@@ -45,7 +61,15 @@
       "analysis": "cases/bytedance-lark.md",
       "question": "先提供技能目录，再按需读取正文；子任务可选择独立或继承父上下文。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "0a5ca53b9d3bf7b661dccc863465ec568a421eea",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-bytedance-trae-agent",
@@ -60,7 +84,15 @@
       "analysis": "cases/bytedance-lark.md",
       "question": "公开编码 Agent 的任务提示、工具循环、轨迹记录和结束信号。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "e839e559ac61bdd0e057c375dd1dee391fee797d",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-doubao-archive-base",
@@ -75,7 +107,15 @@
       "analysis": "cases/bytedance-lark.md",
       "question": "第三方保存的 Base 1.5.1：从业务建模、字段设计到写入和回读验收。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "4e60dd8977eee1d770dd22de4780a4b54385adb8",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-doubao-archive-search",
@@ -90,7 +130,15 @@
       "analysis": "cases/bytedance-lark.md",
       "question": "保留搜索的主体、时间与比较条件，并区分知识检索和已知对象操作。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "4e60dd8977eee1d770dd22de4780a4b54385adb8",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-alibaba-qwen-code",
@@ -105,7 +153,15 @@
       "analysis": "cases/alibaba-tencent.md",
       "question": "依据会话工具声明快照筛选相关指引，技能目录与正文采用不同加载策略。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "338f13366c1d86e586f7e0785942740da3503887",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-alibaba-qwen-agent",
@@ -120,7 +176,15 @@
       "analysis": "cases/alibaba-tencent.md",
       "question": "把检索、模型适配、函数调用协议和工具执行连接到消息列表。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "31a4d36d123688581a9e9744427272b33ce940e0",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-alibaba-agentscope",
@@ -135,7 +199,15 @@
       "analysis": "cases/alibaba-tencent.md",
       "question": "让工具组与技能一起受能力启用状态约束，再装配说明、记忆和历史。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "bdad647d2fee7d66597681ecd89e086b7800dd2a",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-tencent-cloudbase-ai-toolkit",
@@ -150,7 +222,15 @@
       "analysis": "cases/alibaba-tencent.md",
       "question": "业务技能逐层路由到参考资料，CLI 与 MCP 互补，并维护经验规则的入库门槛。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-tencent-codebuddy-workbuddy-docs",
@@ -180,7 +260,15 @@
       "analysis": "cases/baidu-huawei-meituan-xiaomi.md",
       "question": "云端发出工具调用后暂停，本地执行函数，再按调用编号回传继续运行。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "76a7316c0671900b698f9e955afb432ec9a93183",
+        "default_branch": "master",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-huawei-openjiuwen-skills",
@@ -195,7 +283,15 @@
       "analysis": "cases/baidu-huawei-meituan-xiaomi.md",
       "question": "用技能元数据建立入口，正文通过读取工具加载；文档与实际代码存在接口差异。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "046a869101cb895f1ac0ce6d2220111046fdea61",
+        "default_branch": "develop",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-meituan-vitabench-tools",
@@ -210,7 +306,15 @@
       "analysis": "cases/baidu-huawei-meituan-xiaomi.md",
       "question": "工具声明前后条件与读写类型，并用独立评分提示评价完整任务轨迹。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "742e240855bf8686a0842360749d5ea970ea3987",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-xiaomi-mimoagent",
@@ -225,7 +329,15 @@
       "analysis": "cases/baidu-huawei-meituan-xiaomi.md",
       "question": "把模型、Agent、环境和评分拆开，工具说明明确子进程、并发、超时和退出码。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "c3df8469f250b15e7906487a6d52be4c1827a509",
+        "default_branch": "mimo-oss",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-bytedance-coze-studio",
@@ -240,7 +352,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "把人设、变量、检索结果和工具配置装配成可执行 Agent 图。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "fefb05ff27be1da939612fbf9faf5db62583b8ae",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-bytedance-coze-loop",
@@ -255,7 +375,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "把提示词评估拆成输入校验、模板渲染、模型调用、结果解析和可追踪版本。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "434767e7da1c82aa7c34e7abee31a7293bd42861",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-bytedance-deerflow",
@@ -270,7 +398,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "按运行配置拼装提示词与技能入口，并对工具大结果建立外置文件和上下文预算。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "ce0fa4c114226213e5e5799cc2fea43687dc4aba",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-bytedance-ui-tars-desktop",
@@ -285,7 +421,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "用明确的 GUI 动作语法把模型输出转成操作，再将新截图作为下一轮观察。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "3ac2cb8d946d78d5ff92ad17b318eaafa18c178c",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-alibaba-agentscope-runtime",
@@ -300,7 +444,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "将 Agent 查询函数包装成带生命周期、流式响应、中断和协议适配的服务。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-alibaba-opensandbox",
@@ -315,7 +467,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "将沙箱命令执行划分为前台、后台与持久会话，并显式处理状态、日志和重试语义。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "dc96a4698cefc59d0c7e8b393a44f1c795457f26",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-ant-aworld",
@@ -330,7 +490,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "用显式规则选择技能，并把会话压缩、工作区信息和检查点状态纳入 CLI 上下文管理。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "82af4062e29e128910afa8622c866f4b99a4d23d",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-tencent-browserskill",
@@ -345,7 +513,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "把浏览器任务组织成观察、引用元素、操作、再观察的流程，并维护 Skill 安装来源。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "c0b8e5704a69aa93f6cdd40bbb286a9dd485d42b",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-tencent-rtc-agent-skills",
@@ -360,7 +536,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "以路由 Skill、产品 Skill、会话状态工具和独立评估提示组织 SDK 集成知识。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "ec0afda9a277c2f9fd5ab00bebbffbe49c1b3a8f",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-tencent-skillhub",
@@ -375,7 +559,15 @@
       "analysis": "cases/platforms-expansion.md",
       "question": "公开技能发现流程和包质量评估模板，用程序检查报告格式与分数字段。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "a051f06f7944d24ade04bea27735f430b19a8298",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-moonshot-kimi-cli-legacy",
@@ -390,7 +582,15 @@
       "analysis": "cases/ecosystem-expansion.md",
       "question": "用带作用域的技能索引、项目说明和工具集合组装 CLI 上下文，并在可观察的多步循环中持久化消息与停止原因。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82",
+        "default_branch": "main",
+        "archived": true,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-minimax-official-skills",
@@ -405,7 +605,15 @@
       "analysis": "cases/ecosystem-expansion.md",
       "question": "把全栈开发拆成需求、架构、实施、验证与交接流程，并用独立脚本检查技能元数据和部分凭据模式。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "60aaae52bb2af8162732751a4332f62a5fef518b",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-minimax-mcp-media",
@@ -420,7 +628,15 @@
       "analysis": "cases/ecosystem-expansion.md",
       "question": "把多模态服务包装为 MCP 工具，视频任务以 task_id 连接提交、查询、结果下载，并区分 API 与文件处理错误。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-zhipu-open-autoglm",
@@ -435,7 +651,15 @@
       "analysis": "cases/ecosystem-expansion.md",
       "question": "手机界面与任务组成多模态输入，模型给出有限动作，设备适配层执行，再用新截图继续观察。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-jd-joyagent-jdgenie",
@@ -450,7 +674,15 @@
       "analysis": "cases/ecosystem-expansion.md",
       "question": "规划 Agent 管理结构化计划，执行 Agent 使用业务工具；两者根据真实工具列表、任务、日期、SOP 和已有产物组装提示词。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+        "default_branch": "data_agent",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-kuaishou-kwaiagents-lite",
@@ -465,7 +697,15 @@
       "analysis": "cases/ecosystem-expansion.md",
       "question": "以单任务规划—工具执行—结果记录循环完成信息检索；评测代码分别核对工具名、参数和规划文本。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-netease-youdao-lobsterai",
@@ -480,7 +720,15 @@
       "analysis": "cases/ecosystem-expansion.md",
       "question": "桌面产品层维护技能启用、路径和安装状态，生成按需读取目录，并把授权请求转换为 OpenClaw 运行时可处理的决策。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "cbbe6492a02684218376102f383569affeac4b2b",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-shanghai-ai-lagent",
@@ -495,7 +743,15 @@
       "analysis": "cases/ecosystem-expansion.md",
       "question": "把 Agent 封装为统一消息接口，用独立会话记忆、消息聚合器、格式解析器与动作执行器连接模型和工具。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "0ab2e2f550477884743cd63fbca7bc4aa7b00290",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-shanghai-ai-mindsearch",
@@ -510,7 +766,15 @@
       "analysis": "cases/ecosystem-expansion.md",
       "question": "规划器生成搜索图操作，子搜索器并发搜集并留下节点状态与记忆，最后统一引用编号并汇总回答。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "7952c5f8a956fe6a44228a6a7d528a35340e7c87",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "prior-archive-collection-method",
@@ -525,7 +789,15 @@
       "analysis": "cases/archive-collection-method.md",
       "question": "拆开本地文件同步、索引生成、变更归档与模型学习总结，并比较六个技能样本。",
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
-      "full_research_complete": false
+      "full_research_complete": false,
+      "latest_metadata_audit": {
+        "checked_on": "2026-10-26",
+        "head": "4e60dd8977eee1d770dd22de4780a4b54385adb8",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/repository-audit-2026-10-26.md"
+      }
     },
     {
       "id": "std-skills",

@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-10-25",
+  "updated_at": "2026-10-26",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "核对既有31个仓库当前入口与维护状态；同时从官方技能开始小批次解读",
+  "next_action": "继续 P1-01 官网归属与许可例外复核；接续 lark-doc XML/script、FileIO 与未读依赖",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,15 +27,22 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "零依赖完成表示本新台账尚未逐路径验收，不抹去历史局部阅读证据"
+    "note": "新增1组入口与部分依赖阅读；整包完成仍为0。shared仅作依赖阅读，不额外计组。",
+    "new_entry_reviews": 1,
+    "partial_dependency_reviews": 1
   },
   "today_outputs": [
-    "research/solutions/component-map.md",
-    "research/solutions/skills-spec.md",
-    "research/solutions/mcp-versioned.md"
+    "research/repository-audit-2026-10-26.md",
+    "research/solutions/lark-doc-routing-and-validation.md",
+    "research/evidence/2026-10-26/lark-code/manifest.json"
   ],
-  "last_log": "research/log/2026-10-25.md",
+  "last_log": "research/log/2026-10-26.md",
   "estimated_full_skill_completion": null,
   "estimate_note": "积累真实批次耗时后每周估算；24周为主线计划，不是几千技能的完成承诺",
-  "blocking_issues": []
+  "blocking_issues": [],
+  "repository_audit": {
+    "repositories": 31,
+    "current_heads_already_snapshotted": 21,
+    "current_heads_not_snapshotted": 10
+  }
 }

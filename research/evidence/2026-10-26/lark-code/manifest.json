@@ -1,0 +1,325 @@
+{
+  "repository": "larksuite/cli",
+  "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+  "checked_on": "2026-10-26",
+  "scope": "selected files, not full archive",
+  "license": "MIT",
+  "execution_status": "not_run",
+  "files": [
+    {
+      "path": "research/evidence/2026-10-26/lark-code/files/shortcuts/doc/docs_script.go",
+      "bytes": 35805,
+      "sha256": "d33540cac0d74e9da1f938d931ff832f61aa1023ef4ee60da8cd8ba7c506e555",
+      "git_blob": "b8987ff63a071d807fc67dae9e4ff0f920f90a2d",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/doc/docs_script.go"
+    },
+    {
+      "path": "research/evidence/2026-10-26/lark-code/files/shortcuts/doc/internal/docxparse/profile.go",
+      "bytes": 8559,
+      "sha256": "7fad171b3684040f3e9c2f606df225c9e1e00228541afad9d0b5d3c37b5541b9",
+      "git_blob": "878ec5e1477b164b478bfaa3d0f768501cf162dc",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/doc/internal/docxparse/profile.go"
+    },
+    {
+      "path": "research/evidence/2026-10-26/lark-code/files/internal/vfs/localfileio/path.go",
+      "bytes": 13621,
+      "sha256": "56f935ba2deadfddd06446c2daab20fbdbafb4f9d5f27782f1441a097e7525ff",
+      "git_blob": "4c11c7329a957f0a1320bec8cc2da3e19d3d88e2",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/vfs/localfileio/path.go"
+    },
+    {
+      "path": "research/evidence/2026-10-26/lark-code/files/internal/validate/path.go",
+      "bytes": 1338,
+      "sha256": "3efb1e8a9816925fbaf4e85a1b8ed06d474bc2f609f3540dc2310a8354a02923",
+      "git_blob": "c1948ce40786e018d1eb8feebc5fb0763f4403cf",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/validate/path.go"
+    },
+    {
+      "path": "research/evidence/2026-10-26/lark-code/files/shortcuts/doc/doc_resource_path.go",
+      "bytes": 1108,
+      "sha256": "f147f11cefb39743b615e442889dcf0c530ab6325e58fa9d3284ffe7d3d61be7",
+      "git_blob": "4ac0a25b03b96db2550d8d0b616ff9c0deb03076",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/doc/doc_resource_path.go"
+    },
+    {
+      "path": "research/evidence/2026-10-26/lark-code/files/LICENSE",
+      "bytes": 1084,
+      "sha256": "c969fc7e3af68e6bf40b0d8dd9c3dcc377eb685a2139535b203b39fdcad739ee",
+      "git_blob": "2b8bbb5e9c46b1abc3a5ac68ee190baf046ba968",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/LICENSE"
+    }
+  ],
+  "existing_document_files_sha256_verified": [
+    "skills/lark-doc/SKILL.md",
+    "skills/lark-doc/references/lark-doc-fetch.md",
+    "skills/lark-doc/references/lark-doc-create-workflow.md",
+    "skills/lark-doc/references/lark-doc-create.md",
+    "skills/lark-shared/SKILL.md"
+  ],
+  "dependency_inventory": [
+    {
+      "path": "skills/lark-doc/SKILL.md",
+      "bytes": 4247,
+      "sha256": "0f1aea17fc21aaeb1cc17270d6de7de97780c3a9f53f98f668ce318f91f1a1f7",
+      "reading_status": "read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/business-analysis.md",
+      "bytes": 3128,
+      "sha256": "8aaab9e07737ea36dca4427778cc28af0087abb90710c1f2806bb1a51962ef78",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/data-report.md",
+      "bytes": 2943,
+      "sha256": "ea0cb3df6c9b466bfa16eb0090a0a91965ecd242dacdd903d0cffb20f9061cbe",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/email.md",
+      "bytes": 4130,
+      "sha256": "8a83a390d1736991f69f66e7dda5a748da1bda925be300c01e240e0bcf47a82c",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/execution-plan.md",
+      "bytes": 2986,
+      "sha256": "e00d7da0b44bb375880e9fd3bfc9a5e684321aa9e19c3adca407669c4bae84e6",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/formal-doc.md",
+      "bytes": 4477,
+      "sha256": "15812640cd1de50cef24be6d36658ddaaaa623ea214eb2df820d92eccc0efaa6",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/meeting-minutes.md",
+      "bytes": 2325,
+      "sha256": "fb46dc9e97b7b5c8e3261c280bab6ff5366b9ac72fa64d50416365dbde4b868c",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/memo-brief.md",
+      "bytes": 2063,
+      "sha256": "e4958eff02c053002a2664da460cb465d78db097cfe2a1add3969b885d3e57f7",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/official-redhead.md",
+      "bytes": 6249,
+      "sha256": "97dac887c22f55f46b825f25053938d74bc8a1abcfed3b08ec4d3ca04105941c",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/prd.md",
+      "bytes": 2531,
+      "sha256": "0347957894ac879e8a4463d296b0d1f9386bb7274a6600506ca44b86e518aca3",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/proposal.md",
+      "bytes": 2183,
+      "sha256": "ba2e2249a6f56d6e9518253c20654dad1e300d5d009a07da5ec6122db57d4eb8",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/research-report.md",
+      "bytes": 3324,
+      "sha256": "93d14d00076783a140b21424e91272cb8f0cca9dd17526be0bd4477431f7efbe",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/retrospective.md",
+      "bytes": 2410,
+      "sha256": "86bad301a6c207f7243e3690fd0f6794463c9a9d2fd41a3e287fa733cfc0ae8e",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-consumer.md",
+      "bytes": 3910,
+      "sha256": "ea4291f7378204a09ebc89b5a480dca3d3389e06ec0bb6e0607ad9614ac0e7af",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-creative.md",
+      "bytes": 3663,
+      "sha256": "40dbd02cca3ba40d48de68414a8d450e46d233c98cf0dde1dc9b389ffd45e3ff",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-knowledge.md",
+      "bytes": 4791,
+      "sha256": "b052d66f3a3a3cba4900f921cc9eb2346dbbe624b62898e185788cf38b8608d8",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-marketing.md",
+      "bytes": 4347,
+      "sha256": "6ea22d7a5eaadde21ea11e484aba71492dca66428824639a20dad20d9243a787",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-media.md",
+      "bytes": 3771,
+      "sha256": "82bef9147b59e0a6cfd1321718085210cccc484c07885630ee2ac788eb2ce8e9",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-opinion.md",
+      "bytes": 3683,
+      "sha256": "87ff6fedcbd8584cef24407f434935c0fd481f58217d7e5ab8330be86d6c2dad",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-personal-brand.md",
+      "bytes": 3437,
+      "sha256": "ba942789e91fe3239cec092a6556b2bb8a1452bb0ca29bf93dc139c2700b71cf",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-platform.md",
+      "bytes": 639,
+      "sha256": "5065bea6370a87183ca7d612f232da61be458b7d35e6c4ce0b08d0a82498a2c7",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-report.md",
+      "bytes": 1272,
+      "sha256": "441ac715a3038031962405c581741c1ff3aaa96fd057d3bd8bb7bd09cd1e3b0b",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-workplace.md",
+      "bytes": 2899,
+      "sha256": "af06e57228e2a620d8be29b8208b1bb603101468c45d1ca5ee7a3d02491c5bd9",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/sop-tutorial.md",
+      "bytes": 4064,
+      "sha256": "a7f79a8283725d0531675151025960c8cf76930adc3113f388847bc04c94fbe6",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/technical-doc.md",
+      "bytes": 3603,
+      "sha256": "8af772cdc88a2dbaccd7af709de3fa25a4dff3055e6154af480d5c3e44aba67a",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/wechat.md",
+      "bytes": 3982,
+      "sha256": "9ab22f27d0c6207724b8b309f2ed114a93c9a756c8e16da84a78f68c10018efc",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/weekly-report.md",
+      "bytes": 2051,
+      "sha256": "862b8f5eb08fc41d2994e4e1158bba0042d9fbe2274c574ebde892ee5dc74d1b",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/white-paper.md",
+      "bytes": 3209,
+      "sha256": "cda3797a71149cc1f2f4fe7e6c471ce8be6adb05cbb180ba4a6af70392e5c11c",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/xiaohongshu.md",
+      "bytes": 3303,
+      "sha256": "d9121277c04df2196d4c6f2c0e1c4ad3f6fc15af4f09b8a83e689d9144542e92",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-create-workflow.md",
+      "bytes": 9564,
+      "sha256": "f664472c088ac09d8b4b69aa3a49f35c395f1892078b637d7c7812cbc8f9fcaa",
+      "reading_status": "read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-create.md",
+      "bytes": 3313,
+      "sha256": "4add00b26e81207515ba4e3319e690a6143f604dea72444d97d49931191107bb",
+      "reading_status": "read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-fetch.md",
+      "bytes": 7947,
+      "sha256": "0200e8231902b7c532bcec036ab83fb5b6f928f689ed16c0c906217613c92df6",
+      "reading_status": "read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-history.md",
+      "bytes": 5497,
+      "sha256": "a67b4beaacef43626088f92de297fb37021cd1daf829763bbbcb419714854850",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-md.md",
+      "bytes": 5934,
+      "sha256": "74d062a4ac6d436141f4a90f87cbecd45d9f6d8b0d34f3e04077653175dc2e36",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-media-download.md",
+      "bytes": 2231,
+      "sha256": "246ef6cfdbd607683792f806e843189170ecbd94e5cfc8acd02cbe43030d5c33",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-media-insert.md",
+      "bytes": 6930,
+      "sha256": "715c0ffefbca373c2554f3e60ca907b0a28166469f9eecd124418faac9c1ddae",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-media-preview.md",
+      "bytes": 1646,
+      "sha256": "68eff43a4a1f1fcba852a80332b521ba2ce5041f051fba2d6ec25c246886e919",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-mindnote.md",
+      "bytes": 5546,
+      "sha256": "a239f58aa9d832623d79943a8f8268783da3c07bce1816060e2f01b0d1278e92",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-resource-cover.md",
+      "bytes": 4184,
+      "sha256": "3d453cc82978d7a4f8d8fad08e80783c209cf7ff7b1bbf3cb56c23f51aa4e457",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-script.md",
+      "bytes": 5220,
+      "sha256": "7fb8a1d3031e49ef076b0f3a705b8f6527d2cd31f4797a29f4fb6adc7c29aaeb",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-update.md",
+      "bytes": 7468,
+      "sha256": "1325ceac3355401486cf46a7462cf083b4dada00e7c07e03c1084cea2c7f7c6d",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-whiteboard.md",
+      "bytes": 8926,
+      "sha256": "86dd68d27a50914c10af97abc040934ddee38521fb555a1d019ad9b4bb0286ff",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-xml-extended-blocks.md",
+      "bytes": 4444,
+      "sha256": "893faaf0a757cd43b9b2031b695982191e56c6469af1a47e1e90b5c1fd342110",
+      "reading_status": "not_read"
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-xml.md",
+      "bytes": 5467,
+      "sha256": "111e58ffcd10f0d333bb02c2c9b97c8c3cec4f20b5fbd0cf5c30132880ced4a5",
+      "reading_status": "not_read"
+    }
+  ]
+}
