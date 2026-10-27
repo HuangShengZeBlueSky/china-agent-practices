@@ -1,0 +1,35 @@
+{
+  "checked_on": "2026-10-27",
+  "scope": "two fixed-source review units; not all 31 repositories",
+  "sources": [
+    {
+      "repository": "Tencent/skillhub",
+      "commit": "a051f06f7944d24ade04bea27735f430b19a8298",
+      "license": "MIT",
+      "license_blob": "dbbab6c2a989e436545a481e20553b17023d4832",
+      "ownership_status": "organization_copyright_contact_corrobated; reverse_website_chain_pending",
+      "public_scope": [
+        "API documentation/examples",
+        "DSH plugin",
+        "official skills"
+      ]
+    },
+    {
+      "repository": "KwaiKEG/KwaiAgents",
+      "commit": "3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_blob": "bfef380bf7d9cb74ec9ba533b37c3fbeef3bdc09",
+      "ownership_status": "fixed_readme_attribution; reverse_website_chain_pending",
+      "implementation_scope": "Lite differs from paper system"
+    }
+  ],
+  "queries": [
+    "腾讯 SkillHub github Tencent 官方",
+    "KwaiAgents github license Kuaishou"
+  ],
+  "gaps": [
+    "skillhub.cn body extraction insufficient",
+    "remaining ownership chains",
+    "archive metadata contradicts subsequent backups; review pending"
+  ]
+}

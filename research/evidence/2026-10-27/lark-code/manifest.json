@@ -1,0 +1,90 @@
+{
+  "checked_on": "2026-10-27",
+  "repository": "larksuite/cli",
+  "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+  "license": "MIT",
+  "scope": "selected files; not full archive",
+  "execution_status": "static_review_not_run",
+  "files": [
+    {
+      "path": "research/evidence/2026-10-27/lark-code/files/extension/fileio/types.go",
+      "upstream_path": "extension/fileio/types.go",
+      "git_blob": "0e033b951d6653ee083808862378b2b73d325c34",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/extension/fileio/types.go",
+      "reading_scope": "full_file",
+      "sha256": "366aadfdeb8a903484dd7df6e22283113a7a56804fa3be04fcdc087e1fb91805",
+      "bytes": 3719
+    },
+    {
+      "path": "research/evidence/2026-10-27/lark-code/files/extension/fileio/registry.go",
+      "upstream_path": "extension/fileio/registry.go",
+      "git_blob": "a9e1fe368def404d6888aa645c6fa19af778663c",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/extension/fileio/registry.go",
+      "reading_scope": "full_file",
+      "sha256": "007982e253370d3b99c9cc7d89c4e6330825cff6d0ed54688f197e7692dd2552",
+      "bytes": 807
+    },
+    {
+      "path": "research/evidence/2026-10-27/lark-code/files/internal/vfs/localfileio/localfileio.go",
+      "upstream_path": "internal/vfs/localfileio/localfileio.go",
+      "git_blob": "018a529aeb61a9c8840ffdfe00f30fd207ccc23b",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/vfs/localfileio/localfileio.go",
+      "reading_scope": "full_file",
+      "sha256": "c69808787c1db9fb5d42580f184edc12a9bf0938e0723216dd697b8d739d6017",
+      "bytes": 3730
+    },
+    {
+      "path": "research/evidence/2026-10-27/lark-code/files/internal/core/workspace.go",
+      "upstream_path": "internal/core/workspace.go",
+      "git_blob": "181a6bce1f6bfb2c09401bca3543107a84936258",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/core/workspace.go",
+      "reading_scope": "full_file",
+      "sha256": "36bfd99f25ab05b3c2ec003d77f89f4d4961bc1c87be0d0a7b072f30d826b97f",
+      "bytes": 6286
+    },
+    {
+      "path": "research/evidence/2026-10-27/lark-code/files/internal/cmdutil/factory.go",
+      "upstream_path": "internal/cmdutil/factory.go",
+      "git_blob": "3b00bdc78f16599578fbe29ff9a469e3461beebe",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/cmdutil/factory.go",
+      "reading_scope": "FileIO provider construction/resolution and workspace initialization",
+      "sha256": "f0f44a66390472b31b3e8c402e8adcad8d6a6e5b54f160e26ca665aed3085685",
+      "bytes": 11087
+    },
+    {
+      "path": "research/evidence/2026-10-27/lark-code/files/internal/cmdutil/factory_default.go",
+      "upstream_path": "internal/cmdutil/factory_default.go",
+      "git_blob": "ce60361873a3ad2aae04973d6205cc5eee591104",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/cmdutil/factory_default.go",
+      "reading_scope": "FileIO provider construction/resolution and workspace initialization",
+      "sha256": "cfd805b03ad36d1dbace94a90592c2097162d4e3e026c6b7269d949684fde9fc",
+      "bytes": 12694
+    },
+    {
+      "path": "research/evidence/2026-10-27/lark-code/files/shortcuts/common/runner.go",
+      "upstream_path": "shortcuts/common/runner.go",
+      "git_blob": "5746017da38f20859292c1052ccf7c21fcaab203",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/common/runner.go",
+      "reading_scope": "RuntimeContext and FileIO/ResolveSavePath only",
+      "sha256": "171d568f7ed513fd8dd8b303c1fb70632d8fdf837ddf5bb7ccaa3f739819fba8",
+      "bytes": 58953
+    }
+  ],
+  "existing_documents": [
+    {
+      "path": "skills/lark-doc/references/lark-doc-script.md",
+      "git_blob": "a225d9b7ba991c27bd61cc877b821f64a9eea6be",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/lark-doc-script.md",
+      "sha256_expected": "7fb8a1d3031e49ef076b0f3a705b8f6527d2cd31f4797a29f4fb6adc7c29aaeb",
+      "sha256_verified": true
+    },
+    {
+      "path": "skills/lark-doc/references/lark-doc-xml.md",
+      "git_blob": "fb562013f9eb68a1c4b8eb8202c3f0a6f39aa2a3",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/lark-doc-xml.md",
+      "sha256_expected": "111e58ffcd10f0d333bb02c2c9b97c8c3cec4f20b5fbd0cf5c30132880ced4a5",
+      "sha256_verified": true
+    }
+  ],
+  "license_file": "files/LICENSE"
+}

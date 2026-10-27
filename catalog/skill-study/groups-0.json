@@ -5297,13 +5297,17 @@
           "review_status": "in_progress",
           "execution_status": "not_run",
           "equivalence_evidence": null,
-          "evidence_file": "research/evidence/2026-10-26/lark-code/manifest.json",
+          "evidence_file": "research/evidence/2026-10-27/lark-dependency-progress.json",
           "open_questions": [
-            "remaining 40 lark-doc directory files",
-            "cross-skill references and FileIO injection",
-            "shared/doc path contract conflict"
+            "remaining 38 lark-doc directory files",
+            "@file expansion and decision read path",
+            "atomic write implementation and collision tests",
+            "cross-skill references and shared/doc path conflict"
           ]
         }
+      ],
+      "supplementary_analysis": [
+        "research/solutions/lark-fileio-and-draft-contract.md"
       ]
     },
     {
