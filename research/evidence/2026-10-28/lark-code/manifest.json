@@ -1,0 +1,82 @@
+{
+  "checked_on": "2026-10-28",
+  "repository": "larksuite/cli",
+  "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+  "license": "MIT",
+  "scope": "8 selected complete files, including license; not full repository archive",
+  "execution_status": "static_review_not_run",
+  "files": [
+    {
+      "upstream_path": "internal/vfs/localfileio/atomicwrite.go",
+      "path": "research/evidence/2026-10-28/lark-code/files/internal/vfs/localfileio/atomicwrite.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/vfs/localfileio/atomicwrite.go",
+      "sha256": "5023b068adc77132943cb7c2c7b60a0867f7be0ca7bd2cb021da071c3361d45c",
+      "git_blob": "5c048965b388cff56ecb7ca2ef7b62cfacca04c1",
+      "bytes": 3468,
+      "reading_scope": "full_file"
+    },
+    {
+      "upstream_path": "internal/vfs/localfileio/atomicwrite_test.go",
+      "path": "research/evidence/2026-10-28/lark-code/files/internal/vfs/localfileio/atomicwrite_test.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/vfs/localfileio/atomicwrite_test.go",
+      "sha256": "2e12abd1ee8c40aab245c44f0640bfbdf150836e4838e4837e663a289dd5cf02",
+      "git_blob": "93ef985bea4f6c1a4760cb110a5e6a712a84d7f3",
+      "bytes": 6385,
+      "reading_scope": "full_file"
+    },
+    {
+      "upstream_path": "internal/vfs/fs.go",
+      "path": "research/evidence/2026-10-28/lark-code/files/internal/vfs/fs.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/vfs/fs.go",
+      "sha256": "ffaf351bde7af73d1cfa40c42a314c35c6520c77f1f4cb8a734c57ad4ae0b6cb",
+      "git_blob": "1285cfc67d36007e2de81073037a54157dfcb60a",
+      "bytes": 1376,
+      "reading_scope": "full_file"
+    },
+    {
+      "upstream_path": "internal/vfs/default.go",
+      "path": "research/evidence/2026-10-28/lark-code/files/internal/vfs/default.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/vfs/default.go",
+      "sha256": "fffa72ddf946a76dcd527d1f1fa0d9d1cb381e82b0b481d46b6d646a1a4467a0",
+      "git_blob": "d1d58e6039855890be9a356a63cef350ff7e5d41",
+      "bytes": 2019,
+      "reading_scope": "full_file"
+    },
+    {
+      "upstream_path": "internal/vfs/osfs.go",
+      "path": "research/evidence/2026-10-28/lark-code/files/internal/vfs/osfs.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/vfs/osfs.go",
+      "sha256": "33ccbe6edde2f0f84e01459992090d5689737d4bb17d248565f8952488d318ce",
+      "git_blob": "d88bb93012de69a367be4b8ec1cba8115463709f",
+      "bytes": 1913,
+      "reading_scope": "full_file"
+    },
+    {
+      "upstream_path": "skills/lark-doc/references/lark-doc-whiteboard.md",
+      "path": "research/evidence/2026-10-28/lark-code/files/skills/lark-doc/references/lark-doc-whiteboard.md",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/lark-doc-whiteboard.md",
+      "sha256": "86dd68d27a50914c10af97abc040934ddee38521fb555a1d019ad9b4bb0286ff",
+      "git_blob": "c383a40fb2093e8b82f175d58bf78b1892998049",
+      "bytes": 8926,
+      "reading_scope": "full_file"
+    },
+    {
+      "upstream_path": "skills/lark-doc/references/lark-doc-xml-extended-blocks.md",
+      "path": "research/evidence/2026-10-28/lark-code/files/skills/lark-doc/references/lark-doc-xml-extended-blocks.md",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/lark-doc-xml-extended-blocks.md",
+      "sha256": "893faaf0a757cd43b9b2031b695982191e56c6469af1a47e1e90b5c1fd342110",
+      "git_blob": "5bf539235b1a5164fdd5174a0a3ddfd191e8420a",
+      "bytes": 4444,
+      "reading_scope": "full_file"
+    },
+    {
+      "upstream_path": "LICENSE",
+      "path": "research/evidence/2026-10-28/lark-code/files/LICENSE",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/LICENSE",
+      "sha256": "c969fc7e3af68e6bf40b0d8dd9c3dcc377eb685a2139535b203b39fdcad739ee",
+      "git_blob": "2b8bbb5e9c46b1abc3a5ac68ee190baf046ba968",
+      "bytes": 1084,
+      "reading_scope": "full_file"
+    }
+  ]
+}

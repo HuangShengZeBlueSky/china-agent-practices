@@ -59,7 +59,8 @@
         "research/repository-audit-2026-10-26.md",
         "research/evidence/2026-10-26/repository-audit.json",
         "research/ownership-license-review-2026-10-27.md",
-        "research/evidence/2026-10-27/source-review.json"
+        "research/evidence/2026-10-27/source-review.json",
+        "research/ownership-review-2026-10-28.md"
       ],
       "open_questions": [
         "逐项重新核验官方归属链和许可例外",
@@ -733,5 +734,5 @@
       "acceptance": "新增论文和版本有来源与影响分类，纳入下一轮需显式记范围"
     }
   ],
-  "updated_at": "2026-10-27"
+  "updated_at": "2026-10-28"
 }

@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-10-27",
+  "updated_at": "2026-10-28",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "继续P1-01剩余归属链和许可/备份描述一致性；技能接续@file参数链、原子写测试与XML扩展块",
+  "next_action": "继续P1-01其余归属/许可与10个新HEAD缺口；技能追@file与decision读取、跨技能白板/OKR依赖",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,16 +27,17 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "继续已有1组依赖阅读：lark-doc目录累计6/44；新增入口组0，整包完成仍0。",
+    "note": "同一lark-doc组目录累计8/44；新增入口组0，完整依赖0，整包完成0；新增原子提交与白板子任务两张静态方案卡。",
     "new_entry_reviews": 1,
     "partial_dependency_reviews": 1
   },
   "today_outputs": [
-    "research/ownership-license-review-2026-10-27.md",
-    "research/solutions/lark-fileio-and-draft-contract.md",
-    "research/evidence/2026-10-27/lark-code/manifest.json"
+    "research/ownership-review-2026-10-28.md",
+    "research/solutions/lark-atomic-publication.md",
+    "research/solutions/lark-whiteboard-subagent-contract.md",
+    "research/evidence/2026-10-28/lark-code/manifest.json"
   ],
-  "last_log": "research/log/2026-10-27.md",
+  "last_log": "research/log/2026-10-28.md",
   "estimated_full_skill_completion": null,
   "estimate_note": "积累真实批次耗时后每周估算；24周为主线计划，不是几千技能的完成承诺",
   "blocking_issues": [],
