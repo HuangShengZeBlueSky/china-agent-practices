@@ -1,0 +1,55 @@
+{
+  "checked_on": "2026-10-29",
+  "repository": "larksuite/cli",
+  "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+  "license": "MIT",
+  "scope": "5 selected complete files, not a full archive",
+  "execution_status": "static_review_not_run",
+  "files": [
+    {
+      "path": "research/evidence/2026-10-29/lark-code/files/skills/lark-doc/references/lark-doc-history.md",
+      "sha256": "a67b4beaacef43626088f92de297fb37021cd1daf829763bbbcb419714854850",
+      "git_blob": "ff4b3d6cb5e64c2009575a47cb87c94e81d6f348",
+      "bytes": 5497,
+      "upstream_path": "skills/lark-doc/references/lark-doc-history.md",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/lark-doc-history.md",
+      "reading_scope": "full_file"
+    },
+    {
+      "path": "research/evidence/2026-10-29/lark-code/files/skills/lark-doc/references/lark-doc-update.md",
+      "sha256": "1325ceac3355401486cf46a7462cf083b4dada00e7c07e03c1084cea2c7f7c6d",
+      "git_blob": "18234c8d323d25d04bc3b1b91ff7153cf8573a7b",
+      "bytes": 7468,
+      "upstream_path": "skills/lark-doc/references/lark-doc-update.md",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/lark-doc-update.md",
+      "reading_scope": "full_file"
+    },
+    {
+      "path": "research/evidence/2026-10-29/lark-code/files/shortcuts/doc/docs_history.go",
+      "sha256": "6c4395f3787c1d1f77ee1bffc49d35bbb8ff4dad76a27c65603a3eadaad6b290",
+      "git_blob": "389c1a3f6c6514005f54dbb6d3758e91df580560",
+      "bytes": 8813,
+      "upstream_path": "shortcuts/doc/docs_history.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/doc/docs_history.go",
+      "reading_scope": "full_file"
+    },
+    {
+      "path": "research/evidence/2026-10-29/lark-code/files/shortcuts/doc/docs_history_test.go",
+      "sha256": "6cc2a2e1d68395e8ef15531e53087b0143454a0563cd9320619de05572f7e529",
+      "git_blob": "e0bfcf677d3f6a1b79f4af80aa080f9284994bcd",
+      "bytes": 11125,
+      "upstream_path": "shortcuts/doc/docs_history_test.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/doc/docs_history_test.go",
+      "reading_scope": "full_file"
+    },
+    {
+      "path": "research/evidence/2026-10-29/lark-code/files/LICENSE",
+      "sha256": "c969fc7e3af68e6bf40b0d8dd9c3dcc377eb685a2139535b203b39fdcad739ee",
+      "git_blob": "2b8bbb5e9c46b1abc3a5ac68ee190baf046ba968",
+      "bytes": 1084,
+      "upstream_path": "LICENSE",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/LICENSE",
+      "reading_scope": "full_file"
+    }
+  ]
+}

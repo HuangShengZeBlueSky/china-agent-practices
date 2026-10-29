@@ -5297,20 +5297,22 @@
           "review_status": "in_progress",
           "execution_status": "not_run",
           "equivalence_evidence": null,
-          "evidence_file": "research/evidence/2026-10-28/lark-dependency-progress.json",
+          "evidence_file": "research/evidence/2026-10-29/lark-dependency-progress.json",
           "open_questions": [
-            "remaining 36 lark-doc directory files",
+            "remaining 34 lark-doc directory files",
             "@file expansion and decision read path",
             "platform crash durability and cleanup failures",
             "cross-skill lark-whiteboard/lark-okr dependencies and host scheduling",
-            "cross-skill shared/doc path conflict"
+            "cross-skill shared/doc path conflict",
+            "history transport retry scope and update revision conflict mapping"
           ]
         }
       ],
       "supplementary_analysis": [
         "research/solutions/lark-fileio-and-draft-contract.md",
         "research/solutions/lark-atomic-publication.md",
-        "research/solutions/lark-whiteboard-subagent-contract.md"
+        "research/solutions/lark-whiteboard-subagent-contract.md",
+        "research/solutions/lark-history-recovery.md"
       ]
     },
     {

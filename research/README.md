@@ -43,3 +43,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-10-28 更新
 
 [飞书官网归属链补证](ownership-review-2026-10-28.md)完成一个来源子单元。[原子发布](solutions/lark-atomic-publication.md)追到VFS和OS调用，复核上游测试断言不足；[白板子任务与扩展块](solutions/lark-whiteboard-subagent-contract.md)区分技能分工、宿主调度、读写数据模型。两卡各有两类图。目录累计8/44；新增8份指定文件（含许可）校验通过；未实跑，未部署网站。P1继续进行。
+
+## 2026-10-29 更新
+
+[异步回滚与正文恢复](solutions/lark-history-recovery.md)补齐两类图、真实API适配、状态机归属、上游测试边界与失败练习；命令无错误不代表业务成功。目录累计10/44；5份完整文件节选含许可通过Git blob与既有依赖哈希校验。[Eino归属补证](ownership-review-2026-10-29.md)读官网反向链和固定许可。P1-01继续，未实跑、未部署网站。
