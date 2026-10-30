@@ -5297,14 +5297,15 @@
           "review_status": "in_progress",
           "execution_status": "not_run",
           "equivalence_evidence": null,
-          "evidence_file": "research/evidence/2026-10-29/lark-dependency-progress.json",
+          "evidence_file": "research/evidence/2026-10-30/lark-dependency-progress.json",
           "open_questions": [
-            "remaining 34 lark-doc directory files",
-            "@file expansion and decision read path",
+            "remaining 32 lark-doc directory files",
+            "input/decision static subchain read; platform openValidated, BOM asymmetry experiment and all entry points pending",
             "platform crash durability and cleanup failures",
             "cross-skill lark-whiteboard/lark-okr dependencies and host scheduling",
             "cross-skill shared/doc path conflict",
-            "history transport retry scope and update revision conflict mapping"
+            "history transport retry scope and update revision conflict mapping",
+            "media Stat+Save race and permission helper internals not executed"
           ]
         }
       ],
@@ -5312,7 +5313,9 @@
         "research/solutions/lark-fileio-and-draft-contract.md",
         "research/solutions/lark-atomic-publication.md",
         "research/solutions/lark-whiteboard-subagent-contract.md",
-        "research/solutions/lark-history-recovery.md"
+        "research/solutions/lark-history-recovery.md",
+        "research/solutions/lark-input-provenance.md",
+        "research/solutions/lark-media-side-effects.md"
       ]
     },
     {
