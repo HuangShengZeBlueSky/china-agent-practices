@@ -51,3 +51,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-10-30 更新
 
 [文件输入与基线](solutions/lark-input-provenance.md)闭合快捷命令@file、来源位、路径捕获及相邻决策静态子链；发现两个解析器空白/空文件/BOM语义不同。[素材预览与下载](solutions/lark-media-side-effects.md)区分read标记与本地写副作用、存在检查与排他保存。两卡均有两类图；14份原文节选含许可已校验。目录累计12/44。[Qwen-Agent归属核查](ownership-review-2026-10-30.md)补固定README与许可证据。仍在P1，未实跑、未部署网站。
+
+## 2026-11-03 更新
+
+[文档版本与重试边界](solutions/lark-update-conflict-contract.md)追到错误分类和SDK调用边界；[Runtime启动互斥与中断](solutions/agentscope-runtime-interruption.md)对照本地锁、Redis Lua与任务TTL，两卡各有流程和架构图。[AgentScope迁移核查](ownership-review-2026-11-03.md)区分旧Runtime内部迁移与2.0兼容性。24份原文校验，18份补存规范目录、6份复用；目录13/44，整包0、实跑0。[排期复核](review-2026-11-03.md)补登记缺失的周末检查，按依赖继续P1-01；网站未部署。

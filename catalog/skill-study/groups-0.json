@@ -5297,14 +5297,14 @@
           "review_status": "in_progress",
           "execution_status": "not_run",
           "equivalence_evidence": null,
-          "evidence_file": "research/evidence/2026-10-30/lark-dependency-progress.json",
+          "evidence_file": "research/evidence/2026-11-03/lark-dependency-progress.json",
           "open_questions": [
-            "remaining 32 lark-doc directory files",
+            "remaining 31 lark-doc directory files",
             "input/decision static subchain read; platform openValidated, BOM asymmetry experiment and all entry points pending",
             "platform crash durability and cleanup failures",
             "cross-skill lark-whiteboard/lark-okr dependencies and host scheduling",
             "cross-skill shared/doc path conflict",
-            "history transport retry scope and update revision conflict mapping",
+            "SDK v3.7.2 and auth transport retry policy; docs_ai server revision conflict semantics; generic conflict map is not endpoint evidence",
             "media Stat+Save race and permission helper internals not executed"
           ]
         }
@@ -5315,7 +5315,8 @@
         "research/solutions/lark-whiteboard-subagent-contract.md",
         "research/solutions/lark-history-recovery.md",
         "research/solutions/lark-input-provenance.md",
-        "research/solutions/lark-media-side-effects.md"
+        "research/solutions/lark-media-side-effects.md",
+        "research/solutions/lark-update-conflict-contract.md"
       ]
     },
     {

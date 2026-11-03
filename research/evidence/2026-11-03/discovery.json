@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-03",
+  "scope_policy": "incremental candidates only; no change to frozen 6235 paths / 3085 entry groups or main acceptance",
+  "queries": [
+    "飞书 CLI docs revision-id 版本 冲突 重试",
+    "larksuite cli revision conflict retry docs update",
+    "AgentScope Runtime migration 2.0 archive deployment official",
+    "site.agentscope.io AgentScope 2.0 Runtime 迁移 部署",
+    "site.github.com/agentscope-ai/agentscope runtime migration 2.0"
+  ],
+  "included_primary_sources": "see source-manifest.json; fixed source files read after discovery",
+  "candidates": [
+    {
+      "url": "https://github.com/larksuite/cli/issues/1093",
+      "source_type": "upstream_issue_report",
+      "reading_status": "search_title_only",
+      "claim_status": "not_verified",
+      "next_action": "read report, maintainer replies and affected commit before using as counterevidence"
+    }
+  ],
+  "excluded_as_evidence": [
+    "community blog mirrors",
+    "skill marketplaces",
+    "search snippets",
+    "unrelated homonymous AgentScope paper"
+  ],
+  "backup_gaps": [
+    "AgentScope target version: only README and LICENSE selected snapshots, whole repository archive absent",
+    "Lark SDK v3.7.2 implementation not obtained this round"
+  ]
+}

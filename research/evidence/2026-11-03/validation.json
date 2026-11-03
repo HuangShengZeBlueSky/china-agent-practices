@@ -1,0 +1,16 @@
+{
+  "checked_on": "2026-11-03",
+  "validation_kind": "document_integrity_only",
+  "json_parse": "passed",
+  "new_source_files_local_hashes": 18,
+  "selected_upstream_blob_verified": 24,
+  "reused_remote_sources_verified": 6,
+  "new_solution_cards": 2,
+  "mermaid_blocks": 4,
+  "relative_links_checked": 26,
+  "directory_read": 13,
+  "directory_total": 44,
+  "upstream_tests_run": false,
+  "models_or_business_apis_called": false,
+  "scope": "Hash, JSON, references and counters; not upstream runtime correctness; Mermaid source structure checked, not rendered."
+}

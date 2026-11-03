@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-26",
+  "updated_at": "2026-11-03",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -23,7 +23,18 @@
         "archived": false,
         "head_backed_up": true,
         "evidence": "research/repository-audit-2026-10-26.md"
-      }
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-03",
+          "evidence": [
+            "research/solutions/lark-update-conflict-contract.md"
+          ],
+          "manifest": "research/evidence/2026-11-03/source-manifest.json",
+          "execution_status": "not_run",
+          "scope": "selected subchain; not full project review"
+        }
+      ]
     },
     {
       "id": "prior-bytedance-lark-official-skills",
@@ -46,7 +57,18 @@
         "archived": false,
         "head_backed_up": true,
         "evidence": "research/repository-audit-2026-10-26.md"
-      }
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-03",
+          "evidence": [
+            "research/solutions/lark-update-conflict-contract.md"
+          ],
+          "manifest": "research/evidence/2026-11-03/source-manifest.json",
+          "execution_status": "not_run",
+          "scope": "selected subchain; not full project review"
+        }
+      ]
     },
     {
       "id": "prior-bytedance-eino-skills",
@@ -207,7 +229,18 @@
         "archived": false,
         "head_backed_up": false,
         "evidence": "research/repository-audit-2026-10-26.md"
-      }
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-03",
+          "evidence": [
+            "research/ownership-review-2026-11-03.md"
+          ],
+          "manifest": "research/evidence/2026-11-03/source-manifest.json",
+          "execution_status": "not_run",
+          "scope": "target bdad647... README/LICENSE only; no implementation equivalence"
+        }
+      ]
     },
     {
       "id": "prior-tencent-cloudbase-ai-toolkit",
@@ -452,7 +485,19 @@
         "archived": false,
         "head_backed_up": true,
         "evidence": "research/repository-audit-2026-10-26.md"
-      }
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-03",
+          "evidence": [
+            "research/solutions/agentscope-runtime-interruption.md",
+            "research/ownership-review-2026-11-03.md"
+          ],
+          "manifest": "research/evidence/2026-11-03/source-manifest.json",
+          "execution_status": "not_run",
+          "scope": "selected subchain; not full project review"
+        }
+      ]
     },
     {
       "id": "prior-alibaba-opensandbox",

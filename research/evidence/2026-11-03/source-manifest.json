@@ -1,0 +1,278 @@
+{
+  "checked_on": "2026-11-03",
+  "base_repository_commit": "d72cda5b62f8a2e02f7130b2ed2cf7e13a07c1c5",
+  "scope": "selected complete files, not new whole-repository archives",
+  "execution_status": "static_review_not_run",
+  "files": [
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "LICENSE",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/LICENSE",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/LICENSE",
+      "reading_scope": "full",
+      "bytes": 1084,
+      "sha256": "c969fc7e3af68e6bf40b0d8dd9c3dcc377eb685a2139535b203b39fdcad739ee",
+      "git_blob": "2b8bbb5e9c46b1abc3a5ac68ee190baf046ba968"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "go.mod",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/go.mod",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/go.mod",
+      "reading_scope": "dependency version only",
+      "bytes": 3044,
+      "sha256": "a9c905a561f4954a5bd36c5872ef3023f82beef7c41a844e25a25eb762cec1bf",
+      "git_blob": "8628b4f2be9291b2b29a2c86fad66adac87f124b"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "skills/lark-doc/references/lark-doc-update.md",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/lark-doc-update.md",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/lark-doc-update.md",
+      "reading_scope": "full reread",
+      "bytes": 7468,
+      "sha256": "1325ceac3355401486cf46a7462cf083b4dada00e7c07e03c1084cea2c7f7c6d",
+      "git_blob": "18234c8d323d25d04bc3b1b91ff7153cf8573a7b"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "skills/lark-doc/references/lark-doc-md.md",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/lark-doc-md.md",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/lark-doc-md.md",
+      "reading_scope": "full new directory dependency",
+      "bytes": 5934,
+      "sha256": "74d062a4ac6d436141f4a90f87cbecd45d9f6d8b0d34f3e04077653175dc2e36",
+      "git_blob": "c115144122ef32d988f17772508791d6255747b6"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "shortcuts/doc/docs_update.go",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/shortcuts/doc/docs_update.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/doc/docs_update.go",
+      "reading_scope": "full",
+      "bytes": 1732,
+      "sha256": "1df0896d1e8b04d93705010a366e112fa20f91a1f784173e34dc078dc4606893",
+      "git_blob": "c569dbee806f3658e759705b11f717553c4106ef"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "shortcuts/doc/docs_update_v2.go",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/shortcuts/doc/docs_update_v2.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/doc/docs_update_v2.go",
+      "reading_scope": "full",
+      "bytes": 14972,
+      "sha256": "23b0fa9070121fe5f7bcb116f6ad87f45f5f55296ee74aa198e96498b6a72070",
+      "git_blob": "adbcd89723b20a77ae234daa8d0028d1f3fcdf48"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "shortcuts/doc/helpers.go",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/shortcuts/doc/helpers.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/doc/helpers.go",
+      "reading_scope": "full",
+      "bytes": 4128,
+      "sha256": "78527906487ea3c0c92289cf6cf8012d9dca4deba8c3eecf7100d4dad04ad879",
+      "git_blob": "789915af58de18bf7a121dbe8f0fff5c48d47559"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "shortcuts/common/runner.go",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/shortcuts/common/runner.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/common/runner.go",
+      "reading_scope": "CallAPITyped; ClassifyAPIResponseWith; httpStatusError; OutPartialFailure",
+      "bytes": 58953,
+      "sha256": "171d568f7ed513fd8dd8b303c1fb70632d8fdf837ddf5bb7ccaa3f739819fba8",
+      "git_blob": "5746017da38f20859292c1052ccf7c21fcaab203"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "internal/client/client.go",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/internal/client/client.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/client/client.go",
+      "reading_scope": "RawApiRequest; resolveAccessToken; buildApiReq; DoSDKRequest; DoAPI; DoStream",
+      "bytes": 19374,
+      "sha256": "8b08485c1f5d887d41901bded23657837ca34eeeb6374746c74dbd64ebb5da2f",
+      "git_blob": "640b356443fe0baed5fcd02f30e765f51be05ffc"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "internal/client/api_errors.go",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/internal/client/api_errors.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/client/api_errors.go",
+      "reading_scope": "full",
+      "bytes": 5914,
+      "sha256": "911fd8dbad8f6dda9ae516d068e7ca51d243104816b22526c69a532493d78385",
+      "git_blob": "b4f3ab1fb8453b6411b8bf27532a861b1098fda7"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "internal/errclass/codemeta.go",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/internal/errclass/codemeta.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/errclass/codemeta.go",
+      "reading_scope": "full",
+      "bytes": 5598,
+      "sha256": "babc250f1214622c8cfa12a3ea4184cef29c88ddaf421d7c9f0d8377280a0160",
+      "git_blob": "d0b1d7644105ea3147bb04be7f4edfe687e12c8e"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "internal/errclass/classify.go",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/internal/errclass/classify.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/internal/errclass/classify.go",
+      "reading_scope": "BuildAPIError; APIHint",
+      "bytes": 23516,
+      "sha256": "236d2f5579afba16c3851cd386d41baf7f9dbe3ff4cf4c77fcdf7d87eea2079a",
+      "git_blob": "dbac3ca33cefc6d1d42ac67488135c70bb7d1934"
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "upstream_path": "shortcuts/doc/docs_update_test.go",
+      "snapshot_path": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/shortcuts/doc/docs_update_test.go",
+      "source_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/shortcuts/doc/docs_update_test.go",
+      "reading_scope": "TestDocsUpdateDryRunIgnoresAPIVersionCompatFlag; reference-map/range validation tests; no execution",
+      "bytes": 14122,
+      "sha256": "9273f2e379b96a19200d54b58fee47c0ce32d081913ee45434ee34449db387c2",
+      "git_blob": "aef05d7f16c297154f576e61ade0144bbee06b8f"
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "upstream_path": "README.md",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope-runtime/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/files/README.md",
+      "source_url": "https://github.com/agentscope-ai/agentscope-runtime/blob/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/README.md",
+      "reading_scope": "Archive Notice; prerequisites; adapter table (not full README)",
+      "bytes": 47901,
+      "sha256": "6f4107bbc9cf7595624ab068b8914b4704466f73a403ea06fa33fe4ee04be22b",
+      "git_blob": "a6bf2054404e6d3008ad8123487422e1376a4019"
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "upstream_path": "LICENSE",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope-runtime/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/files/LICENSE",
+      "source_url": "https://github.com/agentscope-ai/agentscope-runtime/blob/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/LICENSE",
+      "reading_scope": "full",
+      "bytes": 11337,
+      "sha256": "dcc7240d38224c9d04e9cc68f0579a985544162c33dd7256b2b8ae4ed449cf16",
+      "git_blob": "7ee2994a6bde0470804a097401dea5248b10e4e7"
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "upstream_path": "cookbook/en/CHANGELOG.md",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope-runtime/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/files/cookbook/en/CHANGELOG.md",
+      "source_url": "https://github.com/agentscope-ai/agentscope-runtime/blob/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/cookbook/en/CHANGELOG.md",
+      "reading_scope": "v1.1.0 section lines 3-176; not rest",
+      "bytes": 30751,
+      "sha256": "69ef69b53a4f163aa374ca26de9d322b5d680e70a58f73c39d731578d7647c79",
+      "git_blob": "79e349131e5c870d1e767abc37a0aafb6dacf3bc"
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "upstream_path": "src/agentscope_runtime/engine/app/agent_app.py",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope-runtime/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/files/src/agentscope_runtime/engine/app/agent_app.py",
+      "source_url": "https://github.com/agentscope-ai/agentscope-runtime/blob/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/src/agentscope_runtime/engine/app/agent_app.py",
+      "reading_scope": "_setup_interrupt_service; _stream_generator; _stream_generator_with_interrupt; _common_stream_generator",
+      "bytes": 32293,
+      "sha256": "a037f055fe2af00129efff69ffef83e43cf6b43b95b942610a860999410ad6b8",
+      "git_blob": "a9e619671837597c2a8979a9a00ba4ecd99e395c"
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "upstream_path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/base_backend.py",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope-runtime/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/files/src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/base_backend.py",
+      "source_url": "https://github.com/agentscope-ai/agentscope-runtime/blob/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/base_backend.py",
+      "reading_scope": "full",
+      "bytes": 2718,
+      "sha256": "ee1430d7ad03d991f2066a8f6a13f917c70e3488806838f6d1c22341caafaa28",
+      "git_blob": "592c215e9807eef5e2bc48e77a3788dc8b290578"
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "upstream_path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/local_backend.py",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope-runtime/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/files/src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/local_backend.py",
+      "source_url": "https://github.com/agentscope-ai/agentscope-runtime/blob/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/local_backend.py",
+      "reading_scope": "full",
+      "bytes": 4522,
+      "sha256": "fd353cb080bd757e26ca23803eee182657e271f31344d837061c697049dd8d7d",
+      "git_blob": "ca88a30f03087fe1cd3dcee4d5eff264b744453e"
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "upstream_path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/redis_backend.py",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope-runtime/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/files/src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/redis_backend.py",
+      "source_url": "https://github.com/agentscope-ai/agentscope-runtime/blob/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/redis_backend.py",
+      "reading_scope": "full",
+      "bytes": 2851,
+      "sha256": "0c98cb2a78b39417452ed516fb3512eec2e984fefd66e838cff94e24d6ec7913",
+      "git_blob": "35c4e30ec49103f3fed0a550a1566a8e58575f38"
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "upstream_path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/interrupt_mixin.py",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope-runtime/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/files/src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/interrupt_mixin.py",
+      "source_url": "https://github.com/agentscope-ai/agentscope-runtime/blob/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/interrupt_mixin.py",
+      "reading_scope": "full",
+      "bytes": 5501,
+      "sha256": "793c37159a639663bf5dfebc770b84019b49a0c035959d6c38675fe81a8eb69c",
+      "git_blob": "e9d4b68dce24f8cb6f7212a86d50d7385406a719"
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "commit": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "upstream_path": "tests/unit/test_interrupt_mixin.py",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope-runtime/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/files/tests/unit/test_interrupt_mixin.py",
+      "source_url": "https://github.com/agentscope-ai/agentscope-runtime/blob/22072fd7075ce0c6f43cb39509d6a14b0e60ddb5/tests/unit/test_interrupt_mixin.py",
+      "reading_scope": "full; no execution",
+      "bytes": 5651,
+      "sha256": "d206fff73181c418c62dd78ff5cac012bc02fb1d13d4c833d3563fbb04acb718",
+      "git_blob": "a1df116eb26897273fefe304e5027d8658b611bb"
+    },
+    {
+      "repository": "agentscope-ai/agentscope",
+      "commit": "bdad647d2fee7d66597681ecd89e086b7800dd2a",
+      "upstream_path": "README.md",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope/bdad647d2fee7d66597681ecd89e086b7800dd2a/files/README.md",
+      "source_url": "https://github.com/agentscope-ai/agentscope/blob/bdad647d2fee7d66597681ecd89e086b7800dd2a/README.md",
+      "reading_scope": "full text; no linked media or dependencies read",
+      "bytes": 14755,
+      "sha256": "ec9928a31c1d1168f28adc0db95d3cc33482db7704c523a51d131247e295c5a7",
+      "git_blob": "1da8a786542b2753c89edd39dbea6ca770ea8192"
+    },
+    {
+      "repository": "agentscope-ai/agentscope",
+      "commit": "bdad647d2fee7d66597681ecd89e086b7800dd2a",
+      "upstream_path": "LICENSE",
+      "snapshot_path": "snapshots/agentscope-ai/agentscope/bdad647d2fee7d66597681ecd89e086b7800dd2a/files/LICENSE",
+      "source_url": "https://github.com/agentscope-ai/agentscope/blob/bdad647d2fee7d66597681ecd89e086b7800dd2a/LICENSE",
+      "reading_scope": "full",
+      "bytes": 20637,
+      "sha256": "4186bcadf358c60080060309769db6b2a352720d7353d827bb574c600fee9913",
+      "git_blob": "2f2f2f25ea6019e5a51213c4e8a4df0c67a6ea2a"
+    }
+  ],
+  "unresolved_dependencies": [
+    "Lark oapi-sdk-go/v3 v3.7.2 actual retry policy and client construction / auth transport",
+    "Lark docs_ai server revision conflict and idempotency semantics",
+    "AgentScope Runtime runner/model/persistence full chain and deployment auth",
+    "AgentScope 2.0 implementation equivalence; only README/LICENSE read"
+  ]
+}

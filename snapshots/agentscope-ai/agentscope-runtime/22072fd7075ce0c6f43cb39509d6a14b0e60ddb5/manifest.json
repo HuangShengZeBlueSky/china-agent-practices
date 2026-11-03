@@ -50,9 +50,117 @@
       "path": "src/agentscope_runtime/sandbox/box/mobile/adbmcp/LICENSE",
       "bytes": 1107,
       "sha256": "7a2a8bfc6a5c8f367a8ba6c2ecee7d9819d7e6f47f90bbfa1df69989fd879c54"
+    },
+    {
+      "path": "cookbook/en/CHANGELOG.md",
+      "bytes": 30751,
+      "sha256": "69ef69b53a4f163aa374ca26de9d322b5d680e70a58f73c39d731578d7647c79",
+      "git_blob": "79e349131e5c870d1e767abc37a0aafb6dacf3bc"
+    },
+    {
+      "path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/base_backend.py",
+      "bytes": 2718,
+      "sha256": "ee1430d7ad03d991f2066a8f6a13f917c70e3488806838f6d1c22341caafaa28",
+      "git_blob": "592c215e9807eef5e2bc48e77a3788dc8b290578"
+    },
+    {
+      "path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/local_backend.py",
+      "bytes": 4522,
+      "sha256": "fd353cb080bd757e26ca23803eee182657e271f31344d837061c697049dd8d7d",
+      "git_blob": "ca88a30f03087fe1cd3dcee4d5eff264b744453e"
+    },
+    {
+      "path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/redis_backend.py",
+      "bytes": 2851,
+      "sha256": "0c98cb2a78b39417452ed516fb3512eec2e984fefd66e838cff94e24d6ec7913",
+      "git_blob": "35c4e30ec49103f3fed0a550a1566a8e58575f38"
+    },
+    {
+      "path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/interrupt_mixin.py",
+      "bytes": 5501,
+      "sha256": "793c37159a639663bf5dfebc770b84019b49a0c035959d6c38675fe81a8eb69c",
+      "git_blob": "e9d4b68dce24f8cb6f7212a86d50d7385406a719"
+    },
+    {
+      "path": "tests/unit/test_interrupt_mixin.py",
+      "bytes": 5651,
+      "sha256": "d206fff73181c418c62dd78ff5cac012bc02fb1d13d4c833d3563fbb04acb718",
+      "git_blob": "a1df116eb26897273fefe304e5027d8658b611bb"
     }
   ],
   "skills": [],
   "git_history_included": false,
-  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。",
+  "research_reviews": [
+    {
+      "date": "2026-11-03",
+      "execution_status": "not_run",
+      "manifest": "research/evidence/2026-11-03/source-manifest.json",
+      "files": [
+        {
+          "path": "README.md",
+          "reading_scope": "Archive Notice; prerequisites; adapter table (not full README)",
+          "bytes": 47901,
+          "sha256": "6f4107bbc9cf7595624ab068b8914b4704466f73a403ea06fa33fe4ee04be22b",
+          "git_blob": "a6bf2054404e6d3008ad8123487422e1376a4019"
+        },
+        {
+          "path": "LICENSE",
+          "reading_scope": "full",
+          "bytes": 11337,
+          "sha256": "dcc7240d38224c9d04e9cc68f0579a985544162c33dd7256b2b8ae4ed449cf16",
+          "git_blob": "7ee2994a6bde0470804a097401dea5248b10e4e7"
+        },
+        {
+          "path": "cookbook/en/CHANGELOG.md",
+          "reading_scope": "v1.1.0 section lines 3-176; not rest",
+          "bytes": 30751,
+          "sha256": "69ef69b53a4f163aa374ca26de9d322b5d680e70a58f73c39d731578d7647c79",
+          "git_blob": "79e349131e5c870d1e767abc37a0aafb6dacf3bc"
+        },
+        {
+          "path": "src/agentscope_runtime/engine/app/agent_app.py",
+          "reading_scope": "_setup_interrupt_service; _stream_generator; _stream_generator_with_interrupt; _common_stream_generator",
+          "bytes": 32293,
+          "sha256": "a037f055fe2af00129efff69ffef83e43cf6b43b95b942610a860999410ad6b8",
+          "git_blob": "a9e619671837597c2a8979a9a00ba4ecd99e395c"
+        },
+        {
+          "path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/base_backend.py",
+          "reading_scope": "full",
+          "bytes": 2718,
+          "sha256": "ee1430d7ad03d991f2066a8f6a13f917c70e3488806838f6d1c22341caafaa28",
+          "git_blob": "592c215e9807eef5e2bc48e77a3788dc8b290578"
+        },
+        {
+          "path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/local_backend.py",
+          "reading_scope": "full",
+          "bytes": 4522,
+          "sha256": "fd353cb080bd757e26ca23803eee182657e271f31344d837061c697049dd8d7d",
+          "git_blob": "ca88a30f03087fe1cd3dcee4d5eff264b744453e"
+        },
+        {
+          "path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/redis_backend.py",
+          "reading_scope": "full",
+          "bytes": 2851,
+          "sha256": "0c98cb2a78b39417452ed516fb3512eec2e984fefd66e838cff94e24d6ec7913",
+          "git_blob": "35c4e30ec49103f3fed0a550a1566a8e58575f38"
+        },
+        {
+          "path": "src/agentscope_runtime/engine/deployers/utils/service_utils/interrupt/interrupt_mixin.py",
+          "reading_scope": "full",
+          "bytes": 5501,
+          "sha256": "793c37159a639663bf5dfebc770b84019b49a0c035959d6c38675fe81a8eb69c",
+          "git_blob": "e9d4b68dce24f8cb6f7212a86d50d7385406a719"
+        },
+        {
+          "path": "tests/unit/test_interrupt_mixin.py",
+          "reading_scope": "full; no execution",
+          "bytes": 5651,
+          "sha256": "d206fff73181c418c62dd78ff5cac012bc02fb1d13d4c833d3563fbb04acb718",
+          "git_blob": "a1df116eb26897273fefe304e5027d8658b611bb"
+        }
+      ]
+    }
+  ]
 }

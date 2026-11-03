@@ -2882,6 +2882,66 @@
       "path": "tests/cli_e2e/cli-e2e-testcase-writer/SKILL.md",
       "bytes": 5880,
       "sha256": "9c85b9d3faf88bd48309614f9c25defa68e2283b4cc935894e7515ac8ea12bb1"
+    },
+    {
+      "path": "go.mod",
+      "bytes": 3044,
+      "sha256": "a9c905a561f4954a5bd36c5872ef3023f82beef7c41a844e25a25eb762cec1bf",
+      "git_blob": "8628b4f2be9291b2b29a2c86fad66adac87f124b"
+    },
+    {
+      "path": "shortcuts/doc/docs_update.go",
+      "bytes": 1732,
+      "sha256": "1df0896d1e8b04d93705010a366e112fa20f91a1f784173e34dc078dc4606893",
+      "git_blob": "c569dbee806f3658e759705b11f717553c4106ef"
+    },
+    {
+      "path": "shortcuts/doc/docs_update_v2.go",
+      "bytes": 14972,
+      "sha256": "23b0fa9070121fe5f7bcb116f6ad87f45f5f55296ee74aa198e96498b6a72070",
+      "git_blob": "adbcd89723b20a77ae234daa8d0028d1f3fcdf48"
+    },
+    {
+      "path": "shortcuts/doc/helpers.go",
+      "bytes": 4128,
+      "sha256": "78527906487ea3c0c92289cf6cf8012d9dca4deba8c3eecf7100d4dad04ad879",
+      "git_blob": "789915af58de18bf7a121dbe8f0fff5c48d47559"
+    },
+    {
+      "path": "shortcuts/common/runner.go",
+      "bytes": 58953,
+      "sha256": "171d568f7ed513fd8dd8b303c1fb70632d8fdf837ddf5bb7ccaa3f739819fba8",
+      "git_blob": "5746017da38f20859292c1052ccf7c21fcaab203"
+    },
+    {
+      "path": "internal/client/client.go",
+      "bytes": 19374,
+      "sha256": "8b08485c1f5d887d41901bded23657837ca34eeeb6374746c74dbd64ebb5da2f",
+      "git_blob": "640b356443fe0baed5fcd02f30e765f51be05ffc"
+    },
+    {
+      "path": "internal/client/api_errors.go",
+      "bytes": 5914,
+      "sha256": "911fd8dbad8f6dda9ae516d068e7ca51d243104816b22526c69a532493d78385",
+      "git_blob": "b4f3ab1fb8453b6411b8bf27532a861b1098fda7"
+    },
+    {
+      "path": "internal/errclass/codemeta.go",
+      "bytes": 5598,
+      "sha256": "babc250f1214622c8cfa12a3ea4184cef29c88ddaf421d7c9f0d8377280a0160",
+      "git_blob": "d0b1d7644105ea3147bb04be7f4edfe687e12c8e"
+    },
+    {
+      "path": "internal/errclass/classify.go",
+      "bytes": 23516,
+      "sha256": "236d2f5579afba16c3851cd386d41baf7f9dbe3ff4cf4c77fcdf7d87eea2079a",
+      "git_blob": "dbac3ca33cefc6d1d42ac67488135c70bb7d1934"
+    },
+    {
+      "path": "shortcuts/doc/docs_update_test.go",
+      "bytes": 14122,
+      "sha256": "9273f2e379b96a19200d54b58fee47c0ce32d081913ee45434ee34449db387c2",
+      "git_blob": "aef05d7f16c297154f576e61ade0144bbee06b8f"
     }
   ],
   "skills": [
@@ -3146,5 +3206,105 @@
     }
   ],
   "git_history_included": false,
-  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。",
+  "research_reviews": [
+    {
+      "date": "2026-11-03",
+      "execution_status": "not_run",
+      "manifest": "research/evidence/2026-11-03/source-manifest.json",
+      "files": [
+        {
+          "path": "LICENSE",
+          "reading_scope": "full",
+          "bytes": 1084,
+          "sha256": "c969fc7e3af68e6bf40b0d8dd9c3dcc377eb685a2139535b203b39fdcad739ee",
+          "git_blob": "2b8bbb5e9c46b1abc3a5ac68ee190baf046ba968"
+        },
+        {
+          "path": "go.mod",
+          "reading_scope": "dependency version only",
+          "bytes": 3044,
+          "sha256": "a9c905a561f4954a5bd36c5872ef3023f82beef7c41a844e25a25eb762cec1bf",
+          "git_blob": "8628b4f2be9291b2b29a2c86fad66adac87f124b"
+        },
+        {
+          "path": "skills/lark-doc/references/lark-doc-update.md",
+          "reading_scope": "full reread",
+          "bytes": 7468,
+          "sha256": "1325ceac3355401486cf46a7462cf083b4dada00e7c07e03c1084cea2c7f7c6d",
+          "git_blob": "18234c8d323d25d04bc3b1b91ff7153cf8573a7b"
+        },
+        {
+          "path": "skills/lark-doc/references/lark-doc-md.md",
+          "reading_scope": "full new directory dependency",
+          "bytes": 5934,
+          "sha256": "74d062a4ac6d436141f4a90f87cbecd45d9f6d8b0d34f3e04077653175dc2e36",
+          "git_blob": "c115144122ef32d988f17772508791d6255747b6"
+        },
+        {
+          "path": "shortcuts/doc/docs_update.go",
+          "reading_scope": "full",
+          "bytes": 1732,
+          "sha256": "1df0896d1e8b04d93705010a366e112fa20f91a1f784173e34dc078dc4606893",
+          "git_blob": "c569dbee806f3658e759705b11f717553c4106ef"
+        },
+        {
+          "path": "shortcuts/doc/docs_update_v2.go",
+          "reading_scope": "full",
+          "bytes": 14972,
+          "sha256": "23b0fa9070121fe5f7bcb116f6ad87f45f5f55296ee74aa198e96498b6a72070",
+          "git_blob": "adbcd89723b20a77ae234daa8d0028d1f3fcdf48"
+        },
+        {
+          "path": "shortcuts/doc/helpers.go",
+          "reading_scope": "full",
+          "bytes": 4128,
+          "sha256": "78527906487ea3c0c92289cf6cf8012d9dca4deba8c3eecf7100d4dad04ad879",
+          "git_blob": "789915af58de18bf7a121dbe8f0fff5c48d47559"
+        },
+        {
+          "path": "shortcuts/common/runner.go",
+          "reading_scope": "CallAPITyped; ClassifyAPIResponseWith; httpStatusError; OutPartialFailure",
+          "bytes": 58953,
+          "sha256": "171d568f7ed513fd8dd8b303c1fb70632d8fdf837ddf5bb7ccaa3f739819fba8",
+          "git_blob": "5746017da38f20859292c1052ccf7c21fcaab203"
+        },
+        {
+          "path": "internal/client/client.go",
+          "reading_scope": "RawApiRequest; resolveAccessToken; buildApiReq; DoSDKRequest; DoAPI; DoStream",
+          "bytes": 19374,
+          "sha256": "8b08485c1f5d887d41901bded23657837ca34eeeb6374746c74dbd64ebb5da2f",
+          "git_blob": "640b356443fe0baed5fcd02f30e765f51be05ffc"
+        },
+        {
+          "path": "internal/client/api_errors.go",
+          "reading_scope": "full",
+          "bytes": 5914,
+          "sha256": "911fd8dbad8f6dda9ae516d068e7ca51d243104816b22526c69a532493d78385",
+          "git_blob": "b4f3ab1fb8453b6411b8bf27532a861b1098fda7"
+        },
+        {
+          "path": "internal/errclass/codemeta.go",
+          "reading_scope": "full",
+          "bytes": 5598,
+          "sha256": "babc250f1214622c8cfa12a3ea4184cef29c88ddaf421d7c9f0d8377280a0160",
+          "git_blob": "d0b1d7644105ea3147bb04be7f4edfe687e12c8e"
+        },
+        {
+          "path": "internal/errclass/classify.go",
+          "reading_scope": "BuildAPIError; APIHint",
+          "bytes": 23516,
+          "sha256": "236d2f5579afba16c3851cd386d41baf7f9dbe3ff4cf4c77fcdf7d87eea2079a",
+          "git_blob": "dbac3ca33cefc6d1d42ac67488135c70bb7d1934"
+        },
+        {
+          "path": "shortcuts/doc/docs_update_test.go",
+          "reading_scope": "TestDocsUpdateDryRunIgnoresAPIVersionCompatFlag; reference-map/range validation tests; no execution",
+          "bytes": 14122,
+          "sha256": "9273f2e379b96a19200d54b58fee47c0ce32d081913ee45434ee34449db387c2",
+          "git_blob": "aef05d7f16c297154f576e61ade0144bbee06b8f"
+        }
+      ]
+    }
+  ]
 }

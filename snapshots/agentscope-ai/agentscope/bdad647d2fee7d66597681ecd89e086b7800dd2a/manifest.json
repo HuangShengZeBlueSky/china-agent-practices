@@ -1,0 +1,47 @@
+{
+  "repository": "agentscope-ai/agentscope",
+  "commit": "bdad647d2fee7d66597681ecd89e086b7800dd2a",
+  "captured_on": "2026-11-03",
+  "snapshot_scope": "selected_files_only",
+  "archive_complete": false,
+  "license_notes": [
+    "Apache-2.0 plus third-party notices retained in LICENSE"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 14755,
+      "sha256": "ec9928a31c1d1168f28adc0db95d3cc33482db7704c523a51d131247e295c5a7",
+      "git_blob": "1da8a786542b2753c89edd39dbea6ca770ea8192"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 20637,
+      "sha256": "4186bcadf358c60080060309769db6b2a352720d7353d827bb574c600fee9913",
+      "git_blob": "2f2f2f25ea6019e5a51213c4e8a4df0c67a6ea2a"
+    }
+  ],
+  "research_reviews": [
+    {
+      "date": "2026-11-03",
+      "execution_status": "not_run",
+      "manifest": "research/evidence/2026-11-03/source-manifest.json",
+      "files": [
+        {
+          "path": "README.md",
+          "reading_scope": "full text; no linked media or dependencies read",
+          "bytes": 14755,
+          "sha256": "ec9928a31c1d1168f28adc0db95d3cc33482db7704c523a51d131247e295c5a7",
+          "git_blob": "1da8a786542b2753c89edd39dbea6ca770ea8192"
+        },
+        {
+          "path": "LICENSE",
+          "reading_scope": "full",
+          "bytes": 20637,
+          "sha256": "4186bcadf358c60080060309769db6b2a352720d7353d827bb574c600fee9913",
+          "git_blob": "2f2f2f25ea6019e5a51213c4e8a4df0c67a6ea2a"
+        }
+      ]
+    }
+  ]
+}
