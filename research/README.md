@@ -55,3 +55,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-03 更新
 
 [文档版本与重试边界](solutions/lark-update-conflict-contract.md)追到错误分类和SDK调用边界；[Runtime启动互斥与中断](solutions/agentscope-runtime-interruption.md)对照本地锁、Redis Lua与任务TTL，两卡各有流程和架构图。[AgentScope迁移核查](ownership-review-2026-11-03.md)区分旧Runtime内部迁移与2.0兼容性。24份原文校验，18份补存规范目录、6份复用；目录13/44，整包0、实跑0。[排期复核](review-2026-11-03.md)补登记缺失的周末检查，按依赖继续P1-01；网站未部署。
+
+## 2026-11-04 更新
+
+[Kimi迁移边界](solutions/kimi-migration-state-boundaries.md)补源码与许可核查，区分文件复制、目标运行和完成标记；10份固定原文节选已校验。[体裁与证据路由](solutions/lark-genre-evidence-routing.md)对照技术文档三模式与调研报告，提示契约不等于机器门禁。两卡均有两类图。目录15/44，P1-01继续，整包0、实跑0、未部署网站。

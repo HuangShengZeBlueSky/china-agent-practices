@@ -1,0 +1,99 @@
+{
+  "repository": "MoonshotAI/kimi-code",
+  "commit": "444c609e8e6629d43fb7fd571a8db48ce5a41570",
+  "captured_on": "2026-11-04",
+  "scope": "selected_complete_files_only",
+  "archive_complete": false,
+  "license": "MIT; root license retained; not a whole-repo license audit",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 5334,
+      "sha256": "50ea102c7003c746244c69cb78cbd5b1e9158311e5e4e028aee8a2afee698c4c",
+      "git_blob": "e3e17adb8c3aeb8a566e7c0024d90a06b384baa5",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/README.md"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1068,
+      "sha256": "23cc68e17992e0b512ae2e80afc5787d7d8e0fbfbdb4fff54ec0245508fa400e",
+      "git_blob": "6102a1bc7949a169f10d823a86d4ad161c26b960",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/LICENSE"
+    },
+    {
+      "path": "docs/zh/guides/migration.md",
+      "bytes": 1982,
+      "sha256": "801e490bc68091e6d306cf38c0e71f2fd2ec279cd4b103cb1e74a5518f9d8910",
+      "git_blob": "ee86933d542bb89aa0ab7eca6285e346d227f753",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/docs/zh/guides/migration.md"
+    },
+    {
+      "path": "packages/migration-legacy/src/run-migration.ts",
+      "bytes": 6664,
+      "sha256": "8fd9cf23a6c1085c477e7d89a0a86df21a1a57ec8a8b1873d10c8cafd67104af",
+      "git_blob": "50a97090a6e131b9f58d0793b1cc766b32a24b1e",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/packages/migration-legacy/src/run-migration.ts"
+    },
+    {
+      "path": "packages/migration-legacy/src/atomic-write.ts",
+      "bytes": 894,
+      "sha256": "a6760bc50998092386eb8c60e7dc1381f46165ca8837b6102eebff2accc2578b",
+      "git_blob": "d2d76689e43393d68aa62ea5c43e891b84cd3869",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/packages/migration-legacy/src/atomic-write.ts"
+    },
+    {
+      "path": "packages/migration-legacy/src/marker.ts",
+      "bytes": 5436,
+      "sha256": "decdc0d6e82ed28709a138cdb0bd4c49898c08217351aa69f54c3d5bd783ef87",
+      "git_blob": "2116dce74d2bf9f7e4a0186732523bfd0d45dd79",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/packages/migration-legacy/src/marker.ts"
+    },
+    {
+      "path": "packages/migration-legacy/src/paths.ts",
+      "bytes": 2269,
+      "sha256": "6eaad746ff578183b1a1628291dd321a7da454bbddf6765887f013af935a2570",
+      "git_blob": "4308531ceeb2b92fd5c1d9f82365c1be0e11986c",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/packages/migration-legacy/src/paths.ts"
+    },
+    {
+      "path": "packages/migration-legacy/src/steps/skills.ts",
+      "bytes": 2537,
+      "sha256": "acaec83b85297a6c49af7dc358da5a2c207538a9fd2bda106a9b626c9df4b79a",
+      "git_blob": "a88b052d362bd06985676d75cbd5a4bcad0b143a",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/packages/migration-legacy/src/steps/skills.ts"
+    },
+    {
+      "path": "packages/migration-legacy/src/steps/plans.ts",
+      "bytes": 1951,
+      "sha256": "4e8b76b4b7d690be6bf1e2c997967ad391706bea42bfe4d3d212fa5a718abd1a",
+      "git_blob": "8b86fe1381eaa09d590966dc8bc6b8879308cd03",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/packages/migration-legacy/src/steps/plans.ts"
+    },
+    {
+      "path": "packages/migration-legacy/src/report.ts",
+      "bytes": 625,
+      "sha256": "90f787d74df37933991ab7c666944f1d7939ab9462fbd90ae5080a3c0d2ab701",
+      "git_blob": "a5f311ea8f7cf502e674f7f785d92ae53781efe5",
+      "reading_scope": "full file static reading",
+      "source_url": "https://github.com/MoonshotAI/kimi-code/blob/444c609e8e6629d43fb7fd571a8db48ce5a41570/packages/migration-legacy/src/report.ts"
+    }
+  ],
+  "unread_dependencies": [
+    "steps/config.ts",
+    "steps/mcp.ts",
+    "sessions/index.ts and converters",
+    "detect.ts and command UI",
+    "migration-errors-log.ts",
+    "new host skill scanner and model loop"
+  ],
+  "execution_status": "not_run"
+}

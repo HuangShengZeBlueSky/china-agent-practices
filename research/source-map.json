@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-03",
+  "updated_at": "2026-11-04",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -635,7 +635,17 @@
         "archived": true,
         "head_backed_up": true,
         "evidence": "research/repository-audit-2026-10-26.md"
-      }
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-04",
+          "evidence": "research/ownership-review-2026-11-04.md",
+          "target_repository": "MoonshotAI/kimi-code",
+          "target_commit": "444c609e8e6629d43fb7fd571a8db48ce5a41570",
+          "scope": "migration subchain only; incremental target, no baseline expansion",
+          "execution_status": "not_run"
+        }
+      ]
     },
     {
       "id": "prior-minimax-official-skills",

@@ -1,0 +1,12 @@
+{
+  "checked_on": "2026-11-04",
+  "upstream_git_blobs_verified": 10,
+  "sha256_computed": 10,
+  "reused_skill_snapshot_and_inventory_matches": 2,
+  "independent_cards": 2,
+  "mermaid_blocks": 4,
+  "directory_read": 15,
+  "directory_total": 44,
+  "upstream_execution": false,
+  "validation_scope": "source bytes, JSON counters, Markdown link targets; not upstream runtime tests"
+}

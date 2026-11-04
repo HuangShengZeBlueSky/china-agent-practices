@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-04",
+  "incremental_only": true,
+  "repository": "MoonshotAI/kimi-code",
+  "commit": "444c609e8e6629d43fb7fd571a8db48ce5a41570",
+  "default_branch": "main",
+  "archived": false,
+  "scope": "10 selected complete files; not a whole archive or skill baseline addition",
+  "queries": [
+    "Kimi CLI Python 归档 kimi-code 迁移 官方",
+    "site.github.com/MoonshotAI/kimi-code migration Python license"
+  ],
+  "manifest": "snapshots/MoonshotAI/kimi-code/444c609e8e6629d43fb7fd571a8db48ce5a41570/manifest.json",
+  "open_gaps": [
+    "full archive",
+    "configuration/MCP/session conversion",
+    "new host equivalence"
+  ],
+  "lark_reused_files_verified": 2,
+  "execution": "static_not_run"
+}
