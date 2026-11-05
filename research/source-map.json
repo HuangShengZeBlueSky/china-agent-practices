@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-04",
+  "updated_at": "2026-11-05",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -295,13 +295,25 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
-        "checked_on": "2026-10-26",
+        "checked_on": "2026-11-05",
         "head": "76a7316c0671900b698f9e955afb432ec9a93183",
         "default_branch": "master",
         "archived": false,
         "head_backed_up": true,
-        "evidence": "research/repository-audit-2026-10-26.md"
-      }
+        "evidence": "research/evidence/2026-11-05/source-review.json"
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-05",
+          "evidence": [
+            "research/ownership-review-2026-11-05.md",
+            "research/solutions/tool-outcome-and-termination.md"
+          ],
+          "manifest": "research/evidence/2026-11-05/source-manifest.json",
+          "execution_status": "not_run",
+          "scope": "ownership, root licence, selected tool/termination subchain; not full project review"
+        }
+      ]
     },
     {
       "id": "prior-huawei-openjiuwen-skills",
@@ -364,13 +376,25 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
-        "checked_on": "2026-10-26",
+        "checked_on": "2026-11-05",
         "head": "c3df8469f250b15e7906487a6d52be4c1827a509",
         "default_branch": "mimo-oss",
         "archived": false,
         "head_backed_up": true,
-        "evidence": "research/repository-audit-2026-10-26.md"
-      }
+        "evidence": "research/evidence/2026-11-05/source-review.json"
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-05",
+          "evidence": [
+            "research/ownership-review-2026-11-05.md",
+            "research/solutions/tool-outcome-and-termination.md"
+          ],
+          "manifest": "research/evidence/2026-11-05/source-manifest.json",
+          "execution_status": "not_run",
+          "scope": "ownership, root licence, selected tool/termination subchain; not full project review"
+        }
+      ]
     },
     {
       "id": "prior-bytedance-coze-studio",
@@ -1517,6 +1541,38 @@
       "question": "先确认公开入口、归属、版本与可读实现，再确定具体问题",
       "backup_scope": "未备份",
       "full_research_complete": false
+    },
+    {
+      "id": "delta-2026-11-05-mimo-code",
+      "name": "MiMo Code长任务工程文章",
+      "organization": "小米",
+      "region": "中国",
+      "url": "https://mimo.xiaomi.com/blog/mimo-code-long-horizon",
+      "source_type": "official_blog",
+      "status": "discovered_excerpt_only",
+      "checked_at": "2026-11-05",
+      "version": null,
+      "analysis": null,
+      "question": "与mimoagent是不同公开对象，后续追状态连续性与验证实现",
+      "backup_scope": "仅URL与发现记录；未全文",
+      "full_research_complete": false,
+      "baseline_included": false
+    },
+    {
+      "id": "delta-2026-11-05-mimo-v26",
+      "name": "MiMo-V2.6: Scaling Reinforcement Learning Towards Self-Improvement",
+      "organization": "Xiaomi LLM-Core Team（检索元数据）",
+      "region": "论文",
+      "url": "https://arxiv.org/abs/2610.11959",
+      "source_type": "author_paper",
+      "status": "search_excerpt_only",
+      "checked_at": "2026-11-05",
+      "version": null,
+      "analysis": null,
+      "question": "后续读取全文/附录/代码与grader预算；当前不作方法或收益结论",
+      "backup_scope": "未取得全文，版本待核",
+      "full_research_complete": false,
+      "baseline_included": false
     }
   ]
 }

@@ -65,13 +65,16 @@
         "research/ownership-review-2026-10-30.md",
         "research/ownership-review-2026-11-03.md",
         "research/solutions/agentscope-runtime-interruption.md",
-        "research/ownership-review-2026-11-04.md"
+        "research/ownership-review-2026-11-04.md",
+        "research/ownership-review-2026-11-05.md",
+        "research/solutions/tool-outcome-and-termination.md"
       ],
       "open_questions": [
         "逐项重新核验官方归属链和许可例外",
         "十个新 HEAD 的变更影响与备份安排",
         "Kimi新实现等价；AgentScope目标请求/事件、Session schema、运行代次与取消确认映射（旧Runtime子链已读，不代表2.0等价）",
-        "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界"
+        "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界",
+        "mimoagent官网直达归属链仍待补；Baidu下游校验、mimoagent协议/评分器与异常批次实验列为后续组件研究，不冒充本轮实测"
       ],
       "execution_status": "static_metadata_review"
     },
@@ -739,5 +742,5 @@
       "acceptance": "新增论文和版本有来源与影响分类，纳入下一轮需显式记范围"
     }
   ],
-  "updated_at": "2026-11-04"
+  "updated_at": "2026-11-05"
 }

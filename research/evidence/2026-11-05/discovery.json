@@ -1,0 +1,31 @@
+{
+  "checked_on": "2026-11-05",
+  "queries": [
+    "百度 AppBuilder SDK github baidubce app-builder 官方",
+    "Xiaomi MiMo mimoagent official github agent framework",
+    "site:mimo.xiaomi.com \"mimoagent\"",
+    "site:cloud.baidu.com \"github.com/baidubce/app-builder\""
+  ],
+  "selection": "只以官网正文、固定仓库原文和API元数据支撑结论；聚合站/Reddit/Wikipedia不作为证据",
+  "incremental_candidates": [
+    {
+      "name": "MiMo Code",
+      "url": "https://mimo.xiaomi.com/blog/mimo-code-long-horizon",
+      "status": "discovered_not_full_read",
+      "baseline_included": false
+    },
+    {
+      "name": "MiMo-V2.6 paper",
+      "url": "https://arxiv.org/abs/2610.11959",
+      "status": "search_excerpt_only",
+      "baseline_included": false
+    }
+  ],
+  "failed_retrievals": [
+    {
+      "url": "https://mimo.xiaomi.com/blog/mimo-v2.6",
+      "result": "web tool inaccessible; no content used"
+    }
+  ],
+  "no_scope_expansion": true
+}

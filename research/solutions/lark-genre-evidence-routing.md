@@ -81,3 +81,7 @@ flowchart TD
 未运行练习：给出同一“API请求超时”材料，分别写设计RFC、API参考、故障诊断的第一段，并说明哪个满足当前读者任务；再把三条用户引文改成有范围限制的探索性观察，禁止补造样本量。预期可观察的是结构与主张强度差异，不能据此证明模型性能改善。
 
 本轮新读2份目录依赖，累计15/44；这两份还引用data-report、business-analysis、white-paper等未读依赖，未关闭整包。下一步继续这些消歧依赖和既有SDK/跨技能待办。
+
+## 2026-11-05 接续
+
+上文截至11-04的未读data-report、business-analysis和white-paper已在[指标、决策与发布身份契约](lark-quantitative-evidence-contract.md)完成本轮依赖阅读；目录变为18/44。该更新不关闭Proposal、其他路由、跨技能与宿主验证缺口。

@@ -1,0 +1,27 @@
+{
+  "checked_on": "2026-11-05",
+  "checks": {
+    "original_files_readback_and_hashes": 12,
+    "all_json_parsed": true,
+    "backlog_tasks": 54,
+    "backlog_status": {
+      "done": 3,
+      "in_progress": 1,
+      "pending": 50
+    },
+    "unchanged_other_shard_groups": 180,
+    "changed_groups": 1,
+    "lark_directory_read": 18,
+    "lark_directory_total": 44,
+    "independent_cards": 2,
+    "mermaid_blocks_per_card": 2,
+    "relative_links_in_new_cards_resolved": 13
+  },
+  "limits": [
+    "Mermaid source blocks checked, not image-rendered",
+    "No upstream scripts/tests/business APIs/model runs",
+    "No full archive redownload",
+    "Remote commit readback follows publication and is reported in delivery receipt"
+  ],
+  "execution_status": "static_integrity_checks_only"
+}

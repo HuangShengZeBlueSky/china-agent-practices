@@ -1,0 +1,34 @@
+{
+  "checked_on": "2026-11-05",
+  "scope": "2 existing repositories only",
+  "repositories": [
+    {
+      "repository": "baidubce/app-builder",
+      "default_branch": "master",
+      "archived": false,
+      "pushed_at": "2026-04-26T05:13:53Z",
+      "current_head": "76a7316c0671900b698f9e955afb432ec9a93183",
+      "reviewed_commit": "76a7316c0671900b698f9e955afb432ec9a93183",
+      "unchanged_since_2026_10_26": true,
+      "api_url": "https://api.github.com/repos/baidubce/app-builder",
+      "ref_url": "https://api.github.com/repos/baidubce/app-builder/git/ref/heads/master",
+      "canonical_manifest": "snapshots/baidubce/app-builder/76a7316c0671900b698f9e955afb432ec9a93183/manifest.json",
+      "whole_archive_redownloaded": false
+    },
+    {
+      "repository": "XiaomiMiMo/mimoagent",
+      "default_branch": "mimo-oss",
+      "archived": false,
+      "pushed_at": "2026-10-18T13:45:25Z",
+      "current_head": "c3df8469f250b15e7906487a6d52be4c1827a509",
+      "reviewed_commit": "c3df8469f250b15e7906487a6d52be4c1827a509",
+      "unchanged_since_2026_10_26": true,
+      "api_url": "https://api.github.com/repos/XiaomiMiMo/mimoagent",
+      "ref_url": "https://api.github.com/repos/XiaomiMiMo/mimoagent/git/ref/heads/mimo-oss",
+      "canonical_manifest": "snapshots/XiaomiMiMo/mimoagent/c3df8469f250b15e7906487a6d52be4c1827a509/manifest.json",
+      "whole_archive_redownloaded": false
+    }
+  ],
+  "evidence": "research/ownership-review-2026-11-05.md",
+  "execution_status": "not_run"
+}

@@ -59,3 +59,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-04 更新
 
 [Kimi迁移边界](solutions/kimi-migration-state-boundaries.md)补源码与许可核查，区分文件复制、目标运行和完成标记；10份固定原文节选已校验。[体裁与证据路由](solutions/lark-genre-evidence-routing.md)对照技术文档三模式与调研报告，提示契约不等于机器门禁。两卡均有两类图。目录15/44，P1-01继续，整包0、实跑0、未部署网站。
+
+## 2026-11-05 更新
+
+[百度与小米来源核查](ownership-review-2026-11-05.md)补官方归属、根许可、第三方边界及两仓本日HEAD；[工具结果与结束判定](solutions/tool-outcome-and-termination.md)用实际分支反证立即取消和结束即成功。[指标与决策证据契约](solutions/lark-quantitative-evidence-contract.md)新读3份依赖，目录18/44，剩26。两张方案各有两类图；12份既有原文读回和哈希核对，原文新增0。P1-01、整包与实验继续待办，未部署网站。

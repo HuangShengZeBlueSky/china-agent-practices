@@ -1,0 +1,215 @@
+{
+  "checked_on": "2026-11-05",
+  "scope": "12 complete files statically reread/read and reused from canonical snapshots; no upstream code executed; no new whole archive",
+  "new_raw_files": 0,
+  "reused_raw_files": 12,
+  "files": [
+    {
+      "repo": "baidubce/app-builder",
+      "ref": "76a7316c0671900b698f9e955afb432ec9a93183",
+      "path": "README.md",
+      "bytes": 20444,
+      "sha256": "c2dd54a5b9c13f77f9e3a25062a27d5e552fd6386c78b86a6c6b349467af6c77",
+      "git_blob": "a0d745d77fb6f9d04e71349a5acb6f3b5ddc2dff",
+      "snapshot": "snapshots/baidubce/app-builder/76a7316c0671900b698f9e955afb432ec9a93183/files/README.md",
+      "upstream_url": "https://github.com/baidubce/app-builder/blob/76a7316c0671900b698f9e955afb432ec9a93183/README.md",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "baidubce/app-builder",
+      "ref": "76a7316c0671900b698f9e955afb432ec9a93183",
+      "path": "LICENSE",
+      "bytes": 11366,
+      "sha256": "5441c128de858675382b9b8dc9c73bf77e65f9ab4161cfc66de4f505c0dcfa0b",
+      "git_blob": "f600e8c7ddb2a80ecbd41c95a2e0f6fe1601fc67",
+      "snapshot": "snapshots/baidubce/app-builder/76a7316c0671900b698f9e955afb432ec9a93183/files/LICENSE",
+      "upstream_url": "https://github.com/baidubce/app-builder/blob/76a7316c0671900b698f9e955afb432ec9a93183/LICENSE",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "XiaomiMiMo/mimoagent",
+      "ref": "c3df8469f250b15e7906487a6d52be4c1827a509",
+      "path": "README.md",
+      "bytes": 7692,
+      "sha256": "f57226245a46b352859e88b2af17c7d8982c3dce1c087b40958ebdb3e6f7201e",
+      "git_blob": "58f3cdc7faba310104f193689716528ad1e2bbe3",
+      "snapshot": "snapshots/XiaomiMiMo/mimoagent/c3df8469f250b15e7906487a6d52be4c1827a509/files/README.md",
+      "upstream_url": "https://github.com/XiaomiMiMo/mimoagent/blob/c3df8469f250b15e7906487a6d52be4c1827a509/README.md",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "XiaomiMiMo/mimoagent",
+      "ref": "c3df8469f250b15e7906487a6d52be4c1827a509",
+      "path": "LICENSE.md",
+      "bytes": 1150,
+      "sha256": "32bd919b8f54478499e6a57281bdf6136be6fe4e4e8ded0a66307470dc49d076",
+      "git_blob": "339328d620d779723500f4ad18dccf0293b91d93",
+      "snapshot": "snapshots/XiaomiMiMo/mimoagent/c3df8469f250b15e7906487a6d52be4c1827a509/files/LICENSE.md",
+      "upstream_url": "https://github.com/XiaomiMiMo/mimoagent/blob/c3df8469f250b15e7906487a6d52be4c1827a509/LICENSE.md",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "XiaomiMiMo/mimoagent",
+      "ref": "c3df8469f250b15e7906487a6d52be4c1827a509",
+      "path": "NOTICE",
+      "bytes": 1997,
+      "sha256": "cdeaae4f380399e12a6dcb5fa02af0d69c050ccf18b2f9de040c3aee6264aecf",
+      "git_blob": "060a79e062259e76086298a4f2926f8b8af16a79",
+      "snapshot": "snapshots/XiaomiMiMo/mimoagent/c3df8469f250b15e7906487a6d52be4c1827a509/files/NOTICE",
+      "upstream_url": "https://github.com/XiaomiMiMo/mimoagent/blob/c3df8469f250b15e7906487a6d52be4c1827a509/NOTICE",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "larksuite/cli",
+      "ref": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "path": "skills/lark-doc/references/genres/business-analysis.md",
+      "bytes": 3128,
+      "sha256": "8aaab9e07737ea36dca4427778cc28af0087abb90710c1f2806bb1a51962ef78",
+      "git_blob": "ca92a9b9f1cabd6ccbe9a748b17b06123a042c4d",
+      "snapshot": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/genres/business-analysis.md",
+      "upstream_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/genres/business-analysis.md",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "larksuite/cli",
+      "ref": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "path": "skills/lark-doc/references/genres/data-report.md",
+      "bytes": 2943,
+      "sha256": "ea0cb3df6c9b466bfa16eb0090a0a91965ecd242dacdd903d0cffb20f9061cbe",
+      "git_blob": "f0d7a86fa1b0a0e8024df207b98c2c1a63172d5d",
+      "snapshot": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/genres/data-report.md",
+      "upstream_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/genres/data-report.md",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "larksuite/cli",
+      "ref": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "path": "skills/lark-doc/references/genres/white-paper.md",
+      "bytes": 3209,
+      "sha256": "cda3797a71149cc1f2f4fe7e6c471ce8be6adb05cbb180ba4a6af70392e5c11c",
+      "git_blob": "85336336b6ca3dffb9494ef3a3b64f86d51ecde1",
+      "snapshot": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/genres/white-paper.md",
+      "upstream_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/genres/white-paper.md",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "baidubce/app-builder",
+      "ref": "76a7316c0671900b698f9e955afb432ec9a93183",
+      "path": "python/core/console/appbuilder_client/event_handler.py",
+      "bytes": 16480,
+      "sha256": "add3cceed6683107f5293344327e4335e112faeebbfeaa9510bd5b31ce7d8bf9",
+      "git_blob": "491c894cd94eb76fd9c4a3ebe239f9db81b3b742",
+      "snapshot": "snapshots/baidubce/app-builder/76a7316c0671900b698f9e955afb432ec9a93183/files/python/core/console/appbuilder_client/event_handler.py",
+      "upstream_url": "https://github.com/baidubce/app-builder/blob/76a7316c0671900b698f9e955afb432ec9a93183/python/core/console/appbuilder_client/event_handler.py",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "XiaomiMiMo/mimoagent",
+      "ref": "c3df8469f250b15e7906487a6d52be4c1827a509",
+      "path": "src/mimoagent/agents/default.py",
+      "bytes": 15820,
+      "sha256": "fc63928efbcd18afff018cdfe884ffc5a18ccafc3151bd0c359ab62c2156de23",
+      "git_blob": "4b39593c09f4f5085523a6881b6c1536b64b8031",
+      "snapshot": "snapshots/XiaomiMiMo/mimoagent/c3df8469f250b15e7906487a6d52be4c1827a509/files/src/mimoagent/agents/default.py",
+      "upstream_url": "https://github.com/XiaomiMiMo/mimoagent/blob/c3df8469f250b15e7906487a6d52be4c1827a509/src/mimoagent/agents/default.py",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "XiaomiMiMo/mimoagent",
+      "ref": "c3df8469f250b15e7906487a6d52be4c1827a509",
+      "path": "src/mimoagent/agents/base.py",
+      "bytes": 14937,
+      "sha256": "170460f61bf1873f79d8a98eb8fc3be7202b0accd093cd7db50cbb52d207fbdc",
+      "git_blob": "5b051af70394eb41905411c1846f3a91666b0941",
+      "snapshot": "snapshots/XiaomiMiMo/mimoagent/c3df8469f250b15e7906487a6d52be4c1827a509/files/src/mimoagent/agents/base.py",
+      "upstream_url": "https://github.com/XiaomiMiMo/mimoagent/blob/c3df8469f250b15e7906487a6d52be4c1827a509/src/mimoagent/agents/base.py",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    },
+    {
+      "repo": "baidubce/app-builder",
+      "ref": "76a7316c0671900b698f9e955afb432ec9a93183",
+      "path": "python/tests/test_appbuilder_client_toolcall_event_handler_error.py",
+      "bytes": 3570,
+      "sha256": "a85d7891edeb00a2a5033b9880be54af42c85ffd84a0bf3646af1cf182d737c5",
+      "git_blob": "afce553be745c56e738a0fe322ae9b87f0fcfb59",
+      "snapshot": "snapshots/baidubce/app-builder/76a7316c0671900b698f9e955afb432ec9a93183/files/python/tests/test_appbuilder_client_toolcall_event_handler_error.py",
+      "upstream_url": "https://github.com/baidubce/app-builder/blob/76a7316c0671900b698f9e955afb432ec9a93183/python/tests/test_appbuilder_client_toolcall_event_handler_error.py",
+      "canonical_readback": "equal",
+      "manifest_hash_verified": true,
+      "reading_scope": "complete_file_static_review",
+      "execution_status": "not_run"
+    }
+  ],
+  "web_sources": [
+    {
+      "url": "https://cloud.baidu.com/news/news_4accd301-fabc-4c67-b79f-05e2932a3a8e",
+      "publication": "2024-08-20",
+      "read_scope": "产品使用入口段落及其GitHub链接",
+      "observation": "百度云新闻正文反向链接baidubce/app-builder",
+      "backup_status": "URL and original paraphrase only; no webpage reproduction licence established"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AppBuilder/Nly5mrifk",
+      "read_scope": "安装说明正文",
+      "observation": "Go安装路径指向同仓；Python基础与MCP要求分列",
+      "backup_status": "URL and original paraphrase only"
+    },
+    {
+      "url": "https://mimo.xiaomi.com/",
+      "read_scope": "可提取主页及GitHub链接检索",
+      "observation": "未在可提取正文找到mimoagent直接反向链接；不证明官网没有链接",
+      "backup_status": "URL only"
+    },
+    {
+      "url": "https://mimo.xiaomi.com/blog/mimo-code-long-horizon",
+      "read_scope": "搜索返回的官方正文开头",
+      "observation": "MiMo Code独立产品线索，未全文读；不得等同mimoagent",
+      "backup_status": "candidate only"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.11959",
+      "read_scope": "search excerpt only",
+      "observation": "MiMo-V2.6论文候选；未全文、附录或评测阅读",
+      "backup_status": "candidate only"
+    }
+  ],
+  "dependency_gaps": [
+    "Baidu client.run serialization, server model/context/termination and SSE internals not reviewed in this unit",
+    "mimoagent model wire adapters, tool implementations and dataset graders not reviewed in this unit",
+    "Lark host enforcement, proposal/workplace/marketing routing and remaining26 directory files unresolved"
+  ],
+  "execution_status": "not_run"
+}
