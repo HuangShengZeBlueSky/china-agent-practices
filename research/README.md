@@ -63,3 +63,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-05 更新
 
 [百度与小米来源核查](ownership-review-2026-11-05.md)补官方归属、根许可、第三方边界及两仓本日HEAD；[工具结果与结束判定](solutions/tool-outcome-and-termination.md)用实际分支反证立即取消和结束即成功。[指标与决策证据契约](solutions/lark-quantitative-evidence-contract.md)新读3份依赖，目录18/44，剩26。两张方案各有两类图；12份既有原文读回和哈希核对，原文新增0。P1-01、整包与实验继续待办，未部署网站。
+
+## 2026-11-06 更新
+
+[提案与执行计划](solutions/lark-proposal-plan-contract.md)补路由、真实授权证据、依赖与退出条件，含流程图、架构图、反例及学习练习。[Coze官方归属补证](ownership-review-2026-11-06.md)区分开源与商业版、模板装配与实际执行。6份既有原文核对，技能目录21/44；P1继续，整包0、实跑0，网站未部署。

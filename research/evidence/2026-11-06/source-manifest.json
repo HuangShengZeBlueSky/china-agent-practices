@@ -1,0 +1,101 @@
+{
+  "checked_on": "2026-11-06",
+  "files": [
+    {
+      "repository": "coze-dev/coze-studio",
+      "commit": "fefb05ff27be1da939612fbf9faf5db62583b8ae",
+      "path": "README.md",
+      "snapshot": "snapshots/coze-dev/coze-studio/fefb05ff27be1da939612fbf9faf5db62583b8ae/files/README.md",
+      "bytes": 11720,
+      "sha256": "eb88f0ea792ec66d2c68eb76e36749deea4340e834eccff8ced4254639a0296e",
+      "git_blob": "6f4221d806888d45596156bec6f5599294ea6a2f",
+      "source": "https://github.com/coze-dev/coze-studio/blob/fefb05ff27be1da939612fbf9faf5db62583b8ae/README.md",
+      "read_scope": "complete file static review",
+      "reused_snapshot": true
+    },
+    {
+      "repository": "coze-dev/coze-studio",
+      "commit": "fefb05ff27be1da939612fbf9faf5db62583b8ae",
+      "path": "LICENSE-APACHE",
+      "snapshot": "snapshots/coze-dev/coze-studio/fefb05ff27be1da939612fbf9faf5db62583b8ae/files/LICENSE-APACHE",
+      "bytes": 10174,
+      "sha256": "69849221bfb90053de2134ef5e6d540287b4b98062326492f1f96f5da685524b",
+      "git_blob": "66a27ec5ff940d3a9652d2948746ebac4c9d0188",
+      "source": "https://github.com/coze-dev/coze-studio/blob/fefb05ff27be1da939612fbf9faf5db62583b8ae/LICENSE-APACHE",
+      "read_scope": "complete file static review",
+      "reused_snapshot": true
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "path": "skills/lark-doc/references/genres/proposal.md",
+      "snapshot": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/genres/proposal.md",
+      "bytes": 2183,
+      "sha256": "ba2e2249a6f56d6e9518253c20654dad1e300d5d009a07da5ec6122db57d4eb8",
+      "git_blob": "64e454a67f179ba4615b6083c4ff9a29bbb4b6dd",
+      "source": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/genres/proposal.md",
+      "read_scope": "complete file static review",
+      "reused_snapshot": true
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "path": "skills/lark-doc/references/genres/execution-plan.md",
+      "snapshot": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/genres/execution-plan.md",
+      "bytes": 2986,
+      "sha256": "e00d7da0b44bb375880e9fd3bfc9a5e684321aa9e19c3adca407669c4bae84e6",
+      "git_blob": "e84872fd396b1cb32abd5ab06da058afb70a5b26",
+      "source": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/genres/execution-plan.md",
+      "read_scope": "complete file static review",
+      "reused_snapshot": true
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "path": "skills/lark-doc/references/genres/route-workplace.md",
+      "snapshot": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/genres/route-workplace.md",
+      "bytes": 2899,
+      "sha256": "af06e57228e2a620d8be29b8208b1bb603101468c45d1ca5ee7a3d02491c5bd9",
+      "git_blob": "ae17c76e8b189252efd716931cec62c7601ac645",
+      "source": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/genres/route-workplace.md",
+      "read_scope": "complete file static review",
+      "reused_snapshot": true
+    },
+    {
+      "repository": "coze-dev/coze-studio",
+      "commit": "fefb05ff27be1da939612fbf9faf5db62583b8ae",
+      "path": "backend/domain/agent/singleagent/internal/agentflow/node_chat_prompt.go",
+      "snapshot": "snapshots/coze-dev/coze-studio/fefb05ff27be1da939612fbf9faf5db62583b8ae/files/backend/domain/agent/singleagent/internal/agentflow/node_chat_prompt.go",
+      "bytes": 950,
+      "sha256": "d35eb095e0541ce35af1d1b2ebb25f197131ba2a1cb7977ac428763f0e6eb545",
+      "git_blob": "feaabd9bd13d912f6800e46f82a3205c3fe546b4",
+      "source": "https://github.com/coze-dev/coze-studio/blob/fefb05ff27be1da939612fbf9faf5db62583b8ae/backend/domain/agent/singleagent/internal/agentflow/node_chat_prompt.go",
+      "read_scope": "complete file static review",
+      "reused_snapshot": true
+    }
+  ],
+  "metadata": {
+    "checked_on": "2026-11-06",
+    "default_branch": "main",
+    "archived": false,
+    "head": "fefb05ff27be1da939612fbf9faf5db62583b8ae"
+  },
+  "queries": [
+    "扣子 Coze Studio 开源 官方 Apache",
+    "Coze Studio official open source ByteDance license"
+  ],
+  "official_web": {
+    "url": "https://www.byteplus.com/de/blog/coze-open-sources-ai-agent-tools",
+    "published": "2025-07-29",
+    "read_scope": "正文，归属与项目链接",
+    "backup": "URL and original notes only; webpage licence unconfirmed"
+  },
+  "new_raw_files": 0,
+  "reused_raw_files": 6,
+  "execution_status": "not_run",
+  "gaps": [
+    "Coze builder/Eino internals and system prompt not rereviewed this unit",
+    "Lark remaining23 directory files plus host/cross-skill dependencies",
+    "No full archive redownload"
+  ]
+}

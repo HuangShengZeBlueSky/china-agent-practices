@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-06",
+  "json_parse": "pass",
+  "unchanged_other_groups": 180,
+  "new_card_mermaid_blocks": 2,
+  "relative_links_resolved": 10,
+  "raw_files_verified": 6,
+  "directory_read": 21,
+  "directory_total": 44,
+  "limits": [
+    "Mermaid not rendered",
+    "No upstream execution",
+    "Remote readback follows commit"
+  ]
+}
