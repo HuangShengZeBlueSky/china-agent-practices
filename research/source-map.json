@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06",
+  "updated_at": "2026-11-07",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -33,6 +33,15 @@
           "manifest": "research/evidence/2026-11-03/source-manifest.json",
           "execution_status": "not_run",
           "scope": "selected subchain; not full project review"
+        },
+        {
+          "checked_at": "2026-11-07",
+          "evidence": [
+            "research/solutions/lark-operational-evidence-contract.md"
+          ],
+          "manifest": "research/evidence/2026-11-07/source-manifest.json",
+          "execution_status": "not_run",
+          "scope": "three full genre references; directory 24/44; whole skill incomplete"
         }
       ]
     },
@@ -1565,7 +1574,16 @@
       "question": "与mimoagent是不同公开对象，后续追状态连续性与验证实现",
       "backup_scope": "仅URL与发现记录；未全文",
       "full_research_complete": false,
-      "baseline_included": false
+      "baseline_included": false,
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-07",
+          "url": "https://mimo.xiaomi.com/mimocode/start",
+          "scope": "overview body read only; linked implementation and subpages not read",
+          "evidence": "research/evidence/2026-11-07/discovery.json",
+          "execution_status": "not_run"
+        }
+      ]
     },
     {
       "id": "delta-2026-11-05-mimo-v26",

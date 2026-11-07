@@ -1,0 +1,45 @@
+{
+  "checked_on": "2026-11-07",
+  "repository": "larksuite/cli",
+  "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+  "source_type": "official_skill_contract",
+  "license": "MIT",
+  "license_file": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/LICENSE",
+  "backup_scope": "reuse three existing complete files; no new archive; historic archive not redownloaded",
+  "execution_status": "not_run",
+  "files": [
+    {
+      "path": "skills/lark-doc/references/genres/sop-tutorial.md",
+      "upstream_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/genres/sop-tutorial.md",
+      "snapshot": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/genres/sop-tutorial.md",
+      "bytes": 4064,
+      "sha256": "a7f79a8283725d0531675151025960c8cf76930adc3113f388847bc04c94fbe6",
+      "git_blob": "65b3a5fa3f5a7fec73e4c912ec068bc8a9113da9",
+      "reading_scope": "full",
+      "snapshot_equals_upstream": true,
+      "manifest_hash_verified": true
+    },
+    {
+      "path": "skills/lark-doc/references/genres/prd.md",
+      "upstream_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/genres/prd.md",
+      "snapshot": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/genres/prd.md",
+      "bytes": 2531,
+      "sha256": "0347957894ac879e8a4463d296b0d1f9386bb7274a6600506ca44b86e518aca3",
+      "git_blob": "b1e3c5bf7e4728b120ff0f3f7a3fdbfab8506a72",
+      "reading_scope": "full",
+      "snapshot_equals_upstream": true,
+      "manifest_hash_verified": true
+    },
+    {
+      "path": "skills/lark-doc/references/genres/weekly-report.md",
+      "upstream_url": "https://github.com/larksuite/cli/blob/017b19a793ad71794a02887ede04757f3d82e10d/skills/lark-doc/references/genres/weekly-report.md",
+      "snapshot": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-doc/references/genres/weekly-report.md",
+      "bytes": 2051,
+      "sha256": "862b8f5eb08fc41d2994e4e1158bba0042d9fbe2274c574ebde892ee5dc74d1b",
+      "git_blob": "6b453baff98afdf9f2c00762e4b53b796131124e",
+      "reading_scope": "full",
+      "snapshot_equals_upstream": true,
+      "manifest_hash_verified": true
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-06",
+  "updated_at": "2026-11-07",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "继续P1-01其他来源归属许可、10版本备份影响与Kimi/AgentScope迁移映射；技能继续SOP/PRD/周期状态及剩23目录文件、跨技能/SDK依赖；阶段验收不按日期跳转。",
+  "next_action": "继续P1-01：先核查trae-agent与CloudBase官网归属/固定许可/当前元数据，CloudBase并查旧缺失版本影响；技能meeting-minutes/retrospective，剩20目录文件与跨技能/SDK/宿主。P1未验收不按11-09日期切P2。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,21 +27,24 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "lark-doc目录21/44，剩23；本轮新增入口0、依赖3、完整组0、实跑0；6235/3085冻结范围不变。",
+    "note": "lark-doc目录24/44，剩20；本轮新增入口0、依赖3、完整组0、实跑0；6235/3085冻结范围不变。",
     "new_entry_reviews": 1,
     "partial_dependency_reviews": 1
   },
   "today_outputs": [
-    "research/solutions/lark-proposal-plan-contract.md",
-    "research/ownership-review-2026-11-06.md"
+    "research/solutions/lark-operational-evidence-contract.md",
+    "research/review-2026-11-07.md"
   ],
-  "last_log": "research/log/2026-11-06.md",
+  "last_log": "research/log/2026-11-07.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "完成组仍0，不能用入口/文件阅读数线性外推3085组；本轮补排期复核，24周主线窗口保留，P1未验收则顺延。",
+  "estimate_note": "周末按4个已发布批次复核：目录依赖9、独立卡7、主线验收0、完整组0；工时未知。剩20目录文件机械投影7—20批，不含外部依赖和验证；主线/技能整体日期无法据此估计。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,
     "current_heads_already_snapshotted": 21,
-    "current_heads_not_snapshotted": 10
-  }
+    "current_heads_not_snapshotted": 10,
+    "checked_on": "2026-10-26",
+    "scope_note": "上述31/21/10继承该日固定审计，不是2026-11-07全部HEAD刷新；部分后续核查另见来源记录。"
+  },
+  "weekend_review": "research/review-2026-11-07.md"
 }

@@ -68,10 +68,12 @@
         "research/ownership-review-2026-11-04.md",
         "research/ownership-review-2026-11-05.md",
         "research/solutions/tool-outcome-and-termination.md",
-        "research/ownership-review-2026-11-06.md"
+        "research/ownership-review-2026-11-06.md",
+        "research/review-2026-11-07.md",
+        "research/evidence/2026-11-07/weekend-audit.json"
       ],
       "open_questions": [
-        "逐项重新核验官方归属链和许可例外",
+        "按11-07的31仓矩阵逐项闭合归属与许可：11仓有选定专项、Loop仅反向链接、19仓在所查专项集合未闭合；不等同历史未读。下一批trae-agent/CloudBase。",
         "十个新 HEAD 的变更影响与备份安排",
         "Kimi新实现等价；AgentScope目标请求/事件、Session schema、运行代次与取消确认映射（旧Runtime子链已读，不代表2.0等价）",
         "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界",

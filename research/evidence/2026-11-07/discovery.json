@@ -1,0 +1,49 @@
+{
+  "checked_on": "2026-11-07",
+  "queries": [
+    {
+      "engine": "system2",
+      "q": "site.github.com/larksuite/cli \"sop-tutorial\""
+    },
+    {
+      "engine": "system2",
+      "q": "site.github.com/larksuite/cli \"weekly-report\" \"prd\""
+    },
+    {
+      "engine": "system2",
+      "q": "小米 MiMo mimoagent 官方 GitHub"
+    },
+    {
+      "engine": "system1",
+      "q": "site.mimo.xiaomi.com mimoagent",
+      "recency_days": 90
+    },
+    {
+      "engine": "system1",
+      "q": "site.github.com/larksuite/cli SOP PRD weekly report validation skill",
+      "recency_days": 90
+    }
+  ],
+  "method": "中英文发现后回读固定源码；市场目录/博客/论坛不作证据。搜索未直接返回目标体裁正文，已用GitHub固定文件获取全文。",
+  "official_pages": [
+    {
+      "url": "https://mimo.xiaomi.com/",
+      "read_scope": "主页已打开；对mimoagent及GitHub文本查找无匹配，仅说明当前提取文本未找到，不证明网站没有链接",
+      "result": "mimoagent reverse-link gap remains"
+    },
+    {
+      "url": "https://mimo.xiaomi.com/mimocode/start",
+      "read_scope": "overview正文；子页未读",
+      "result": "既有MiMo Code增量项补概览入口，不作为mimoagent归属或实现证据"
+    }
+  ],
+  "candidate_only": [
+    {
+      "url": "https://github.com/larksuite/cli/blob/main/skills/lark-im/references/lark-im-messages-search.md",
+      "reason": "搜索片段提出周报搜集需完整分页；未固定或全文读，本轮不入结论",
+      "frozen_scope_changed": false
+    }
+  ],
+  "web_backup": "未确认网页再分发许可；只留URL、日期与原创说明，不计原文全文备份。",
+  "new_frozen_sources": 0
+}
