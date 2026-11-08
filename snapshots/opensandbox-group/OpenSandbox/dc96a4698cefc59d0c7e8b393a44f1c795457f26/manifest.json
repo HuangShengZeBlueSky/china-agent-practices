@@ -1,0 +1,28 @@
+{
+  "repository": "opensandbox-group/OpenSandbox",
+  "commit": "dc96a4698cefc59d0c7e8b393a44f1c795457f26",
+  "captured_on": "2026-11-08",
+  "scope": "selected_files_only",
+  "license": "Apache-2.0",
+  "license_file": "files/LICENSE",
+  "archive_status": "not_archived",
+  "archive_url": "https://codeload.github.com/opensandbox-group/OpenSandbox/tar.gz/dc96a4698cefc59d0c7e8b393a44f1c795457f26",
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11324,
+      "sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a",
+      "git_blob": "b09cd7856d58590578ee1a4f3ad45d1310a97f87"
+    },
+    {
+      "path": "sdks/sandbox/python/src/opensandbox/adapters/command_adapter.py",
+      "bytes": 15539,
+      "sha256": "c2a16d45ea4df89f8f2442d8c30eed0fd0c91fc79688408c75249df50fed71fc",
+      "git_blob": "c5aa78038cd5ce4320163a993d703955dc0d88df"
+    }
+  ],
+  "unresolved_dependencies": [
+    "full source archive",
+    "execd implementation and deployed ingress configuration"
+  ]
+}

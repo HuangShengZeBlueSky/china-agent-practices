@@ -77,3 +77,5 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 [Trae Agent 与 CloudBase](ownership-review-2026-11-08.md)补归属、许可及版本差异。CloudBase 两版新增指定原文节选，整包未发布。[会议纪要与复盘](solutions/lark-meeting-retrospective-evidence.md)含两类图、反例和练习，目录 26/44，整包与实跑均 0。[P1 复核](review-2026-11-08.md)确认未达验收，按依赖顺延。
 
 [11-08 追加批次](log/2026-11-08-b.md)补 Qwen Code 归属、权限与恢复，飞书目录 28/44。
+
+[11-08 OpenSandbox 与体裁路由批次](log/2026-11-08-c.md)补归属、唤醒重发和三份路由，目录 31/44。

@@ -598,12 +598,26 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
+        "checked_on": "2026-11-08",
+        "head": "1f3ec4f27432ea2386cb8b357d70d2036c11f81c",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/ownership-review-2026-11-08-c.md"
+      },
+      "previous_metadata_audit": {
         "checked_on": "2026-10-26",
         "head": "dc96a4698cefc59d0c7e8b393a44f1c795457f26",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": false,
         "evidence": "research/repository-audit-2026-10-26.md"
+      },
+      "ownership_review": {
+        "checked_on": "2026-11-08",
+        "evidence": "research/ownership-review-2026-11-08-c.md",
+        "license": "Apache-2.0",
+        "visible_scope": "Alibaba-contributed AAIF project; cloud products and deployments require independent evidence"
       }
     },
     {

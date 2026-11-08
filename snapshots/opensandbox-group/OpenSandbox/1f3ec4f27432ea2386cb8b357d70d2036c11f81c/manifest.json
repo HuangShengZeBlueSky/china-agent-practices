@@ -1,0 +1,100 @@
+{
+  "repository": "opensandbox-group/OpenSandbox",
+  "commit": "1f3ec4f27432ea2386cb8b357d70d2036c11f81c",
+  "captured_on": "2026-11-08",
+  "scope": "selected_files_only",
+  "license": "Apache-2.0",
+  "license_file": "files/LICENSE",
+  "archive_status": "not_archived",
+  "archive_url": "https://codeload.github.com/opensandbox-group/OpenSandbox/tar.gz/1f3ec4f27432ea2386cb8b357d70d2036c11f81c",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 11668,
+      "sha256": "39535d8f0c100407c2a7bbd3c9e47a058e5ac1aaf1751d6a6dab59c5a51ac48e",
+      "git_blob": "d32141a2917f759014d1fcc96271117c9e3992e1"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11324,
+      "sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a",
+      "git_blob": "b09cd7856d58590578ee1a4f3ad45d1310a97f87"
+    },
+    {
+      "path": "sdks/sandbox/python/src/opensandbox/adapters/command_adapter.py",
+      "bytes": 15411,
+      "sha256": "81a69dddf184c69575f35656e9d07814fec71ac37a04ceac89181fa3bf3358e1",
+      "git_blob": "c1ef73c1c4787a4be86724c88e9fb0c3678ddf3f"
+    },
+    {
+      "path": "sdks/sandbox/python/src/opensandbox/transport/__init__.py",
+      "bytes": 3745,
+      "sha256": "66571ab5a982ccbe7aa91119058a8d670b25fb622fe742b61ae5989b05ac789f",
+      "git_blob": "64e208ae5f9e7e2802d4ebc72a372d10b06723e2"
+    },
+    {
+      "path": "sdks/sandbox/python/src/opensandbox/transport/_async_retry.py",
+      "bytes": 16928,
+      "sha256": "aedb0f003d8ceb49bdc60e35894369c7d1ef7ba35f9ee8a976772fe7e0ba0179",
+      "git_blob": "a697118d8e1ebb8bad10f224c031bac6f1ab67be"
+    },
+    {
+      "path": "sdks/sandbox/python/src/opensandbox/transport/_classify.py",
+      "bytes": 3807,
+      "sha256": "9fadbe70d913a3d86b240576c868ac2fa755fcb800d6894aa1321c21a93fc093",
+      "git_blob": "fbb941dffa9ae421dbc0318682c146ad58e66123"
+    },
+    {
+      "path": "sdks/sandbox/python/src/opensandbox/transport/_decision.py",
+      "bytes": 7986,
+      "sha256": "f09e88ab3930a9c14fd996113551ca98d7455f320cd6e39ba0071ea52e56f7fa",
+      "git_blob": "2d23f0d20a3bbf16450406784109e6a303a27b76"
+    },
+    {
+      "path": "sdks/sandbox/python/src/opensandbox/transport/retry.py",
+      "bytes": 9764,
+      "sha256": "0d487af83ee5e2cbbd4984abb425e90b063f9e965383ffae68f9726b27abb65a",
+      "git_blob": "9b67bd736cc5ff2563a54f15159e2241c6276551"
+    },
+    {
+      "path": "sdks/sandbox/python/tests/test_wake_retry_transport.py",
+      "bytes": 19386,
+      "sha256": "702380756ff0eabf7f84a21f05354a4b4f6b8c98507c50754846545c34b4ea29",
+      "git_blob": "e8b1d1759856ed5e78c2f5f2392d44aeaf792da4"
+    },
+    {
+      "path": "components/ingress/pkg/proxy/proxy.go",
+      "bytes": 17093,
+      "sha256": "2c74b6f6950220ed0d3c1f33fcc822a381672842e60fc39f51ab7e2999a919cf",
+      "git_blob": "320c61aafa58c7d5dd1b7de95af3bdbcb4093544"
+    },
+    {
+      "path": "components/ingress/pkg/proxy/wake_marker.go",
+      "bytes": 3411,
+      "sha256": "4720cf0397e827394bf698530f495b8aa33d7de91a654ecc113d51e1a836f054",
+      "git_blob": "aab265a21fbbb244e934d7ab3db105d67a3d97e5"
+    },
+    {
+      "path": "components/ingress/pkg/proxy/wake.go",
+      "bytes": 7615,
+      "sha256": "30d18a2e35d184b4a36eba28c0ccd8fb0889b1c072fa75453dcf4db6cf5a5659",
+      "git_blob": "b9d78c2f6613b8a07040e6305a9f4f80de15b13f"
+    },
+    {
+      "path": "components/ingress/pkg/proxy/wake_test.go",
+      "bytes": 18872,
+      "sha256": "8622830a5c6602ff514e28dadc2487c26c857e82843040632f65418aecf1759f",
+      "git_blob": "54357743269305031a2454f6f1c04fd449fe82fb"
+    },
+    {
+      "path": "oseps/0025-credential-vault-provider-spi.md",
+      "bytes": 47340,
+      "sha256": "61857a70bf65ad4546fd110a769a296e21d60ed94397f8964e87d5cf6efc5be3",
+      "git_blob": "cbc79daa75b2db73c1c70c02ba6324a85c5d9d84"
+    }
+  ],
+  "unresolved_dependencies": [
+    "full source archive",
+    "execd implementation and deployed ingress configuration"
+  ]
+}
