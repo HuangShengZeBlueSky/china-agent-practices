@@ -5297,9 +5297,9 @@
           "review_status": "in_progress",
           "execution_status": "not_run",
           "equivalence_evidence": null,
-          "evidence_file": "research/evidence/2026-11-07/lark-dependency-progress.json",
+          "evidence_file": "research/evidence/2026-11-08/lark-dependency-progress.json",
           "open_questions": [
-            "remaining 20 lark-doc directory files; other routes and host enforcement pending; SOP/PRD/status contracts read, not executed",
+            "remaining 18 lark-doc directory files; meeting-minutes and retrospective contracts read; other routes and host enforcement pending",
             "input/decision static subchain read; platform openValidated, BOM asymmetry experiment and all entry points pending",
             "platform crash durability and cleanup failures",
             "cross-skill lark-whiteboard/lark-okr dependencies and host scheduling",
@@ -5320,7 +5320,8 @@
         "research/solutions/lark-genre-evidence-routing.md",
         "research/solutions/lark-quantitative-evidence-contract.md",
         "research/solutions/lark-proposal-plan-contract.md",
-        "research/solutions/lark-operational-evidence-contract.md"
+        "research/solutions/lark-operational-evidence-contract.md",
+        "research/solutions/lark-meeting-retrospective-evidence.md"
       ]
     },
     {

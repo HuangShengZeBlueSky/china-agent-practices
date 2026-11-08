@@ -1,0 +1,152 @@
+{
+  "checked_on": "2026-11-08",
+  "status": "static",
+  "baseline": "e81270c91abdfc2daa82c5174896491abfbf8065",
+  "source_records": [
+    {
+      "repository": "bytedance/trae-agent",
+      "commit": "e839e559ac61bdd0e057c375dd1dee391fee797d",
+      "scope": "existing_full_archive_manifest",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 1084,
+          "sha256": "89e0d148344772c3931992a8370b7315034bb9ce49a7d183e3fafa2a6632367f",
+          "git_blob": "3b8890f7c67d2e5342e96c343b1aa3ae8bf6b78c"
+        },
+        {
+          "path": "README.md",
+          "bytes": 10238,
+          "sha256": "6ff2b6c84def1b93ffa8f754b949fdf12a9d3c5d77644984d3a81f3f5b197089",
+          "git_blob": "0e47f0593b085e2e7c75f7d58d0e645f4dc92472"
+        },
+        {
+          "path": "trae_agent/agent/agent.py",
+          "bytes": 3503,
+          "sha256": "dfa0e42a70cbe331d712678a71d0ca7d170358b106a42c51e7e01fe1229040e2",
+          "git_blob": "bbca94f01ffe36fdd72dae4e5a49f284f122399b"
+        },
+        {
+          "path": "trae_agent/utils/llm_clients/openai_client.py",
+          "bytes": 8078,
+          "sha256": "c5b7ed9e76de22971eb58d834399ff1ae76bffedf9c3885e4b53918f6ecf852c",
+          "git_blob": "3188eed6464916c903d6d6d811956240f78d3e96"
+        }
+      ]
+    },
+    {
+      "repository": "TencentCloudBase/CloudBase-AI-Toolkit",
+      "commit": "4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+      "scope": "selected_files_only",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 1074,
+          "sha256": "d9dc995e7c280063ca3927b7c47c3d370e1ab6e5db706603175d73199a6b4a71",
+          "git_blob": "ec6c46c7a4fccebe3906daeadd546e8e0a79f43a"
+        },
+        {
+          "path": "README.zh-CN.md",
+          "bytes": 24610,
+          "sha256": "d57dbf525509aa5d034e73351bfa494b73f690e779fe83be48b0b5107a9c2957",
+          "git_blob": "3c41e5002b7a7e07679ea2ddf87e122264a3e7a2"
+        },
+        {
+          "path": "mcp/package.json",
+          "bytes": 5269,
+          "sha256": "ce09436ffd201a277c7e26e0417c6a83b4da2660291549718c2e6f786bc82584",
+          "git_blob": "86c5d352548266665a44d672be11dc22e1c6243b"
+        }
+      ]
+    },
+    {
+      "repository": "TencentCloudBase/CloudBase-AI-Toolkit",
+      "commit": "8ec7084e0483e408573b7bd26ff7f3f4e02a788f",
+      "scope": "selected_files_only",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 1074,
+          "sha256": "d9dc995e7c280063ca3927b7c47c3d370e1ab6e5db706603175d73199a6b4a71",
+          "git_blob": "ec6c46c7a4fccebe3906daeadd546e8e0a79f43a"
+        },
+        {
+          "path": "README.zh-CN.md",
+          "bytes": 22590,
+          "sha256": "55f33b10fe8cbb07319b3899afa329dca88c112738572990df116d10da508cec",
+          "git_blob": "0798d2c30befe1db83e81423e78cf94feeedddfc"
+        },
+        {
+          "path": "mcp/package.json",
+          "bytes": 5269,
+          "sha256": "7abd20ad863546ffa12593c6e229d4aa829ab526bcc368eb8a341489ea997200",
+          "git_blob": "10ad0d7780dd845d8d658899b2b11a3fbfd1824b"
+        },
+        {
+          "path": "config/source/skills/cloudbase-mcp/SKILL.md",
+          "bytes": 10381,
+          "sha256": "2835a2b4b635072dc145214663f75ce6da2e87409ed55fdfbf4e485719bf7f44",
+          "git_blob": "43091179702c63297996303772bf6ac9ca0feae7"
+        }
+      ]
+    },
+    {
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "scope": "verified_existing",
+      "files": [
+        {
+          "path": "skills/lark-doc/references/genres/meeting-minutes.md",
+          "bytes": 2325,
+          "sha256": "fb46dc9e97b7b5c8e3261c280bab6ff5366b9ac72fa64d50416365dbde4b868c",
+          "git_blob": "f74bef3047f27781d6fdb7fc9d821ca321d20b4c"
+        },
+        {
+          "path": "skills/lark-doc/references/genres/retrospective.md",
+          "bytes": 2410,
+          "sha256": "86bad301a6c207f7243e3690fd0f6794463c9a9d2fd41a3e287fa733cfc0ae8e",
+          "git_blob": "25926de72b783ff1c2f6d0ca2075460f5e8b61a1"
+        },
+        {
+          "path": "skills/lark-doc/references/genres/route-workplace.md",
+          "bytes": 2899,
+          "sha256": "af06e57228e2a620d8be29b8208b1bb603101468c45d1ca5ee7a3d02491c5bd9",
+          "git_blob": "ae17c76e8b189252efd716931cec62c7601ac645"
+        }
+      ]
+    }
+  ],
+  "cloudbase_delta": {
+    "base": "4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+    "head": "8ec7084e0483e408573b7bd26ff7f3f4e02a788f",
+    "ahead_by": 265,
+    "behind_by": 0,
+    "returned_files": 300,
+    "old_package": "2.36.1",
+    "head_package": "2.37.5",
+    "registry_release_verified": false
+  },
+  "cloudbase_archive_downloads": [
+    {
+      "commit": "8ec7084e0483e408573b7bd26ff7f3f4e02a788f",
+      "sha256": "6bae7875f7d01736416cc6813f03f20627e1cf0e577a209814022dd09a5ac470",
+      "bytes": 74312704,
+      "members": 3363,
+      "root": "CloudBase-AI-Toolkit-8ec7084e0483e408573b7bd26ff7f3f4e02a788f"
+    },
+    {
+      "commit": "4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+      "sha256": "c5c3b1ae1471fbe8c1983f413b991fb6533888495b7ce74c75b6011869fca5aa",
+      "bytes": 72674270,
+      "members": 2686,
+      "root": "CloudBase-AI-Toolkit-4f68e9060c94327c1a39aa282ad17a03a4d7dfe5"
+    }
+  ],
+  "cloudbase_full_archives_published": false,
+  "web_sources": [
+    "https://www.trae.ai/blog/product_update_0625?v=1",
+    "https://docs.cloudbase.net/ai/cloudbase-ai-toolkit/prompts/how-to-use",
+    "https://developer.cloud.tencent.com/mcp/server/11698"
+  ],
+  "execution_status": "not_run"
+}

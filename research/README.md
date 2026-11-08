@@ -71,3 +71,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-07 更新
 
 [SOP、PRD与周期报告](solutions/lark-operational-evidence-contract.md)完整解读3份依赖，区分操作证明、可观察需求和状态证据，含两类图、跨实现结束判定对照与未运行练习。三份既有原文逐字读回并哈希核对，目录24/44，整包0、实跑0。[周末复核](review-2026-11-07.md)归集31仓证据、79条来源状态及真实吞吐，明确P1剩余和下一批trae-agent/CloudBase；阶段未验收不按日期切换，网站未部署。
+
+## 2026-11-08 更新
+
+[Trae Agent 与 CloudBase](ownership-review-2026-11-08.md)补归属、许可及版本差异。CloudBase 两版新增指定原文节选，整包未发布。[会议纪要与复盘](solutions/lark-meeting-retrospective-evidence.md)含两类图、反例和练习，目录 26/44，整包与实跑均 0。[P1 复核](review-2026-11-08.md)确认未达验收，按依赖顺延。

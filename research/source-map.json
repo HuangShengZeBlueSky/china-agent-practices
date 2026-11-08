@@ -117,12 +117,26 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
+        "checked_on": "2026-11-08",
+        "head": "e839e559ac61bdd0e057c375dd1dee391fee797d",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/ownership-review-2026-11-08.md"
+      },
+      "previous_metadata_audit": {
         "checked_on": "2026-10-26",
         "head": "e839e559ac61bdd0e057c375dd1dee391fee797d",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": true,
         "evidence": "research/repository-audit-2026-10-26.md"
+      },
+      "ownership_review": {
+        "checked_on": "2026-11-08",
+        "evidence": "research/ownership-review-2026-11-08.md",
+        "license": "MIT",
+        "visible_scope": "公开 CLI 与 Agent；商业客户端与榜单流水线另核"
       }
     },
     {
@@ -266,12 +280,26 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
+        "checked_on": "2026-11-08",
+        "head": "8ec7084e0483e408573b7bd26ff7f3f4e02a788f",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/ownership-review-2026-11-08.md"
+      },
+      "previous_metadata_audit": {
         "checked_on": "2026-10-26",
         "head": "4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": false,
         "evidence": "research/repository-audit-2026-10-26.md"
+      },
+      "ownership_review": {
+        "checked_on": "2026-11-08",
+        "evidence": "research/ownership-review-2026-11-08.md",
+        "license": "MIT",
+        "visible_scope": "源仓与公开分发入口；托管运行版本、服务端与客户端宿主另核"
       }
     },
     {

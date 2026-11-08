@@ -70,11 +70,14 @@
         "research/solutions/tool-outcome-and-termination.md",
         "research/ownership-review-2026-11-06.md",
         "research/review-2026-11-07.md",
-        "research/evidence/2026-11-07/weekend-audit.json"
+        "research/evidence/2026-11-07/weekend-audit.json",
+        "research/ownership-review-2026-11-08.md",
+        "research/evidence/2026-11-08/source-review.json",
+        "research/review-2026-11-08.md"
       ],
       "open_questions": [
-        "按11-07的31仓矩阵逐项闭合归属与许可：11仓有选定专项、Loop仅反向链接、19仓在所查专项集合未闭合；不等同历史未读。下一批trae-agent/CloudBase。",
-        "十个新 HEAD 的变更影响与备份安排",
+        "11-07矩阵的11个专项基础上补Trae Agent/CloudBase两项，合计13；Loop仅反向链接，其余17项未在该组专项闭合。继续按矩阵核对。",
+        "十个10-26新HEAD的变更影响与备份安排；CloudBase两版已补节选与整包下载哈希，整包未发布，分发/宿主仍待核。",
         "Kimi新实现等价；AgentScope目标请求/事件、Session schema、运行代次与取消确认映射（旧Runtime子链已读，不代表2.0等价）",
         "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界",
         "mimoagent官网直达归属链仍待补；Baidu下游校验、mimoagent协议/评分器与异常批次实验列为后续组件研究，不冒充本轮实测"

@@ -1,0 +1,41 @@
+{
+  "repository": "TencentCloudBase/CloudBase-AI-Toolkit",
+  "commit": "4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+  "captured_on": "2026-11-08",
+  "scope": "selected_files_only",
+  "license": "MIT",
+  "license_file": "files/LICENSE",
+  "source": "https://github.com/TencentCloudBase/CloudBase-AI-Toolkit/tree/4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+  "archive_url": "https://codeload.github.com/TencentCloudBase/CloudBase-AI-Toolkit/tar.gz/4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+  "archive_status": "downloaded_locally_not_published",
+  "download_observation": {
+    "commit": "4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+    "sha256": "c5c3b1ae1471fbe8c1983f413b991fb6533888495b7ce74c75b6011869fca5aa",
+    "bytes": 72674270,
+    "members": 2686,
+    "root": "CloudBase-AI-Toolkit-4f68e9060c94327c1a39aa282ad17a03a4d7dfe5"
+  },
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1074,
+      "sha256": "d9dc995e7c280063ca3927b7c47c3d370e1ab6e5db706603175d73199a6b4a71",
+      "git_blob": "ec6c46c7a4fccebe3906daeadd546e8e0a79f43a"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "bytes": 24610,
+      "sha256": "d57dbf525509aa5d034e73351bfa494b73f690e779fe83be48b0b5107a9c2957",
+      "git_blob": "3c41e5002b7a7e07679ea2ddf87e122264a3e7a2"
+    },
+    {
+      "path": "mcp/package.json",
+      "bytes": 5269,
+      "sha256": "ce09436ffd201a277c7e26e0417c6a83b4da2660291549718c2e6f786bc82584",
+      "git_blob": "86c5d352548266665a44d672be11dc22e1c6243b"
+    }
+  ],
+  "unresolved_dependencies": [
+    "remaining source tree and dependency files"
+  ]
+}
