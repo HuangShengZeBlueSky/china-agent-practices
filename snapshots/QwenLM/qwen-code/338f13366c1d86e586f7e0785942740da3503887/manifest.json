@@ -1,0 +1,34 @@
+{
+  "repository": "QwenLM/qwen-code",
+  "commit": "338f13366c1d86e586f7e0785942740da3503887",
+  "captured_on": "2026-11-08",
+  "scope": "selected_files_only",
+  "license": "Apache-2.0",
+  "license_file": "files/LICENSE",
+  "archive_status": "not_archived",
+  "archive_url": "https://codeload.github.com/QwenLM/qwen-code/tar.gz/338f13366c1d86e586f7e0785942740da3503887",
+  "files": [
+    {
+      "path": "package.json",
+      "bytes": 16635,
+      "sha256": "2f93638a8a80c47e0a394ed45f1f8793b1ad3048e4da2a7f381b616faf16cbe9",
+      "git_blob": "7a524b45c9009dd7d57ad55b2274e37e12a078b8"
+    },
+    {
+      "path": "packages/core/src/tools/skill.ts",
+      "bytes": 38498,
+      "sha256": "9e7c4d6765b51199fbc5de924b15110f7143208bcd52547d186dffb9334d1bb7",
+      "git_blob": "740c1926b61082483619cfcfcbde61eefe556631"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11361,
+      "sha256": "55367b61ccd2a016a0159ad886bd66a3ee6cb5e873d0c75c803c897dd245b075",
+      "git_blob": "2d4f1fee82272cbad5f22394dc064e621f668aac"
+    }
+  ],
+  "unresolved_dependencies": [
+    "complete source tree",
+    "runtime permission manager and hook dispatch"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "repository": "QwenLM/qwen-code",
+  "commit": "53e3e3ac2a01c2c933075d4941d0d2ceb18b106e",
+  "captured_on": "2026-11-08",
+  "scope": "selected_files_only",
+  "license": "Apache-2.0",
+  "license_file": "files/LICENSE",
+  "license_note": null,
+  "archive_status": "not_archived",
+  "archive_url": "https://codeload.github.com/QwenLM/qwen-code/tar.gz/53e3e3ac2a01c2c933075d4941d0d2ceb18b106e",
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11361,
+      "sha256": "55367b61ccd2a016a0159ad886bd66a3ee6cb5e873d0c75c803c897dd245b075",
+      "git_blob": "2d4f1fee82272cbad5f22394dc064e621f668aac"
+    },
+    {
+      "path": "README.md",
+      "bytes": 13394,
+      "sha256": "c4ec592956f959934b16e074e4a9687d68f11a9adf4bbfb301f340a8a24338fe",
+      "git_blob": "da3f979ff3f1fe7bf4239373fde8f7fda659ecea"
+    },
+    {
+      "path": "package.json",
+      "bytes": 18491,
+      "sha256": "2ab09f3e89471dd677697ecbb2b4d676965f1a2960458c7655caa1a05cf35679",
+      "git_blob": "08b46a846c553650d425a1ae46a8df989141dae0"
+    },
+    {
+      "path": "packages/core/src/tools/skill.ts",
+      "bytes": 39943,
+      "sha256": "9bd7434698a14059c1e61669465010c8277e796c44f1912564fc766502e2c715",
+      "git_blob": "19eaef6449ab7c8019c460ea0c4100106f358d32"
+    },
+    {
+      "path": "packages/core/src/tools/skill-utils.ts",
+      "bytes": 21400,
+      "sha256": "d5b130df5a00601f61940d6066ca9ee05fc3fc1c11c5e13fbeb0480b12bd688f",
+      "git_blob": "fd6c7c3d8565967dd06302cfff83746672dd3590"
+    },
+    {
+      "path": "packages/core/src/tools/skill.test.ts",
+      "bytes": 90362,
+      "sha256": "9f946f09b93d0e10728c5bf654e080701dbde1249d7ba0b3545ff68072ce1880",
+      "git_blob": "d9938f54c55e50767b18cedd2532a92014d30b9d"
+    }
+  ],
+  "unresolved_dependencies": [
+    "complete source tree",
+    "runtime permission manager and hook dispatch"
+  ]
+}

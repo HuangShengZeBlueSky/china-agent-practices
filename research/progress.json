@@ -3,7 +3,7 @@
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "继续P1-01，核对剩余17项专项和版本备份，可提前备海外候选。技能线复核memo-brief、formal-doc与相关路由，余18目录文件及跨技能/SDK/宿主。",
+  "next_action": "P1-01继续补剩余国内来源及整包缺口；技能线继续未读体裁路由，余16目录文件及跨技能、SDK与宿主。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,18 +27,21 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "lark-doc目录26/44，剩18；本轮新增入口0、依赖2、完整组0、实跑0；6235/3085冻结范围不变。",
+    "note": "lark-doc目录28/44，余16；本批新读依赖2、完整组0、实跑0；冻结6235/3085不变。",
     "new_entry_reviews": 1,
     "partial_dependency_reviews": 1
   },
   "today_outputs": [
     "research/ownership-review-2026-11-08.md",
     "research/solutions/lark-meeting-retrospective-evidence.md",
-    "research/review-2026-11-08.md"
+    "research/review-2026-11-08.md",
+    "research/ownership-review-2026-11-08-b.md",
+    "research/solutions/lark-formal-authority-and-skill-trust.md",
+    "research/review-2026-11-08-b.md"
   ],
-  "last_log": "research/log/2026-11-08.md",
+  "last_log": "research/log/2026-11-08-b.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "11-03至11-07五个已发布批次新读目录文件12、独立卡8、主线验收0、完整组0；工时未知。按观察1—3文件/批，余18目录文件机械估计6—18批，不含外部依赖或宿主验证。",
+  "estimate_note": "截至11-08上一提交，6个已发布批次新增14依赖、9方案卡、0整组与0主线验收；本批另增2依赖、1卡。按观察1—3文件/批，余16目录文件约6—16批，外部依赖和验证另计。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,
@@ -47,5 +50,5 @@
     "checked_on": "2026-10-26",
     "scope_note": "上述31/21/10继承该日固定审计，不是2026-11-07全部HEAD刷新；部分后续核查另见来源记录。"
   },
-  "weekend_review": "research/review-2026-11-08.md"
+  "weekend_review": "research/review-2026-11-08-b.md"
 }

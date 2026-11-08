@@ -1,0 +1,78 @@
+{
+  "checked_on": "2026-11-08",
+  "base_repository_head": "70bceff28e9ef14b38f53390c253de1ce4e7b152",
+  "repository": "QwenLM/qwen-code",
+  "current_head": "53e3e3ac2a01c2c933075d4941d0d2ceb18b106e",
+  "audit_head": "338f13366c1d86e586f7e0785942740da3503887",
+  "ahead": 613,
+  "behind": 0,
+  "returned_file_rows": 300,
+  "package_versions": [
+    "0.26.1",
+    "0.27.0"
+  ],
+  "license": "Apache-2.0",
+  "license_at": "53e3e3ac2a01c2c933075d4941d0d2ceb18b106e",
+  "notices_lookup": "NOTICE and NOTICE.md unavailable at root; no inference for third-party files",
+  "files": {
+    "q:LICENSE": {
+      "bytes": 11361,
+      "sha256": "55367b61ccd2a016a0159ad886bd66a3ee6cb5e873d0c75c803c897dd245b075",
+      "git_blob": "2d4f1fee82272cbad5f22394dc064e621f668aac"
+    },
+    "q:README.md": {
+      "bytes": 13394,
+      "sha256": "c4ec592956f959934b16e074e4a9687d68f11a9adf4bbfb301f340a8a24338fe",
+      "git_blob": "da3f979ff3f1fe7bf4239373fde8f7fda659ecea"
+    },
+    "q:package.json": {
+      "bytes": 18491,
+      "sha256": "2ab09f3e89471dd677697ecbb2b4d676965f1a2960458c7655caa1a05cf35679",
+      "git_blob": "08b46a846c553650d425a1ae46a8df989141dae0"
+    },
+    "q:packages/core/src/tools/skill.ts": {
+      "bytes": 39943,
+      "sha256": "9bd7434698a14059c1e61669465010c8277e796c44f1912564fc766502e2c715",
+      "git_blob": "19eaef6449ab7c8019c460ea0c4100106f358d32"
+    },
+    "q:packages/core/src/tools/skill-utils.ts": {
+      "bytes": 21400,
+      "sha256": "d5b130df5a00601f61940d6066ca9ee05fc3fc1c11c5e13fbeb0480b12bd688f",
+      "git_blob": "fd6c7c3d8565967dd06302cfff83746672dd3590"
+    },
+    "q:packages/core/src/tools/skill.test.ts": {
+      "bytes": 90362,
+      "sha256": "9f946f09b93d0e10728c5bf654e080701dbde1249d7ba0b3545ff68072ce1880",
+      "git_blob": "d9938f54c55e50767b18cedd2532a92014d30b9d"
+    },
+    "old:package.json": {
+      "bytes": 16635,
+      "sha256": "2f93638a8a80c47e0a394ed45f1f8793b1ad3048e4da2a7f381b616faf16cbe9",
+      "git_blob": "7a524b45c9009dd7d57ad55b2274e37e12a078b8"
+    },
+    "old:packages/core/src/tools/skill.ts": {
+      "bytes": 38498,
+      "sha256": "9e7c4d6765b51199fbc5de924b15110f7143208bcd52547d186dffb9334d1bb7",
+      "git_blob": "740c1926b61082483619cfcfcbde61eefe556631"
+    },
+    "skills/lark-doc/references/genres/memo-brief.md": {
+      "bytes": 2063,
+      "sha256": "e4958eff02c053002a2664da460cb465d78db097cfe2a1add3969b885d3e57f7",
+      "git_blob": "53b1b5fa4ef6c4d7e61c7744b12f489147c59b9c"
+    },
+    "skills/lark-doc/references/genres/formal-doc.md": {
+      "bytes": 4477,
+      "sha256": "15812640cd1de50cef24be6d36658ddaaaa623ea214eb2df820d92eccc0efaa6",
+      "git_blob": "2de096db132f50685c251d84ee44929767e6969d"
+    },
+    "skills/lark-doc/references/genres/route-workplace.md": {
+      "bytes": 2899,
+      "sha256": "af06e57228e2a620d8be29b8208b1bb603101468c45d1ca5ee7a3d02491c5bd9",
+      "git_blob": "ae17c76e8b189252efd716931cec62c7601ac645"
+    }
+  },
+  "web": [
+    "https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/"
+  ],
+  "execution_status": "not_run"
+}

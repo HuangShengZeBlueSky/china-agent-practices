@@ -200,12 +200,26 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
+        "checked_on": "2026-11-08",
+        "head": "53e3e3ac2a01c2c933075d4941d0d2ceb18b106e",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": false,
+        "evidence": "research/ownership-review-2026-11-08-b.md"
+      },
+      "previous_metadata_audit": {
         "checked_on": "2026-10-26",
         "head": "338f13366c1d86e586f7e0785942740da3503887",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": false,
         "evidence": "research/repository-audit-2026-10-26.md"
+      },
+      "ownership_review": {
+        "checked_on": "2026-11-08",
+        "evidence": "research/ownership-review-2026-11-08-b.md",
+        "license": "Apache-2.0",
+        "visible_scope": "公开 CLI 和 SDK 源码；实际宿主部署和第三方依赖许可另核"
       }
     },
     {
