@@ -79,3 +79,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 [11-08 追加批次](log/2026-11-08-b.md)补 Qwen Code 归属、权限与恢复，飞书目录 28/44。
 
 [11-08 OpenSandbox 与体裁路由批次](log/2026-11-08-c.md)补归属、唤醒重发和三份路由，目录 31/44。
+
+## 2026-11-09 更新
+
+[MiniMax MCP 整包与归属](ownership-review-2026-11-09.md)已核归档和固定文件，[查询与交付](solutions/minimax-mcp-video-delivery.md)追到副作用及异常差异。[飞书三类路由](solutions/lark-creative-media-marketing-routing.md)推进目录至 34/44。

@@ -1,0 +1,90 @@
+{
+  "checked_on": "2026-11-09",
+  "baseline": "580c0db05f0f2410a4d26e72e1f31c813088a94c",
+  "repository": "MiniMax-AI/MiniMax-MCP",
+  "upstream_commit": "0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a",
+  "package_manifest_version": "0.0.19",
+  "license": "MIT",
+  "archive_manifest": "snapshots/MiniMax-AI/MiniMax-MCP/0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a/manifest.json",
+  "archive_evidence": {
+    "archive_sha256": "4a63a217e61e452b919cbf44ab0f0fa079dcb0c459b5c6e9532fde39f886bdf3",
+    "archive_bytes": 132167,
+    "files": {
+      "LICENSE": {
+        "bytes": 1064,
+        "sha256": "a9138c01f3c22641ac8f8fe2f3ec75de0b4a0494ff81e8da43b3cc2091935ac3",
+        "git_blob": "b3d379e6706e52edcf591c846ad356b92e983994"
+      },
+      "README.md": {
+        "bytes": 11969,
+        "sha256": "46fd66aa807a33554aff71cdd308b86e15e58cb07682883beba2f12cc93f0619",
+        "git_blob": "6fc7604f40c08181d98f20459324921c254edac6"
+      },
+      "README-CN.md": {
+        "bytes": 11992,
+        "sha256": "e9c0b6ad26de688f37e7689cdfef1327806d10a051212627fd303e158cbe85dc",
+        "git_blob": "7edfd00a94c064b4d6d0d5a9a7b41e02d35ec86a"
+      },
+      "pyproject.toml": {
+        "bytes": 1336,
+        "sha256": "68517efaf346c5e592b9123e36d583733f5ea6dc2037e02c01e3d2cf170f1537",
+        "git_blob": "f828ee75b2d76efbf7b425e586e5072bb48c68bb"
+      },
+      "minimax_mcp/server.py": {
+        "bytes": 26731,
+        "sha256": "7a8cf05181e4c0a0b0fa2190fee7a598df732dd5ed17eb35d492ce29b9be349b",
+        "git_blob": "5f53e0bf6b206633c0231718516af7fc037716a2"
+      },
+      "minimax_mcp/client.py": {
+        "bytes": 3675,
+        "sha256": "08d4116a20e8a652ceb9e2b6f58b1e7cdfe464b14baff05977e08b4b05b66be3",
+        "git_blob": "41988d2a4a54c6cb506c2cb8aa1ddaafda1b76b3"
+      },
+      "minimax_mcp/utils.py": {
+        "bytes": 5405,
+        "sha256": "ec6098665465e07793a8aa022eb76f2bac223eb7f54a66b01deaea8b3671e1ff",
+        "git_blob": "0cfdfdfebb043f36805437d7e592bd6a8fe7602d"
+      },
+      "minimax_mcp/exceptions.py": {
+        "bytes": 547,
+        "sha256": "7f4db2f0500aa3b592f63aa1403d7f84590f1d6157e3e8f99c4bd9feb0661425",
+        "git_blob": "3a9c1e856d1e07ab325164db30559a0c6113ed7c"
+      },
+      "tests/test_utils.py": {
+        "bytes": 3466,
+        "sha256": "a1cebb288e5b7e15836a356729f8a6e2253d719110ad318c2ae9fda2b4c32288",
+        "git_blob": "13691a1dfcf4e673c0381ed17640eac29320ef43"
+      },
+      "tests/test_server.py": {
+        "bytes": 2441,
+        "sha256": "6a4b0f089cea3ab0c56fa96d85e322547ae9e1321e5d88ffc8439025b31f0548",
+        "git_blob": "fb5e39460c18a35333a370b23ff853b0ea4ddd22"
+      }
+    }
+  },
+  "lark_files": [
+    {
+      "path": "skills/lark-doc/references/genres/route-creative.md",
+      "bytes": 3663,
+      "sha256": "40dbd02cca3ba40d48de68414a8d450e46d233c98cf0dde1dc9b389ffd45e3ff",
+      "reading_status": "read",
+      "git_blob": "d1ecaf17bad2aec85053b6a887fa5f37f38276f2"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-marketing.md",
+      "bytes": 4347,
+      "sha256": "6ea22d7a5eaadde21ea11e484aba71492dca66428824639a20dad20d9243a787",
+      "reading_status": "read",
+      "git_blob": "b991317fff865e90293a14977f3cf60f7d0140f8"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/route-media.md",
+      "bytes": 3771,
+      "sha256": "82bef9147b59e0a6cfd1321718085210cccc484c07885630ee2ac788eb2ce8e9",
+      "reading_status": "read",
+      "git_blob": "6ff646499decbb5a9cee003a42c72ae7bb9d42aa"
+    }
+  ],
+  "official_doc": "https://platform.minimax.io/docs/guides/mcp-guide",
+  "execution_status": "not_run"
+}

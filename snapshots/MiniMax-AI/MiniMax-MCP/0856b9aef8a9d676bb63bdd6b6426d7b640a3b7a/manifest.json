@@ -45,6 +45,31 @@
       "path": "minimax_mcp/server.py",
       "bytes": 26731,
       "sha256": "7a8cf05181e4c0a0b0fa2190fee7a598df732dd5ed17eb35d492ce29b9be349b"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 1336,
+      "sha256": "68517efaf346c5e592b9123e36d583733f5ea6dc2037e02c01e3d2cf170f1537"
+    },
+    {
+      "path": "minimax_mcp/utils.py",
+      "bytes": 5405,
+      "sha256": "ec6098665465e07793a8aa022eb76f2bac223eb7f54a66b01deaea8b3671e1ff"
+    },
+    {
+      "path": "minimax_mcp/exceptions.py",
+      "bytes": 547,
+      "sha256": "7f4db2f0500aa3b592f63aa1403d7f84590f1d6157e3e8f99c4bd9feb0661425"
+    },
+    {
+      "path": "tests/test_utils.py",
+      "bytes": 3466,
+      "sha256": "a1cebb288e5b7e15836a356729f8a6e2253d719110ad318c2ae9fda2b4c32288"
+    },
+    {
+      "path": "tests/test_server.py",
+      "bytes": 2441,
+      "sha256": "6a4b0f089cea3ab0c56fa96d85e322547ae9e1321e5d88ffc8439025b31f0548"
     }
   ],
   "skills": [],

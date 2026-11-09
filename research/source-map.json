@@ -783,12 +783,26 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
+        "checked_on": "2026-11-09",
+        "head": "0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/ownership-review-2026-11-09.md"
+      },
+      "previous_metadata_audit": {
         "checked_on": "2026-10-26",
         "head": "0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": true,
         "evidence": "research/repository-audit-2026-10-26.md"
+      },
+      "ownership_review": {
+        "checked_on": "2026-11-09",
+        "evidence": "research/ownership-review-2026-11-09.md",
+        "license": "MIT",
+        "visible_scope": "official Python MCP adapter; JavaScript, npm/PyPI deployment and cloud runtime not reviewed"
       }
     },
     {
