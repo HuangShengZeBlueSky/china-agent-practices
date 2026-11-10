@@ -1,0 +1,70 @@
+{
+  "checked_on": "2026-11-10",
+  "baseline": "8da7fac71b9af393c8e7937b5c78f69e760ec1fa",
+  "repository": "bytedance/deer-flow",
+  "head": "c612531213b2505857bf733a6a332fd7653f84b4",
+  "prior": "ce0fa4c114226213e5e5799cc2fea43687dc4aba",
+  "prior_license": {
+    "bytes": 1134,
+    "sha256": "b23dff4d4bac8d17b6efaaa7e88c2b730149c4dda45699ce676b719cfdffe7e1",
+    "git_blob": "9dc98a4a6b9b549447a4fc314e4cf50529c184c7"
+  },
+  "delta": {
+    "ahead": 257,
+    "behind": 0,
+    "returned_file_rows": 300
+  },
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1134,
+      "sha256": "b23dff4d4bac8d17b6efaaa7e88c2b730149c4dda45699ce676b719cfdffe7e1",
+      "git_blob": "9dc98a4a6b9b549447a4fc314e4cf50529c184c7"
+    },
+    {
+      "path": "README_zh.md",
+      "bytes": 100616,
+      "sha256": "7d690efb08c3f39008131745d953a9f95525ec186aea95732c24e374686ef74b",
+      "git_blob": "fcd74194576416e6c389576fcbb66c50d4d2ebfb"
+    },
+    {
+      "path": "backend/packages/harness/deerflow/agents/middlewares/AGENTS.md",
+      "bytes": 41077,
+      "sha256": "cda2a38ebd780c05f128fd7a739f200da89f414a4541254e918f6e1d9642eece",
+      "git_blob": "c0605afa37db70847f58788bb45f2d56cd9d8cd5"
+    },
+    {
+      "path": "backend/packages/harness/deerflow/agents/middlewares/input_sanitization_middleware.py",
+      "bytes": 26775,
+      "sha256": "7ee9a620267ad7db201fe5e968bd6833231dc32f5deeaae72ba7106aded4cca5",
+      "git_blob": "fa3b3400613f560a3fe16625b8c05ef8f41945d6"
+    },
+    {
+      "path": "backend/tests/test_input_sanitization_middleware.py",
+      "bytes": 70836,
+      "sha256": "c536fdc69ca5ed17bb8a63d9caefd3f7904411aff3b9c982d25b00aa1c9afd25",
+      "git_blob": "cd7d5b8fbf0ebf56154be41e34b49088f35ae679"
+    }
+  ],
+  "lark": [
+    {
+      "path": "skills/lark-doc/references/genres/email.md",
+      "bytes": 4130,
+      "sha256": "8a83a390d1736991f69f66e7dda5a748da1bda925be300c01e240e0bcf47a82c",
+      "git_blob": "1fb8b0c99dac15df082ac639c0192436990c5baa"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/wechat.md",
+      "bytes": 3982,
+      "sha256": "9ab22f27d0c6207724b8b309f2ed114a93c9a756c8e16da84a78f68c10018efc",
+      "git_blob": "618b16f124f0daa8cb3bdaf7ba4b6d217f5a86be"
+    },
+    {
+      "path": "skills/lark-doc/references/genres/xiaohongshu.md",
+      "bytes": 3303,
+      "sha256": "d9121277c04df2196d4c6f2c0e1c4ad3f6fc15af4f09b8a83e689d9144542e92",
+      "git_blob": "584ec6298bd7b1b778aa25be76333f50331eff99"
+    }
+  ],
+  "execution_status": "not_run"
+}

@@ -83,3 +83,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-09 更新
 
 [MiniMax MCP 整包与归属](ownership-review-2026-11-09.md)已核归档和固定文件，[查询与交付](solutions/minimax-mcp-video-delivery.md)追到副作用及异常差异。[飞书三类路由](solutions/lark-creative-media-marketing-routing.md)推进目录至 34/44。
+
+## 2026-11-10
+
+[DeerFlow 归属](ownership-review-2026-11-10.md)及[输入归一化](solutions/deerflow-model-input-normalization.md)已补。[平台叶](solutions/lark-platform-draft-boundaries.md)推进目录至37/44。

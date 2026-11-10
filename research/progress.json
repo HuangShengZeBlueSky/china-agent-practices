@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-09",
+  "updated_at": "2026-11-10",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "继续P1-01剩余14条国内来源专项和版本归档；技能线核对剩余10份目录文件，优先平台叶与媒体插入，并保留跨技能、SDK与宿主缺口。",
+  "next_action": "继续P1-01剩余13条专项和版本归档；飞书优先媒体插入、资源封面与思维笔记，余7目录文件及跨技能、SDK、宿主。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,18 +27,18 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "lark-doc目录34/44，余10，本批新读3、整组0、实跑0；冻结6235/3085不变。",
+    "note": "lark-doc目录37/44，余7；本批新增依赖3、整组0、实跑0；冻结范围不变。",
     "new_entry_reviews": 1,
     "partial_dependency_reviews": 1
   },
   "today_outputs": [
-    "research/ownership-review-2026-11-09.md",
-    "research/solutions/minimax-mcp-video-delivery.md",
-    "research/solutions/lark-creative-media-marketing-routing.md"
+    "research/ownership-review-2026-11-10.md",
+    "research/solutions/deerflow-model-input-normalization.md",
+    "research/solutions/lark-platform-draft-boundaries.md"
   ],
-  "last_log": "research/log/2026-11-09.md",
+  "last_log": "research/log/2026-11-10.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "截至11-08有8个已发布批次新增19份目录依赖、12张方案卡、0整组、0主线验收。本批另增3依赖、2卡。按已观察1—3份/批，余10目录文件约4—10批，外部依赖和验证另计。",
+  "estimate_note": "既有观察每批1—3份，余7目录文件约3—7批；跨技能、SDK与宿主验证另计。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,

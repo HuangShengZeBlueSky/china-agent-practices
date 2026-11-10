@@ -5297,9 +5297,9 @@
           "review_status": "in_progress",
           "execution_status": "not_run",
           "equivalence_evidence": null,
-          "evidence_file": "research/evidence/2026-11-09/lark-dependency-progress.json",
+          "evidence_file": "research/evidence/2026-11-10/lark-dependency-progress.json",
           "open_questions": [
-            "remaining 10 directory files; creative/media/marketing routers read; platform leaves and host enforcement pending",
+            "remaining seven directory files; email/WeChat/Xiaohongshu read; lark-mail, SDK and host enforcement pending",
             "input/decision static subchain read; platform openValidated, BOM asymmetry experiment and all entry points pending",
             "platform crash durability and cleanup failures",
             "cross-skill lark-whiteboard/lark-okr dependencies and host scheduling",
@@ -5324,7 +5324,8 @@
         "research/solutions/lark-meeting-retrospective-evidence.md",
         "research/solutions/lark-formal-authority-and-skill-trust.md",
         "research/solutions/lark-reader-outcome-routing.md",
-        "research/solutions/lark-creative-media-marketing-routing.md"
+        "research/solutions/lark-creative-media-marketing-routing.md",
+        "research/solutions/lark-platform-draft-boundaries.md"
       ]
     },
     {

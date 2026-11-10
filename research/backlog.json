@@ -83,10 +83,13 @@
         "research/review-2026-11-08-c.md",
         "research/ownership-review-2026-11-09.md",
         "research/solutions/minimax-mcp-video-delivery.md",
-        "research/evidence/2026-11-09/source-review.json"
+        "research/evidence/2026-11-09/source-review.json",
+        "research/ownership-review-2026-11-10.md",
+        "research/solutions/deerflow-model-input-normalization.md",
+        "research/evidence/2026-11-10/source-review.json"
       ],
       "open_questions": [
-        "11-07矩阵追加后已有16条专项（含MiniMax MCP整包核验），Loop仅反向链接，余14条尚未在专项集合闭合。",
+        "31仓中17条有专项记录；Loop仅反向链接，余13条尚未在专项集合闭合。",
         "十个10-26新HEAD的变更影响与备份安排；CloudBase两版已补节选与整包下载哈希，整包未发布，分发/宿主仍待核。 Qwen Code 10-26 与当前版本已保存节选，整包仍缺。 OpenSandbox 两版已补节选，整包仍缺。",
         "Kimi新实现等价；AgentScope目标请求/事件、Session schema、运行代次与取消确认映射（旧Runtime子链已读，不代表2.0等价）",
         "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界",

@@ -1,0 +1,45 @@
+{
+  "repository": "bytedance/deer-flow",
+  "commit": "c612531213b2505857bf733a6a332fd7653f84b4",
+  "captured_on": "2026-11-10",
+  "scope": "selected_files_only",
+  "license": "MIT",
+  "license_file": "files/LICENSE",
+  "archive_status": "not_archived_in_this_batch",
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1134,
+      "sha256": "b23dff4d4bac8d17b6efaaa7e88c2b730149c4dda45699ce676b719cfdffe7e1",
+      "git_blob": "9dc98a4a6b9b549447a4fc314e4cf50529c184c7"
+    },
+    {
+      "path": "README_zh.md",
+      "bytes": 100616,
+      "sha256": "7d690efb08c3f39008131745d953a9f95525ec186aea95732c24e374686ef74b",
+      "git_blob": "fcd74194576416e6c389576fcbb66c50d4d2ebfb"
+    },
+    {
+      "path": "backend/packages/harness/deerflow/agents/middlewares/AGENTS.md",
+      "bytes": 41077,
+      "sha256": "cda2a38ebd780c05f128fd7a739f200da89f414a4541254e918f6e1d9642eece",
+      "git_blob": "c0605afa37db70847f58788bb45f2d56cd9d8cd5"
+    },
+    {
+      "path": "backend/packages/harness/deerflow/agents/middlewares/input_sanitization_middleware.py",
+      "bytes": 26775,
+      "sha256": "7ee9a620267ad7db201fe5e968bd6833231dc32f5deeaae72ba7106aded4cca5",
+      "git_blob": "fa3b3400613f560a3fe16625b8c05ef8f41945d6"
+    },
+    {
+      "path": "backend/tests/test_input_sanitization_middleware.py",
+      "bytes": 70836,
+      "sha256": "c536fdc69ca5ed17bb8a63d9caefd3f7904411aff3b9c982d25b00aa1c9afd25",
+      "git_blob": "cd7d5b8fbf0ebf56154be41e34b49088f35ae679"
+    }
+  ],
+  "unresolved_dependencies": [
+    "middleware composition and gateway provenance",
+    "provider serializer and live deployments"
+  ]
+}
