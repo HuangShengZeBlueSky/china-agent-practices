@@ -2942,6 +2942,18 @@
       "bytes": 14122,
       "sha256": "9273f2e379b96a19200d54b58fee47c0ce32d081913ee45434ee34449db387c2",
       "git_blob": "aef05d7f16c297154f576e61ade0144bbee06b8f"
+    },
+    {
+      "path": "shortcuts/doc/doc_media_insert.go",
+      "bytes": 24936,
+      "sha256": "9dc5a58a4faba305adf9e5903473abc1739ff7e9ae569c01fadefb975e42ec2c",
+      "git_blob": "1e2d5f852cb31f237cc5b6c18feb626ce3e12279"
+    },
+    {
+      "path": "shortcuts/doc/doc_media_insert_test.go",
+      "bytes": 21132,
+      "sha256": "8a73802ecc4af823de287185626cce9ed396bef733327019b6f122d61ab741a2",
+      "git_blob": "4391f5f04e7ca5d313dff85cb59feeb382bda95e"
     }
   ],
   "skills": [

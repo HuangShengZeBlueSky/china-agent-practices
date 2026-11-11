@@ -926,12 +926,26 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
+        "checked_on": "2026-11-11",
+        "head": "0ab2e2f550477884743cd63fbca7bc4aa7b00290",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/ownership-review-2026-11-11.md"
+      },
+      "previous_metadata_audit": {
         "checked_on": "2026-10-26",
         "head": "0ab2e2f550477884743cd63fbca7bc4aa7b00290",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": true,
         "evidence": "research/repository-audit-2026-10-26.md"
+      },
+      "ownership_review": {
+        "checked_on": "2026-11-11",
+        "evidence": "research/ownership-review-2026-11-11.md",
+        "license": "Apache-2.0",
+        "visible_scope": "official Shanghai AI Lab/InternLM source; archive existence inherited, selected hashes rechecked; no live verification"
       }
     },
     {

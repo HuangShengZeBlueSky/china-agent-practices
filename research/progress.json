@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-10",
+  "updated_at": "2026-11-11",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "继续P1-01剩余13条专项和版本归档；飞书优先媒体插入、资源封面与思维笔记，余7目录文件及跨技能、SDK、宿主。",
+  "next_action": "继续P1-01剩余12条专项及版本归档；飞书读最后4份体裁文件，另核封面执行链、Wiki入口文档差异、补偿并发与跨技能/宿主。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,18 +27,18 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "lark-doc目录37/44，余7；本批新增依赖3、整组0、实跑0；冻结范围不变。",
+    "note": "lark-doc目录40/44，余4；本轮新读3、完整组0、实跑0；6235/3085冻结不变。",
     "new_entry_reviews": 1,
     "partial_dependency_reviews": 1
   },
   "today_outputs": [
-    "research/ownership-review-2026-11-10.md",
-    "research/solutions/deerflow-model-input-normalization.md",
-    "research/solutions/lark-platform-draft-boundaries.md"
+    "research/ownership-review-2026-11-11.md",
+    "research/solutions/lagent-action-status-and-hooks.md",
+    "research/solutions/lark-media-insert-recovery.md"
   ],
-  "last_log": "research/log/2026-11-10.md",
+  "last_log": "research/log/2026-11-11.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "既有观察每批1—3份，余7目录文件约3—7批；跨技能、SDK与宿主验证另计。",
+  "estimate_note": "余4目录文件按既有1—3份/批约2—4批；目录读完仍需跨技能、SDK和宿主核查，完整组和主线完工日未知。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,

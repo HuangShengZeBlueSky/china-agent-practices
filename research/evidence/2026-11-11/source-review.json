@@ -1,0 +1,81 @@
+{
+  "checked_on": "2026-11-11",
+  "baseline": "3bb88d6091008ba03b4edcd1d63e1698239e5f65",
+  "repository": "InternLM/lagent",
+  "upstream_commit": "0ab2e2f550477884743cd63fbca7bc4aa7b00290",
+  "license": "Apache-2.0",
+  "scope": "static selected source and prior manifests",
+  "hashes": {
+    "LICENSE": {
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "git_blob": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+    },
+    "README.md": {
+      "bytes": 24099,
+      "sha256": "fc04cfee6d0c1d5ef3c3c6a425caaf041eb4ca3a886ae668aea40173f26e931e",
+      "git_blob": "066bc039a1bb59c9c6a92124db130fc177eeb546"
+    },
+    "lagent/actions/action_executor.py": {
+      "bytes": 7788,
+      "sha256": "bad5198953a4a439d9984bbbbcb5734ee0a7e60e65b16c87d6a035a9b34c232f",
+      "git_blob": "e28f32d57766be5d3c54da5fb0db7c0cc5a918ae"
+    },
+    "lagent/actions/builtin_actions.py": {
+      "bytes": 3491,
+      "sha256": "51419337f096460b98e19675a52a90fd5651feb34e93a14aec8c3607b8b4d4bd",
+      "git_blob": "6bc4a49525f1aae5cf84e55c0dd5c88930fd3ecc"
+    },
+    "lagent/actions/base_action.py": {
+      "bytes": 14680,
+      "sha256": "c49933292071b9fa4dd9a368708d6fa3b715e1af00138fc75344bbf79099ffa0",
+      "git_blob": "b42036af012376dbd2623458a49245cb40b65baf"
+    },
+    "lagent/hooks/action_preprocessor.py": {
+      "bytes": 2605,
+      "sha256": "cd2a67ae9e621c680febf7f9a6515f71b16afd00a4b663c5808e8021388ec118",
+      "git_blob": "51083aa86d4241acc307817b77708299c32daf93"
+    },
+    "lagent/schema.py": {
+      "bytes": 4829,
+      "sha256": "936893f21fc2b124fed8a7318c79a1ea210407a0e3454e7818aa79feb6444069",
+      "git_blob": "085c25753b1d35d1de6dc9e59b831830e5b27a70"
+    },
+    "shortcuts/doc/doc_media_insert.go": {
+      "bytes": 24936,
+      "sha256": "9dc5a58a4faba305adf9e5903473abc1739ff7e9ae569c01fadefb975e42ec2c",
+      "git_blob": "1e2d5f852cb31f237cc5b6c18feb626ce3e12279"
+    },
+    "shortcuts/doc/doc_media_insert_test.go": {
+      "bytes": 21132,
+      "sha256": "8a73802ecc4af823de287185626cce9ed396bef733327019b6f122d61ab741a2",
+      "git_blob": "4391f5f04e7ca5d313dff85cb59feeb382bda95e"
+    },
+    "lark-doc-media-insert": {
+      "bytes": 6930,
+      "sha256": "715c0ffefbca373c2554f3e60ca907b0a28166469f9eecd124418faac9c1ddae",
+      "git_blob": "6b87755f49962cbd14654508ed7b345aa31869e9"
+    },
+    "lark-doc-resource-cover": {
+      "bytes": 4184,
+      "sha256": "3d453cc82978d7a4f8d8fad08e80783c209cf7ff7b1bbf3cb56c23f51aa4e457",
+      "git_blob": "2ac56fb70781da475e7578940248de9a533efbc5"
+    },
+    "lark-doc-mindnote": {
+      "bytes": 5546,
+      "sha256": "a239f58aa9d832623d79943a8f8268783da3c07bce1816060e2f01b0d1278e92",
+      "git_blob": "3e3f26bbb79404b36f85f556db32787e32b8034e"
+    }
+  },
+  "react_additional_read": {
+    "url": "https://github.com/InternLM/lagent/blob/0ab2e2f550477884743cd63fbca7bc4aa7b00290/lagent/agents/react.py",
+    "git_blob": "4a942a068c44e8481ec8f382b63947407826305b",
+    "prior_manifest": "snapshots/InternLM/lagent/0ab2e2f550477884743cd63fbca7bc4aa7b00290/manifest.json"
+  },
+  "lark_discrepancy": {
+    "path": "skills/lark-doc/references/lark-doc-media-insert.md",
+    "statement": "wiki URL unsupported",
+    "code": "resolveDocxDocumentID resolves wiki and requires obj_type=docx"
+  },
+  "execution_status": "not_run"
+}
