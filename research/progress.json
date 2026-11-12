@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-11",
+  "updated_at": "2026-11-12",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "继续P1-01剩余12条专项及版本归档；飞书读最后4份体裁文件，另核封面执行链、Wiki入口文档差异、补偿并发与跨技能/宿主。",
+  "next_action": "继续P1-01剩余11条专项及版本归档；lark-doc目录已读完，先核lark-shared/lark-whiteboard/lark-okr等跨技能边、SDK和宿主执行条件，再判整组验收。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,18 +27,18 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "lark-doc目录40/44，余4；本轮新读3、完整组0、实跑0；6235/3085冻结不变。",
+    "note": "lark-doc目录44/44；本轮新增依赖4、完整组0、实跑0；6235/3085冻结不变。",
     "new_entry_reviews": 1,
     "partial_dependency_reviews": 1
   },
   "today_outputs": [
-    "research/ownership-review-2026-11-11.md",
-    "research/solutions/lagent-action-status-and-hooks.md",
-    "research/solutions/lark-media-insert-recovery.md"
+    "research/ownership-review-2026-11-12.md",
+    "research/solutions/mindsearch-citation-integrity.md",
+    "research/solutions/lark-genre-evidence-closure.md"
   ],
-  "last_log": "research/log/2026-11-11.md",
+  "last_log": "research/log/2026-11-12.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "余4目录文件按既有1—3份/批约2—4批；目录读完仍需跨技能、SDK和宿主核查，完整组和主线完工日未知。",
+  "estimate_note": "此出现路径目录阅读完成；跨技能、SDK、宿主尚待验证，完整组和主线完工日未知。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,

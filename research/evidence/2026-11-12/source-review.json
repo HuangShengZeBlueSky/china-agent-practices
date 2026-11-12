@@ -1,0 +1,77 @@
+{
+  "checked_on": "2026-11-12",
+  "baseline": "af077b8e47352ce771921453228ef849bf26055c",
+  "repository": "InternLM/MindSearch",
+  "upstream_commit": "7952c5f8a956fe6a44228a6a7d528a35340e7c87",
+  "license": "Apache-2.0",
+  "archive_status": "previous_manifest_only_not_reverified",
+  "hashes": {
+    "LICENSE": {
+      "bytes": 11353,
+      "sha256": "9424a68484e9164bb9d81d71283c60dd79adb54af73e5222b008bbfe220e4a50",
+      "git_blob": "d78fe384132bd63552fac705aa14e29abb26c072"
+    },
+    "README_zh-CN.md": {
+      "bytes": 4788,
+      "sha256": "d59f5e1e20de23fce96771e04670dd0d2d8681296feac856ea045bf960255ae5",
+      "git_blob": "073a1b971665f1a5eee1c703a57db8060d61d9d5"
+    },
+    "requirements.txt": {
+      "bytes": 198,
+      "sha256": "1a485e457155875a3628c8aed5c1755bc9b99efb122cd158e908c23ff2831874",
+      "git_blob": "fac815c6d49485ff19cd9660fc6cd02ccd030968"
+    },
+    "mindsearch/agent/graph.py": {
+      "bytes": 11768,
+      "sha256": "ef42f61fbfef47e60dbecfd30865ad1bf0557889c78eaca75579763c242319ac",
+      "git_blob": "b9a09f1040418ae5b0b71fa66d3d80ce8e65eb3c"
+    },
+    "mindsearch/agent/mindsearch_agent.py": {
+      "bytes": 9163,
+      "sha256": "45c8730acb0e9427137184573edec24edbeb92375c3b62746da7826d640cfc51",
+      "git_blob": "ac8d33e8dd542abe9ea5ba8a2115f74ff22e6338"
+    },
+    "mindsearch/app.py": {
+      "bytes": 6671,
+      "sha256": "4b4f62c3087f77646dcb0c9a3ec80fad00adda2c99368f308f892c73dd5c925e",
+      "git_blob": "1f71cc6620394f33c51e17f05a342a7f9b90e4fd"
+    },
+    "skills/lark-doc/references/genres/official-redhead.md": {
+      "bytes": 6249,
+      "sha256": "97dac887c22f55f46b825f25053938d74bc8a1abcfed3b08ec4d3ca04105941c",
+      "git_blob": "589ad684fa9fafa5108a280289388bb55e93c8b4"
+    },
+    "skills/lark-doc/references/genres/route-consumer.md": {
+      "bytes": 3910,
+      "sha256": "ea4291f7378204a09ebc89b5a480dca3d3389e06ec0bb6e0607ad9614ac0e7af",
+      "git_blob": "48c334340d518abd362ad4e752ae4491371cc344"
+    },
+    "skills/lark-doc/references/genres/route-opinion.md": {
+      "bytes": 3683,
+      "sha256": "87ff6fedcbd8584cef24407f434935c0fd481f58217d7e5ab8330be86d6c2dad",
+      "git_blob": "4e87f0571da921b6aa5bbb5c7358fa1aa913a145"
+    },
+    "skills/lark-doc/references/genres/route-personal-brand.md": {
+      "bytes": 3437,
+      "sha256": "ba942789e91fe3239cec092a6556b2bb8a1452bb0ca29bf93dc139c2700b71cf",
+      "git_blob": "de735b2962b0bc68fcaa78d224f2b5aab33b050f"
+    }
+  },
+  "paper": {
+    "url": "https://arxiv.org/html/2407.20183",
+    "scope": "method and selected evaluation sections only",
+    "evaluation_reproduced": false
+  },
+  "simulation": {
+    "scope": "synthetic Python mapping only, no upstream imports",
+    "input_local_ids": [
+      2,
+      7
+    ],
+    "available_local_ids": [
+      2
+    ],
+    "output": "synthetic example: rendered=[1,2], resolved=[1], missing=[2]"
+  },
+  "execution_status": "not_run"
+}

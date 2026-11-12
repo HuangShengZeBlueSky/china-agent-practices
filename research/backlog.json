@@ -89,10 +89,13 @@
         "research/evidence/2026-11-10/source-review.json",
         "research/ownership-review-2026-11-11.md",
         "research/solutions/lagent-action-status-and-hooks.md",
-        "research/evidence/2026-11-11/source-review.json"
+        "research/evidence/2026-11-11/source-review.json",
+        "research/ownership-review-2026-11-12.md",
+        "research/solutions/mindsearch-citation-integrity.md",
+        "research/evidence/2026-11-12/source-review.json"
       ],
       "open_questions": [
-        "31仓中18条有专项记录；Loop仅反向链接，余12条尚未在专项集合闭合。",
+        "31仓中19条有专项记录；Loop仅反向链接，余11条尚未在专项集合闭合。",
         "十个10-26新HEAD的变更影响与备份安排；CloudBase两版已补节选与整包下载哈希，整包未发布，分发/宿主仍待核。 Qwen Code 10-26 与当前版本已保存节选，整包仍缺。 OpenSandbox 两版已补节选，整包仍缺。",
         "Kimi新实现等价；AgentScope目标请求/事件、Session schema、运行代次与取消确认映射（旧Runtime子链已读，不代表2.0等价）",
         "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界",

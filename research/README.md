@@ -91,3 +91,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-11
 
 [Lagent归属](ownership-review-2026-11-11.md)与[执行契约](solutions/lagent-action-status-and-hooks.md)已补。[飞书媒体补偿](solutions/lark-media-insert-recovery.md)发现同版Wiki入口文档与代码差异，目录40/44，整组未验收。
+
+## 2026-11-12
+
+[MindSearch 归属](ownership-review-2026-11-12.md)和[引用完整性](solutions/mindsearch-citation-integrity.md)已补。[飞书体裁收口](solutions/lark-genre-evidence-closure.md)完成目录阅读 44/44，跨技能、SDK、宿主仍待验收。

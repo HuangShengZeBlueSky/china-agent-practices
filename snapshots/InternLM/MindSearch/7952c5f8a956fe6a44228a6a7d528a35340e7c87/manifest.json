@@ -50,6 +50,18 @@
       "path": "mindsearch/agent/mindsearch_prompt.py",
       "bytes": 14101,
       "sha256": "ddebd293252f7077b0da6b9bb4850e385d3ba18296214116acffbb7ac9d081c3"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 198,
+      "sha256": "1a485e457155875a3628c8aed5c1755bc9b99efb122cd158e908c23ff2831874",
+      "git_blob": "fac815c6d49485ff19cd9660fc6cd02ccd030968"
+    },
+    {
+      "path": "mindsearch/app.py",
+      "bytes": 6671,
+      "sha256": "4b4f62c3087f77646dcb0c9a3ec80fad00adda2c99368f308f892c73dd5c925e",
+      "git_blob": "1f71cc6620394f33c51e17f05a342a7f9b90e4fd"
     }
   ],
   "skills": [],

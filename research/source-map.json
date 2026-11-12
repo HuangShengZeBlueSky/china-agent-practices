@@ -963,12 +963,26 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
+        "checked_on": "2026-11-12",
+        "head": "7952c5f8a956fe6a44228a6a7d528a35340e7c87",
+        "default_branch": "main",
+        "archived": false,
+        "head_backed_up": true,
+        "evidence": "research/ownership-review-2026-11-12.md"
+      },
+      "previous_metadata_audit": {
         "checked_on": "2026-10-26",
         "head": "7952c5f8a956fe6a44228a6a7d528a35340e7c87",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": true,
         "evidence": "research/repository-audit-2026-10-26.md"
+      },
+      "ownership_review": {
+        "checked_on": "2026-11-12",
+        "evidence": "research/ownership-review-2026-11-12.md",
+        "license": "Apache-2.0",
+        "visible_scope": "official research code; selected static paths and synthetic mapping only; prior archive not reverified"
       }
     },
     {

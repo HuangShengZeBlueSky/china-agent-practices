@@ -5297,9 +5297,9 @@
           "review_status": "in_progress",
           "execution_status": "not_run",
           "equivalence_evidence": null,
-          "evidence_file": "research/evidence/2026-11-11/lark-dependency-progress.json",
+          "evidence_file": "research/evidence/2026-11-12/lark-dependency-progress.json",
           "open_questions": [
-            "remaining four directory files; insert/cover/mindnote read; Wiki doc-code mismatch, concurrent rollback index, cross-skill and host enforcement pending",
+            "directory 44/44 read; Wiki doc-code mismatch, concurrent rollback index, cross-skill, SDK and host enforcement pending",
             "input/decision static subchain read; platform openValidated, BOM asymmetry experiment and all entry points pending",
             "platform crash durability and cleanup failures",
             "cross-skill lark-whiteboard/lark-okr dependencies and host scheduling",
@@ -5326,7 +5326,8 @@
         "research/solutions/lark-reader-outcome-routing.md",
         "research/solutions/lark-creative-media-marketing-routing.md",
         "research/solutions/lark-platform-draft-boundaries.md",
-        "research/solutions/lark-media-insert-recovery.md"
+        "research/solutions/lark-media-insert-recovery.md",
+        "research/solutions/lark-genre-evidence-closure.md"
       ]
     },
     {
