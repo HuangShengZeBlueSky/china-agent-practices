@@ -2954,6 +2954,48 @@
       "bytes": 21132,
       "sha256": "8a73802ecc4af823de287185626cce9ed396bef733327019b6f122d61ab741a2",
       "git_blob": "4391f5f04e7ca5d313dff85cb59feeb382bda95e"
+    },
+    {
+      "path": "cmd/skill/skill.go",
+      "bytes": 6281,
+      "sha256": "45a49a7a51612b764dab6966ba4a460a84c6f52d890f98ec4ea08a2652895de3",
+      "git_blob": "351dda777169af271f6118fbf0505660d4b637f8"
+    },
+    {
+      "path": "cmd/skill/skill_test.go",
+      "bytes": 9881,
+      "sha256": "4b7914a08b3099d7b5a637ea0aad9c673169b8a0facab020dc9b8d92ebca1258",
+      "git_blob": "af7b2caa461abc29c192a9ca8f91745e0c712257"
+    },
+    {
+      "path": "internal/skillcontent/reader.go",
+      "bytes": 6654,
+      "sha256": "b32d6e9432bc440bddd77dfcae0250c6686e4ceba13c7cdc0411b2515ee6f2ce",
+      "git_blob": "d2be5ed27bd60814295af02abf9b2bc6ba06e533"
+    },
+    {
+      "path": "internal/skillcontent/reader_test.go",
+      "bytes": 8787,
+      "sha256": "b94c3ddab5e33ee138b1cb4499c1a5da7c08976b44477f5e2ccbfe9c1aded32d",
+      "git_blob": "cb36d41dc986a6d886583acb263d2c5952233a25"
+    },
+    {
+      "path": "extension/platform/README.md",
+      "bytes": 17260,
+      "sha256": "a6db7cb9d72a38d18f11602930272bcb1ab2d7cd5a512d99d97ad4dc76754ee8",
+      "git_blob": "6ed58d61d40c538ac241d62f4f72b09d8f94fe79"
+    },
+    {
+      "path": "internal/cmdutil/factory_default.go",
+      "bytes": 12694,
+      "sha256": "cfd805b03ad36d1dbace94a90592c2097162d4e3e026c6b7269d949684fde9fc",
+      "git_blob": "ce60361873a3ad2aae04973d6205cc5eee591104"
+    },
+    {
+      "path": "internal/cmdutil/transport.go",
+      "bytes": 4627,
+      "sha256": "659b6c3953540963f9d0522539d88dd1523ebb924da538db709c002ed3c503ad",
+      "git_blob": "454141fed498a576482a4e88b4e9df1cbf988a46"
     }
   ],
   "skills": [
@@ -3345,6 +3387,21 @@
           "reading_scope": "full"
         }
       ]
+    }
+  ],
+  "expanded_file_additions": [
+    {
+      "checked_on": "2026-11-15",
+      "paths": [
+        "cmd/skill/skill.go",
+        "cmd/skill/skill_test.go",
+        "internal/skillcontent/reader.go",
+        "internal/skillcontent/reader_test.go",
+        "extension/platform/README.md",
+        "internal/cmdutil/factory_default.go",
+        "internal/cmdutil/transport.go"
+      ],
+      "evidence": "research/evidence/2026-11-15/lark-dependency-progress.json"
     }
   ]
 }

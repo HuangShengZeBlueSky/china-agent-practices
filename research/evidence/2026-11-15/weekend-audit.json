@@ -1,0 +1,476 @@
+{
+  "checked_on": "2026-11-15",
+  "baseline_commit": "69c95e6b789e28f7e8575e512a8acffbf19c9a42",
+  "frozen_scope": "2026-10-25.v1",
+  "source_records": 79,
+  "coverage": {
+    "overseas": 6,
+    "paper": 7,
+    "communities": 10
+  },
+  "rows": [
+    {
+      "repository": "larksuite/cli",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "official_site_link_and_fixed_license",
+      "review_checked_on": "2026-10-28",
+      "review_file": "research/ownership-review-2026-10-28.md",
+      "license_text_review": "MIT",
+      "boundary": "官网直链与固定版权/许可；目录深读不等于整包",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "cloudwego/eino",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "0a5ca53b9d3bf7b661dccc863465ec568a421eea",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "official_site_link_and_fixed_license",
+      "review_checked_on": "2026-10-29",
+      "review_file": "research/ownership-review-2026-10-29.md",
+      "license_text_review": "Apache-2.0",
+      "boundary": "eino-ext/examples不由核心仓阅读覆盖",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "bytedance/trae-agent",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "e839e559ac61bdd0e057c375dd1dee391fee797d",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "dedicated_static_review",
+      "review_checked_on": "2026-11-08",
+      "review_file": "research/ownership-review-2026-11-08.md",
+      "license_text_review": null,
+      "boundary": "仅核所引专项，其他 HEAD 沿用历史日期。",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "ahang1598/doubao-workbuddy-qwenwork-skills",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "4e60dd8977eee1d770dd22de4780a4b54385adb8",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "QwenLM/qwen-code",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "338f13366c1d86e586f7e0785942740da3503887",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "dedicated_static_review",
+      "review_checked_on": "2026-11-08",
+      "review_file": "research/ownership-review-2026-11-08-b.md",
+      "license_text_review": null,
+      "boundary": "仅核所引专项，其他 HEAD 沿用历史日期。",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "QwenLM/Qwen-Agent",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "31a4d36d123688581a9e9744427272b33ce940e0",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "official_site_link_and_fixed_license",
+      "review_checked_on": "2026-10-30",
+      "review_file": "research/ownership-review-2026-10-30.md",
+      "license_text_review": "Apache-2.0",
+      "boundary": "旧版官网说明不证明当前闭源后端",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "agentscope-ai/agentscope",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "bdad647d2fee7d66597681ecd89e086b7800dd2a",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "migration_target_selected_files",
+      "review_checked_on": "2026-11-03",
+      "review_file": "research/ownership-review-2026-11-03.md",
+      "license_text_review": "Apache-2.0 plus third-party notices",
+      "boundary": "README/LICENSE节选；目标schema/事件/取消映射未闭合",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "TencentCloudBase/CloudBase-AI-Toolkit",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "4f68e9060c94327c1a39aa282ad17a03a4d7dfe5",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "dedicated_static_review",
+      "review_checked_on": "2026-11-08",
+      "review_file": "research/ownership-review-2026-11-08.md",
+      "license_text_review": null,
+      "boundary": "仅核所引专项，其他 HEAD 沿用历史日期。",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "baidubce/app-builder",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "76a7316c0671900b698f9e955afb432ec9a93183",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "official_site_link_and_fixed_license",
+      "review_checked_on": "2026-11-05",
+      "review_file": "research/ownership-review-2026-11-05.md",
+      "license_text_review": "Apache-2.0",
+      "boundary": "SDK公开不代表云端编排公开",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "openJiuwen-ai/agent-core",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "046a869101cb895f1ac0ce6d2220111046fdea61",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "meituan-longcat/vitabench",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "742e240855bf8686a0842360749d5ea970ea3987",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "XiaomiMiMo/mimoagent",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "c3df8469f250b15e7906487a6d52be4c1827a509",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "repository_copyright_license_notice",
+      "review_checked_on": "2026-11-05",
+      "review_file": "research/ownership-review-2026-11-05.md",
+      "license_text_review": "MIT with NOTICE",
+      "boundary": "官网直达该仓链仍缺；不等同MiMo Code",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "coze-dev/coze-studio",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "fefb05ff27be1da939612fbf9faf5db62583b8ae",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "official_site_link_and_fixed_license",
+      "review_checked_on": "2026-11-06",
+      "review_file": "research/ownership-review-2026-11-06.md",
+      "license_text_review": "Apache-2.0",
+      "boundary": "开源版不等于商业版",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "coze-dev/coze-loop",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "434767e7da1c82aa7c34e7abee31a7293bd42861",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "dedicated_static_review",
+      "review_checked_on": "2026-11-15",
+      "review_file": "research/ownership-review-2026-11-15.md",
+      "license_text_review": "Apache-2.0",
+      "boundary": "仅核所引专项，其他 HEAD 沿用历史日期。",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "bytedance/deer-flow",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "ce0fa4c114226213e5e5799cc2fea43687dc4aba",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "dedicated_static_review",
+      "review_checked_on": "2026-11-10",
+      "review_file": "research/ownership-review-2026-11-10.md",
+      "license_text_review": null,
+      "boundary": "仅核所引专项，其他 HEAD 沿用历史日期。",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "bytedance/UI-TARS-desktop",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "3ac2cb8d946d78d5ff92ad17b318eaafa18c178c",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "agentscope-ai/agentscope-runtime",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "22072fd7075ce0c6f43cb39509d6a14b0e60ddb5",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "migration_source_selected_chain",
+      "review_checked_on": "2026-11-03",
+      "review_file": "research/ownership-review-2026-11-03.md",
+      "license_text_review": "Apache-2.0",
+      "boundary": "旧内部迁移不等于2.0等价；官网链未全核",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "opensandbox-group/OpenSandbox",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "dc96a4698cefc59d0c7e8b393a44f1c795457f26",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "dedicated_static_review",
+      "review_checked_on": "2026-11-08",
+      "review_file": "research/ownership-review-2026-11-08-c.md",
+      "license_text_review": null,
+      "boundary": "仅核所引专项，其他 HEAD 沿用历史日期。",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "Tencent/BrowserSkill",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "c0b8e5704a69aa93f6cdd40bbb286a9dd485d42b",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "ec0afda9a277c2f9fd5ab00bebbffbe49c1b3a8f",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "Tencent/skillhub",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "a051f06f7944d24ade04bea27735f430b19a8298",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "repository_and_license_review",
+      "review_checked_on": "2026-10-27",
+      "review_file": "research/ownership-license-review-2026-10-27.md",
+      "license_text_review": "MIT",
+      "boundary": "产品站正文不足；聚合技能不共享根许可",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "MoonshotAI/kimi-cli",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "9ab1286b8fe4e6bcd116949a27ce5e0ac3389c82",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "migration_source_and_target_selected_chain",
+      "review_checked_on": "2026-11-04",
+      "review_file": "research/ownership-review-2026-11-04.md",
+      "license_text_review": "Apache-2.0 old; MIT new",
+      "boundary": "新仓kimi-code部分复制链；配置/MCP/session/宿主待核",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "MiniMax-AI/MiniMax-MCP",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "0856b9aef8a9d676bb63bdd6b6426d7b640a3b7a",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "dedicated_static_review",
+      "review_checked_on": "2026-11-09",
+      "review_file": "research/ownership-review-2026-11-09.md",
+      "license_text_review": null,
+      "boundary": "仅核所引专项，其他 HEAD 沿用历史日期。",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "KwaiKEG/KwaiAgents",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "3504ab8a00a3c3f5e5a4ccbd12dee64997f9561c",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "repository_and_license_review",
+      "review_checked_on": "2026-10-27",
+      "review_file": "research/ownership-license-review-2026-10-27.md",
+      "license_text_review": "CC-BY-NC-SA-4.0",
+      "boundary": "官网反向链未全核；Lite不等于论文系统",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "netease-youdao/LobsterAI",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "cbbe6492a02684218376102f383569affeac4b2b",
+      "head_backed_up_on_audit": false,
+      "ownership_evidence_status": "no_dedicated_review_in_checked_corpus",
+      "review_checked_on": null,
+      "review_file": null,
+      "license_text_review": null,
+      "boundary": "既有基线不作未读断言；本次所查10-27至11-06专项复核中未找到此仓独立闭合记录，下一步回读基线及固定来源",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "InternLM/lagent",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "0ab2e2f550477884743cd63fbca7bc4aa7b00290",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "dedicated_static_review",
+      "review_checked_on": "2026-11-11",
+      "review_file": "research/ownership-review-2026-11-11.md",
+      "license_text_review": null,
+      "boundary": "仅核所引专项，其他 HEAD 沿用历史日期。",
+      "accepted_full_p1_row": false
+    },
+    {
+      "repository": "InternLM/MindSearch",
+      "metadata_checked_on": "2026-10-26",
+      "audited_head": "7952c5f8a956fe6a44228a6a7d528a35340e7c87",
+      "head_backed_up_on_audit": true,
+      "ownership_evidence_status": "dedicated_static_review",
+      "review_checked_on": "2026-11-12",
+      "review_file": "research/ownership-review-2026-11-12.md",
+      "license_text_review": null,
+      "boundary": "仅核所引专项，其他 HEAD 沿用历史日期。",
+      "accepted_full_p1_row": false
+    }
+  ],
+  "domestic": {
+    "remote_baseline": 19,
+    "including_current": 20,
+    "pending": [
+      "ahang1598/doubao-workbuddy-qwenwork-skills",
+      "openJiuwen-ai/agent-core",
+      "meituan-longcat/vitabench",
+      "bytedance/UI-TARS-desktop",
+      "inclusionAI/AWorld",
+      "Tencent/BrowserSkill",
+      "Tencent-RTC/agent-skills",
+      "MiniMax-AI/skills",
+      "zai-org/Open-AutoGLM",
+      "jd-opensource/joyagent-jdgenie",
+      "netease-youdao/LobsterAI"
+    ]
+  },
+  "skill_audit": {
+    "shards": 16,
+    "groups": 3085,
+    "occurrences": 6235,
+    "entry_states": {
+      "not_read": 3079,
+      "entry_read": 1,
+      "prior_entry_read_only": 5
+    },
+    "new_complete_groups": 0,
+    "executed": 0
+  },
+  "throughput": {
+    "remote_logs": [
+      "research/log/2026-11-09.md",
+      "research/log/2026-11-10.md",
+      "research/log/2026-11-11.md",
+      "research/log/2026-11-12.md"
+    ],
+    "published_batches": 4,
+    "new_specialist_reviews": 4,
+    "new_solution_cards": 8,
+    "local_directory_reads": 13,
+    "accepted_main_tasks": 0,
+    "accepted_skill_groups": 0,
+    "measured_hours": null
+  },
+  "remaining": {
+    "specialist_review_batches_at_observed_rate": 11,
+    "main_tasks_not_accepted": 51,
+    "full_groups_not_accepted": 3085,
+    "p1_completion_date": null,
+    "skill_completion_date": null
+  },
+  "candidate_increment": [
+    {
+      "name": "When Agents Fail: Model or Harness--Who's to Blame?",
+      "url": "https://arxiv.org/abs/2610.32483v1",
+      "version_date": "2026-10-23",
+      "scope": "near_30_days",
+      "status": "abstract_candidate",
+      "question": "跨模型、Harness 组合时如何分别计可评估结束和正确性"
+    },
+    {
+      "name": "Harness-Bench",
+      "url": "https://arxiv.org/abs/2605.27922v2",
+      "version_date": "2026-10-15",
+      "scope": "near_90_days",
+      "status": "abstract_candidate",
+      "question": "共享任务与预算下的配置效应是否可归因"
+    }
+  ],
+  "evidence": [
+    "research/ownership-review-2026-11-15.md",
+    "research/solutions/coze-loop-current-request-observation.md",
+    "research/solutions/lark-cli-embedded-skill-read.md",
+    "research/evidence/2026-11-15/lark-dependency-progress.json"
+  ],
+  "archival_state": {
+    "new_coze_loop_manifest": "snapshots/coze-dev/coze-loop/36b9796878604bc87e0fadd047dc27e89dfe8c26/manifest.json",
+    "whole_archive": false,
+    "retained_historical_loop_manifest": "snapshots/coze-dev/coze-loop/95dc2eebbc100b929c102d90111bb94fad41e500/manifest.json",
+    "previous_vitabench_unpublished": true
+  },
+  "simulation": {
+    "kind": "independent_synthetic_python",
+    "cases": [
+      "observed",
+      "skipped",
+      "scan_error",
+      "unstable_without_publication"
+    ],
+    "upstream_executed": false
+  }
+}

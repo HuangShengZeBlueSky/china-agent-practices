@@ -92,14 +92,19 @@
         "research/evidence/2026-11-11/source-review.json",
         "research/ownership-review-2026-11-12.md",
         "research/solutions/mindsearch-citation-integrity.md",
-        "research/evidence/2026-11-12/source-review.json"
+        "research/evidence/2026-11-12/source-review.json",
+        "research/ownership-review-2026-11-15.md",
+        "research/solutions/coze-loop-current-request-observation.md",
+        "research/review-2026-11-15.md",
+        "research/evidence/2026-11-15/weekend-audit.json"
       ],
       "open_questions": [
-        "31仓中19条有专项记录；Loop仅反向链接，余11条尚未在专项集合闭合。",
+        "31 仓中 20 条有专项记录（本批补 Loop），其余 11 条待专项，VitaBench 的前次未发布批次仍待恢复。",
         "十个10-26新HEAD的变更影响与备份安排；CloudBase两版已补节选与整包下载哈希，整包未发布，分发/宿主仍待核。 Qwen Code 10-26 与当前版本已保存节选，整包仍缺。 OpenSandbox 两版已补节选，整包仍缺。",
         "Kimi新实现等价；AgentScope目标请求/事件、Session schema、运行代次与取消确认映射（旧Runtime子链已读，不代表2.0等价）",
         "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界",
-        "mimoagent官网直达归属链仍待补；Baidu下游校验、mimoagent协议/评分器与异常批次实验列为后续组件研究，不冒充本轮实测"
+        "mimoagent官网直达归属链仍待补；Baidu下游校验、mimoagent协议/评分器与异常批次实验列为后续组件研究，不冒充本轮实测",
+        "Coze Loop HEAD 36b9796 仅五份指定节选，现版本整包与 10-26 中间版本差异待补。"
       ],
       "execution_status": "static_metadata_review"
     },
@@ -764,8 +769,9 @@
     {
       "id": "frontier-delta",
       "status": "active",
-      "acceptance": "新增论文和版本有来源与影响分类，纳入下一轮需显式记范围"
+      "acceptance": "新增论文和版本有来源与影响分类，纳入下一轮需显式记范围",
+      "latest_evidence": "research/evidence/2026-11-15/weekend-audit.json"
     }
   ],
-  "updated_at": "2026-11-06"
+  "updated_at": "2026-11-15"
 }

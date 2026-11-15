@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-12",
+  "updated_at": "2026-11-15",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "继续P1-01剩余11条专项及版本归档；lark-doc目录已读完，先核lark-shared/lark-whiteboard/lark-okr等跨技能边、SDK和宿主执行条件，再判整组验收。",
+  "next_action": "继续 P1-01：恢复 VitaBench 待发布成果，核 Coze Loop 版本归档与应用层调度调用；飞书继续具体宿主捕获、加载与审批。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,18 +27,19 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "lark-doc目录44/44；本轮新增依赖4、完整组0、实跑0；6235/3085冻结不变。",
+    "note": "飞书 lark-doc 指定路径目录 44/44；CLI 内嵌读取和输出分支已静态核查；完整组 0、实跑 0。",
     "new_entry_reviews": 1,
     "partial_dependency_reviews": 1
   },
   "today_outputs": [
-    "research/ownership-review-2026-11-12.md",
-    "research/solutions/mindsearch-citation-integrity.md",
-    "research/solutions/lark-genre-evidence-closure.md"
+    "research/ownership-review-2026-11-15.md",
+    "research/solutions/coze-loop-current-request-observation.md",
+    "research/solutions/lark-cli-embedded-skill-read.md",
+    "research/review-2026-11-15.md"
   ],
-  "last_log": "research/log/2026-11-12.md",
+  "last_log": "research/log/2026-11-15.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "此出现路径目录阅读完成；跨技能、SDK、宿主尚待验证，完整组和主线完工日未知。",
+  "estimate_note": "最近已发布四批每批新增一条专项，11 条缺口约 11 批专项文档；整仓、阶段和技能全量验收日期待实测。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,
@@ -47,5 +48,5 @@
     "checked_on": "2026-10-26",
     "scope_note": "上述31/21/10继承该日固定审计，不是2026-11-07全部HEAD刷新；部分后续核查另见来源记录。"
   },
-  "weekend_review": "research/review-2026-11-08-c.md"
+  "weekend_review": "research/review-2026-11-15.md"
 }

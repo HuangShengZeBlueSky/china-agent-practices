@@ -1,0 +1,47 @@
+{
+  "repository": "coze-dev/coze-loop",
+  "commit": "36b9796878604bc87e0fadd047dc27e89dfe8c26",
+  "captured_on": "2026-11-15",
+  "source_ids": [
+    "bytedance-coze-loop"
+  ],
+  "license_notes": [
+    "Apache-2.0，保留根许可与文件版权"
+  ],
+  "archive_scope": "selected_files_only",
+  "archive_parts": [],
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "git_blob": "7a4a3ea2424c09fbe48d455aed1eaa94d9124835"
+    },
+    {
+      "path": "README.cn.md",
+      "bytes": 10938,
+      "sha256": "1fa7633bec754091b6129a77b51c4c587427e1e355917fc555fd90e280578169",
+      "git_blob": "4c34e59440a351df13eec78b5c5396202702633d"
+    },
+    {
+      "path": "backend/infra/db/db.go",
+      "bytes": 3262,
+      "sha256": "72979f8cfdc635e823f51efc300ef5f1a5ef26ea4d7c2690917d2aa54ad7e33d",
+      "git_blob": "a8683dbfd9cbb0b41cdcb8f322156781e1d3818a"
+    },
+    {
+      "path": "backend/modules/evaluation/infra/repo/experiment/mysql/expt_item_current_request.go",
+      "bytes": 19031,
+      "sha256": "5fc306959d1e7a08055a8d1faca14da7ecd5a473a3e50fad267520db3dec955e",
+      "git_blob": "6f69236c3b29da41ba0a9328a85ce9da56d6c4a2"
+    },
+    {
+      "path": "backend/modules/evaluation/infra/repo/experiment/mysql/expt_item_current_request_split_read_test.go",
+      "bytes": 4657,
+      "sha256": "5f198e4102033bd8673db637a75d8308c808cfc19b0f85cc6cf9234471f54eb0",
+      "git_blob": "04fcd97206dcf187fa783b4ef0c5c3ca4b652291"
+    }
+  ],
+  "skills": [],
+  "whole_archive_gap": "现版本整仓未获取，旧版本清单独立保留。"
+}

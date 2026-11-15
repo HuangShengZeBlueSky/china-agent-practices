@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07",
+  "updated_at": "2026-11-15",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -42,6 +42,15 @@
           "manifest": "research/evidence/2026-11-07/source-manifest.json",
           "execution_status": "not_run",
           "scope": "three full genre references; directory 24/44; whole skill incomplete"
+        },
+        {
+          "checked_at": "2026-11-15",
+          "evidence": [
+            "research/solutions/lark-cli-embedded-skill-read.md"
+          ],
+          "manifest": "research/evidence/2026-11-15/lark-dependency-progress.json",
+          "execution_status": "not_run",
+          "scope": "宿主可调用 CLI 的技能读取子链，不含实际宿主确认"
         }
       ]
     },
@@ -494,13 +503,26 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
-        "checked_on": "2026-10-26",
-        "head": "434767e7da1c82aa7c34e7abee31a7293bd42861",
+        "checked_on": "2026-11-15",
+        "head": "36b9796878604bc87e0fadd047dc27e89dfe8c26",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": false,
-        "evidence": "research/repository-audit-2026-10-26.md"
-      }
+        "selected_file_manifest": "snapshots/coze-dev/coze-loop/36b9796878604bc87e0fadd047dc27e89dfe8c26/manifest.json",
+        "evidence": "research/ownership-review-2026-11-15.md"
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-15",
+          "evidence": [
+            "research/ownership-review-2026-11-15.md",
+            "research/solutions/coze-loop-current-request-observation.md"
+          ],
+          "manifest": "snapshots/coze-dev/coze-loop/36b9796878604bc87e0fadd047dc27e89dfe8c26/manifest.json",
+          "execution_status": "synthetic_only",
+          "scope": "恢复扫描读取，整仓未归档"
+        }
+      ]
     },
     {
       "id": "prior-bytedance-deerflow",

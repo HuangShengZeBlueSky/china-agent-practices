@@ -95,3 +95,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-12
 
 [MindSearch 归属](ownership-review-2026-11-12.md)和[引用完整性](solutions/mindsearch-citation-integrity.md)已补。[飞书体裁收口](solutions/lark-genre-evidence-closure.md)完成目录阅读 44/44，跨技能、SDK、宿主仍待验收。
+
+## 2026-11-15
+
+[Coze Loop 归属与版本](ownership-review-2026-11-15.md)和[恢复扫描](solutions/coze-loop-current-request-observation.md)更新新 HEAD 与状态复核。[飞书内嵌读取](solutions/lark-cli-embedded-skill-read.md)追到 CLI 输出和宿主边界。[周末复核](review-2026-11-15.md)更新覆盖与排期。

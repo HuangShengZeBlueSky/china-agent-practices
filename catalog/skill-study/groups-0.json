@@ -5297,7 +5297,7 @@
           "review_status": "in_progress",
           "execution_status": "not_run",
           "equivalence_evidence": null,
-          "evidence_file": "research/evidence/2026-11-12/lark-dependency-progress.json",
+          "evidence_file": "research/evidence/2026-11-15/lark-dependency-progress.json",
           "open_questions": [
             "directory 44/44 read; Wiki doc-code mismatch, concurrent rollback index, cross-skill, SDK and host enforcement pending",
             "input/decision static subchain read; platform openValidated, BOM asymmetry experiment and all entry points pending",
@@ -5305,7 +5305,8 @@
             "cross-skill lark-whiteboard/lark-okr dependencies and host scheduling",
             "cross-skill shared/doc path conflict",
             "SDK v3.7.2 and auth transport retry policy; docs_ai server revision conflict semantics; generic conflict map is not endpoint evidence",
-            "media Stat+Save race and permission helper internals not executed"
+            "media Stat+Save race and permission helper internals not executed",
+            "embedded list/read and guidance delivery inspected; actual host context and deployed filesystem projection are unverified"
           ]
         }
       ],
@@ -5327,7 +5328,8 @@
         "research/solutions/lark-creative-media-marketing-routing.md",
         "research/solutions/lark-platform-draft-boundaries.md",
         "research/solutions/lark-media-insert-recovery.md",
-        "research/solutions/lark-genre-evidence-closure.md"
+        "research/solutions/lark-genre-evidence-closure.md",
+        "research/solutions/lark-cli-embedded-skill-read.md"
       ]
     },
     {
