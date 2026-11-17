@@ -5892,11 +5892,21 @@
           "commit": "1c9239cc90585f57d9e06d32deffc017bbff5802",
           "path": "workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
           "prior_reading": null,
-          "dependency_status": "not_checked",
+          "dependency_status": "partially_reviewed",
           "host_status": "not_checked",
-          "review_status": "pending",
+          "review_status": "in_progress",
           "execution_status": "not_run",
-          "equivalence_evidence": null
+          "equivalence_evidence": {
+            "file": "research/evidence/2026-11-17/lark-shared-equivalence.json",
+            "scope": "entry_and_six_archived_references_only",
+            "host_and_version_equivalence": false
+          },
+          "evidence_file": "research/evidence/2026-11-17/lark-shared-equivalence.json",
+          "open_questions": [
+            "运行时 CLI 构建/版本",
+            "宿主上下文与批准回传",
+            "外部命令及跨业务技能传递依赖"
+          ]
         },
         {
           "source_id": "4cfc26fbba463f3127f8e6ce",
@@ -5904,11 +5914,21 @@
           "commit": "4e60dd8977eee1d770dd22de4780a4b54385adb8",
           "path": "workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
           "prior_reading": null,
-          "dependency_status": "not_checked",
+          "dependency_status": "partially_reviewed",
           "host_status": "not_checked",
-          "review_status": "pending",
+          "review_status": "in_progress",
           "execution_status": "not_run",
-          "equivalence_evidence": null
+          "equivalence_evidence": {
+            "file": "research/evidence/2026-11-17/lark-shared-equivalence.json",
+            "scope": "entry_and_six_archived_references_only",
+            "host_and_version_equivalence": false
+          },
+          "evidence_file": "research/evidence/2026-11-17/lark-shared-equivalence.json",
+          "open_questions": [
+            "运行时 CLI 构建/版本",
+            "宿主上下文与批准回传",
+            "外部命令及跨业务技能传递依赖"
+          ]
         },
         {
           "source_id": "a4e2e6d2d1d18cfa102485d3",
@@ -5922,12 +5942,25 @@
             "note": "cases/original-reading-workbook.md",
             "status": "入口已解读，未实跑"
           },
-          "dependency_status": "not_checked",
-          "host_status": "not_checked",
-          "review_status": "pending",
+          "dependency_status": "partially_reviewed",
+          "host_status": "requirements_read_not_verified",
+          "review_status": "in_progress",
           "execution_status": "not_run",
-          "equivalence_evidence": null
+          "equivalence_evidence": {
+            "file": "research/evidence/2026-11-17/lark-shared-equivalence.json",
+            "scope": "entry_and_six_archived_references_only",
+            "host_and_version_equivalence": false
+          },
+          "evidence_file": "research/evidence/2026-11-17/lark-shared-equivalence.json",
+          "open_questions": [
+            "运行时 CLI 构建/版本",
+            "宿主上下文与批准回传",
+            "外部命令及跨业务技能传递依赖"
+          ]
         }
+      ],
+      "supplementary_analysis": [
+        "research/solutions/lark-shared-occurrence-equivalence.md"
       ]
     },
     {

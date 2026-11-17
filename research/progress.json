@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-15",
+  "updated_at": "2026-11-17",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "继续 P1-01：恢复 VitaBench 待发布成果，核 Coze Loop 版本归档与应用层调度调用；飞书继续具体宿主捕获、加载与审批。",
+  "next_action": "P1-01 先推进剩余 9 条专项与版本归档。VitaBench 原文展开和飞书 SDK 旧批仍待恢复，lark-shared 继续核实际宿主和传递依赖。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,19 +27,20 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "飞书 lark-doc 指定路径目录 44/44；CLI 内嵌读取和输出分支已静态核查；完整组 0、实跑 0。",
+    "note": "飞书文档目录44/44；新增 lark-shared 三路径七文件等价证据，两个内容组有部分依赖研究，完整组与实跑0。",
     "new_entry_reviews": 1,
-    "partial_dependency_reviews": 1
+    "partial_dependency_reviews": 2
   },
   "today_outputs": [
-    "research/ownership-review-2026-11-15.md",
-    "research/solutions/coze-loop-current-request-observation.md",
-    "research/solutions/lark-cli-embedded-skill-read.md",
-    "research/review-2026-11-15.md"
+    "research/ownership-review-2026-11-17.md",
+    "research/solutions/openjiuwen-workflow-cancel-checkpoint.md",
+    "research/solutions/vitabench-window-reward.md",
+    "research/solutions/lark-shared-occurrence-equivalence.md",
+    "research/evidence/2026-11-17/lark-shared-equivalence.json"
   ],
-  "last_log": "research/log/2026-11-15.md",
+  "last_log": "research/log/2026-11-17.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "最近已发布四批每批新增一条专项，11 条缺口约 11 批专项文档；整仓、阶段和技能全量验收日期待实测。",
+  "estimate_note": "专项 22/31，余 9 项。近期每个已发布批次约 1 条专项，仅用于范围估算，整仓、阶段及技能终点未估。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,

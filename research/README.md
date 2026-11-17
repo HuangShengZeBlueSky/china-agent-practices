@@ -99,3 +99,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-15
 
 [Coze Loop 归属与版本](ownership-review-2026-11-15.md)和[恢复扫描](solutions/coze-loop-current-request-observation.md)更新新 HEAD 与状态复核。[飞书内嵌读取](solutions/lark-cli-embedded-skill-read.md)追到 CLI 输出和宿主边界。[周末复核](review-2026-11-15.md)更新覆盖与排期。
+
+## 2026-11-17
+
+[openJiuwen 工作流取消](solutions/openjiuwen-workflow-cancel-checkpoint.md)与[VitaBench 改判](solutions/vitabench-window-reward.md)补主线专项。[飞书共享技能等价](solutions/lark-shared-occurrence-equivalence.md)加三路径证据。详见[当日记录](log/2026-11-17.md)。

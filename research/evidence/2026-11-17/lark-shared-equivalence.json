@@ -1,0 +1,215 @@
+{
+  "checked_on": "2026-11-17",
+  "base_commit": "ef352372a3c3f3008b6562f2d794aeecf45c67b0",
+  "content_id": "9fa68bb1f3ce564602c6df6c303ea4d2759de02442772f332fe5041d65720a1f",
+  "matching_files": 7,
+  "occurrences": [
+    {
+      "source_id": "615b1d598706b98c04da5110",
+      "repository": "ahang1598/doubao-workbuddy-qwenwork-skills",
+      "commit": "1c9239cc90585f57d9e06d32deffc017bbff5802",
+      "path": "workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
+      "manifest": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/manifest.json",
+      "manifest_blob": "6c6f95f0c96f689b5a54e5bd4b8a5aff52fd1a7f",
+      "manifest_method": "git_blob",
+      "source_kind": "third_party_archive",
+      "files": [
+        {
+          "relative_path": "SKILL.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
+          "bytes": 4282,
+          "sha256": "9fa68bb1f3ce564602c6df6c303ea4d2759de02442772f332fe5041d65720a1f",
+          "git_blob": "9e54704bcd1a494bbdb69e4142b31054e10ec1f0"
+        },
+        {
+          "relative_path": "references/lark-shared-config-init.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-config-init.md",
+          "bytes": 980,
+          "sha256": "d995546300e59284e223e9be856ff5674056900b86c9ad022c4e9b2bf0f24563",
+          "git_blob": "7c85969c04029e918f0ed60240ea447bbb56e685"
+        },
+        {
+          "relative_path": "references/lark-shared-high-risk-approval.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-high-risk-approval.md",
+          "bytes": 2070,
+          "sha256": "b8bbff0c71d376564f8d6ea640686b08645d6ff4c905aa03c79882b98bd6bf05",
+          "git_blob": "1108ff8cce28894e83107285e6f6b260f4d3b786"
+        },
+        {
+          "relative_path": "references/lark-shared-identity-and-permissions.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-identity-and-permissions.md",
+          "bytes": 5805,
+          "sha256": "68c8f409ceeb062b4460a63ea4a8822e4150db475b7ca2f4baaf1e67162907f1",
+          "git_blob": "16335fb1050a4e9f244a969e83988329c7d43f2e"
+        },
+        {
+          "relative_path": "references/lark-shared-output-contract.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-output-contract.md",
+          "bytes": 933,
+          "sha256": "8f47ada21810a83de272d1bef088ece187947c2cb0743ded7590d82d8c175699",
+          "git_blob": "95dbeadbd1adb4ef3c1fdc1f9d38bea40a4826b6"
+        },
+        {
+          "relative_path": "references/lark-shared-update-notice.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-update-notice.md",
+          "bytes": 1040,
+          "sha256": "6e1d08f7338721053087f8292c98302a947ee97358be71a60a7110a3b91e8d3a",
+          "git_blob": "e9804988a1b29c744aaad4e90ae00bb8389fb948"
+        },
+        {
+          "relative_path": "references/lark-wiki-token-routing.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/1c9239cc90585f57d9e06d32deffc017bbff5802/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-wiki-token-routing.md",
+          "bytes": 2066,
+          "sha256": "8109dd583c0ed2193621ff83f341a9c7b0af7cf711aff5e69f4790821b4355db",
+          "git_blob": "006ec87a10fde43536eb35a2847ec5faa9f2d1a9"
+        }
+      ],
+      "host_status": "not_checked",
+      "missing": [
+        "运行时 CLI 构建/版本",
+        "宿主上下文与批准回传",
+        "外部命令及跨业务技能传递依赖"
+      ],
+      "execution_status": "not_run"
+    },
+    {
+      "source_id": "4cfc26fbba463f3127f8e6ce",
+      "repository": "ahang1598/doubao-workbuddy-qwenwork-skills",
+      "commit": "4e60dd8977eee1d770dd22de4780a4b54385adb8",
+      "path": "workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
+      "manifest": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/4e60dd8977eee1d770dd22de4780a4b54385adb8/manifest.json",
+      "manifest_blob": "1f7547e2c918a8b437fe4bba2e41401208da3e89",
+      "manifest_method": "git_blob",
+      "source_kind": "third_party_archive",
+      "files": [
+        {
+          "relative_path": "SKILL.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/4e60dd8977eee1d770dd22de4780a4b54385adb8/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
+          "bytes": 4282,
+          "sha256": "9fa68bb1f3ce564602c6df6c303ea4d2759de02442772f332fe5041d65720a1f",
+          "git_blob": "9e54704bcd1a494bbdb69e4142b31054e10ec1f0"
+        },
+        {
+          "relative_path": "references/lark-shared-config-init.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/4e60dd8977eee1d770dd22de4780a4b54385adb8/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-config-init.md",
+          "bytes": 980,
+          "sha256": "d995546300e59284e223e9be856ff5674056900b86c9ad022c4e9b2bf0f24563",
+          "git_blob": "7c85969c04029e918f0ed60240ea447bbb56e685"
+        },
+        {
+          "relative_path": "references/lark-shared-high-risk-approval.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/4e60dd8977eee1d770dd22de4780a4b54385adb8/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-high-risk-approval.md",
+          "bytes": 2070,
+          "sha256": "b8bbff0c71d376564f8d6ea640686b08645d6ff4c905aa03c79882b98bd6bf05",
+          "git_blob": "1108ff8cce28894e83107285e6f6b260f4d3b786"
+        },
+        {
+          "relative_path": "references/lark-shared-identity-and-permissions.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/4e60dd8977eee1d770dd22de4780a4b54385adb8/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-identity-and-permissions.md",
+          "bytes": 5805,
+          "sha256": "68c8f409ceeb062b4460a63ea4a8822e4150db475b7ca2f4baaf1e67162907f1",
+          "git_blob": "16335fb1050a4e9f244a969e83988329c7d43f2e"
+        },
+        {
+          "relative_path": "references/lark-shared-output-contract.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/4e60dd8977eee1d770dd22de4780a4b54385adb8/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-output-contract.md",
+          "bytes": 933,
+          "sha256": "8f47ada21810a83de272d1bef088ece187947c2cb0743ded7590d82d8c175699",
+          "git_blob": "95dbeadbd1adb4ef3c1fdc1f9d38bea40a4826b6"
+        },
+        {
+          "relative_path": "references/lark-shared-update-notice.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/4e60dd8977eee1d770dd22de4780a4b54385adb8/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-shared-update-notice.md",
+          "bytes": 1040,
+          "sha256": "6e1d08f7338721053087f8292c98302a947ee97358be71a60a7110a3b91e8d3a",
+          "git_blob": "e9804988a1b29c744aaad4e90ae00bb8389fb948"
+        },
+        {
+          "relative_path": "references/lark-wiki-token-routing.md",
+          "archive_file": "snapshots/ahang1598/doubao-workbuddy-qwenwork-skills/4e60dd8977eee1d770dd22de4780a4b54385adb8/files/workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/references/lark-wiki-token-routing.md",
+          "bytes": 2066,
+          "sha256": "8109dd583c0ed2193621ff83f341a9c7b0af7cf711aff5e69f4790821b4355db",
+          "git_blob": "006ec87a10fde43536eb35a2847ec5faa9f2d1a9"
+        }
+      ],
+      "host_status": "not_checked",
+      "missing": [
+        "运行时 CLI 构建/版本",
+        "宿主上下文与批准回传",
+        "外部命令及跨业务技能传递依赖"
+      ],
+      "execution_status": "not_run"
+    },
+    {
+      "source_id": "a4e2e6d2d1d18cfa102485d3",
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "path": "skills/lark-shared/SKILL.md",
+      "manifest": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/manifest.json",
+      "manifest_blob": "becf7c67f5ac59dcefb494216fed79cb4bbc600c",
+      "manifest_method": "contents",
+      "source_kind": "official_code_snapshot",
+      "files": [
+        {
+          "relative_path": "SKILL.md",
+          "archive_file": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-shared/SKILL.md",
+          "bytes": 4282,
+          "sha256": "9fa68bb1f3ce564602c6df6c303ea4d2759de02442772f332fe5041d65720a1f",
+          "git_blob": "9e54704bcd1a494bbdb69e4142b31054e10ec1f0"
+        },
+        {
+          "relative_path": "references/lark-shared-config-init.md",
+          "archive_file": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-shared/references/lark-shared-config-init.md",
+          "bytes": 980,
+          "sha256": "d995546300e59284e223e9be856ff5674056900b86c9ad022c4e9b2bf0f24563",
+          "git_blob": "7c85969c04029e918f0ed60240ea447bbb56e685"
+        },
+        {
+          "relative_path": "references/lark-shared-high-risk-approval.md",
+          "archive_file": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-shared/references/lark-shared-high-risk-approval.md",
+          "bytes": 2070,
+          "sha256": "b8bbff0c71d376564f8d6ea640686b08645d6ff4c905aa03c79882b98bd6bf05",
+          "git_blob": "1108ff8cce28894e83107285e6f6b260f4d3b786"
+        },
+        {
+          "relative_path": "references/lark-shared-identity-and-permissions.md",
+          "archive_file": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-shared/references/lark-shared-identity-and-permissions.md",
+          "bytes": 5805,
+          "sha256": "68c8f409ceeb062b4460a63ea4a8822e4150db475b7ca2f4baaf1e67162907f1",
+          "git_blob": "16335fb1050a4e9f244a969e83988329c7d43f2e"
+        },
+        {
+          "relative_path": "references/lark-shared-output-contract.md",
+          "archive_file": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-shared/references/lark-shared-output-contract.md",
+          "bytes": 933,
+          "sha256": "8f47ada21810a83de272d1bef088ece187947c2cb0743ded7590d82d8c175699",
+          "git_blob": "95dbeadbd1adb4ef3c1fdc1f9d38bea40a4826b6"
+        },
+        {
+          "relative_path": "references/lark-shared-update-notice.md",
+          "archive_file": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-shared/references/lark-shared-update-notice.md",
+          "bytes": 1040,
+          "sha256": "6e1d08f7338721053087f8292c98302a947ee97358be71a60a7110a3b91e8d3a",
+          "git_blob": "e9804988a1b29c744aaad4e90ae00bb8389fb948"
+        },
+        {
+          "relative_path": "references/lark-wiki-token-routing.md",
+          "archive_file": "snapshots/larksuite/cli/017b19a793ad71794a02887ede04757f3d82e10d/files/skills/lark-shared/references/lark-wiki-token-routing.md",
+          "bytes": 2066,
+          "sha256": "8109dd583c0ed2193621ff83f341a9c7b0af7cf711aff5e69f4790821b4355db",
+          "git_blob": "006ec87a10fde43536eb35a2847ec5faa9f2d1a9"
+        }
+      ],
+      "host_status": "requirements_read_not_verified",
+      "missing": [
+        "运行时 CLI 构建/版本",
+        "宿主上下文与批准回传",
+        "外部命令及跨业务技能传递依赖"
+      ],
+      "execution_status": "not_run"
+    }
+  ],
+  "scope": "目录原文等价。未核二进制、传递依赖或宿主等价。",
+  "solution": "research/solutions/lark-shared-occurrence-equivalence.md",
+  "group_complete": false
+}

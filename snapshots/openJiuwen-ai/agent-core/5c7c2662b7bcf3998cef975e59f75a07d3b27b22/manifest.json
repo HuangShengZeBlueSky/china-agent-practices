@@ -1,0 +1,71 @@
+{
+  "repository": "openJiuwen-ai/agent-core",
+  "commit": "5c7c2662b7bcf3998cef975e59f75a07d3b27b22",
+  "captured_on": "2026-11-17",
+  "source_ids": [
+    "huawei-openjiuwen-skills"
+  ],
+  "license_notes": [
+    "Apache-2.0；保留原作者版权"
+  ],
+  "archive_scope": "selected_files_only",
+  "archive_parts": [],
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "git_blob": "7a4a3ea2424c09fbe48d455aed1eaa94d9124835"
+    },
+    {
+      "path": "README.zh.md",
+      "bytes": 9705,
+      "sha256": "714311383485ffe9049cce29ca0a0c4f1f1254670e1e4bde4865af14a9559d06",
+      "git_blob": "1da591e49af9fcad7ef17fe5478f00313cdd2ce5"
+    },
+    {
+      "path": "openjiuwen/core/runner/runner.py",
+      "bytes": 40124,
+      "sha256": "4d1728cc484d563b2b4faa3913cde4eed461aa3d4b2fbd641ebe7bef90d81a65",
+      "git_blob": "20ee34b6e8a3e064255f90f3b17e8d4303cceedc"
+    },
+    {
+      "path": "openjiuwen/core/workflow/workflow.py",
+      "bytes": 33062,
+      "sha256": "3e9fddc1508988d864d46dcee6e81de073d506cb435a15276e3f30dd6d7d9ba1",
+      "git_blob": "ae9684e32af03c8a871c30d9463e6327e201791a"
+    },
+    {
+      "path": "openjiuwen/core/graph/graph.py",
+      "bytes": 16881,
+      "sha256": "a77af4994e5b8e942c202161990fc2d0263d2ec4b5a65e4b910e9f17dff00a71",
+      "git_blob": "1f013d2520185c8be64e88210dde4baf7c356c71"
+    },
+    {
+      "path": "openjiuwen/core/session/checkpointer/checkpointer.py",
+      "bytes": 4638,
+      "sha256": "538b2b4564185a031f11a050e726cab4bf35ee07c8a4a2e76b816e1fbe1dfb1a",
+      "git_blob": "1173dcd42da58aec91a7415c264fd67944b7a19f"
+    },
+    {
+      "path": "openjiuwen/core/session/checkpointer/noop.py",
+      "bytes": 1814,
+      "sha256": "9990e5febe7e840ba4401307984c42f94ed76b9752932f42dae9c8e7f8f0a5f3",
+      "git_blob": "035e093627236b5c4fbe3f77ebad09e4a8dae832"
+    },
+    {
+      "path": "openjiuwen/core/session/workflow.py",
+      "bytes": 1580,
+      "sha256": "7be5111eb82993e488468113668d8194573ec74edbd56609ebd6226361cf6a4c",
+      "git_blob": "16e1ca13a3f857165c900eb089eea2f4ddec9e68"
+    },
+    {
+      "path": "openjiuwen/core/session/checkpointer/inmemory.py",
+      "bytes": 24276,
+      "sha256": "080986e36d7e2ce6fe2b15ba65734ec144d25fa7b3faca6da02c7af7f53275a4",
+      "git_blob": "34cc37d1b9067fcdd98d7fb22ddeefb4e4818d6b"
+    }
+  ],
+  "skills": [],
+  "whole_archive_gap": "本版未取得完整源码包；仅保存许可、入口和工作流取消及检查点选读。"
+}

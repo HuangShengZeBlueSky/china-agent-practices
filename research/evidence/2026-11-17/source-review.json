@@ -1,0 +1,101 @@
+{
+  "checked_on": "2026-11-17",
+  "base_commit": "ef352372a3c3f3008b6562f2d794aeecf45c67b0",
+  "openjiuwen": {
+    "head": "5c7c2662b7bcf3998cef975e59f75a07d3b27b22",
+    "branch": "develop",
+    "archived": false,
+    "head_date": "2026-11-16T14:43:17Z",
+    "prior_audit_head": "046a869101cb895f1ac0ce6d2220111046fdea61",
+    "license": "Apache-2.0",
+    "files": [
+      {
+        "path": "LICENSE",
+        "bytes": 11357,
+        "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+        "git_blob": "7a4a3ea2424c09fbe48d455aed1eaa94d9124835"
+      },
+      {
+        "path": "README.zh.md",
+        "bytes": 9705,
+        "sha256": "714311383485ffe9049cce29ca0a0c4f1f1254670e1e4bde4865af14a9559d06",
+        "git_blob": "1da591e49af9fcad7ef17fe5478f00313cdd2ce5"
+      },
+      {
+        "path": "openjiuwen/core/runner/runner.py",
+        "bytes": 40124,
+        "sha256": "4d1728cc484d563b2b4faa3913cde4eed461aa3d4b2fbd641ebe7bef90d81a65",
+        "git_blob": "20ee34b6e8a3e064255f90f3b17e8d4303cceedc"
+      },
+      {
+        "path": "openjiuwen/core/workflow/workflow.py",
+        "bytes": 33062,
+        "sha256": "3e9fddc1508988d864d46dcee6e81de073d506cb435a15276e3f30dd6d7d9ba1",
+        "git_blob": "ae9684e32af03c8a871c30d9463e6327e201791a"
+      },
+      {
+        "path": "openjiuwen/core/graph/graph.py",
+        "bytes": 16881,
+        "sha256": "a77af4994e5b8e942c202161990fc2d0263d2ec4b5a65e4b910e9f17dff00a71",
+        "git_blob": "1f013d2520185c8be64e88210dde4baf7c356c71"
+      },
+      {
+        "path": "openjiuwen/core/session/checkpointer/checkpointer.py",
+        "bytes": 4638,
+        "sha256": "538b2b4564185a031f11a050e726cab4bf35ee07c8a4a2e76b816e1fbe1dfb1a",
+        "git_blob": "1173dcd42da58aec91a7415c264fd67944b7a19f"
+      },
+      {
+        "path": "openjiuwen/core/session/checkpointer/noop.py",
+        "bytes": 1814,
+        "sha256": "9990e5febe7e840ba4401307984c42f94ed76b9752932f42dae9c8e7f8f0a5f3",
+        "git_blob": "035e093627236b5c4fbe3f77ebad09e4a8dae832"
+      },
+      {
+        "path": "openjiuwen/core/session/workflow.py",
+        "bytes": 1580,
+        "sha256": "7be5111eb82993e488468113668d8194573ec74edbd56609ebd6226361cf6a4c",
+        "git_blob": "16e1ca13a3f857165c900eb089eea2f4ddec9e68"
+      },
+      {
+        "path": "openjiuwen/core/session/checkpointer/inmemory.py",
+        "bytes": 24276,
+        "sha256": "080986e36d7e2ce6fe2b15ba65734ec144d25fa7b3faca6da02c7af7f53275a4",
+        "git_blob": "34cc37d1b9067fcdd98d7fb22ddeefb4e4818d6b"
+      }
+    ],
+    "manifest": "snapshots/openJiuwen-ai/agent-core/5c7c2662b7bcf3998cef975e59f75a07d3b27b22/manifest.json",
+    "whole_archive": false
+  },
+  "vitabench": {
+    "head": "742e240855bf8686a0842360749d5ea970ea3987",
+    "branch": "main",
+    "archived": false,
+    "license": "MIT",
+    "files": [
+      {
+        "path": "LICENSE",
+        "git_blob": "b6459d27f6d65bdb0a8bc92d4579d211e5d46207"
+      },
+      {
+        "path": "README.md",
+        "git_blob": "4288c14c439531d2f926ff2ca82d79dc1c4b68fb"
+      },
+      {
+        "path": "src/vita/evaluator/evaluator.py",
+        "git_blob": "91bb6712015e23773e695730965a5ebb7fec098f"
+      },
+      {
+        "path": "src/vita/evaluator/evaluator_traj.py",
+        "git_blob": "52c1792311e6d748ce426ef3f4d799e85a88580f"
+      }
+    ],
+    "paper_scope": "arXiv v2 §3.3 相关段落",
+    "official_camera_ready_read": false,
+    "old_archive_manifest": "snapshots/meituan-longcat/vitabench/742e240855bf8686a0842360749d5ea970ea3987/manifest.json",
+    "old_archive_reverified": false,
+    "expanded_evaluator_files_published": false
+  },
+  "prior_lark_sdk_batch_restored": false,
+  "upstream_execution": "not_run"
+}
