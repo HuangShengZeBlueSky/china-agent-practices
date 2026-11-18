@@ -1,0 +1,126 @@
+{
+  "checked_on": "2026-11-18",
+  "base_commit": "4073bea9bb3ea1320fa89fff0cd443d75334d03b",
+  "scope": "P1-01 既有 BrowserSkill 版本专项",
+  "upstream": {
+    "repository": "Tencent/BrowserSkill",
+    "head": "3d4c1bb3b1a29908a299c1ccac1d55bdd54a0a62",
+    "head_date": "2026-11-17T12:30:21Z",
+    "default_branch": "main",
+    "archived": false,
+    "license": "MIT",
+    "prior_source_commit": "6214e3d6a3d74eaf39c0202c4f182b5755974da9",
+    "prior_audit_head": "c0b8e5704a69aa93f6cdd40bbb286a9dd485d42b"
+  },
+  "official_site": {
+    "url": "https://browserskill.weixin.qq.com/",
+    "status": "not_read_tool_open_failed",
+    "provenance": "fixed README"
+  },
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "45426ad9507fe1b922121f5af6a4669096e721980b4426609a4384da410f5114",
+      "git_blob": "0d72eb2dbb2d166576ff81781a0127dfbbd5e636"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "bytes": 36200,
+      "sha256": "5346c56d4ea077318c5fbd63b8ebdbca25206e3f622787741df3eff74346b1a9",
+      "git_blob": "930e6e1fc9dbd8211aeccb5ff5963c537c2c110f"
+    },
+    {
+      "path": "crates/bsk-cli/skill/SKILL.md",
+      "bytes": 1852,
+      "sha256": "720db742b877bad4e85550e0b7388787f552d25216a5f8a5cb7d9b1033042280",
+      "git_blob": "c884758581c61f0eef12dafdb95a258444238da2"
+    },
+    {
+      "path": "crates/bsk-cli/src/cli/install_skill.rs",
+      "bytes": 11153,
+      "sha256": "4f32b9be2ae9be15c744064381efdfe67e6cf630231801a78ed50e4afd0eca59",
+      "git_blob": "fc191f0d39031c1a808d6f105914b4faaf591f4b"
+    },
+    {
+      "path": "crates/bsk-cli/src/skill_install/mod.rs",
+      "bytes": 27425,
+      "sha256": "7efd7c7bcd73e9a394e5a985d5b751f159d8b1d8d45eb38c3dfa921cd6de4cab",
+      "git_blob": "fe8590133f96233814e1a982307d1336522e54dd"
+    },
+    {
+      "path": "crates/bsk-cli/src/skill_install/sync.rs",
+      "bytes": 25425,
+      "sha256": "e95b38919c195fbcc4daab1e13ccf5aeefbccc6d2d82d39e4a68188c7b8680fe",
+      "git_blob": "4d35209b944defe73e40126c6cc593ab275e39ae"
+    },
+    {
+      "path": "crates/bsk-cli/src/skill_install/conflicts.rs",
+      "bytes": 1737,
+      "sha256": "e3126209c8880197eb107f1ee79acb98df91b8aaa6e3c1477bf52025e065fc55",
+      "git_blob": "c8699c49867e68b0ffe821f0bb3c22fb1ed117ce"
+    },
+    {
+      "path": "crates/bsk-cli/src/skill_install/transaction.rs",
+      "bytes": 2630,
+      "sha256": "10624cffbed2ccb5b94d7bb5a51951a9dc8b51581da78d3de1b02608f2821a01",
+      "git_blob": "9c411552bc985e53880104f353dc1f1e079c7cb8"
+    },
+    {
+      "path": "crates/bsk-cli/src/skill_install/provenance.rs",
+      "bytes": 4189,
+      "sha256": "01786c1a78a13e5c1cc0cf21bfb4631882da1732d938d85712592fc4a492ee79",
+      "git_blob": "44f27a87ec846150ccf671727d8e4decd0d1d96f"
+    },
+    {
+      "path": "crates/bsk-cli/src/skill_install/storage.rs",
+      "bytes": 5835,
+      "sha256": "47108242b595233a11eb2b3debb6a22d8ec266168a525893d8118089411de0b1",
+      "git_blob": "c86d9974204037d78ff642fc27b6ed6d08405ed9"
+    },
+    {
+      "path": "crates/bsk-cli/src/skill_install/bundle.rs",
+      "bytes": 4760,
+      "sha256": "3a6e6d6a9ae81a7d974a3e2231337f66e5f86e0d27ce314804a18cbf690f721d",
+      "git_blob": "73197f336112c6033b444ff05f47e1ff74e830c2"
+    }
+  ],
+  "manifest": "snapshots/Tencent/BrowserSkill/3d4c1bb3b1a29908a299c1ccac1d55bdd54a0a62/manifest.json",
+  "source_review": "research/ownership-review-2026-11-18.md",
+  "solution": "research/solutions/browserskill-managed-skill-update.md",
+  "archive": {
+    "current_full_archive": false,
+    "oct26_full_archive": false,
+    "historical_manifest": "snapshots/Tencent/BrowserSkill/6214e3d6a3d74eaf39c0202c4f182b5755974da9/manifest.json",
+    "historical_archive_hash": "c7dc085ee00436c14c01dc6b4f5a712e10893f1e03982c7ddd6e0be9a86c64bb",
+    "historical_archive_reverified": false
+  },
+  "query_log": [
+    {
+      "q": "腾讯 BrowserSkill 官方 浏览器 安全",
+      "language": "zh",
+      "selected": "Tencent 官方组织固定源码、README 与许可"
+    },
+    {
+      "q": "Tencent BrowserSkill official extension authorization",
+      "language": "en",
+      "selected": "官方扩展隐私说明；社区及镜像只作发现"
+    },
+    {
+      "q": "Tencent BrowserSkill managed skill baseline install_skill",
+      "language": "en",
+      "selected": "沿 main.rs 模块导入定位 skill_install 模块，搜索摘要不足不计源码"
+    }
+  ],
+  "verification": {
+    "static": true,
+    "simulation": {
+      "pending_hash_cases": 5,
+      "output": "PASS",
+      "upstream_execution": false
+    },
+    "upstream_tests": "read_not_run",
+    "browser_automation": "not_run"
+  },
+  "scope_delta": "读取新版本入口作分发依赖，不纳入冻结技能组数；该项目版本影响并未完整比较"
+}

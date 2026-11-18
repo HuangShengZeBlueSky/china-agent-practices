@@ -5905,7 +5905,11 @@
           "open_questions": [
             "运行时 CLI 构建/版本",
             "宿主上下文与批准回传",
-            "外部命令及跨业务技能传递依赖"
+            "外部命令及跨业务技能传递依赖",
+            "service-path confirmation read statically; actual host approval, stdin replay and other shortcut paths remain unverified"
+          ],
+          "supplementary_evidence": [
+            "research/evidence/2026-11-18/lark-shared-confirmation.json"
           ]
         },
         {
@@ -5927,7 +5931,11 @@
           "open_questions": [
             "运行时 CLI 构建/版本",
             "宿主上下文与批准回传",
-            "外部命令及跨业务技能传递依赖"
+            "外部命令及跨业务技能传递依赖",
+            "service-path confirmation read statically; actual host approval, stdin replay and other shortcut paths remain unverified"
+          ],
+          "supplementary_evidence": [
+            "research/evidence/2026-11-18/lark-shared-confirmation.json"
           ]
         },
         {
@@ -5955,12 +5963,17 @@
           "open_questions": [
             "运行时 CLI 构建/版本",
             "宿主上下文与批准回传",
-            "外部命令及跨业务技能传递依赖"
+            "外部命令及跨业务技能传递依赖",
+            "service-path confirmation read statically; actual host approval, stdin replay and other shortcut paths remain unverified"
+          ],
+          "supplementary_evidence": [
+            "research/evidence/2026-11-18/lark-shared-confirmation.json"
           ]
         }
       ],
       "supplementary_analysis": [
-        "research/solutions/lark-shared-occurrence-equivalence.md"
+        "research/solutions/lark-shared-occurrence-equivalence.md",
+        "research/solutions/lark-confirmation-argv-contract.md"
       ]
     },
     {

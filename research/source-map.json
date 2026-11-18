@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-17",
+  "updated_at": "2026-11-18",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -60,6 +60,15 @@
           "manifest": "research/evidence/2026-11-17/lark-shared-equivalence.json",
           "execution_status": "not_run",
           "scope": "指定子链与证据静态核对"
+        },
+        {
+          "checked_at": "2026-11-18",
+          "evidence": [
+            "research/solutions/lark-confirmation-argv-contract.md"
+          ],
+          "manifest": "research/evidence/2026-11-18/lark-shared-confirmation.json",
+          "execution_status": "synthetic_only",
+          "scope": "shared skill confirmation protocol and generic service execution path"
         }
       ]
     },
@@ -726,13 +735,26 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
-        "checked_on": "2026-10-26",
-        "head": "c0b8e5704a69aa93f6cdd40bbb286a9dd485d42b",
+        "checked_on": "2026-11-18",
+        "head": "3d4c1bb3b1a29908a299c1ccac1d55bdd54a0a62",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": false,
-        "evidence": "research/repository-audit-2026-10-26.md"
-      }
+        "selected_file_manifest": "snapshots/Tencent/BrowserSkill/3d4c1bb3b1a29908a299c1ccac1d55bdd54a0a62/manifest.json",
+        "evidence": "research/ownership-review-2026-11-18.md"
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-18",
+          "evidence": [
+            "research/ownership-review-2026-11-18.md",
+            "research/solutions/browserskill-managed-skill-update.md"
+          ],
+          "manifest": "research/evidence/2026-11-18/source-review.json",
+          "execution_status": "synthetic_only",
+          "scope": "managed skill installation and automatic sync; not full browser automation"
+        }
+      ]
     },
     {
       "id": "prior-tencent-rtc-agent-skills",

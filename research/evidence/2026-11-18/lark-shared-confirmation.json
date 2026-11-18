@@ -1,0 +1,89 @@
+{
+  "checked_on": "2026-11-18",
+  "base_commit": "4073bea9bb3ea1320fa89fff0cd443d75334d03b",
+  "prior_file_equivalence": "research/evidence/2026-11-17/lark-shared-equivalence.json",
+  "solution": "research/solutions/lark-confirmation-argv-contract.md",
+  "implementation_repository": "larksuite/cli",
+  "implementation_commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+  "files": [
+    {
+      "path": "internal/cmdutil/confirm.go",
+      "bytes": 1343,
+      "sha256": "7d49c079e18b89aa151e29160b380905319d4c657296cd9d5b19a8497b6205ca",
+      "git_blob": "6c6fa3b86f1fde45555f6377467ef46db36702ed"
+    },
+    {
+      "path": "internal/cmdutil/confirm_test.go",
+      "bytes": 2730,
+      "sha256": "f775db33ecb9dbf3b8abff82f84e3c56c3262edaa2362c9e4de1289c59a5cd2c",
+      "git_blob": "9b337feb1716bf186bf9202bf277ffbe5e86dc7d"
+    },
+    {
+      "path": "internal/cmdutil/risk.go",
+      "bytes": 1398,
+      "sha256": "c373b7b40c7da06424c4c4321367fdf8b569c65f6b5df32f81ed9ba3975a932c",
+      "git_blob": "29ce402bb7c67f0d641fb8950115e7d522ee1136"
+    },
+    {
+      "path": "cmd/service/service.go",
+      "bytes": 30278,
+      "sha256": "5f6fbc8bb5ce5cc4b5813e17e0d01225f964c8d5e97bef52ca3c30f1725d1b24",
+      "git_blob": "a1edb2a369eacddc646609513caa74288a0432f9"
+    },
+    {
+      "path": "skills/lark-shared/references/lark-shared-high-risk-approval.md",
+      "bytes": 2070,
+      "sha256": "b8bbff0c71d376564f8d6ea640686b08645d6ff4c905aa03c79882b98bd6bf05",
+      "git_blob": "1108ff8cce28894e83107285e6f6b260f4d3b786"
+    }
+  ],
+  "occurrences": [
+    {
+      "source_id": "615b1d598706b98c04da5110",
+      "repository": "ahang1598/doubao-workbuddy-qwenwork-skills",
+      "commit": "1c9239cc90585f57d9e06d32deffc017bbff5802",
+      "path": "workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
+      "dependency_status": "partially_reviewed",
+      "host_status": "not_checked",
+      "execution_status": "not_run",
+      "scope": "文件解释依据前批等价证据复用，实际二进制与宿主未核"
+    },
+    {
+      "source_id": "4cfc26fbba463f3127f8e6ce",
+      "repository": "ahang1598/doubao-workbuddy-qwenwork-skills",
+      "commit": "4e60dd8977eee1d770dd22de4780a4b54385adb8",
+      "path": "workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
+      "dependency_status": "partially_reviewed",
+      "host_status": "not_checked",
+      "execution_status": "not_run",
+      "scope": "文件解释依据前批等价证据复用，实际二进制与宿主未核"
+    },
+    {
+      "source_id": "a4e2e6d2d1d18cfa102485d3",
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "path": "skills/lark-shared/SKILL.md",
+      "dependency_status": "partially_reviewed",
+      "host_status": "requirements_read_not_verified",
+      "execution_status": "not_run",
+      "scope": "对应固定官方 CLI 的通用 service 分支"
+    }
+  ],
+  "evidence_level": "static_source_and_independent_control_flow_simulation",
+  "simulation": {
+    "cases": 3,
+    "results": [
+      "preview",
+      "confirmation_required",
+      "execute"
+    ],
+    "upstream_imported": false
+  },
+  "unverified": [
+    "用户批准来源绑定",
+    "stdout/stderr 实际捕获",
+    "原 argv 与 stdin 保留",
+    "其他快捷命令路径",
+    "业务端点结果"
+  ]
+}

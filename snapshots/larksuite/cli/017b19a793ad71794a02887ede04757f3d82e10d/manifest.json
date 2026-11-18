@@ -2996,6 +2996,30 @@
       "bytes": 4627,
       "sha256": "659b6c3953540963f9d0522539d88dd1523ebb924da538db709c002ed3c503ad",
       "git_blob": "454141fed498a576482a4e88b4e9df1cbf988a46"
+    },
+    {
+      "path": "internal/cmdutil/confirm.go",
+      "bytes": 1343,
+      "sha256": "7d49c079e18b89aa151e29160b380905319d4c657296cd9d5b19a8497b6205ca",
+      "git_blob": "6c6fa3b86f1fde45555f6377467ef46db36702ed"
+    },
+    {
+      "path": "internal/cmdutil/confirm_test.go",
+      "bytes": 2730,
+      "sha256": "f775db33ecb9dbf3b8abff82f84e3c56c3262edaa2362c9e4de1289c59a5cd2c",
+      "git_blob": "9b337feb1716bf186bf9202bf277ffbe5e86dc7d"
+    },
+    {
+      "path": "internal/cmdutil/risk.go",
+      "bytes": 1398,
+      "sha256": "c373b7b40c7da06424c4c4321367fdf8b569c65f6b5df32f81ed9ba3975a932c",
+      "git_blob": "29ce402bb7c67f0d641fb8950115e7d522ee1136"
+    },
+    {
+      "path": "cmd/service/service.go",
+      "bytes": 30278,
+      "sha256": "5f6fbc8bb5ce5cc4b5813e17e0d01225f964c8d5e97bef52ca3c30f1725d1b24",
+      "git_blob": "a1edb2a369eacddc646609513caa74288a0432f9"
     }
   ],
   "skills": [
@@ -3402,6 +3426,16 @@
         "internal/cmdutil/transport.go"
       ],
       "evidence": "research/evidence/2026-11-15/lark-dependency-progress.json"
+    },
+    {
+      "checked_on": "2026-11-18",
+      "paths": [
+        "internal/cmdutil/confirm.go",
+        "internal/cmdutil/confirm_test.go",
+        "internal/cmdutil/risk.go",
+        "cmd/service/service.go"
+      ],
+      "evidence": "research/evidence/2026-11-18/lark-shared-confirmation.json"
     }
   ]
 }

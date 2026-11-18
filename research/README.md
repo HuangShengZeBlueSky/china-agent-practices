@@ -103,3 +103,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-17
 
 [openJiuwen 工作流取消](solutions/openjiuwen-workflow-cancel-checkpoint.md)与[VitaBench 改判](solutions/vitabench-window-reward.md)补主线专项。[飞书共享技能等价](solutions/lark-shared-occurrence-equivalence.md)加三路径证据。详见[当日记录](log/2026-11-17.md)。
+
+## 2026-11-18
+
+[BrowserSkill 受管理技能更新](solutions/browserskill-managed-skill-update.md)补版本、来源标记与恢复边界。[飞书确认与 argv](solutions/lark-confirmation-argv-contract.md)核固定执行分支。国内专项23/31，详见[日志](log/2026-11-18.md)。
