@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-18",
+  "updated_at": "2026-11-19",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "P1-01 推进 UI-TARS Desktop 等余下 8 条专项与版本归档；共享技能补具体宿主批准回传、stdin 重开和真实加载证据。VitaBench 原文展开与 SDK 旧批待恢复。",
+  "next_action": "P1-01 接续 AWorld 等余7条专项和版本归档；共享技能补宿主 stdin 保存/重开与审批输入绑定。VitaBench 原文展开和飞书 SDK 旧批继续保留恢复待办。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,20 +27,20 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "共享技能三 occurrence 沿用七文件等价证据，新增固定 CLI 的确认分支静态核查；完整组0、实跑0。",
+    "note": "lark-shared 三 occurrence 继续保留部分依赖/宿主状态，新增 stdin 确认重试子链。完整组与实跑均0。",
     "new_entry_reviews": 1,
     "partial_dependency_reviews": 2
   },
   "today_outputs": [
-    "research/ownership-review-2026-11-18.md",
-    "research/solutions/browserskill-managed-skill-update.md",
-    "research/solutions/lark-confirmation-argv-contract.md",
-    "research/evidence/2026-11-18/source-review.json",
-    "research/evidence/2026-11-18/lark-shared-confirmation.json"
+    "research/ownership-review-2026-11-19.md",
+    "research/solutions/ui-tars-sdk-terminal-status.md",
+    "research/solutions/lark-stdin-confirmation-replay.md",
+    "research/evidence/2026-11-19/source-review.json",
+    "research/evidence/2026-11-19/lark-shared-stdin.json"
   ],
-  "last_log": "research/log/2026-11-18.md",
+  "last_log": "research/log/2026-11-19.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "专项 23/31，余8项；近期约每个已发布批次一条专项，仅估计文档单元，整仓、阶段与技能全量验收日期待实测。",
+  "estimate_note": "专项24/31，余7项，基于近期约一条/批估计专项文档量。维护状态、版本归档、主线验收与技能全量日期仍未知。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,

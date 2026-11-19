@@ -5906,10 +5906,12 @@
             "运行时 CLI 构建/版本",
             "宿主上下文与批准回传",
             "外部命令及跨业务技能传递依赖",
-            "service-path confirmation read statically; actual host approval, stdin replay and other shortcut paths remain unverified"
+            "service-path confirmation read statically; actual host approval, stdin replay and other shortcut paths remain unverified",
+            "stdin consumed before confirmation in fixed service path; actual host input preservation and replay not observed"
           ],
           "supplementary_evidence": [
-            "research/evidence/2026-11-18/lark-shared-confirmation.json"
+            "research/evidence/2026-11-18/lark-shared-confirmation.json",
+            "research/evidence/2026-11-19/lark-shared-stdin.json"
           ]
         },
         {
@@ -5932,10 +5934,12 @@
             "运行时 CLI 构建/版本",
             "宿主上下文与批准回传",
             "外部命令及跨业务技能传递依赖",
-            "service-path confirmation read statically; actual host approval, stdin replay and other shortcut paths remain unverified"
+            "service-path confirmation read statically; actual host approval, stdin replay and other shortcut paths remain unverified",
+            "stdin consumed before confirmation in fixed service path; actual host input preservation and replay not observed"
           ],
           "supplementary_evidence": [
-            "research/evidence/2026-11-18/lark-shared-confirmation.json"
+            "research/evidence/2026-11-18/lark-shared-confirmation.json",
+            "research/evidence/2026-11-19/lark-shared-stdin.json"
           ]
         },
         {
@@ -5964,16 +5968,19 @@
             "运行时 CLI 构建/版本",
             "宿主上下文与批准回传",
             "外部命令及跨业务技能传递依赖",
-            "service-path confirmation read statically; actual host approval, stdin replay and other shortcut paths remain unverified"
+            "service-path confirmation read statically; actual host approval, stdin replay and other shortcut paths remain unverified",
+            "stdin consumed before confirmation in fixed service path; actual host input preservation and replay not observed"
           ],
           "supplementary_evidence": [
-            "research/evidence/2026-11-18/lark-shared-confirmation.json"
+            "research/evidence/2026-11-18/lark-shared-confirmation.json",
+            "research/evidence/2026-11-19/lark-shared-stdin.json"
           ]
         }
       ],
       "supplementary_analysis": [
         "research/solutions/lark-shared-occurrence-equivalence.md",
-        "research/solutions/lark-confirmation-argv-contract.md"
+        "research/solutions/lark-confirmation-argv-contract.md",
+        "research/solutions/lark-stdin-confirmation-replay.md"
       ]
     },
     {

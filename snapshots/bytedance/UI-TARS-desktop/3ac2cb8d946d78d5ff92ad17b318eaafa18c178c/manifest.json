@@ -70,9 +70,80 @@
       "path": "multimodal/tarko/llm-client/LICENSE",
       "bytes": 11357,
       "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "packages/ui-tars/sdk/README.md",
+      "bytes": 10968,
+      "sha256": "b2cd7c3fcc5036860d4cc453f535402d1fd0a38139f05a8fc1bfb067e4e9fdaf",
+      "git_blob": "e3c44d6218857c16e23a5f4390368a39a4bee7bd"
+    },
+    {
+      "path": "packages/ui-tars/sdk/package.json",
+      "bytes": 2088,
+      "sha256": "9e82d8d73396fa91317b0dbaa7f639c6d818a0fd6bdbcbc6f16ea75de709091a",
+      "git_blob": "29bb0918b47e17c3edbba8952f11c0fe45c87aba"
+    },
+    {
+      "path": "packages/ui-tars/sdk/src/GUIAgent.ts",
+      "bytes": 17317,
+      "sha256": "036e14d2cf5db9c3bca830c8e43a8667bf25bfb866832eb3c505356d0a52017d",
+      "git_blob": "02603ca551afefd17ad3b4e515165c553cb5a965"
+    },
+    {
+      "path": "packages/ui-tars/sdk/src/types.ts",
+      "bytes": 3307,
+      "sha256": "a705510e1e65b4a87d5b55482c52c0e486ae4d174399d7115cbe5b140bb0b538",
+      "git_blob": "75a8e48bb05efaaec2dff571d90aba22f46429b9"
+    },
+    {
+      "path": "packages/ui-tars/sdk/src/utils.ts",
+      "bytes": 8003,
+      "sha256": "e212b03cf649544c5e4969d7cd49bd89eb0eb135f09a63abc28c6ef8f41e8f57",
+      "git_blob": "37389e2b3c58394340aca21cd53eaa3ad2412f69"
+    },
+    {
+      "path": "packages/ui-tars/sdk/src/Model.ts",
+      "bytes": 9536,
+      "sha256": "9d3232978acedc656a8ff5781b9e8234bee1cb0655f59dac296b1d6e49f4faef",
+      "git_blob": "68f52b997ae8c9a7fd173174750aa6e36966e378"
+    },
+    {
+      "path": "packages/ui-tars/sdk/src/constants.ts",
+      "bytes": 2621,
+      "sha256": "efdcbf2ea742a90dbc89ca254730adf95001cdc619b0666f992bd8b17cddae63",
+      "git_blob": "739bebe0ad7bc335cfcd98a3a3bbb152e72a3bf5"
+    },
+    {
+      "path": "packages/ui-tars/shared/src/types/agent.ts",
+      "bytes": 2146,
+      "sha256": "a6cb37a374f21c29d654fc8e7577e684683cdd7e8b32edda8ee0c3601b8bb0b9",
+      "git_blob": "7b9864b8aef6c78149eab014412896e9b0439c7d"
+    },
+    {
+      "path": "packages/ui-tars/shared/src/constants/vlm.ts",
+      "bytes": 906,
+      "sha256": "81958fa63e0b2efe94cb6dd16e7e56b63d319c99e6f2f25e1a3785bd51e15c76",
+      "git_blob": "389d68ebd19d9baee2b2716226cb0fd1ba176432"
     }
   ],
   "skills": [],
   "git_history_included": false,
-  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。",
+  "expanded_file_additions": [
+    {
+      "checked_on": "2026-11-19",
+      "paths": [
+        "packages/ui-tars/sdk/README.md",
+        "packages/ui-tars/sdk/package.json",
+        "packages/ui-tars/sdk/src/GUIAgent.ts",
+        "packages/ui-tars/sdk/src/types.ts",
+        "packages/ui-tars/sdk/src/utils.ts",
+        "packages/ui-tars/sdk/src/Model.ts",
+        "packages/ui-tars/sdk/src/constants.ts",
+        "packages/ui-tars/shared/src/types/agent.ts",
+        "packages/ui-tars/shared/src/constants/vlm.ts"
+      ],
+      "evidence": "research/evidence/2026-11-19/source-review.json"
+    }
+  ]
 }

@@ -3020,6 +3020,30 @@
       "bytes": 30278,
       "sha256": "5f6fbc8bb5ce5cc4b5813e17e0d01225f964c8d5e97bef52ca3c30f1725d1b24",
       "git_blob": "a1edb2a369eacddc646609513caa74288a0432f9"
+    },
+    {
+      "path": "internal/cmdutil/json.go",
+      "bytes": 2262,
+      "sha256": "a28fda27b9df1b92fc0c04d0bfcde6937ce4ac24f644c90ec91a89749e3e289d",
+      "git_blob": "c00be5bdf14cb9440c3087fb11a19b54ceeabe5a"
+    },
+    {
+      "path": "internal/cmdutil/resolve.go",
+      "bytes": 3180,
+      "sha256": "c2d851b7a27824428639d694f9c9f1215ab105763fb8a92b31fc530b1b0e56e6",
+      "git_blob": "06723fad803a610d7030507afcda817731955694"
+    },
+    {
+      "path": "internal/cmdutil/json_test.go",
+      "bytes": 4814,
+      "sha256": "79202ebfceaf8db1dc6b49cd07b0096125ceda81572cfca21cc90390cbb19455",
+      "git_blob": "94812346d3be6e00be25a69556585e9050b30496"
+    },
+    {
+      "path": "cmd/service/service_test.go",
+      "bytes": 45495,
+      "sha256": "f3850d8aa2ff25f25ecee62da096ee172c731d05f5ce168a46b3acaeb434d325",
+      "git_blob": "50884ed4a3056313bd8853b65491d4f1cb164f5c"
     }
   ],
   "skills": [
@@ -3436,6 +3460,16 @@
         "cmd/service/service.go"
       ],
       "evidence": "research/evidence/2026-11-18/lark-shared-confirmation.json"
+    },
+    {
+      "checked_on": "2026-11-19",
+      "paths": [
+        "internal/cmdutil/json.go",
+        "internal/cmdutil/resolve.go",
+        "internal/cmdutil/json_test.go",
+        "cmd/service/service_test.go"
+      ],
+      "evidence": "research/evidence/2026-11-19/lark-shared-stdin.json"
     }
   ]
 }

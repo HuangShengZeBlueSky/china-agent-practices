@@ -103,17 +103,21 @@
         "research/evidence/2026-11-17/source-review.json",
         "research/ownership-review-2026-11-18.md",
         "research/solutions/browserskill-managed-skill-update.md",
-        "research/evidence/2026-11-18/source-review.json"
+        "research/evidence/2026-11-18/source-review.json",
+        "research/ownership-review-2026-11-19.md",
+        "research/solutions/ui-tars-sdk-terminal-status.md",
+        "research/evidence/2026-11-19/source-review.json"
       ],
       "open_questions": [
-        "31 仓中 23 条有专项记录，本批补 BrowserSkill，余 8 条待专项。",
+        "31 仓中24条有专项记录，本批补UI-TARS Desktop，余7条待专项。",
         "十个10-26新HEAD的变更影响与备份安排；CloudBase两版已补节选与整包下载哈希，整包未发布，分发/宿主仍待核。 Qwen Code 10-26 与当前版本已保存节选，整包仍缺。 OpenSandbox 两版已补节选，整包仍缺。",
         "Kimi新实现等价；AgentScope目标请求/事件、Session schema、运行代次与取消确认映射（旧Runtime子链已读，不代表2.0等价）",
         "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界",
         "mimoagent官网直达归属链仍待补；Baidu下游校验、mimoagent协议/评分器与异常批次实验列为后续组件研究，不冒充本轮实测",
         "Coze Loop HEAD 36b9796 仅五份指定节选，现版本整包与 10-26 中间版本差异待补。",
         "openJiuwen 现版本整仓及跨平台提交等价待补；VitaBench 六份评分原文展开，飞书前次 SDK 方案与节选仍待恢复。",
-        "BrowserSkill 10-26 与当前 HEAD 均仅有版本缺口记录，当前保存 11 份节选，整包及完整版本差异待补。"
+        "BrowserSkill 10-26 与当前 HEAD 均仅有版本缺口记录，当前保存 11 份节选，整包及完整版本差异待补。",
+        "UI-TARS Desktop 今日 archived=true，归档日期未知；packages/ui-tars/sdk 与 multimodal SDK 的实际 Desktop 接线待核。"
       ],
       "execution_status": "static_metadata_review"
     },
@@ -782,5 +786,5 @@
       "latest_evidence": "research/evidence/2026-11-15/weekend-audit.json"
     }
   ],
-  "updated_at": "2026-11-18"
+  "updated_at": "2026-11-19"
 }

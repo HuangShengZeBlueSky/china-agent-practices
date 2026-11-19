@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-18",
+  "updated_at": "2026-11-19",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -69,6 +69,15 @@
           "manifest": "research/evidence/2026-11-18/lark-shared-confirmation.json",
           "execution_status": "synthetic_only",
           "scope": "shared skill confirmation protocol and generic service execution path"
+        },
+        {
+          "checked_at": "2026-11-19",
+          "evidence": [
+            "research/solutions/lark-stdin-confirmation-replay.md"
+          ],
+          "manifest": "research/evidence/2026-11-19/lark-shared-stdin.json",
+          "execution_status": "synthetic_only",
+          "scope": "stdin consuming and service confirmation replay"
         }
       ]
     },
@@ -617,13 +626,25 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
-        "checked_on": "2026-10-26",
+        "checked_on": "2026-11-19",
         "head": "3ac2cb8d946d78d5ff92ad17b318eaafa18c178c",
         "default_branch": "main",
-        "archived": false,
+        "archived": true,
         "head_backed_up": true,
-        "evidence": "research/repository-audit-2026-10-26.md"
-      }
+        "evidence": "research/ownership-review-2026-11-19.md"
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-19",
+          "evidence": [
+            "research/ownership-review-2026-11-19.md",
+            "research/solutions/ui-tars-sdk-terminal-status.md"
+          ],
+          "manifest": "research/evidence/2026-11-19/source-review.json",
+          "execution_status": "synthetic_only",
+          "scope": "experimental packages/ui-tars/sdk 1.2.3 selected subchain"
+        }
+      ]
     },
     {
       "id": "prior-alibaba-agentscope-runtime",

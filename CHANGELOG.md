@@ -1,5 +1,10 @@
 # 变更记录
 
+## 2026-11-19 · GUI 结束与输入恢复
+
+- UI-TARS Desktop 核出 archived=true，保留历史审计。packages SDK 的 terminal 分支可覆盖执行错误状态，默认轮数与文档不同。
+- 飞书 service 在确认前构造请求并消费 stdin，补宿主保存输入字节的恢复待办。
+
 ## 2026-11-18 · 技能交付与确认回传
 
 - 补 BrowserSkill 官方归属、固定 MIT 版本和技能同步实现，记录旧新哈希、冲突暂停和逐文件更新边界。

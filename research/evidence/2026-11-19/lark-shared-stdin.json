@@ -1,0 +1,87 @@
+{
+  "checked_on": "2026-11-19",
+  "base_commit": "12a8dddb39bec3bfe253c19902ae38695d6dc56d",
+  "solution": "research/solutions/lark-stdin-confirmation-replay.md",
+  "prior_evidence": "research/evidence/2026-11-18/lark-shared-confirmation.json",
+  "implementation_repository": "larksuite/cli",
+  "implementation_commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+  "files": [
+    {
+      "path": "internal/cmdutil/json.go",
+      "bytes": 2262,
+      "sha256": "a28fda27b9df1b92fc0c04d0bfcde6937ce4ac24f644c90ec91a89749e3e289d",
+      "git_blob": "c00be5bdf14cb9440c3087fb11a19b54ceeabe5a"
+    },
+    {
+      "path": "internal/cmdutil/resolve.go",
+      "bytes": 3180,
+      "sha256": "c2d851b7a27824428639d694f9c9f1215ab105763fb8a92b31fc530b1b0e56e6",
+      "git_blob": "06723fad803a610d7030507afcda817731955694"
+    },
+    {
+      "path": "internal/cmdutil/json_test.go",
+      "bytes": 4814,
+      "sha256": "79202ebfceaf8db1dc6b49cd07b0096125ceda81572cfca21cc90390cbb19455",
+      "git_blob": "94812346d3be6e00be25a69556585e9050b30496"
+    },
+    {
+      "path": "cmd/service/service.go",
+      "bytes": 30278,
+      "sha256": "5f6fbc8bb5ce5cc4b5813e17e0d01225f964c8d5e97bef52ca3c30f1725d1b24",
+      "git_blob": "a1edb2a369eacddc646609513caa74288a0432f9"
+    },
+    {
+      "path": "cmd/service/service_test.go",
+      "bytes": 45495,
+      "sha256": "f3850d8aa2ff25f25ecee62da096ee172c731d05f5ce168a46b3acaeb434d325",
+      "git_blob": "50884ed4a3056313bd8853b65491d4f1cb164f5c"
+    }
+  ],
+  "occurrences": [
+    {
+      "source_id": "615b1d598706b98c04da5110",
+      "repository": "ahang1598/doubao-workbuddy-qwenwork-skills",
+      "commit": "1c9239cc90585f57d9e06d32deffc017bbff5802",
+      "path": "workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
+      "dependency_status": "partially_reviewed",
+      "host_status": "not_checked",
+      "execution_status": "not_run",
+      "scope": "shared text only; actual binary and host pending"
+    },
+    {
+      "source_id": "4cfc26fbba463f3127f8e6ce",
+      "repository": "ahang1598/doubao-workbuddy-qwenwork-skills",
+      "commit": "4e60dd8977eee1d770dd22de4780a4b54385adb8",
+      "path": "workbuddy/connectors/marketplace/connectors/feishu/skills/lark-shared/SKILL.md",
+      "dependency_status": "partially_reviewed",
+      "host_status": "not_checked",
+      "execution_status": "not_run",
+      "scope": "shared text only; actual binary and host pending"
+    },
+    {
+      "source_id": "a4e2e6d2d1d18cfa102485d3",
+      "repository": "larksuite/cli",
+      "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "path": "skills/lark-shared/SKILL.md",
+      "dependency_status": "partially_reviewed",
+      "host_status": "requirements_read_not_verified",
+      "execution_status": "not_run",
+      "scope": "fixed CLI generic service input subchain"
+    }
+  ],
+  "simulation": {
+    "type": "independent_python",
+    "result": {
+      "first_bytes": 17,
+      "reused_reader_bytes": 0,
+      "reopened_same_bytes": true
+    },
+    "upstream_execution": false
+  },
+  "open_questions": [
+    "保存或重开 stdin 字节的宿主实现",
+    "批准与输入摘要绑定",
+    "实际 API 副作用与超时恢复",
+    "其他快捷命令输入路径"
+  ]
+}

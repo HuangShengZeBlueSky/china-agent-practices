@@ -107,3 +107,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-18
 
 [BrowserSkill 受管理技能更新](solutions/browserskill-managed-skill-update.md)补版本、来源标记与恢复边界。[飞书确认与 argv](solutions/lark-confirmation-argv-contract.md)核固定执行分支。国内专项23/31，详见[日志](log/2026-11-18.md)。
+
+## 2026-11-19
+
+[UI-TARS 实验 SDK 状态](solutions/ui-tars-sdk-terminal-status.md)与[飞书 stdin 恢复](solutions/lark-stdin-confirmation-replay.md)补执行及恢复证据，专项24/31。[当日记录](log/2026-11-19.md)
