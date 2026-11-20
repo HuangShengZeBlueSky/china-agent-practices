@@ -3494,9 +3494,9 @@
     },
     {
       "content_id": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4",
-      "entry_status": "not_read",
-      "analysis_file": null,
-      "solution_file": null,
+      "entry_status": "entry_read",
+      "analysis_file": "research/solutions/aworld-long-running-evidence-contract.md",
+      "solution_file": "research/solutions/aworld-long-running-evidence-contract.md",
       "occurrences": [
         {
           "source_id": "88db3ba554f3e23ef7f1b3e5",
@@ -3504,11 +3504,23 @@
           "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
           "path": "aworld-skills/long-running-agent/SKILL.md",
           "prior_reading": null,
-          "dependency_status": "not_checked",
-          "host_status": "not_checked",
-          "review_status": "pending",
+          "dependency_status": "partially_reviewed",
+          "host_status": "partially_reviewed",
+          "review_status": "in_progress",
           "execution_status": "not_run",
-          "equivalence_evidence": null
+          "equivalence_evidence": null,
+          "evidence_file": "research/evidence/2026-11-20/long-running-skill.json",
+          "open_questions": [
+            "冻结版 execution_protocol 的 controller/models/store/runner 与实际 schema 未读完",
+            "控制字段签名、崩溃恢复、deadline、取消及业务验证器未实跑",
+            "Workbench 与协作者属条件性依赖，未核具体宿主能力",
+            "新版 reviewer value lease 与冻结版不等价，不能迁移完整结论"
+          ],
+          "direct_dependency_review": {
+            "read": 3,
+            "total": 3,
+            "scope": "entry plus two direct references; excludes runtime transitive dependencies"
+          }
         }
       ]
     },

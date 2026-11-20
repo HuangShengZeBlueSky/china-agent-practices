@@ -1,0 +1,368 @@
+{
+  "date": "2026-11-20",
+  "baseline_repository_commit": "212cee5ccacb4f2cd4ec22f338ce1fcadf39277a",
+  "task": "P1-01",
+  "source_id": "prior-ant-aworld",
+  "source_type": "official_code",
+  "repository": "inclusionAI/AWorld",
+  "official_chain": [
+    {
+      "url": "https://www.inclusion-ai.org/blog/aworld/",
+      "published_on": "2025-07-07",
+      "read": "article body; Ant Group byline, repository link, license; leaderboard claims not verified",
+      "mirror": "not_mirrored; web-page redistribution permission not established"
+    },
+    {
+      "url": "https://github.com/inclusionAI",
+      "read": "official organization public profile names Ant Group; verified domain inclusion-ai.org"
+    },
+    {
+      "url": "https://github.com/inclusionAI/AWorld",
+      "read": "fixed README and MIT LICENSE; code selected below"
+    }
+  ],
+  "metadata": {
+    "head": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+    "default_branch": "main",
+    "archived": false,
+    "head_verified_via": "GET git/ref/heads/main; recent commit search corroboration",
+    "previous_audit_head": "82af4062e29e128910afa8622c866f4b99a4d23d",
+    "current_whole_archive": "not_acquired",
+    "old_whole_archive": "existing manifest retained; archive parts not downloaded or rehashed this batch"
+  },
+  "searches": [
+    {
+      "engine": "system2",
+      "queries": [
+        "site.github.com/inclusionAI/AWorld skill context checkpoint CLI",
+        "site.aworld.ai 蚂蚁 AWorld 技能 CLI 上下文"
+      ],
+      "admission": "official repository/docs only for claims; community search results discovery only"
+    },
+    {
+      "engine": "system1",
+      "queries": [
+        "site.inclusion-ai.org/blog/aworld Ant Group inclusionAI AWorld",
+        "AWorld 蚂蚁 inclusionAI 官方 开源 技能"
+      ],
+      "recency_days": 90,
+      "admission": "official blog and organization profile establish ownership; no new frozen source"
+    }
+  ],
+  "reading_scope": {
+    "full": "old and new resolver; package fingerprint helpers; core Skill; Registry; SkillService; both SkillsNeuron versions; old long-running entry and two references; new versions compared in full textual diff; LICENSE; builtin skill manifest",
+    "selected_functions": [
+      {
+        "path": "aworld-cli/src/aworld_cli/executors/local.py",
+        "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+        "functions": [
+          "_resolve_swarm_skills",
+          "_build_task context and Task evidence binding",
+          "execute task-bound evidence preservation"
+        ]
+      },
+      {
+        "path": "aworld/core/context/amni/tool/context_skill_tool.py",
+        "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+        "scope": "action schema, file resolution/read containment, active/offload branches, Observation/ActionResult return"
+      },
+      {
+        "path": "tests/core/test_skill_activation_resolver.py",
+        "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+        "scope": "multiple selection, attestation failure, count limit, explicit symlink paths and import isolation assertions; relevant old assertions/diff"
+      },
+      {
+        "path": "README.md",
+        "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+        "scope": "project framing, ownership/license and official entry links; benchmark/training sections not verified"
+      }
+    ]
+  },
+  "verification": {
+    "type": "static_source_and_byte_verification",
+    "upstream_run": false,
+    "model_run": false,
+    "synthetic_experiment": false,
+    "source_files": 26,
+    "source_sha256_and_git_blob_verified": true,
+    "new_expanded_files": 21,
+    "reused_expanded_files": 5,
+    "reused_old_paths": [
+      "LICENSE",
+      "aworld-cli/src/aworld_cli/core/skill_activation_resolver.py",
+      "aworld-skills/long-running-agent/SKILL.md",
+      "aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "aworld-skills/long-running-agent/references/execution-semantics.md"
+    ],
+    "notes": "Source hashes computed from exact UTF-8 bytes and matched Git blob SHA; textual diff is static evidence, not runtime reproduction."
+  },
+  "files": [
+    {
+      "bytes": 1071,
+      "sha256": "7a6308fd98e53e0ef59b98fab14f9312ef32f4edae093b1604e56c7ade56e3b5",
+      "git_blob": "43e80c00dfa6a7aeb48ed20103821f84ddb03657",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "LICENSE",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/LICENSE"
+    },
+    {
+      "bytes": 28420,
+      "sha256": "b9d6055a36e5dee6cf5aa283fe4c6b27035eafc4998a3620669779bb7fb4d25b",
+      "git_blob": "2efec4c9387134cc1a0fac863085f39784858ffd",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "README.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/README.md"
+    },
+    {
+      "bytes": 16587,
+      "sha256": "8dad63d24388a604016fe19f933bb84f642a6cc94795b82bb72b22bc78945de4",
+      "git_blob": "3bf89d127ef02540947df6290a85f3e61ddfae8b",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-cli/src/aworld_cli/core/skill_activation_resolver.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-cli/src/aworld_cli/core/skill_activation_resolver.py"
+    },
+    {
+      "bytes": 3670,
+      "sha256": "9375679cbf175bcd1e88c53264c12b60c66395876d00705510d9f66ab0804543",
+      "git_blob": "b6f6da11b8fb4d7632ec27812f331e01af032e32",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-cli/src/aworld_cli/core/runtime_skill_registry.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-cli/src/aworld_cli/core/runtime_skill_registry.py"
+    },
+    {
+      "bytes": 1593,
+      "sha256": "8d88e8a71cf28326d208f2ced5c3eb9f3ef381ee5cc1f9148fb5e68ebce26978",
+      "git_blob": "2bea9ad66197e89ef58d9277b893576f819b5273",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-cli/src/aworld_cli/core/builtin_skills.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-cli/src/aworld_cli/core/builtin_skills.py"
+    },
+    {
+      "bytes": 862,
+      "sha256": "efbe8db253f1beffb9b856109d0a807267105dad88a43525250ea27df9b1a00e",
+      "git_blob": "3b0ff1b4a5753d218e987eda968656b1e43810d7",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld/skills/package_fingerprint.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld/skills/package_fingerprint.py"
+    },
+    {
+      "bytes": 2947,
+      "sha256": "627778acf3836a374ac814ea5e07d3818e60cf568e6c9da9fc376b83457caa78",
+      "git_blob": "05804db9ee1c58cca104031594171e614bbfd3f8",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld/skills/registry.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld/skills/registry.py"
+    },
+    {
+      "bytes": 8835,
+      "sha256": "37fd061ae37a2fe09a3159b8f1677db13d85bd00ae266c042ab842ffdbd838ae",
+      "git_blob": "58d1a097e9175b3b822daa3352bda79f4766d334",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld/core/agent/skill.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld/core/agent/skill.py"
+    },
+    {
+      "bytes": 5391,
+      "sha256": "ff8892ddb8bc3a9d74cb9f280bac449da3e7388b8ab53aa9883646cc14c83daa",
+      "git_blob": "473805dcf1bc184be886b7ea17647d4f245e942b",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld/core/context/amni/prompt/neurons/skill_neuron.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld/core/context/amni/prompt/neurons/skill_neuron.py"
+    },
+    {
+      "bytes": 11635,
+      "sha256": "291eee8feb458a73cb36f4ba6cc0edff903a38ac5d6a5f9e2360abcc56519718",
+      "git_blob": "7f652190472c9ebf7e395ad5381a1916bf02235c",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld/core/context/amni/services/skill_service.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld/core/context/amni/services/skill_service.py"
+    },
+    {
+      "bytes": 26035,
+      "sha256": "2b7f2a203da2a7aa3ed687fe0f40c1e28a3cb4024d791b80e8cf37a8fa0608e0",
+      "git_blob": "8b0f4944f900b6319c04b6f6b575063a9d412c26",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld/core/context/amni/tool/context_skill_tool.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld/core/context/amni/tool/context_skill_tool.py"
+    },
+    {
+      "bytes": 18758,
+      "sha256": "4c22f2e0121ad8e3cab622d936fd01175bacae5920ec56b90af4418849a14bd5",
+      "git_blob": "b789c74f273520abf380fccb0eee3405dd1993e6",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "tests/core/test_skill_activation_resolver.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/tests/core/test_skill_activation_resolver.py"
+    },
+    {
+      "bytes": 165775,
+      "sha256": "d4dbe1139a0b5bdc7cb3f9ed12bf3a018afa7816755796b9d6bf7a09f7ac9e0b",
+      "git_blob": "8d8cb4b86b31ac97ca570b80cee36e42f5fe72e8",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-cli/src/aworld_cli/executors/local.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-cli/src/aworld_cli/executors/local.py"
+    },
+    {
+      "bytes": 14014,
+      "sha256": "51f2a040cb6fff686330e434ef43c0460fc78be11fbde433b4d13b0be1f5ce70",
+      "git_blob": "86676c9bb7fceb7ef0cdbeaab543eab2d243b042",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-skills/long-running-agent/SKILL.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-skills/long-running-agent/SKILL.md"
+    },
+    {
+      "bytes": 6317,
+      "sha256": "cfefab958e793a30995e1f44c688279034fc25ab94c59c35f5574ccec6d4017e",
+      "git_blob": "b066a379a894bc1d87340342a4e13d67d06696ad",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-skills/long-running-agent/references/checkpoints-and-review.md"
+    },
+    {
+      "bytes": 2508,
+      "sha256": "23e9520d70d8136085dab308f5dfb43478e83d91982a03dcf11568708c969468",
+      "git_blob": "1261e6b3bacbad04d317a848758192f9ceb0e2d5",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-skills/long-running-agent/references/execution-semantics.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-skills/long-running-agent/references/execution-semantics.md"
+    },
+    {
+      "bytes": 1071,
+      "sha256": "7a6308fd98e53e0ef59b98fab14f9312ef32f4edae093b1604e56c7ade56e3b5",
+      "git_blob": "43e80c00dfa6a7aeb48ed20103821f84ddb03657",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "LICENSE",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/LICENSE"
+    },
+    {
+      "bytes": 15235,
+      "sha256": "4c8c4ea3139cc1bb1a74bb5df744738d78b642a722677b114a17b4e2eff2096e",
+      "git_blob": "21f1e868b239c156864db21d2d72cd141524ce88",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-cli/src/aworld_cli/core/skill_activation_resolver.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-cli/src/aworld_cli/core/skill_activation_resolver.py"
+    },
+    {
+      "bytes": 1626,
+      "sha256": "714445bb61380b7d3ae10165db6dc456bde07c3a5b22ce5a5d836c16bc103b8a",
+      "git_blob": "450d7949dd460b891280b97c250ed826c248ed11",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/skills/package_fingerprint.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld/skills/package_fingerprint.py"
+    },
+    {
+      "bytes": 14948,
+      "sha256": "71802941ee1472c8afd035fe16ac00a659a1a5c0b9a68c84fd4902a4c655e5da",
+      "git_blob": "2bf9e85ab85e2df1fbc4c3e955f5dbd1d225c0b4",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "tests/core/test_skill_activation_resolver.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/tests/core/test_skill_activation_resolver.py"
+    },
+    {
+      "bytes": 12810,
+      "sha256": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4",
+      "git_blob": "72437cd517aface6fbc3f40246c5e62e64d5caa9",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/SKILL.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-skills/long-running-agent/SKILL.md"
+    },
+    {
+      "bytes": 5085,
+      "sha256": "ff7783fc3f18b8cb8c88f55f8bad4e0ac9a6412b4021e8e3fecb20f10b030e23",
+      "git_blob": "4181e8f14cbec6f465c2c38c1aec1120913dd3ed",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-skills/long-running-agent/references/checkpoints-and-review.md"
+    },
+    {
+      "bytes": 2508,
+      "sha256": "23e9520d70d8136085dab308f5dfb43478e83d91982a03dcf11568708c969468",
+      "git_blob": "1261e6b3bacbad04d317a848758192f9ceb0e2d5",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/references/execution-semantics.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-skills/long-running-agent/references/execution-semantics.md"
+    },
+    {
+      "bytes": 4218,
+      "sha256": "6972c0eace0d8313d96a36908ff73ea6b94a686fa9a47164cab7ae4a2cd86cbf",
+      "git_blob": "3a9ba22790f8d44f136544ca15a21801c7d0d040",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/core/context/amni/prompt/neurons/skill_neuron.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld/core/context/amni/prompt/neurons/skill_neuron.py"
+    },
+    {
+      "bytes": 11635,
+      "sha256": "291eee8feb458a73cb36f4ba6cc0edff903a38ac5d6a5f9e2360abcc56519718",
+      "git_blob": "7f652190472c9ebf7e395ad5381a1916bf02235c",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/core/context/amni/services/skill_service.py",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld/core/context/amni/services/skill_service.py"
+    },
+    {
+      "bytes": 1193,
+      "sha256": "dd1fe8a5528fb8152175c1aee18ba18a44882c52b086d7553044b46e48dc31e4",
+      "git_blob": "b8829d272511d1a2712ee695fccc4bcbf86797d9",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-cli/src/aworld_cli/builtin_skills/manifest.json",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-cli/src/aworld_cli/builtin_skills/manifest.json"
+    }
+  ],
+  "changed_conclusions": [
+    {
+      "kind": "source_fact",
+      "claim": "old resolver omitted failed package attestation; new resolver raises and checks every active skill has evidence",
+      "boundary": "does not prove every old caller allowed unverified execution"
+    },
+    {
+      "kind": "source_fact",
+      "claim": "program-level candidate content loading precedes model-level active-only usage injection",
+      "boundary": "not lazy disk loading; actual complete model request assembly remains unverified"
+    },
+    {
+      "kind": "source_fact",
+      "claim": "dynamic SkillService.active_skill does not recalculate package fingerprint within that function",
+      "boundary": "initial task attestation is not proven complete dynamic activation audit"
+    },
+    {
+      "kind": "official_prompt_contract",
+      "claim": "new skill narrows reviewer to armed long task/current candidate/unresolved public obligation; bounded validation lease",
+      "boundary": "reviewer protocol implementation not traced"
+    }
+  ],
+  "outputs": [
+    "research/ownership-review-2026-11-20.md",
+    "research/solutions/aworld-skill-activation-attestation.md",
+    "research/solutions/aworld-long-running-evidence-contract.md"
+  ],
+  "remaining": [
+    "new HEAD full archive and whole version comparison",
+    "frozen execution protocol/runtime transitive dependencies",
+    "dynamic activation and execution-time package identity",
+    "old VitaBench expanded originals and lark SDK recovery remain pending"
+  ]
+}

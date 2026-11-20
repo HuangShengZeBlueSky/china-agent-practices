@@ -1,0 +1,139 @@
+{
+  "date": "2026-11-20",
+  "content_id": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4",
+  "baseline_scope_changed": false,
+  "occurrences": [
+    {
+      "source_id": "88db3ba554f3e23ef7f1b3e5",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/SKILL.md",
+      "prior_reading": null,
+      "dependency_status": "partially_reviewed",
+      "host_status": "partially_reviewed",
+      "review_status": "in_progress",
+      "execution_status": "not_run",
+      "equivalence_evidence": null,
+      "evidence_file": "research/evidence/2026-11-20/long-running-skill.json",
+      "open_questions": [
+        "冻结版 execution_protocol 的 controller/models/store/runner 与实际 schema 未读完",
+        "控制字段签名、崩溃恢复、deadline、取消及业务验证器未实跑",
+        "Workbench 与协作者属条件性依赖，未核具体宿主能力",
+        "新版 reviewer value lease 与冻结版不等价，不能迁移完整结论"
+      ],
+      "direct_dependency_review": {
+        "read": 3,
+        "total": 3,
+        "scope": "entry plus two direct references; excludes runtime transitive dependencies"
+      }
+    }
+  ],
+  "entry_sha256_verified": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4",
+  "directory_files": [
+    {
+      "path": "aworld-skills/long-running-agent/SKILL.md",
+      "git_blob": "72437cd517aface6fbc3f40246c5e62e64d5caa9",
+      "read": "full"
+    },
+    {
+      "path": "aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "git_blob": "4181e8f14cbec6f465c2c38c1aec1120913dd3ed",
+      "read": "full"
+    },
+    {
+      "path": "aworld-skills/long-running-agent/references/execution-semantics.md",
+      "git_blob": "1261e6b3bacbad04d317a848758192f9ceb0e2d5",
+      "read": "full"
+    }
+  ],
+  "directory_read": 3,
+  "directory_total": 3,
+  "directory_completion_is_full_research": false,
+  "files": [
+    {
+      "bytes": 14014,
+      "sha256": "51f2a040cb6fff686330e434ef43c0460fc78be11fbde433b4d13b0be1f5ce70",
+      "git_blob": "86676c9bb7fceb7ef0cdbeaab543eab2d243b042",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-skills/long-running-agent/SKILL.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-skills/long-running-agent/SKILL.md"
+    },
+    {
+      "bytes": 6317,
+      "sha256": "cfefab958e793a30995e1f44c688279034fc25ab94c59c35f5574ccec6d4017e",
+      "git_blob": "b066a379a894bc1d87340342a4e13d67d06696ad",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-skills/long-running-agent/references/checkpoints-and-review.md"
+    },
+    {
+      "bytes": 2508,
+      "sha256": "23e9520d70d8136085dab308f5dfb43478e83d91982a03dcf11568708c969468",
+      "git_blob": "1261e6b3bacbad04d317a848758192f9ceb0e2d5",
+      "repository": "inclusionAI/AWorld",
+      "commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "path": "aworld-skills/long-running-agent/references/execution-semantics.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/bef598fcfb60da988c2660cafcf0d45f0128e8bf/files/aworld-skills/long-running-agent/references/execution-semantics.md"
+    },
+    {
+      "bytes": 12810,
+      "sha256": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4",
+      "git_blob": "72437cd517aface6fbc3f40246c5e62e64d5caa9",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/SKILL.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-skills/long-running-agent/SKILL.md"
+    },
+    {
+      "bytes": 5085,
+      "sha256": "ff7783fc3f18b8cb8c88f55f8bad4e0ac9a6412b4021e8e3fecb20f10b030e23",
+      "git_blob": "4181e8f14cbec6f465c2c38c1aec1120913dd3ed",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-skills/long-running-agent/references/checkpoints-and-review.md"
+    },
+    {
+      "bytes": 2508,
+      "sha256": "23e9520d70d8136085dab308f5dfb43478e83d91982a03dcf11568708c969468",
+      "git_blob": "1261e6b3bacbad04d317a848758192f9ceb0e2d5",
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/references/execution-semantics.md",
+      "snapshot": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-skills/long-running-agent/references/execution-semantics.md"
+    }
+  ],
+  "host_evidence": {
+    "frozen_neuron": "old prompt raw-string rendering; differs from new model-visible tool names and XML/CDATA handling",
+    "skill_service_equal_git_blob": {
+      "old": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "new": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+      "git_blob": "7f652190472c9ebf7e395ad5381a1916bf02235c",
+      "scope": "this one service only; not host equivalence"
+    },
+    "resolver_changes": "research/solutions/aworld-skill-activation-attestation.md",
+    "unread_runtime_dependencies": [
+      "aworld/core/execution_protocol/controller.py",
+      "aworld/core/execution_protocol/models.py",
+      "aworld/core/execution_protocol/store.py",
+      "aworld/runners/execution_protocol.py"
+    ]
+  },
+  "version_delta": {
+    "new_commit": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+    "in_frozen_queue": false,
+    "execution_semantics_equal": true,
+    "entry_equal": false,
+    "checkpoint_reference_equal": false,
+    "complete_conclusion_reusable": false
+  },
+  "execution": {
+    "upstream": "not_run",
+    "model": "not_run",
+    "exercises": "not_run",
+    "synthetic": "not_run"
+  },
+  "solution_file": "research/solutions/aworld-long-running-evidence-contract.md"
+}

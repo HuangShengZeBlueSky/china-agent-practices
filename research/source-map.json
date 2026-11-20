@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-19",
+  "updated_at": "2026-11-20",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -733,13 +733,29 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
-        "checked_on": "2026-10-26",
-        "head": "82af4062e29e128910afa8622c866f4b99a4d23d",
+        "checked_on": "2026-11-20",
+        "head": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
         "default_branch": "main",
         "archived": false,
-        "head_backed_up": true,
-        "evidence": "research/repository-audit-2026-10-26.md"
-      }
+        "head_backed_up": false,
+        "backup_scope": "17 selected files only; whole archive missing",
+        "evidence": "research/ownership-review-2026-11-20.md"
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-20",
+          "version": "bef598fcfb60da988c2660cafcf0d45f0128e8bf",
+          "previous_version": "82af4062e29e128910afa8622c866f4b99a4d23d",
+          "evidence": [
+            "research/ownership-review-2026-11-20.md",
+            "research/solutions/aworld-skill-activation-attestation.md",
+            "research/solutions/aworld-long-running-evidence-contract.md"
+          ],
+          "manifest": "research/evidence/2026-11-20/aworld-review.json",
+          "execution_status": "static_only",
+          "scope": "skill activation and prompt evidence; frozen skill direct references read; runtime protocol pending"
+        }
+      ]
     },
     {
       "id": "prior-tencent-browserskill",

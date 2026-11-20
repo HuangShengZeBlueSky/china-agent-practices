@@ -410,6 +410,38 @@
       "path": "tests/fixtures/plugins/legacy_agents_only/skills/demo/SKILL.md",
       "bytes": 167,
       "sha256": "72dd69580286d9bfe00af83d38b69703b789c3533265c8208d4174ba03539c19"
+    },
+    {
+      "path": "aworld/skills/package_fingerprint.py",
+      "bytes": 1626,
+      "sha256": "714445bb61380b7d3ae10165db6dc456bde07c3a5b22ce5a5d836c16bc103b8a",
+      "git_blob": "450d7949dd460b891280b97c250ed826c248ed11",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld/skills/package_fingerprint.py",
+      "checked_on": "2026-11-20"
+    },
+    {
+      "path": "tests/core/test_skill_activation_resolver.py",
+      "bytes": 14948,
+      "sha256": "71802941ee1472c8afd035fe16ac00a659a1a5c0b9a68c84fd4902a4c655e5da",
+      "git_blob": "2bf9e85ab85e2df1fbc4c3e955f5dbd1d225c0b4",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/tests/core/test_skill_activation_resolver.py",
+      "checked_on": "2026-11-20"
+    },
+    {
+      "path": "aworld/core/context/amni/prompt/neurons/skill_neuron.py",
+      "bytes": 4218,
+      "sha256": "6972c0eace0d8313d96a36908ff73ea6b94a686fa9a47164cab7ae4a2cd86cbf",
+      "git_blob": "3a9ba22790f8d44f136544ca15a21801c7d0d040",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld/core/context/amni/prompt/neurons/skill_neuron.py",
+      "checked_on": "2026-11-20"
+    },
+    {
+      "path": "aworld/core/context/amni/services/skill_service.py",
+      "bytes": 11635,
+      "sha256": "291eee8feb458a73cb36f4ba6cc0edff903a38ac5d6a5f9e2360abcc56519718",
+      "git_blob": "7f652190472c9ebf7e395ad5381a1916bf02235c",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld/core/context/amni/services/skill_service.py",
+      "checked_on": "2026-11-20"
     }
   ],
   "skills": [
@@ -590,5 +622,18 @@
     }
   ],
   "git_history_included": false,
-  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。",
+  "expanded_file_additions": [
+    {
+      "date": "2026-11-20",
+      "paths": [
+        "aworld/skills/package_fingerprint.py",
+        "tests/core/test_skill_activation_resolver.py",
+        "aworld/core/context/amni/prompt/neurons/skill_neuron.py",
+        "aworld/core/context/amni/services/skill_service.py"
+      ],
+      "evidence": "research/evidence/2026-11-20/aworld-review.json",
+      "note": "指定文件补展开；旧整仓分片与整包哈希未重新下载验算。"
+    }
+  ]
 }

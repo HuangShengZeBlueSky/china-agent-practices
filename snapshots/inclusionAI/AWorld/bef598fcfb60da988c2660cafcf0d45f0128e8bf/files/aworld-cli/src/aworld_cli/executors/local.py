@@ -1,0 +1,3245 @@
+"""
+Local agent executor.
+"""
+import asyncio
+import copy
+import math
+import os
+import time
+import re
+import shutil
+import traceback
+import uuid
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from time import monotonic
+from typing import Optional, List, Dict, Any, Union
+
+from dotenv import load_dotenv
+from rich.console import Console, Group
+from rich.live import Live
+from rich.panel import Panel
+from rich.status import Status
+from rich.text import Text
+
+from aworld.config import TaskConfig
+from aworld.core.agent.swarm import Swarm
+from aworld.core.common import Observation
+from aworld.core.context.amni import TaskInput, ApplicationContext
+from aworld.core.context.amni.config import AmniConfigFactory, AmniConfigLevel
+from aworld.core.context.compiler.parity import _issue_context_entrypoint_claim
+from aworld.core.context.execution_state import (
+    ARTIFACT_MEDIA_RECOVERY_EXHAUSTED_REASON,
+)
+from aworld.core.task import Task, TaskResponse
+from aworld.logs.util import logger, summarize_llm_payload_for_log, summarize_tool_calls_for_log
+from aworld.memory.main import _default_file_memory_store
+from aworld.runner import Runners
+from aworld.utils.runtime_state import runtime_state_path
+from aworld_cli.core.plugin_manager import PluginManager
+from aworld_cli.core.runtime_completion import configure_runtime_completion
+from aworld_cli.core.skill_activation_resolver import (
+    ResolvedSkillSet,
+    SkillActivationResolver,
+    SkillResolverRequest,
+)
+from aworld_cli.async_runtime import direct_run_task_budget
+from .base_executor import BaseAgentExecutor
+from .hooks import ExecutorHookPoint, ExecutorHook
+from .stats import (
+    StreamTokenStats,
+    build_complete_llm_usage_summary,
+    build_llm_diagnostics_summary,
+    build_llm_usage_observability,
+    format_elapsed,
+    resolve_stream_context_window,
+)
+from .stream import (
+    ActiveSteeringCommitBuffer,
+    StreamDisplayConfig,
+    StreamDisplayController,
+    _print_tool_result_lines,
+)
+
+# Try to import WorkSpace for local workspace creation
+try:
+    from aworld.output import WorkSpace
+except ImportError:
+    WorkSpace = None
+
+# Try to import init_middlewares, fallback to no-op if not available
+try:
+    from aworld.core.context.amni.config import init_middlewares
+except ImportError:
+    # Fallback: init_middlewares might not be available in all environments
+    def init_middlewares():
+        """No-op fallback for init_middlewares if not available."""
+        pass
+
+
+class _PauseForQueuedSteeringCheckpoint(Exception):
+    """Internal control-flow signal for yielding to queued steering at a safe checkpoint."""
+
+    pass
+
+
+@dataclass(frozen=True)
+class _GoalContinuation:
+    prompt: str
+    context: Any = None
+    origin_user_input: Any = None
+    logical_task_state: dict[str, Any] | None = None
+    acceptance_state: dict[str, Any] | None = None
+    source: str = "goal"
+
+
+def _stream_buffer_log_summary(
+    content: Any, tool_calls: Any
+) -> dict[str, int]:
+    """Return bounded-size stream-buffer counts for operational INFO logs."""
+    return {
+        "content_chars": len(content) if isinstance(content, str) else 0,
+        **summarize_tool_calls_for_log(tool_calls),
+    }
+
+
+def _message_output_log_summary(output: Any, answer: Any) -> dict[str, Any]:
+    payload = getattr(output, "data", None)
+    if payload is None:
+        payload = getattr(output, "source", None)
+    return {
+        "output_type": type(output).__name__,
+        "answer_chars": len(answer) if isinstance(answer, str) else 0,
+        "payload": summarize_llm_payload_for_log(payload),
+    }
+
+
+_MAX_LOGGED_TOKEN_COUNT = 2_147_483_647
+
+
+def _bounded_token_count(value: Any) -> int | None:
+    """Coerce untrusted usage values without exposing or exploding their repr."""
+    if type(value) not in {int, float}:
+        return None
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+    return max(0, min(int(value), _MAX_LOGGED_TOKEN_COUNT))
+
+
+def _usage_log_summary(usage: Any) -> dict[str, Any]:
+    """Return only fixed, bounded token fields for operational INFO logs."""
+
+    def _read(*names: str) -> int | None:
+        for name in names:
+            try:
+                value = (
+                    usage.get(name)
+                    if isinstance(usage, dict)
+                    else getattr(usage, name, None)
+                )
+            except Exception:
+                continue
+            normalized = _bounded_token_count(value)
+            if normalized is not None:
+                return normalized
+        return None
+
+    return {
+        "reported": usage is not None,
+        "input_tokens": _read("prompt_tokens", "input_tokens"),
+        "output_tokens": _read("completion_tokens", "output_tokens"),
+        "total_tokens": _read("total_tokens"),
+    }
+
+
+class LocalAgentExecutor(BaseAgentExecutor):
+    """
+    Executor for local agents.
+
+    Only responsible for:
+    - Building Task objects
+    - Executing tasks locally
+    - Workspace management (local-specific)
+    - Skill status query (local-specific)
+
+    All other capabilities (session management, output rendering, logging) are inherited from BaseAgentExecutor.
+    """
+    TASK_PROGRESS_HOOK_MIN_INTERVAL_SECONDS = 2.0
+
+    def _context_entry_point(self) -> str:
+        resumed = getattr(self, "_aworld_cli_resumed", False) or getattr(
+            self, "_context_checkpoint_restored_for_task", False
+        )
+        return "resume" if resumed else "cli"
+
+    def _attest_context_entry_point(self, context: ApplicationContext) -> None:
+        context._aworld_context_entrypoint_claim = _issue_context_entrypoint_claim(
+            self._context_entry_point()
+        )
+    
+    def __init__(
+        self, 
+        swarm: Swarm, 
+        context_config=None,
+        console: Optional[Console] = None,
+        session_id: Optional[str] = None,
+        hooks: Optional[List[str]] = None,
+        runtime_skill_paths: Optional[List[str]] = None,
+        isolated_candidate_skill_paths: Optional[List[str]] = None,
+    ):
+        """
+        Initialize local agent executor.
+        
+        Args:
+            swarm: Swarm instance from agent team
+            context_config: Context configuration for ApplicationContext. If None, will use default config.
+            console: Optional Rich console for output
+            session_id: Optional session ID. If None, will generate one automatically.
+            hooks: Optional list of hook names (registered with HookFactory)
+
+        Example:
+            >>> executor = LocalAgentExecutor(swarm)
+            >>> response = await executor.chat("Hello")
+        """
+        # Initialize base executor (handles session management, logging, etc.)
+        super().__init__(console=console, session_id=session_id)
+
+        # Local-specific initialization
+        self.swarm = swarm
+        self.context_config = context_config
+        self._hooks_config = hooks or []
+        self._hooks = self._load_hooks()
+        self.runtime_skill_paths = tuple(
+            dict.fromkeys(
+                str(Path(item).expanduser().absolute())
+                for item in runtime_skill_paths or ()
+                if str(item).strip()
+            )
+        )
+        self.isolated_candidate_skill_paths = tuple(
+            dict.fromkeys(
+                str(Path(item).expanduser().resolve())
+                for item in isolated_candidate_skill_paths or ()
+                if str(item).strip()
+            )
+        )
+
+        # Initialize background task manager
+        from aworld_cli.core.background_task_manager import BackgroundTaskManager
+        self.background_task_manager = BackgroundTaskManager(
+            session_id=self.session_id,
+            console=self.console
+        )
+        self._last_task_progress_hook_at: float | None = None
+        self._resume_context_checkpoint_once = False
+        self._context_checkpoint_restored_for_task = False
+
+    def _record_cli_session_transcript_turn(
+        self,
+        *,
+        task_content: str,
+        answer: str,
+        task_id: str | None,
+    ) -> None:
+        try:
+            from aworld_cli.core.session_transcript import CliSessionTranscript
+
+            agent_name = getattr(getattr(self.swarm, "conf", None), "name", None) or "Aworld"
+            CliSessionTranscript().record_turn(
+                session_id=self.session_id,
+                user_input=task_content,
+                assistant_output=answer,
+                agent_name=agent_name,
+                task_id=task_id,
+            )
+        except Exception as exc:
+            logger.debug(f"Failed to record CLI session transcript: {exc}")
+
+    def _load_hooks(self) -> Dict[str, List[ExecutorHook]]:
+        """
+        Load hooks from configuration.
+
+        Hooks are provided as a list of hook names (registered with HookFactory).
+        Each hook is retrieved by name, instantiated, and grouped by its hook point
+        (returned by hook.point() method).
+
+        FileParseHook is automatically registered as a default hook for file parsing.
+
+        Returns:
+            Dict mapping hook point to list of hook instances
+
+        Example:
+            >>> hooks = executor._load_hooks()
+            >>> # Returns: {"post_input_parse": [FileParseHook()], "post_build_context": [ImageParseHook()], ...}
+        """
+        from aworld.runners.hook.hook_factory import HookFactory
+
+        hooks = {}
+
+        # Automatically register FileParseHook as default hook
+        try:
+            from .file_parse_hook import FileParseHook
+
+            file_parse_hook = FileParseHook()
+            hook_point = file_parse_hook.point()
+            if hook_point not in hooks:
+                hooks[hook_point] = []
+            hooks[hook_point].append(file_parse_hook)
+
+            # Silently register, no console output needed
+        except Exception as e:
+            if self.console:
+                self.console.print(f"[yellow]⚠️ [Executor] Failed to auto-register FileParseHook: {e}[/yellow]")
+
+        if not self._hooks_config:
+            return hooks
+
+        for hook_name in self._hooks_config:
+            try:
+                # Get hook class from HookFactory by name
+                hook_cls = HookFactory.get_class(hook_name)
+                if not hook_cls:
+                    if self.console:
+                        self.console.print(f"[yellow]⚠️ [Executor] Hook '{hook_name}' not found in HookFactory[/yellow]")
+                    continue
+
+                # Instantiate hook class
+                hook_instance = hook_cls()
+
+                # Get hook point from the instance
+                hook_point = hook_instance.point()
+
+                # Group hooks by their point
+                if hook_point not in hooks:
+                    hooks[hook_point] = []
+                hooks[hook_point].append(hook_instance)
+
+                if self.console:
+                    self.console.print(f"[dim]✅ [Executor] Loaded hook '{hook_name}' for point '{hook_point}'[/dim]")
+            except Exception as e:
+                if self.console:
+                    self.console.print(f"[red]❌ [Executor] Failed to load hook '{hook_name}': {e}[/red]")
+
+        return hooks
+
+    def _publish_hud_task_started(self, task: Task) -> None:
+        runtime = getattr(self, "_base_runtime", None)
+        if runtime is None:
+            return
+        try:
+            runtime.update_hud_snapshot(
+                session={"session_id": self.session_id},
+                task={
+                    "current_task_id": task.id,
+                    "status": "running",
+                    "started_at": datetime.now().isoformat(),
+                },
+                activity={"current_tool": None, "recent_tools": [], "tool_calls_count": 0},
+            )
+        except Exception as exc:
+            logger.warning(f"HUD publish task started failed: {exc}")
+
+    def _streaming_output_enabled(self) -> bool:
+        stream_on = os.environ.get("STREAM", "0").lower() in ("1", "true", "yes")
+        if not stream_on:
+            return False
+        if self._active_steering_event_mode_enabled():
+            return False
+        return not bool(getattr(self, "_suppress_interactive_stream_output", False))
+
+    def _active_steering_event_mode_enabled(self) -> bool:
+        return callable(getattr(self, "_active_steering_event_sink", None))
+
+    def _session_steering_checkpoint_mode_enabled(self) -> bool:
+        if self._active_steering_event_mode_enabled():
+            return True
+        return bool(getattr(self, "_allow_session_steering_checkpoints", False))
+
+    def _emit_active_steering_event(self, kind: str, **payload: Any) -> None:
+        sink = getattr(self, "_active_steering_event_sink", None)
+        if sink is None:
+            return
+        sink({"kind": kind, **payload})
+
+    def _emit_active_steering_status(self, text: str) -> None:
+        normalized = str(text or "").strip()
+        if not normalized:
+            return
+        self._emit_active_steering_event("status_changed", text=normalized)
+
+    def _active_steering_buffer(self) -> ActiveSteeringCommitBuffer:
+        buffer = getattr(self, "_active_steering_commit_buffer", None)
+        if buffer is None:
+            buffer = ActiveSteeringCommitBuffer()
+            self._active_steering_commit_buffer = buffer
+        return buffer
+
+    def _buffer_active_steering_message_chunk(self, text: str) -> None:
+        self._active_steering_buffer().append_message_delta(text)
+
+    def _emit_active_steering_message(
+        self,
+        *,
+        text: str | None = None,
+        agent_name: str | None = None,
+    ) -> None:
+        event = self._active_steering_buffer().commit_message(
+            text=text,
+            agent_name=agent_name,
+        )
+        if event is not None:
+            self._emit_active_steering_event(**event)
+
+    def _flush_active_steering_message_buffer(
+        self,
+        *,
+        agent_name: str | None = None,
+    ) -> None:
+        self._emit_active_steering_message(agent_name=agent_name)
+
+    def _emit_active_steering_tool_result_lines(
+        self,
+        lines: list[str],
+        *,
+        exit_code: int | None = None,
+    ) -> None:
+        event = self._active_steering_buffer().commit_tool_result(
+            lines,
+            exit_code=exit_code,
+        )
+        if event is not None:
+            self._emit_active_steering_event(**event)
+
+    def _reset_active_steering_buffer(self) -> None:
+        buffer = getattr(self, "_active_steering_commit_buffer", None)
+        if buffer is not None:
+            buffer.reset()
+
+    def _publish_hud_stream_update(
+        self,
+        task_id: str,
+        stream_token_stats: StreamTokenStats,
+        current_tool: Optional[str],
+        elapsed_seconds: Optional[float],
+    ) -> None:
+        runtime = getattr(self, "_base_runtime", None)
+        if runtime is None or stream_token_stats is None:
+            return
+
+        usage = stream_token_stats.to_hud_usage()
+        activity_payload = {
+            "current_tool": current_tool,
+            "tool_calls_count": usage.get("tool_calls_count", 0),
+        }
+        if current_tool:
+            activity_payload["recent_tools"] = [current_tool]
+        try:
+            # Transitional path: the generic runtime HUD snapshot stays live while
+            # hook-driven plugin_state remains the canonical source for the built-in
+            # HUD plugin's task/session/usage rendering.
+            runtime.update_hud_snapshot(
+                session={
+                    "session_id": self.session_id,
+                    "model": usage.get("model"),
+                    "elapsed_seconds": elapsed_seconds,
+                },
+                task={"current_task_id": task_id, "status": "running"},
+                activity=activity_payload,
+                usage=usage,
+            )
+        except Exception as exc:
+            logger.warning(f"HUD publish stream update failed: {exc}")
+
+    async def _emit_task_progress_hook(self, event: dict[str, Any]) -> list[tuple[Any, Any]]:
+        min_interval = getattr(
+            self,
+            "_task_progress_hook_min_interval_seconds",
+            self.TASK_PROGRESS_HOOK_MIN_INTERVAL_SECONDS,
+        )
+        now = monotonic()
+        last_fired_at = getattr(self, "_last_task_progress_hook_at", None)
+        if last_fired_at is not None and now - last_fired_at < min_interval:
+            return []
+
+        self._last_task_progress_hook_at = now
+        return await self._run_plugin_task_hook("task_progress", event)
+
+    def _publish_hud_task_finished(self, task_id: str, task_status: str = "idle") -> None:
+        runtime = getattr(self, "_base_runtime", None)
+        if runtime is None:
+            return
+        try:
+            runtime.update_hud_snapshot(task={"current_task_id": task_id})
+        except Exception as exc:
+            logger.warning(f"HUD publish task finish update failed: {exc}")
+        try:
+            runtime.settle_hud_snapshot(task_status=task_status)
+        except Exception as exc:
+            logger.warning(f"HUD settle task finish failed: {exc}")
+
+    def _publish_hud_llm_observability(
+        self,
+        task_id: str,
+        llm_calls: Optional[List[Dict[str, Any]]],
+    ) -> Dict[str, Any]:
+        usage = build_llm_usage_observability(llm_calls, task_id=task_id)
+        runtime = getattr(self, "_base_runtime", None)
+        if runtime is None or not usage:
+            return usage
+
+        session_payload = {}
+        if usage.get("model"):
+            session_payload["model"] = usage["model"]
+
+        try:
+            runtime.update_hud_snapshot(
+                session=session_payload,
+                task={"current_task_id": task_id},
+                usage=usage,
+            )
+        except Exception as exc:
+            logger.warning(f"HUD publish llm observability failed: {exc}")
+        return usage
+
+    def _hud_is_active(self) -> bool:
+        runtime = getattr(self, "_base_runtime", None)
+        if runtime is None or not hasattr(runtime, "active_plugin_capabilities"):
+            return False
+        try:
+            return "hud" in tuple(runtime.active_plugin_capabilities())
+        except Exception:
+            return False
+
+    async def _run_plugin_task_hook(
+        self,
+        hook_point: str,
+        event: dict[str, Any],
+    ) -> list[tuple[Any, Any]]:
+        runtime = getattr(self, "_base_runtime", None)
+        if runtime is None or not hasattr(runtime, "run_plugin_hooks"):
+            return []
+
+        payload = dict(event)
+        payload.setdefault("session_id", self.session_id)
+        context = getattr(self, "context", None)
+        if context is not None:
+            workspace_path = getattr(context, "workspace_path", None)
+            task_id = getattr(context, "task_id", None)
+            if workspace_path:
+                payload.setdefault("workspace_path", workspace_path)
+            if task_id:
+                payload.setdefault("task_id", task_id)
+
+        try:
+            return await runtime.run_plugin_hooks(
+                hook_point,
+                event=payload,
+                executor_instance=self,
+            )
+        except Exception as exc:
+            logger.warning(f"Plugin task hook '{hook_point}' failed: {exc}")
+            return []
+
+    @staticmethod
+    def _resolve_hook_text(value: Any) -> str | None:
+        if value is None:
+            return None
+        if isinstance(value, str):
+            return value
+        if isinstance(value, dict):
+            content = value.get("content")
+            if isinstance(content, str):
+                return content
+        return str(value)
+
+    async def _should_pause_for_queued_steering_checkpoint(
+        self,
+        *,
+        task_id: str,
+        checkpoint: str,
+        current_tool: str | None = None,
+        partial_answer: str = "",
+    ) -> bool:
+        if not self._session_steering_checkpoint_mode_enabled():
+            return False
+
+        runtime = getattr(self, "_base_runtime", None)
+        steering = getattr(runtime, "_steering", None) if runtime is not None else None
+        if steering is None or not self.session_id:
+            return False
+
+        snapshot = steering.snapshot(self.session_id)
+        pending_count = int(snapshot.get("pending_count", 0) or 0)
+        interrupt_requested = bool(snapshot.get("interrupt_requested"))
+
+        should_pause = pending_count > 0 or interrupt_requested
+        hook_results = await self._run_plugin_task_hook(
+            "steering_checkpoint",
+            {
+                "task_id": task_id,
+                "session_id": self.session_id,
+                "checkpoint": checkpoint,
+                "current_tool": current_tool,
+                "pending_count": pending_count,
+                "interrupt_requested": interrupt_requested,
+                "partial_answer": partial_answer or "",
+            },
+        )
+        for _, result in hook_results:
+            system_message = getattr(result, "system_message", None)
+            if system_message:
+                self._emit_active_steering_event(
+                    "system_notice",
+                    text=str(system_message).strip(),
+                )
+
+            action = str(getattr(result, "action", "allow") or "allow").strip().lower()
+            if action == "deny":
+                should_pause = False
+            elif action == "block_and_continue" and (pending_count > 0 or interrupt_requested):
+                should_pause = True
+
+        if should_pause:
+            self._emit_active_steering_status("Applying queued steering")
+        return should_pause
+
+    async def _handle_task_interrupted(self, task: Task, answer: str = "") -> str:
+        # Preserve a typed executor-owned signal.  Returning a partial string is
+        # useful for an interactive session, but it must never be reclassified
+        # as a successful direct/non-interactive task by a higher layer.
+        self.last_task_interrupted = True
+        await self._run_plugin_task_hook(
+            "task_interrupted",
+            {
+                "task_id": task.id,
+                "session_id": self.session_id,
+                "task_status": "interrupted",
+                "partial_answer": answer or "",
+            },
+        )
+        self._publish_hud_task_finished(task.id, task_status="idle")
+        return answer or ""
+
+    async def cleanup_resources(self) -> None:
+        """
+        Close MCP and other resources in the same event loop to avoid
+        "Attempted to exit cancel scope in a different task" on exit.
+        """
+        # Cleanup background tasks
+        if hasattr(self, 'background_task_manager'):
+            await self.background_task_manager.cleanup()
+
+    async def _execute_hooks(self, hook_point: str, **kwargs) -> Any:
+        """
+        Execute hooks for a specific hook point.
+
+        This method follows the same pattern as runner hooks, using Message objects
+        to pass parameters, but extracts results from message for executor use.
+
+        After each hook execution, updates kwargs with any modified values from message.headers,
+        so subsequent hooks and the caller can see the updates.
+
+        Args:
+            hook_point: Hook point name from ExecutorHookPoint
+            **kwargs: Parameters to pass to hooks (will be in message.headers)
+
+        Returns:
+            Result extracted from message.payload or message.headers, or None if no hooks executed
+
+        Example:
+            >>> result = await executor._execute_hooks(
+            ...     ExecutorHookPoint.POST_INPUT_PARSE,
+            ...     user_message="test",
+            ...     context=context,
+            ...     image_urls=["data:image/png;base64,..."]
+            ... )
+        """
+        from aworld.core.event.base import Message
+
+        hooks = self._hooks.get(hook_point, [])
+        if not hooks:
+            return None
+
+        # Extract context from kwargs if available
+        context = kwargs.get('context')
+        if not context:
+            # Try to get from other kwargs
+            for key, value in kwargs.items():
+                if isinstance(value, ApplicationContext):
+                    context = value
+                    break
+
+        result = None
+        for hook in hooks:
+            try:
+                # Create Message object with current kwargs in headers
+                # Use a copy to avoid modifying the original
+                message_headers = dict(kwargs)
+                # Pass console to hook so it can output messages
+                if self.console:
+                    message_headers['console'] = self.console
+                message = Message(
+                    category="executor_hook",
+                    payload=kwargs.get('payload'),
+                    sender="LocalAgentExecutor",
+                    session_id=context.session_id if context and hasattr(context, 'session_id') else None,
+                    headers=message_headers
+                )
+
+                # Execute hook
+                result_message = await hook.exec(message, context)
+
+                # Update kwargs with any modifications from message.headers
+                # This ensures subsequent hooks and the caller see the updates
+                if result_message and result_message.headers:
+                    for key, value in result_message.headers.items():
+                        if key in kwargs or key in ['context', 'task_input', 'task', 'user_message', 'task_content']:
+                            kwargs[key] = value
+                            # Update context variable if it's the context that was modified
+                            if key == 'context' and isinstance(value, ApplicationContext):
+                                context = value
+
+                    # Extract result - prioritize specific keys, then payload
+                    if 'context' in result_message.headers:
+                        result = result_message.headers['context']
+                    elif 'task_input' in result_message.headers:
+                        result = result_message.headers['task_input']
+                    elif 'task' in result_message.headers:
+                        result = result_message.headers['task']
+                    elif 'result' in result_message.headers:
+                        result = result_message.headers['result']
+                    elif result_message.payload and result_message.payload != kwargs.get('payload'):
+                        result = result_message.payload
+
+            except Exception as e:
+                if self.console:
+                    self.console.print(f"[red]❌ [Executor] Hook '{hook.__class__.__name__}' failed at '{hook_point}': {e}[/red]")
+
+        return result
+
+    def _extract_requested_skill_names(self, task_input: TaskInput) -> tuple[str, ...]:
+        metadata = getattr(task_input, "metadata", None)
+        if not isinstance(metadata, dict):
+            return tuple()
+        requested = metadata.get("requested_skill_names")
+        if not isinstance(requested, list):
+            return tuple()
+        return tuple(str(item).strip() for item in requested if str(item).strip())
+
+    def _agent_name_for_resolution(self, agent: Any) -> str | None:
+        name_attr = getattr(agent, "name", None)
+        if callable(name_attr):
+            try:
+                resolved = name_attr()
+                return str(resolved) if resolved else None
+            except Exception:
+                return None
+        if isinstance(name_attr, str) and name_attr:
+            return name_attr
+        return None
+
+    def _skill_package_roots_for_agent(
+        self,
+        plugin_manager: PluginManager,
+        agent_name: str | None,
+    ) -> tuple[Path, ...]:
+        roots: list[Path] = []
+        normalized_agent = (agent_name or "").strip().lower()
+
+        for package in plugin_manager.list_skill_packages(include_disabled=False):
+            metadata = package.get("metadata", {})
+            scope = str(
+                metadata.get("scope")
+                if isinstance(metadata, dict) and metadata.get("scope") is not None
+                else package.get("activation_scope", "global")
+            )
+            if scope == "global":
+                pass
+            elif (
+                scope.startswith("agent:")
+                and normalized_agent
+                and scope.lower() == f"agent:{normalized_agent}"
+            ):
+                pass
+            else:
+                continue
+
+            plugin_path = Path(str(package["path"])).resolve()
+            if plugin_path.exists() and plugin_path.is_dir():
+                roots.append(plugin_path)
+
+        return tuple(roots)
+
+    def _iter_swarm_agents(self) -> list[Any]:
+        ordered_agents = getattr(self.swarm, "ordered_agents", None)
+        if isinstance(ordered_agents, list) and ordered_agents:
+            return list(ordered_agents)
+        if isinstance(ordered_agents, tuple) and ordered_agents:
+            return list(ordered_agents)
+        agents = getattr(self.swarm, "agents", None)
+        if isinstance(agents, dict) and agents:
+            return list(agents.values())
+        if isinstance(agents, (list, tuple)) and agents:
+            return list(agents)
+        communicate_agent = getattr(self.swarm, "communicate_agent", None)
+        if isinstance(communicate_agent, list):
+            return list(communicate_agent)
+        if communicate_agent is not None:
+            return [communicate_agent]
+        return []
+
+    def _resolve_swarm_skills(
+        self, task_input: TaskInput
+    ) -> tuple[dict[str, str], ...]:
+        resolver = SkillActivationResolver()
+        plugin_manager = PluginManager()
+        from aworld_cli.core.skill_state_manager import SkillStateManager
+
+        runtime_plugin_roots = tuple(
+            Path(item).expanduser().absolute()
+            for item in plugin_manager.get_runtime_plugin_roots()
+        )
+        requested = self._extract_requested_skill_names(task_input)
+        task_text = str(getattr(task_input, "task_content", "") or "")
+        skill_state = SkillStateManager()
+        disabled_skill_names = skill_state.disabled_skill_names()
+        enabled_skill_names = skill_state.enabled_skill_names()
+        sandbox_skills: dict[int, tuple[Any, dict[str, Any]]] = {}
+        activation_evidence: list[dict[str, str]] = []
+        runtime_skill_paths = tuple(getattr(self, "runtime_skill_paths", ()))
+        isolated_candidate_skill_paths = tuple(
+            getattr(self, "isolated_candidate_skill_paths", ())
+        )
+        isolated_candidate_sources: set[Path] = {
+            Path(item) for item in isolated_candidate_skill_paths
+        }
+
+        for agent in self._iter_swarm_agents():
+            agent_name = self._agent_name_for_resolution(agent)
+            resolver_inputs = {}
+            agent_conf = getattr(agent, "conf", None)
+            if agent_conf is not None and isinstance(getattr(agent_conf, "ext", None), dict):
+                resolver_inputs = dict(agent_conf.ext.get("skill_resolver_inputs", {}))
+            skills_disabled = resolver_inputs.get("skills_disabled") is True
+
+            compatibility_sources = tuple(
+                dict.fromkeys(
+                    [
+                        *(
+                            str(item)
+                            for item in resolver_inputs.get(
+                                "compatibility_sources", []
+                            )
+                        ),
+                        *runtime_skill_paths,
+                    ]
+                )
+            )
+            runtime_isolated_sources = tuple(
+                dict.fromkeys(
+                    [
+                        *(
+                            str(item)
+                            for item in resolver_inputs.get(
+                                "isolated_candidate_sources", []
+                            )
+                        ),
+                        *isolated_candidate_skill_paths,
+                    ]
+                )
+            )
+
+            plugin_roots = tuple(
+                Path(item).expanduser().absolute()
+                for item in resolver_inputs.get("plugin_roots", [])
+            )
+            skill_package_roots = self._skill_package_roots_for_agent(
+                plugin_manager,
+                agent_name,
+            )
+            request = SkillResolverRequest(
+                plugin_roots=(
+                    ()
+                    if skills_disabled
+                    else runtime_plugin_roots + skill_package_roots + plugin_roots
+                ),
+                runtime_scope="session",
+                agent_name=agent_name,
+                task_text="" if skills_disabled else task_text,
+                requested_skill_names=() if skills_disabled else requested,
+                default_skill_names=(
+                    ()
+                    if skills_disabled
+                    else tuple(resolver_inputs.get("default_skill_names", []))
+                ),
+                enabled_skill_names=() if skills_disabled else enabled_skill_names,
+                disabled_skill_names=disabled_skill_names,
+                compatibility_sources=(
+                    () if skills_disabled else compatibility_sources
+                ),
+                strict_compatibility_sources=(
+                    ()
+                    if skills_disabled
+                    else tuple(dict.fromkeys([
+                        *resolver_inputs.get("strict_compatibility_sources", []),
+                        *runtime_skill_paths,
+                    ]))
+                ),
+                compatibility_skill_patterns=tuple(
+                    str(item)
+                    for item in resolver_inputs.get("compatibility_skill_patterns", [])
+                ),
+                isolated_candidate_sources=(
+                    () if skills_disabled else runtime_isolated_sources
+                ),
+            )
+            for source in request.isolated_candidate_sources:
+                try:
+                    isolated_candidate_sources.add(
+                        Path(source).expanduser().resolve()
+                    )
+                except (OSError, RuntimeError):
+                    continue
+            result = (
+                ResolvedSkillSet(
+                    skill_configs={},
+                    active_skill_names=(),
+                    available_skill_names=(),
+                    activation_evidence=(),
+                )
+                if skills_disabled
+                else resolver.resolve(request)
+            )
+            if agent_conf is not None:
+                agent_conf.skill_configs = result.skill_configs
+                # Agents and sandboxes retain their own skill configuration
+                # references after construction. Keep the prompt, tool filter,
+                # and execution-asset staging views aligned with this task.
+                agent.skill_configs = result.skill_configs
+                sandbox = getattr(agent, "sandbox", None)
+                if sandbox is not None:
+                    shared_skill_configs = sandbox_skills.setdefault(
+                        id(sandbox), (sandbox, {})
+                    )[1]
+                    for skill_name, skill_config in result.skill_configs.items():
+                        previous = shared_skill_configs.get(skill_name)
+                        if previous is None or (
+                            skill_config.get("active") and not previous.get("active")
+                        ):
+                            shared_skill_configs[skill_name] = skill_config
+                if result.skill_configs:
+                    from aworld.core.context.amni.tool.context_skill_tool import CONTEXT_SKILL
+
+                    tool_names = getattr(agent, "tool_names", None)
+                    if tool_names is not None and CONTEXT_SKILL not in tool_names:
+                        tool_names.append(CONTEXT_SKILL)
+            activation_evidence.extend(
+                {
+                    **dict(item),
+                    "agent_name": str(agent_name or ""),
+                }
+                for item in result.activation_evidence
+            )
+        # Shared sandboxes stage assets for every owner, while each agent keeps
+        # its own activation state. Refresh each sandbox only after the union is
+        # complete so a later agent cannot erase an earlier agent's skills.
+        for sandbox, skill_configs in sandbox_skills.values():
+            sandbox.skill_configs = skill_configs
+
+        # This state is produced by the actual task-time resolver after it has
+        # materialized the configs that ApplicationContext will inject.
+        self.last_skill_activation_evidence = tuple(activation_evidence)
+        if requested and isolated_candidate_sources:
+            unattested = []
+            for skill_name in requested:
+                observed = False
+                for item in activation_evidence:
+                    if item.get("skill_name") != skill_name:
+                        continue
+                    raw_root = item.get("canonical_skill_root")
+                    if not isinstance(raw_root, str):
+                        continue
+                    try:
+                        observed_root = Path(raw_root).expanduser().resolve()
+                    except (OSError, RuntimeError):
+                        continue
+                    if any(
+                        observed_root == source
+                        or observed_root.is_relative_to(source)
+                        for source in isolated_candidate_sources
+                    ):
+                        observed = True
+                        break
+                if not observed:
+                    unattested.append(skill_name)
+            if unattested:
+                names = ", ".join(unattested)
+                raise RuntimeError(
+                    "Requested isolated candidate skill did not produce "
+                    f"activation evidence: {names}"
+                )
+        return self.last_skill_activation_evidence
+
+    def _consume_restored_messages(self) -> list[dict[str, Any]]:
+        restored_messages = getattr(self, "_aworld_cli_restored_messages", None) or []
+        self._aworld_cli_restored_messages = []
+        return [dict(message) for message in restored_messages if isinstance(message, dict)]
+
+    async def _build_task(
+        self, 
+        task_content: str, 
+        session_id: str = None, 
+        task_id: str = None,
+        image_urls: Optional[List[str]] = None,
+        requested_skill_names: Optional[List[str]] = None,
+        origin_user_input: Any = None,
+        logical_task_state: dict[str, Any] | None = None,
+    ) -> Task:
+        """
+        Build task from task content.
+        
+        Args:
+            task_content: Task content string
+            session_id: Optional session ID. If None, will use the executor's current session_id.
+            task_id: Optional task ID. If None, will generate one.
+            image_urls: Optional list of image data URLs (base64 encoded) for multimodal support
+
+        Returns:
+            Task instance
+
+        Example:
+            >>> # Text only
+            >>> task = await executor._build_task("Hello")
+            >>> # With images
+            >>> task = await executor._build_task("Analyze this", image_urls=["data:image/jpeg;base64,..."])
+        """
+        # Use executor's session_id if not provided
+        if not session_id:
+            session_id = self.session_id
+        
+        if not task_id:
+            task_id = f"task_{datetime.now().strftime('%Y%m%d%H%M%S')}_{uuid.uuid4().hex[:8]}"
+        
+        # 🔥 Hook: PRE_INPUT_PARSE
+        original_task_content = task_content if origin_user_input is None else origin_user_input
+        hook_kwargs = {
+            'user_message': task_content,
+            'task_content': task_content,
+            'image_urls': image_urls or [],
+            'session_id': session_id,
+            'task_id': task_id
+        }
+        hook_result = await self._execute_hooks(ExecutorHookPoint.PRE_INPUT_PARSE, **hook_kwargs)
+        # Get updated task_content from kwargs
+        task_content = hook_kwargs.get('task_content', task_content) or hook_kwargs.get('user_message', task_content)
+        # Get updated image_urls from kwargs (FileParseHook may have added images)
+        image_urls = hook_kwargs.get('image_urls', image_urls) or []
+        restored_messages = self._consume_restored_messages()
+
+        # 1. Build task input
+        task_input = TaskInput(
+            user_id="user",
+            session_id=session_id,
+            task_id=task_id,
+            task_content=task_content,
+            origin_user_input=original_task_content,
+            messages=restored_messages,
+            metadata={
+                "requested_skill_names": list(requested_skill_names or []),
+            },
+        )
+
+        # 🔥 Hook: PRE_BUILD_CONTEXT
+        hook_kwargs = {
+            'task_input': task_input,
+            'session_id': session_id,
+            'task_id': task_id
+        }
+        hook_result = await self._execute_hooks(ExecutorHookPoint.PRE_BUILD_CONTEXT, **hook_kwargs)
+        # Get updated task_input from kwargs
+        task_input = hook_kwargs.get('task_input', task_input)
+
+        # 2. Build context config if not provided
+        if not self.context_config:
+            self.context_config = AmniConfigFactory.create(
+                AmniConfigLevel.NAVIGATOR,
+                debug_mode=True
+            )
+            self.context_config.agent_config.history_scope = "session"
+        
+        # 3. Build workspace
+        workspace = await self._create_workspace(session_id)
+
+        # Resolve runtime-visible skills immediately before context initialization.
+        task_skill_activation_evidence = self._resolve_swarm_skills(task_input)
+
+        # 4. Build context
+        async def build_context(_task_input: TaskInput, _swarm: Swarm, _workspace) -> ApplicationContext:
+            """Build application context from task input and swarm."""
+            resume_checkpoint = bool(
+                getattr(self, "_resume_context_checkpoint_once", False)
+            )
+            self._context_checkpoint_restored_for_task = False
+            context_kwargs = {
+                "workspace": _workspace,
+                "context_config": self.context_config,
+            }
+            if resume_checkpoint:
+                context_kwargs["use_checkpoint"] = True
+            _context = await ApplicationContext.from_input(_task_input, **context_kwargs)
+            if resume_checkpoint:
+                self._resume_context_checkpoint_once = False
+                self._context_checkpoint_restored_for_task = True
+            _context.get_config().debug_mode=True
+            await _context.init_swarm_state(_swarm)
+            return _context
+
+        context = await build_context(task_input, self.swarm, workspace)
+
+        # Set workspace_path for hook system (CLI working directory)
+        context.execution_scope = "cli_interactive"
+        # ContextState is a dict-like runtime registry but intentionally is not
+        # a ``dict`` subclass. Replacing it here discards restored checkpoints.
+        if getattr(context, "context_info", None) is None:
+            context.context_info = {}
+        context.context_info["execution_scope"] = "cli_interactive"
+        context.workspace_path = os.getcwd()
+        runtime = getattr(self, "_base_runtime", None)
+        if runtime is not None and getattr(runtime, "_steering", None) is not None:
+            context._aworld_cli_steering = runtime._steering
+
+        # 🔥 Hook: POST_BUILD_CONTEXT
+        hook_kwargs = {
+            'context': context,
+            'task_input': task_input
+        }
+        hook_result = await self._execute_hooks(ExecutorHookPoint.POST_BUILD_CONTEXT, **hook_kwargs)
+        # Get updated context from kwargs
+        context = hook_kwargs.get('context', context)
+        context.workspace_path = os.getcwd()
+        self._attest_context_entry_point(context)
+        context.set_state("context_entry_point", self._context_entry_point())
+        if runtime is not None and getattr(runtime, "_steering", None) is not None:
+            context._aworld_cli_steering = runtime._steering
+
+        # 🔥 Hook: POST_INPUT_PARSE (after context is ready)
+        # FileParseHook processes @filename references here
+        hook_kwargs = {
+            'task_input': task_input,
+            'user_message': task_input.task_content,
+            'context': context,
+            'image_urls': image_urls or [],
+            'original_input': original_task_content,
+            'session_id': session_id,
+            'task_id': task_id
+        }
+        hook_result = await self._execute_hooks(ExecutorHookPoint.POST_INPUT_PARSE, **hook_kwargs)
+        # Get updated values from kwargs (FileParseHook may have modified them)
+        context = hook_kwargs.get('context', context)
+        task_input = hook_kwargs.get('task_input', task_input)
+        image_urls = hook_kwargs.get('image_urls', image_urls) or []
+
+        # Bind native filesystem authority before preparing originals. Goal
+        # segments share a durable identity; ordinary requests never do.
+        goal_state = self._goal_session_state()
+        logical_state = (
+            goal_state
+            if goal_state.get("active")
+            else logical_task_state
+            if isinstance(logical_task_state, dict)
+            else {}
+        )
+        workspace_request = str(original_task_content or "")
+        if goal_state.get("active"):
+            workspace_request = str(goal_state.get("objective") or workspace_request)
+        elif logical_state:
+            workspace_request = str(logical_state.get("objective") or workspace_request)
+        root_agent = getattr(self.swarm, "communicate_agent", None)
+        if isinstance(root_agent, list):
+            root_agent = root_agent[0] if len(root_agent) == 1 else None
+        install_contract = getattr(root_agent, "_install_runtime_completion_contract", None)
+        if callable(install_contract):
+            install_contract(context)
+        configure_runtime_completion(
+            context, request=workspace_request,
+            workspace_path=context.workspace_path,
+        )
+        goal_commands = goal_state.get("verification_commands")
+        if goal_state.get("active") and goal_commands:
+            from aworld_cli.core.runtime_completion import configure_goal_completion
+            configure_goal_completion(
+                context, verification_commands=goal_commands,
+                workspace_path=context.workspace_path,
+            )
+
+        # 5. Build observation with images if provided
+        # Use task_input.task_content (which may have been updated by FileParseHook) instead of old task_content
+        observation = None
+        if image_urls:
+            observation = Observation(
+                images=image_urls,
+                content=task_input.task_content
+            )
+
+        # 🔥 Hook: PRE_BUILD_TASK
+        hook_kwargs = {
+            'task_input': task_input,
+            'context': context,
+            'swarm': self.swarm
+        }
+        hook_result = await self._execute_hooks(ExecutorHookPoint.PRE_BUILD_TASK, **hook_kwargs)
+        # Get updated values from kwargs
+        task_input = hook_kwargs.get('task_input', task_input)
+        if 'task_content' in hook_kwargs:
+            task_input.task_content = hook_kwargs['task_content']
+
+        # 6. Build task with context and observation
+        self._attest_context_entry_point(context)
+        context.set_state("context_entry_point", self._context_entry_point())
+        direct_run_budget = direct_run_task_budget()
+        task = Task(
+            id=context.task_id,
+            user_id=context.user_id,
+            session_id=context.session_id,
+            input=task_input.task_content,
+            endless_threshold=5,
+            swarm=self.swarm,
+            context=context,
+            timeout=(
+                direct_run_budget.timeout_seconds
+                if direct_run_budget is not None
+                else None
+            ),
+            deadline_epoch_seconds=(
+                direct_run_budget.deadline_epoch_seconds
+                if direct_run_budget is not None
+                else None
+            ),
+            completion_reserve_seconds=(
+                direct_run_budget.completion_reserve_seconds
+                if direct_run_budget is not None
+                else None
+            ),
+            conf=TaskConfig(
+                stream=False,
+                exit_on_failure=True
+            ),
+            observation=observation
+        )
+        # Bind the resolver output to the concrete task.  The signed replay
+        # response must not depend on a mutable executor-wide "last value"
+        # that a hook, retry, or nested task can overwrite after resolution.
+        task._aworld_cli_skill_activation_evidence = (
+            task_skill_activation_evidence
+        )
+
+        # 🔥 Hook: POST_BUILD_TASK
+        hook_kwargs = {
+            'task': task
+        }
+        hook_result = await self._execute_hooks(ExecutorHookPoint.POST_BUILD_TASK, **hook_kwargs)
+        # Get updated task from kwargs
+        task = hook_kwargs.get('task', task)
+
+        return task
+
+    async def chat(
+        self,
+        message: Union[str, tuple[str, List[str]]],
+        requested_skill_names: Optional[List[str]] = None,
+    ) -> str:
+        """Run until completion, user stop, or an optional goal attempt limit."""
+        previous_context = None
+        objective = message[0] if isinstance(message, tuple) else message
+        origin_user_input = str(objective or "")
+        # One public invocation owns one stable logical workspace identity. It
+        # is deliberately invocation-local: short tasks gain no extra loop and
+        # a later chat cannot inherit this task's evidence.
+        from aworld_cli.builtin_plugins.goal_session.hooks.task_completed import (
+            new_goal_contract_state,
+        )
+        logical_task_state = (
+            new_goal_contract_state(
+                str(objective or ""),
+                source="direct_invocation",
+            )
+            if getattr(self, "_session_mode", "interactive") == "direct"
+            else None
+        )
+        acceptance_state = None
+        prior_llm_calls: list[dict[str, Any]] = []
+        prior_segments: list[dict[str, Any]] = []
+        self.last_execution_protocol = None
+
+        def retain_segment(response: TaskResponse | None) -> None:
+            if not isinstance(response, TaskResponse):
+                return
+            if isinstance(response.llm_calls, list):
+                prior_llm_calls.extend(copy.deepcopy(response.llm_calls))
+            build = response.trajectory_build_result
+            delivery = response.trajectory_delivery_receipt
+            prior_segments.append(
+                {
+                    "task_id": response.id,
+                    "trajectory": copy.deepcopy(
+                        response.trajectory
+                        if isinstance(response.trajectory, list)
+                        else []
+                    ),
+                    "trajectory_build_result": (
+                        build.to_dict()
+                        if build is not None and callable(getattr(build, "to_dict", None))
+                        else copy.deepcopy(build)
+                    ),
+                    "trajectory_delivery_receipt": (
+                        delivery.to_dict()
+                        if delivery is not None
+                        and callable(getattr(delivery, "to_dict", None))
+                        else copy.deepcopy(delivery)
+                    ),
+                }
+            )
+
+        def attach_prior_evidence(response: TaskResponse | None) -> None:
+            if not isinstance(response, TaskResponse):
+                return
+            if prior_llm_calls:
+                current_calls = (
+                    response.llm_calls
+                    if isinstance(response.llm_calls, list)
+                    else []
+                )
+                response.llm_calls = [*prior_llm_calls, *current_calls]
+                self.last_llm_usage = build_complete_llm_usage_summary(
+                    response.llm_calls
+                )
+                self.last_llm_diagnostics = build_llm_diagnostics_summary(
+                    response.llm_calls
+                )
+            if prior_segments:
+                response.execution_segments = copy.deepcopy(prior_segments)
+
+        def ensure_failure_response(
+            *,
+            failure_origin: str,
+            failure_code: str,
+            error_type: str,
+        ) -> TaskResponse | None:
+            response = getattr(self, "last_task_response", None)
+            if not isinstance(response, TaskResponse) and (
+                prior_llm_calls or prior_segments
+            ):
+                response = TaskResponse(
+                    success=False,
+                    answer="",
+                    status="failed",
+                    failure_origin=failure_origin,
+                    failure_code=failure_code,
+                    error_type=error_type,
+                    semantic_status="incomplete",
+                    completion_reason=failure_code,
+                    recoverable=False,
+                )
+                self.last_task_response = response
+            return response
+
+        self._active_chat_task = asyncio.current_task()
+        try:
+            while True:
+                result = await self._chat_turn(
+                    message, requested_skill_names=requested_skill_names,
+                    _previous_goal_context=previous_context,
+                    _origin_user_input=origin_user_input,
+                    _logical_task_state=logical_task_state,
+                    _direct_acceptance_state=acceptance_state,
+                )
+                if not isinstance(result, _GoalContinuation):
+                    final_response = getattr(self, "last_task_response", None)
+                    attach_prior_evidence(final_response)
+                    return result
+                segment_response = getattr(self, "last_task_response", None)
+                if result.source == "direct_acceptance":
+                    retain_segment(segment_response)
+                message = result.prompt
+                previous_context = result.context
+                origin_user_input = result.origin_user_input or origin_user_input
+                logical_task_state = result.logical_task_state or logical_task_state
+                acceptance_state = result.acceptance_state
+                # Give cancellation/queued controls a scheduling point between turns.
+                await asyncio.sleep(0)
+        except asyncio.CancelledError:
+            attach_prior_evidence(
+                ensure_failure_response(
+                    failure_origin="cancelled",
+                    failure_code="internal_segment_cancelled",
+                    error_type="CancelledError",
+                )
+            )
+            await self._run_plugin_task_hook("task_interrupted", {
+                "session_id": self.session_id, "task_status": "interrupted",
+                "partial_answer": "",
+            })
+            raise
+        except Exception as exc:
+            attach_prior_evidence(
+                ensure_failure_response(
+                    failure_origin="infrastructure",
+                    failure_code="internal_segment_setup_error",
+                    error_type=type(exc).__name__,
+                )
+            )
+            raise
+        finally:
+            self._active_goal_task = None
+            self._active_chat_task = None
+
+    def _goal_session_state(self) -> dict:
+        runtime = getattr(self, "_base_runtime", None)
+        if runtime is None or not hasattr(runtime, "build_plugin_hook_state"):
+            return {}
+        return runtime.build_plugin_hook_state("goal-session", "session", self)
+
+    def _root_agent(self):
+        root = getattr(self.swarm, "communicate_agent", None)
+        if isinstance(root, list):
+            return root[0] if len(root) == 1 else None
+        return root
+
+    @staticmethod
+    def _merge_acceptance_protocol_telemetry(
+        previous: dict[str, Any], current: dict[str, Any]
+    ) -> dict[str, Any]:
+        """Accumulate bounded segment counters without reviving stale state."""
+        merged = dict(previous)
+        merged.update(current)
+        additive_counters = (
+            "event_count",
+            "tool_observation_count",
+            "replan_count",
+            "replan_requested_count",
+            "replan_applied_count",
+            "initial_decision_attempt_count",
+            "initial_decision_unavailable_count",
+            "replan_decision_attempt_count",
+            "replan_decision_unavailable_count",
+            "suppressed_replan_boundaries",
+            "candidate_final_count",
+            "final_review_count",
+            "repair_count",
+            "delivery_checkpoint_count",
+            "candidate_decision_count",
+            "action_alignment_match_count",
+            "action_alignment_mismatch_count",
+            "acceptance_controller_error_count",
+            "mutation_gate_activation_count",
+            "mutation_gate_blocked_read_only_call_count",
+            "convergence_gate_blocked_call_count",
+            "convergence_constraint_activation_count",
+            "model_expected_tool_actions_overrun_count",
+        )
+        high_water_counters = (
+            "stagnant_observations",
+            "consecutive_unapplied_replans",
+            "delivery_debt_observations",
+            "workspace_mutation_absent_observations",
+            "acceptance_attempt",
+            "acceptance_continuation_count",
+            "consecutive_read_only_observations",
+            "post_candidate_read_only_observations",
+            "post_candidate_no_delivery_progress_observations",
+            "model_expected_tool_actions",
+        )
+        for key in additive_counters:
+            merged[key] = min(
+                1_000_000,
+                int(previous.get(key, 0) or 0)
+                + int(current.get(key, 0) or 0),
+            )
+        for key in high_water_counters:
+            merged[key] = min(
+                1_000_000,
+                max(
+                    int(previous.get(key, 0) or 0),
+                    int(current.get(key, 0) or 0),
+                ),
+            )
+        merged["armed"] = bool(previous.get("armed") or current.get("armed"))
+        merged["finalization_entered"] = bool(
+            previous.get("finalization_entered")
+            or current.get("finalization_entered")
+        )
+        return merged
+
+    async def _direct_acceptance_continuation(
+        self,
+        *,
+        task: Task,
+        response: TaskResponse | None,
+        answer: str,
+        event: dict[str, Any],
+        origin_user_input: Any,
+        logical_task_state: dict[str, Any],
+        acceptance_state: dict[str, Any] | None,
+        explicit_goal_owned_segment: bool = False,
+    ) -> _GoalContinuation | None:
+        """Continue one armed direct task without replaying its public prompt."""
+        if getattr(self, "_session_mode", "interactive") != "direct":
+            return None
+        if explicit_goal_owned_segment or self._goal_session_state().get("active"):
+            return None
+        root = self._root_agent()
+        root_id = getattr(root, "id", None)
+        root_id = root_id() if callable(root_id) else root_id
+        if not isinstance(root_id, str) or not root_id:
+            return None
+
+        from aworld.runners.execution_protocol import (
+            build_execution_protocol_telemetry,
+            execution_protocol_policy,
+            load_execution_protocol_state,
+            reviewer_value_lease_requires_continuation,
+        )
+        from aworld.core.execution_protocol import ProtocolMode
+
+        policy = execution_protocol_policy(task.context, root_id)
+        protocol_state = load_execution_protocol_state(task.context, root_id)
+        current_telemetry = build_execution_protocol_telemetry(task.context, root_id)
+        completion_reason = str(
+            getattr(response, "completion_reason", None)
+            or event.get("completion_reason")
+            or ""
+        ).strip()
+        if completion_reason == ARTIFACT_MEDIA_RECOVERY_EXHAUSTED_REASON:
+            # Media transport recovery owns its own single text-only retry.
+            # Replaying the task through implicit acceptance would spend the
+            # task repair allowance on the same provider failure and relabel it
+            # as task budget exhaustion.
+            current_telemetry["acceptance_continuation_suppressed"] = (
+                "artifact_media_recovery_exhausted"
+            )
+            self.last_execution_protocol = current_telemetry
+            if response is not None:
+                response.execution_protocol = current_telemetry
+                response.recoverable = False
+            return None
+        if response is not None and (
+            response.failure_origin in {"infrastructure", "cancelled"}
+            or response.recoverable is False
+        ):
+            preserved = (
+                dict(acceptance_state.get("protocol_telemetry") or {})
+                if isinstance(acceptance_state, dict)
+                else current_telemetry
+            )
+            self.last_execution_protocol = preserved
+            response.execution_protocol = preserved
+            return None
+        self.last_execution_protocol = current_telemetry
+        if response is not None:
+            response.execution_protocol = current_telemetry
+        protocol_phase = getattr(protocol_state.phase, "value", None)
+        protocol_terminal_incomplete = bool(
+            protocol_state.terminal_incomplete or protocol_phase == "review"
+        )
+        if (
+            response is not None
+            and protocol_terminal_incomplete
+            and (
+                response.success is True
+                or str(response.semantic_status or "").strip().lower()
+                == "succeeded"
+            )
+        ):
+            # A response cannot be semantically successful while the protocol
+            # still says review/incomplete. Terminal fail-open must first use
+            # the explicit fallback-submit transition, which moves the phase
+            # to COMPLETE without claiming reviewer acceptance.
+            response.success = False
+            response.failure_origin = "task"
+            response.semantic_status = "incomplete"
+            response.completion_reason = "execution_protocol_terminal_incomplete"
+            response.recoverable = True
+            event = {
+                **event,
+                "semantic_status": "incomplete",
+                "completion_reason": "execution_protocol_terminal_incomplete",
+                "recoverable": True,
+            }
+        protocol_finalized = bool(
+            protocol_state.finalization_entered
+            or getattr(protocol_state.phase, "value", None) == "finalize"
+        )
+        protocol_converging = bool(
+            protocol_state.convergence_constraint_active
+        )
+        if reviewer_value_lease_requires_continuation(task.context, root_id):
+            current_telemetry["acceptance_continuation_suppressed"] = (
+                "reviewer_lease_active"
+            )
+            self.last_execution_protocol = current_telemetry
+            if response is not None:
+                response.execution_protocol = current_telemetry
+            return None
+        if policy.mode is ProtocolMode.GUIDE and (
+            protocol_finalized
+            or (
+                protocol_converging
+                and policy.hard_tool_admission_enabled
+            )
+        ):
+            # The execution protocol already owns the remaining work for this
+            # task scope. Starting another implicit goal segment would create
+            # a fresh protocol store and reopen broad Tool work after either a
+            # hard convergence decision or terminal finalization. Preserve the
+            # incomplete/success status from the bounded segment instead.
+            if (
+                isinstance(acceptance_state, dict)
+                and int(acceptance_state.get("turn_count", 1) or 1) > 1
+            ):
+                prior_telemetry = acceptance_state.get("protocol_telemetry")
+                if isinstance(prior_telemetry, dict):
+                    current_telemetry = self._merge_acceptance_protocol_telemetry(
+                        prior_telemetry,
+                        current_telemetry,
+                    )
+            current_telemetry["acceptance_continuation_suppressed"] = (
+                "protocol_finalization"
+                if protocol_finalized
+                else "protocol_convergence"
+            )
+            self.last_execution_protocol = current_telemetry
+            if response is not None:
+                response.execution_protocol = current_telemetry
+            return None
+        semantic_status = str(event.get("semantic_status") or "").strip().lower()
+        if not semantic_status:
+            semantic_status = (
+                "succeeded"
+                if response is not None and response.success is True
+                else "incomplete"
+            )
+        completion_assessment = event.get("completion_assessment")
+        if not isinstance(completion_assessment, dict):
+            completion_assessment = {}
+        assessment_mode = str(completion_assessment.get("mode") or "").lower()
+        assessment_status = str(completion_assessment.get("status") or "").lower()
+        structured_gap = (
+            semantic_status in {"incomplete", "budget_exhausted"}
+            or not str(answer or "").strip()
+            or (
+                assessment_mode == "enforce"
+                and assessment_status not in {"", "satisfied"}
+            )
+        )
+
+        if acceptance_state is None:
+            repair_limit = policy.max_repairs
+            if (
+                not protocol_state.long_horizon_armed
+                or repair_limit == 0
+                or not structured_gap
+            ):
+                return None
+            from aworld_cli.builtin_plugins.goal_session.hooks.task_completed import (
+                new_goal_contract_state,
+            )
+
+            acceptance_state = new_goal_contract_state(
+                str(logical_task_state.get("objective") or ""),
+                max_turns=(
+                    None if repair_limit is None else 1 + repair_limit
+                ),
+                source="direct_long_horizon",
+            )
+            # Reuse the invocation identity so every internal segment observes
+            # the same workspace originals and evidence scope.
+            acceptance_state["workspace_id"] = logical_task_state.get("workspace_id")
+            acceptance_state["protocol_telemetry"] = current_telemetry
+        acceptance_event = dict(event)
+        acceptance_event["semantic_status"] = semantic_status
+        if not str(answer or "").strip() and semantic_status == "succeeded":
+            acceptance_event.update(
+                {
+                    "semantic_status": "incomplete",
+                    "completion_reason": "final_answer_missing",
+                    "recoverable": True,
+                }
+            )
+
+        from aworld_cli.builtin_plugins.goal_session.hooks.task_completed import (
+            apply_turn_outcome,
+            build_goal_context_prompt,
+        )
+
+        updated, should_continue = apply_turn_outcome(
+            acceptance_state,
+            acceptance_event,
+        )
+        receipt = updated.get("last_attempt_receipt")
+        telemetry = dict(updated.get("protocol_telemetry") or {})
+        if acceptance_state.get("turn_count", 1) > 1:
+            telemetry = self._merge_acceptance_protocol_telemetry(
+                telemetry,
+                current_telemetry,
+            )
+            telemetry["phase"] = current_telemetry.get(
+                "phase", telemetry.get("phase")
+            )
+            telemetry["decision_checkpoint_pending"] = bool(
+                current_telemetry.get("decision_checkpoint_pending")
+            )
+            for key in (
+                "model_horizon",
+                "initial_decision_status",
+                "replan_decision_status",
+            ):
+                if current_telemetry.get(key) is not None:
+                    telemetry[key] = current_telemetry[key]
+        telemetry.update(
+            {
+                "implicit_acceptance_created": True,
+                "acceptance_attempt": receipt.get("attempt") if isinstance(receipt, dict) else None,
+                "acceptance_continuation_count": max(
+                    0, int(updated.get("turn_count", 1) or 1) - 1
+                ),
+                "acceptance_disposition": receipt.get("disposition") if isinstance(receipt, dict) else None,
+                "acceptance_reason": receipt.get("decision_reason") if isinstance(receipt, dict) else None,
+                "acceptance_satisfied": receipt.get("acceptance_satisfied") if isinstance(receipt, dict) else None,
+            }
+        )
+        updated["protocol_telemetry"] = telemetry
+        self.last_execution_protocol = telemetry
+        if response is not None:
+            response.execution_protocol = telemetry
+
+        async def salvage_authenticated_candidate(*, completion_reason: str) -> bool:
+            from aworld.runners.execution_protocol import (
+                authenticated_declared_candidate_status,
+                load_execution_protocol_state,
+                record_candidate_final,
+                record_validated_terminal_fallback_submission,
+            )
+
+            status = authenticated_declared_candidate_status(
+                task.context, root_id
+            )
+            if status.get("authenticated") is not True:
+                telemetry["acceptance_candidate_authentication"] = status.get(
+                    "reason"
+                )
+                return False
+            if not load_execution_protocol_state(
+                task.context, root_id
+            ).candidate_checkpoint_recorded:
+                checkpoint = record_candidate_final(
+                    task.context,
+                    root_id,
+                    actions=None,
+                    review_boundary_available=False,
+                )
+                if (
+                    checkpoint is None
+                    or not checkpoint.state.candidate_checkpoint_recorded
+                ):
+                    telemetry["acceptance_candidate_authentication"] = (
+                        "terminal_transition_rejected"
+                    )
+                    return False
+            transition = await record_validated_terminal_fallback_submission(
+                task.context, root_id
+            )
+            if (
+                transition is None
+                or transition.decision.action.value != "submit_current_result"
+            ):
+                telemetry["acceptance_candidate_authentication"] = (
+                    "terminal_transition_rejected"
+                )
+                return False
+            terminal_telemetry = build_execution_protocol_telemetry(
+                task.context, root_id
+            )
+            terminal_telemetry.update(
+                {
+                    key: value
+                    for key, value in telemetry.items()
+                    if key.startswith("acceptance_")
+                    or key == "implicit_acceptance_created"
+                }
+            )
+            terminal_telemetry.update(
+                {
+                    "acceptance_candidate_authentication": status.get("reason"),
+                    "acceptance_disposition": "authenticated_candidate_salvaged",
+                    "acceptance_satisfied": True,
+                    "decision_checkpoint_pending": False,
+                }
+            )
+            updated["protocol_telemetry"] = terminal_telemetry
+            self.last_execution_protocol = terminal_telemetry
+            if response is not None:
+                response.success = True
+                response.failure_origin = None
+                response.semantic_status = "succeeded"
+                response.completion_reason = completion_reason
+                response.recoverable = False
+                response.execution_protocol = terminal_telemetry
+            return response is not None
+
+        remaining = task.remaining_seconds()
+        reserve = max(
+            float(task.completion_reserve_seconds or 0.0),
+            float(policy.finalization_reserve_seconds or 0.0),
+        )
+        if remaining is not None and remaining <= reserve:
+            telemetry["acceptance_continuation_suppressed"] = "deadline_reserve"
+            if await salvage_authenticated_candidate(
+                completion_reason=(
+                    "implicit_acceptance_deadline_reserve_fail_open"
+                )
+            ):
+                return None
+            if response is not None:
+                response.success = False
+                response.failure_origin = "task"
+                response.semantic_status = "budget_exhausted"
+                response.completion_reason = "implicit_acceptance_deadline_reserve"
+                response.recoverable = False
+            return None
+
+        if not should_continue:
+            if (
+                response is not None
+                and isinstance(receipt, dict)
+                and receipt.get("acceptance_satisfied") is False
+            ):
+                if await salvage_authenticated_candidate(
+                    completion_reason="implicit_acceptance_candidate_salvaged"
+                ):
+                    return None
+                response.success = False
+                response.failure_origin = "task"
+                response.semantic_status = "budget_exhausted"
+                response.completion_reason = "implicit_acceptance_limit_reached"
+                response.recoverable = False
+            return None
+        if (
+            int(telemetry.get("acceptance_continuation_count", 0) or 0) >= 1
+            and protocol_state.candidate_present is True
+        ):
+            if await salvage_authenticated_candidate(
+                completion_reason="implicit_acceptance_candidate_salvaged"
+            ):
+                return None
+            telemetry["acceptance_continuation_suppressed"] = (
+                "candidate_continuation_limit"
+            )
+            updated["protocol_telemetry"] = telemetry
+            self.last_execution_protocol = telemetry
+            if response is not None:
+                response.success = False
+                response.failure_origin = "task"
+                response.semantic_status = "budget_exhausted"
+                response.completion_reason = (
+                    "implicit_acceptance_candidate_unverified"
+                )
+                response.recoverable = False
+                response.execution_protocol = telemetry
+            return None
+        return _GoalContinuation(
+            build_goal_context_prompt(updated),
+            task.context,
+            origin_user_input,
+            logical_task_state,
+            updated,
+            "direct_acceptance",
+        )
+
+    def _goal_agent_ids(self) -> dict[str, str]:
+        """Stable configured names bridge UUID agent IDs after process restart.
+
+        Ambiguous names are deliberately excluded, never guessed.
+        """
+        groups = {}
+        for agent in (getattr(self.swarm, "agents", None) or {}).values():
+            name = agent.name() if callable(agent.name) else agent.name
+            groups.setdefault(name, []).append(agent.id())
+        return {name: ids[0] for name, ids in groups.items() if len(ids) == 1}
+
+    def request_goal_pause(self) -> None:
+        task = getattr(self, "_active_goal_task", None)
+        if task is not None:
+            task.request_pause()
+        chat = getattr(self, "_active_chat_task", None)
+        if chat is not None and not chat.done():
+            chat.cancel()
+
+    async def _chat_turn(
+        self,
+        message: Union[str, tuple[str, List[str]]],
+        requested_skill_names: Optional[List[str]] = None,
+        *,
+        _previous_goal_context: Any = None,
+        _origin_user_input: Any = None,
+        _logical_task_state: dict[str, Any] | None = None,
+        _direct_acceptance_state: dict[str, Any] | None = None,
+    ) -> str | _GoalContinuation:
+            """
+            Execute chat with local agent using Task/Runners pattern.
+            
+            Args:
+                message: User message (string) or tuple of (text, image_urls) for multimodal support
+                
+            Returns:
+                Agent response
+                
+            Example:
+                >>> executor = LocalAgentExecutor(swarm)
+                >>> # Text only
+                >>> response = await executor.chat("Hello")
+                >>> # With images
+                >>> response = await executor.chat(("Analyze this", ["data:image/jpeg;base64,..."]))
+            """
+            # 1. Ensure console is set - use global console if not set
+            if not self.console:
+                from .._globals import console as global_console
+                self.console = global_console
+            self.last_task_response = None
+            self.last_task_interrupted = False
+            self.last_llm_usage = None
+            self.last_llm_diagnostics = None
+            self.last_skill_activation_evidence = ()
+
+            # 2. Parse message - handle both string and tuple format
+            if isinstance(message, tuple):
+                task_content, image_urls = message
+            else:
+                task_content = message
+                image_urls = None
+
+            # 3. Build task (will use current session_id)
+            explicit_goal_owned_segment = bool(
+                self._goal_session_state().get("active")
+            )
+            # Update session last used time
+            self._update_session_last_used(self.session_id)
+            task = await self._build_task(
+                task_content,
+                session_id=self.session_id,
+                image_urls=image_urls,
+                requested_skill_names=requested_skill_names,
+                origin_user_input=_origin_user_input,
+                logical_task_state=_logical_task_state,
+            )
+            internal_acceptance_segment = _direct_acceptance_state is not None
+            if _previous_goal_context is not None:
+                from aworld.core.context.work_progress import carry_goal_work_state
+                carry_goal_work_state(_previous_goal_context, task.context)
+            resume_scope = getattr(self, "_resume_goal_work_scope_once", None)
+            if resume_scope is not None:
+                from aworld.core.context.work_progress import resume_goal_work_state
+                old_ids = getattr(self, "_resume_goal_agent_ids_once", {})
+                new_ids = self._goal_agent_ids()
+                mapping = {old_id: new_ids[name] for name, old_id in old_ids.items() if name in new_ids}
+                resume_goal_work_state(task.context, **resume_scope, agent_id_mapping=mapping)
+                self._resume_goal_work_scope_once = None
+                self._resume_goal_agent_ids_once = None
+            raw_skill_activation_evidence = getattr(
+                task,
+                "_aworld_cli_skill_activation_evidence",
+                self.last_skill_activation_evidence,
+            )
+            task_skill_activation_evidence = (
+                tuple(raw_skill_activation_evidence)
+                if isinstance(raw_skill_activation_evidence, (list, tuple))
+                else ()
+            )
+            # Resolution happens before task execution. Preserve its bounded
+            # attestation immediately so an incomplete or failed task cannot
+            # erase the skills that were actually activated for this run.
+            self.last_skill_activation_evidence = task_skill_activation_evidence
+            try:
+                from aworld_cli.core.session_store import CliSessionStore
+
+                if not internal_acceptance_segment:
+                    CliSessionStore().record_turn(
+                        session_id=self.session_id,
+                        cwd=os.getcwd(),
+                        agent_name=getattr(getattr(self.swarm, "conf", None), "name", None) or "Aworld",
+                        mode=getattr(self, "_session_mode", "interactive"),
+                        prompt=task_content,
+                        task_id=getattr(task, "id", None),
+                        source_type=getattr(self, "_session_source_type", None),
+                        source_location=getattr(self, "_session_source_location", None),
+                    )
+            except Exception as exc:
+                logger.debug(f"Failed to record CLI session turn: {exc}")
+            self.context = getattr(task, "context", None)
+            runtime = getattr(self, "_base_runtime", None)
+            steering = getattr(runtime, "_steering", None) if runtime is not None else None
+            if steering is not None and self.session_id:
+                try:
+                    steering.begin_task(self.session_id, task.id)
+                except Exception:
+                    pass
+            self._publish_hud_task_started(task)
+            await self._run_plugin_task_hook(
+                "task_started",
+                {
+                    "task_id": task.id,
+                    "session_id": self.session_id,
+                    "message": task_content,
+                },
+            )
+            
+            # 🔥 Hook: PRE_RUN_TASK
+            hook_kwargs = {
+                'task': task,
+                'task_id': task.id,
+                'session_id': task.session_id
+            }
+            hook_result = await self._execute_hooks(ExecutorHookPoint.PRE_RUN_TASK, **hook_kwargs)
+            # Get updated task from kwargs
+            task = hook_kwargs.get('task', task)
+            if isinstance(task, Task):
+                state = self._goal_session_state()
+                if state.get("active") and state.get("__plugin_state__") is not None:
+                    state["__plugin_state__"].update({
+                        "last_task_id": task.id,
+                        "last_task_epoch": getattr(task.context, "task_epoch", None),
+                        "agent_ids_by_name": self._goal_agent_ids(),
+                    })
+                self._active_goal_task = task
+
+            # 4. Run task with streaming
+            try:
+                chat_start_time = time.time()
+                # Ensure console is set before running task
+                # Use global console if self.console is not set
+                if not self.console:
+                    from .._globals import console as global_console
+                    self.console = global_console
+
+                if self.console and not self._active_steering_event_mode_enabled():
+                    self.console.print(f"[dim]🔄 Running task: {task.id}[/dim]")
+                
+                # Get streaming outputs
+                outputs = Runners.streamed_run_task(task=task)
+
+                # Process stream events
+                answer = ""
+                last_message_output = None
+                stream_token_stats = None  # Set by consume_stream, used for history
+                
+                saved_any_round = internal_acceptance_segment
+
+                async def consume_stream():
+                    """Consume stream events and collect outputs with beautiful formatting."""
+                    nonlocal answer, last_message_output, stream_token_stats, saved_any_round
+                    stream_token_stats = StreamTokenStats()
+                    show_stream_stats = not self._hud_is_active()
+                    logger.info(f"📊 Starting consume_stream - stream_token_stats initialized")
+                    ctrl = StreamDisplayController(
+                        console=self.console,
+                        stream_token_stats=stream_token_stats,
+                        format_tool_calls_fn=self._format_tool_calls_display_lines,
+                        format_elapsed_fn=format_elapsed,
+                        config=StreamDisplayConfig(render_interval=0.02, chars_per_render=1),
+                        show_stats_line=show_stream_stats,
+                        loading_enabled=not bool(
+                            getattr(self, "_suppress_interactive_loading_status", False)
+                        ),
+                    )
+                    active_event_mode = self._active_steering_event_mode_enabled()
+                    checkpoint_mode = self._session_steering_checkpoint_mode_enabled()
+
+                    try:
+                        from aworld.output.base import MessageOutput, ToolResultOutput, StepOutput, ChunkOutput
+                        
+                        # Show loading status while waiting for first output
+                        logger.info(f"Start thinking status: {ctrl.loading_status} {ctrl.status_start_time}")
+                        ctrl.start_loading("💭 Thinking...")
+                        await asyncio.sleep(0)  # Yield so _update_elapsed_time task can start
+
+                        # Track current agent for handoff detection
+                        current_agent_name = None
+                        last_agent_name = None
+                        received_chunk_output = False
+
+                        try:
+                            # Ensure console is set before processing stream events
+                            if not self.console:
+                                from .._globals import console as global_console
+                                self.console = global_console
+
+                            async for output in outputs.stream_events():
+                                if not self.console:
+                                    continue
+
+                                # Handle MessageOutput
+                                if isinstance(output, MessageOutput):
+                                    elapsed_sec = (datetime.now() - ctrl.status_start_time).total_seconds() if ctrl.status_start_time else None
+                                    tool_calls = output.tool_calls if hasattr(output, "tool_calls") and output.tool_calls else []
+                                    self._track_tool_calls(tool_calls)
+                                    current_tool_name = None
+                                    if tool_calls and not active_event_mode:
+                                        first_tool = tool_calls[0]
+                                        tool_data = getattr(first_tool, "data", first_tool)
+                                        function = getattr(tool_data, "function", None)
+                                        current_tool_name = getattr(function, "name", None)
+                                    # 💾 Save to history at end of each streaming round (before clear)
+                                    stats = stream_token_stats.get_current_stats()
+                                    if stats and task_content and not internal_acceptance_segment:
+                                        try:
+                                            from ..history import JSONLHistory
+                                            history_path = Path.home() / ".aworld" / "cli_history.jsonl"
+                                            history_path.parent.mkdir(parents=True, exist_ok=True)
+                                            history = JSONLHistory(str(history_path), session_id=self.session_id)
+                                            duration_sec = elapsed_sec if elapsed_sec is not None else 0
+                                            model_name = stats.get("model_name") or stats.get("agent_name", "unknown")
+                                            agent_name = stats.get("agent_name") or "unknown"
+                                            token_stats = {
+                                                "input_tokens": stats.get("input_tokens") or 0,
+                                                "output_tokens": stats.get("output_tokens") or 0,
+                                                "total_tokens": (stats.get("input_tokens") or 0) + (stats.get("output_tokens") or 0),
+                                                "model_name": model_name,
+                                                "agent_name": agent_name,
+                                                "context_window_tokens": stats.get("input_tokens") or 0,
+                                                "duration_seconds": duration_sec,
+                                            }
+                                            history.store_string(task_content, token_stats=token_stats, aggregate_with_previous=saved_any_round)
+                                            saved_any_round = True
+                                            logger.info(f"💾 Saved round to history - model: {model_name}")
+                                        except Exception as save_err:
+                                            logger.warning(f"💾 Failed to save round to history: {save_err}")
+                                    stream_on = self._streaming_output_enabled()
+                                    tool_result_pending = ctrl.buffer.has_tool_result_pending()
+                                    has_pending_display = ctrl.has_pending_display(stream_on, received_chunk_output, tool_result_pending)
+                                    if has_pending_display:
+                                        ctrl.set_pending_clear()
+                                    else:
+                                        ctrl.stop_loading()
+                                    if stream_on and not has_pending_display:
+                                        if received_chunk_output and stream_token_stats.get_current_stats():
+                                            stream_token_stats.clear()
+                                            ctrl.buffer.clear()
+                                    # Extract agent name from output metadata
+                                    current_agent_name = None
+                                    if hasattr(output, 'metadata') and output.metadata:
+                                        current_agent_name = output.metadata.get('agent_name') or output.metadata.get('from_agent')
+
+                                    # Fallback to get current agent from swarm
+                                    if not current_agent_name and hasattr(self.swarm, 'cur_agent') and self.swarm.cur_agent:
+                                        current_agent_name = getattr(self.swarm.cur_agent, 'name', None) or getattr(self.swarm.cur_agent, 'id', lambda: None)()
+                                    logger.info(
+                                        "Stop thinking status: "
+                                        f"loading={ctrl.loading_status} "
+                                        f"started_at={ctrl.status_start_time} "
+                                        f"elapsed_seconds={elapsed_sec} "
+                                        f"agent={current_agent_name} previous_agent={last_agent_name} "
+                                        f"received_chunk={received_chunk_output} "
+                                        f"token_stats={stream_token_stats.get_current_stats()} "
+                                        f"buffer={_stream_buffer_log_summary(ctrl.buffer.accumulated_content, ctrl.buffer.accumulated_tool_calls)}"
+                                    )
+
+                                    # Default agent name
+                                    if not current_agent_name:
+                                        current_agent_name = "Assistant"
+
+                                    # Check if this is a handoff (agent switch)
+                                    is_handoff = last_agent_name is not None and last_agent_name != current_agent_name
+
+                                    last_message_output = output
+                                    
+                                    # 🔧 FIX: Extract token stats from MessageOutput if not already collected from ChunkOutput
+                                    # This ensures we capture token stats even when STREAM=0 or no ChunkOutput was received
+                                    if not received_chunk_output or not stream_token_stats.get_current_stats():
+                                        try:
+                                            # Log the output structure for debugging
+                                            logger.info(
+                                                "📊 Attempting to extract token stats from "
+                                                f"MessageOutput type={type(output).__name__[:128]}"
+                                            )
+                                            
+                                            # Try multiple paths to extract usage information
+                                            usage = None
+                                            input_tokens = None
+                                            output_tokens = None
+                                            model_name = None
+                                            
+                                            # Path 1: Direct usage attribute
+                                            if hasattr(output, 'usage') and output.usage:
+                                                usage = output.usage
+                                                logger.info(
+                                                    "📊 Found usage in output.usage: "
+                                                    f"{_usage_log_summary(usage)}"
+                                                )
+                                            
+                                            # Path 2: usage in data attribute
+                                            elif hasattr(output, 'data') and output.data:
+                                                if hasattr(output.data, 'usage') and output.data.usage:
+                                                    usage = output.data.usage
+                                                    logger.info(
+                                                        "📊 Found usage in output.data.usage: "
+                                                        f"{_usage_log_summary(usage)}"
+                                                    )
+                                            
+                                            # Path 3: usage in source (ModelResponse)
+                                            if not usage and hasattr(output, 'source') and output.source:
+                                                if hasattr(output.source, 'usage') and output.source.usage:
+                                                    usage = output.source.usage
+                                                    logger.info(
+                                                        "📊 Found usage in output.source.usage: "
+                                                        f"{_usage_log_summary(usage)}"
+                                                    )
+                                            
+                                            # Path 4: Check if output itself is a dict-like object
+                                            if not usage and hasattr(output, '__dict__'):
+                                                output_dict = output.__dict__
+                                                if 'usage' in output_dict and output_dict['usage']:
+                                                    usage = output_dict['usage']
+                                                    logger.info(
+                                                        "📊 Found usage in output.__dict__: "
+                                                        f"{_usage_log_summary(usage)}"
+                                                    )
+                                            
+                                            # Extract tokens from usage object
+                                            if usage:
+                                                usage_summary = _usage_log_summary(usage)
+                                                input_tokens = usage_summary["input_tokens"]
+                                                output_tokens = usage_summary["output_tokens"]
+                                                logger.info(
+                                                    "📊 Extracted token usage: "
+                                                    f"{usage_summary}"
+                                                )
+                                            
+                                            # Fallback: Estimate tokens if we couldn't extract them
+                                            if input_tokens is None or output_tokens is None:
+                                                logger.warning(f"📊 Could not extract token stats from usage, attempting estimation")
+                                                
+                                                # Estimate output tokens from response content
+                                                if output_tokens is None:
+                                                    response_text = ""
+                                                    if hasattr(output, 'response') and output.response:
+                                                        response_text = str(output.response)
+                                                    elif hasattr(output, 'content') and output.content:
+                                                        response_text = str(output.content)
+                                                    elif hasattr(output, 'data') and hasattr(output.data, 'content'):
+                                                        response_text = str(output.data.content)
+                                                    
+                                                    if response_text:
+                                                        # Rough estimation: 1 token ≈ 4 characters
+                                                        output_tokens = max(1, len(response_text) // 4)
+                                                        logger.info(f"📊 Estimated output tokens from content length: {output_tokens} (content length: {len(response_text)})")
+                                                
+                                                # Estimate input tokens (harder, but we can try)
+                                                if input_tokens is None:
+                                                    # Use task content length as a rough estimate
+                                                    if task_content:
+                                                        input_tokens = max(1, len(task_content) // 4)
+                                                        logger.info(f"📊 Estimated input tokens from task content: {input_tokens}")
+                                            
+                                            # Get tool calls count
+                                            tool_calls_count = 0
+                                            if hasattr(output, 'tool_calls') and output.tool_calls:
+                                                tool_calls_count = len(output.tool_calls)
+                                            
+                                            # Extract model name
+                                            if hasattr(output, "metadata") and output.metadata:
+                                                model_name = output.metadata.get("model_name")
+                                            if not model_name and hasattr(output, "source") and output.source:
+                                                model_name = getattr(output.source, "model", None)
+                                            if not model_name:
+                                                model_name = "unknown"
+                                            
+                                            # Update stream_token_stats if we have any token data
+                                            if input_tokens is not None or output_tokens is not None:
+                                                logger.info(f"📊 Updating token stats - agent: {current_agent_name}, model: {model_name}, input: {input_tokens}, output: {output_tokens}, tool_calls: {tool_calls_count}")
+                                                context_window = resolve_stream_context_window(
+                                                    self.swarm, model_name=model_name, agent_name=current_agent_name,
+                                                    context=task.context, task_id=task.id, output=output,
+                                                )
+                                                stream_token_stats.update(
+                                                    agent_id=None,
+                                                    agent_name=current_agent_name,
+                                                    output_tokens=output_tokens if output_tokens is not None else 0,
+                                                    input_tokens=input_tokens if input_tokens is not None else 0,
+                                                    tool_calls_count=tool_calls_count,
+                                                    output_estimated=(output_tokens is not None and usage is None),
+                                                    input_estimated=(input_tokens is not None and usage is None),
+                                                    tool_calls_estimated=False,
+                                                    model_name=context_window.model_name,
+                                                    context_window=context_window.tokens,
+                                                    context_window_source=context_window.source,
+                                                )
+                                                logger.info(f"📊 Token stats successfully updated - current stats: {stream_token_stats.get_current_stats()}")
+                                                self._publish_hud_stream_update(
+                                                    task_id=task.id,
+                                                    stream_token_stats=stream_token_stats,
+                                                    current_tool=current_tool_name,
+                                                    elapsed_seconds=elapsed_sec,
+                                                )
+                                                await self._emit_task_progress_hook(
+                                                    {
+                                                        "task_id": task.id,
+                                                        "session_id": self.session_id,
+                                                        "current_tool": current_tool_name,
+                                                        "elapsed_seconds": elapsed_sec,
+                                                        "usage": stream_token_stats.to_hud_usage(),
+                                                    },
+                                                )
+                                            else:
+                                                logger.warning(f"📊 No token data available to update stats")
+                                                logger.warning(
+                                                    "📊 Output structure summary: "
+                                                    f"{_message_output_log_summary(output, answer)}"
+                                                )
+                                        except Exception as extract_error:
+                                            logger.error(f"📊 Failed to extract token stats from MessageOutput: {extract_error}")
+                                            logger.error(f"📊 Traceback: {traceback.format_exc()}")
+                                    
+                                    # 💾 Save round when stats came from MessageOutput (STREAM=0 or no ChunkOutput)
+                                    if not saved_any_round:
+                                        stats = stream_token_stats.get_current_stats()
+                                        if stats and task_content:
+                                            try:
+                                                from ..history import JSONLHistory
+                                                history_path = Path.home() / ".aworld" / "cli_history.jsonl"
+                                                history_path.parent.mkdir(parents=True, exist_ok=True)
+                                                history = JSONLHistory(str(history_path), session_id=self.session_id)
+                                                duration_sec = elapsed_sec if elapsed_sec is not None else 0
+                                                model_name = stats.get("model_name") or stats.get("agent_name", "unknown")
+                                                agent_name = stats.get("agent_name") or "unknown"
+                                                token_stats = {
+                                                    "input_tokens": stats.get("input_tokens") or 0,
+                                                    "output_tokens": stats.get("output_tokens") or 0,
+                                                    "total_tokens": (stats.get("input_tokens") or 0) + (stats.get("output_tokens") or 0),
+                                                    "model_name": model_name,
+                                                    "agent_name": agent_name,
+                                                    "context_window_tokens": stats.get("input_tokens") or 0,
+                                                    "duration_seconds": duration_sec,
+                                                }
+                                                history.store_string(task_content, token_stats=token_stats, aggregate_with_previous=saved_any_round)
+                                                saved_any_round = True
+                                                logger.info(f"💾 Saved round to history (from MessageOutput) - model: {model_name}")
+                                            except Exception as save_err:
+                                                logger.warning(f"💾 Failed to save round to history: {save_err}")
+                                    
+                                    current_tool_name = None
+                                    if tool_calls:
+                                        first_tool = tool_calls[0]
+                                        tool_data = getattr(first_tool, "data", first_tool)
+                                        function = getattr(tool_data, "function", None)
+                                        current_tool_name = getattr(function, "name", None)
+
+                                    if active_event_mode:
+                                        response_text = str(output.response) if hasattr(output, 'response') and output.response else ""
+                                        had_buffered_message_chunks = self._active_steering_buffer().has_pending_message()
+                                        self._flush_active_steering_message_buffer(
+                                            agent_name=current_agent_name or "Assistant",
+                                        )
+                                        if response_text.strip():
+                                            answer = response_text if not answer else (response_text if response_text not in answer else answer)
+                                            if not had_buffered_message_chunks:
+                                                self._buffer_active_steering_message_chunk(response_text)
+                                                self._flush_active_steering_message_buffer(
+                                                    agent_name=current_agent_name or "Assistant",
+                                                )
+                                        if tool_calls:
+                                            tool_lines = self._format_tool_calls_display_lines(tool_calls)
+                                            if tool_lines:
+                                                self._emit_active_steering_event(
+                                                    "tool_calls_committed",
+                                                    text="\n".join(tool_lines),
+                                                )
+                                                if current_tool_name:
+                                                    self._emit_active_steering_status(f"Calling {current_tool_name}")
+                                        else:
+                                            self._emit_active_steering_status("Working")
+                                        if await self._should_pause_for_queued_steering_checkpoint(
+                                            task_id=task.id,
+                                            checkpoint="after_message_output",
+                                            current_tool=current_tool_name if tool_calls else None,
+                                            partial_answer=answer,
+                                        ):
+                                            raise _PauseForQueuedSteeringCheckpoint()
+                                    elif checkpoint_mode and await self._should_pause_for_queued_steering_checkpoint(
+                                        task_id=task.id,
+                                        checkpoint="after_message_output",
+                                        current_tool=current_tool_name if tool_calls else None,
+                                        partial_answer=answer,
+                                    ):
+                                        raise _PauseForQueuedSteeringCheckpoint()
+                                    # When STREAM=1: render message output; when STREAM=0: skip output, only update answer
+                                    elif not stream_on:
+                                        logger.info(f"Rendering message output for agent: {current_agent_name}")
+                                        logger.info(
+                                            "Message output summary: "
+                                            f"{_message_output_log_summary(output, answer)}"
+                                        )
+                                        logger.info(f"Is handoff: {is_handoff}")
+                                        answer, _ = self._render_simple_message_output(output, answer, agent_name=current_agent_name, is_handoff=is_handoff, content_already_streamed=received_chunk_output)
+                                        
+                                        # 🔧 FIX: Display token stats after rendering message output (STREAM=0 mode)
+                                        # This ensures the stats line is shown even when not streaming
+                                        if show_stream_stats and stream_token_stats and stream_token_stats.get_current_stats():
+                                            elapsed_sec = (datetime.now() - ctrl.status_start_time).total_seconds() if ctrl.status_start_time else None
+                                            if elapsed_sec is not None:
+                                                elapsed_str = format_elapsed(elapsed_sec)
+                                                msg = stream_token_stats.format_streaming_line(elapsed_str)
+                                                if msg and self.console:
+                                                    self.console.print(Text.from_markup(msg))
+                                                    self.console.print()  # Add spacing
+                                    else:
+                                        response_text = str(output.response) if hasattr(output, 'response') and output.response else ""
+                                        if response_text.strip():
+                                            answer = response_text if not answer else (response_text if response_text not in answer else answer)
+
+                                    # Update last_agent_name for next iteration
+                                    last_agent_name = current_agent_name
+                                    
+                                    # Check if there are tool calls - if so, show "Thinking..." for agent-as-tool
+                                    # Skip status for human tools as they require user interaction
+                                    if tool_calls:
+                                        from aworld.models.model_response import ToolCall
+                                        from aworld.core.agent.base import is_agent_by_name
+                                        has_agent_as_tool = False
+                                        for tool_call_output in tool_calls:
+                                            tool_call = None
+                                            if hasattr(tool_call_output, 'data'):
+                                                tool_call = tool_call_output.data
+                                            elif isinstance(tool_call_output, ToolCall):
+                                                tool_call = tool_call_output
+                                            else:
+                                                tool_call = tool_call_output
+                                            if tool_call:
+                                                function_name = ""
+                                                if hasattr(tool_call, 'function') and tool_call.function:
+                                                    function_name = getattr(tool_call.function, 'name', '')
+                                                if 'human' not in function_name.lower() and is_agent_by_name(function_name):
+                                                    has_agent_as_tool = True
+                                                    break
+                                        if has_agent_as_tool:
+                                            if has_pending_display:
+                                                ctrl.set_deferred_thinking("💭 Thinking...")
+                                            else:
+                                                ctrl.start_loading("💭 Thinking...")
+                                    elif not active_event_mode and not tool_calls and (current_agent_name or "").lower() != "aworld":
+                                        # No tool calls and not Aworld: agent may produce more output
+                                        if has_pending_display:
+                                            ctrl.set_deferred_thinking("💭 Thinking...")
+                                        else:
+                                            ctrl.start_loading("💭 Thinking...")
+                                
+                                # Handle ToolResultOutput - add to buffer for gradual display
+                                elif isinstance(output, ToolResultOutput):
+                                    tr_lines = self._format_tool_result_display_lines(
+                                        output,
+                                        truncate=not active_event_mode,
+                                    )
+                                    if active_event_mode and tr_lines:
+                                        metadata = getattr(output, "metadata", None) or {}
+                                        exit_code = metadata.get("exit_code")
+                                        if isinstance(exit_code, str) and exit_code.strip().lstrip("-").isdigit():
+                                            exit_code = int(exit_code)
+                                        elif not isinstance(exit_code, int):
+                                            exit_code = None
+                                        self._emit_active_steering_tool_result_lines(
+                                            tr_lines,
+                                            exit_code=exit_code,
+                                        )
+                                        if await self._should_pause_for_queued_steering_checkpoint(
+                                            task_id=task.id,
+                                            checkpoint="after_tool_result",
+                                            current_tool=getattr(output, "tool_name", None),
+                                            partial_answer=answer,
+                                        ):
+                                            raise _PauseForQueuedSteeringCheckpoint()
+                                        self._emit_active_steering_status("Working")
+                                        continue
+                                    if checkpoint_mode and await self._should_pause_for_queued_steering_checkpoint(
+                                        task_id=task.id,
+                                        checkpoint="after_tool_result",
+                                        current_tool=getattr(output, "tool_name", None),
+                                        partial_answer=answer,
+                                    ):
+                                        raise _PauseForQueuedSteeringCheckpoint()
+                                    if tr_lines:
+                                        ctrl.buffer.accumulated_tool_result_lines.extend(tr_lines)
+                                    stream_on = self._streaming_output_enabled()
+                                    has_pending_display = ctrl.has_any_pending(stream_on)
+                                    if has_pending_display:
+                                        ctrl.set_pending_clear()
+                                        ctrl.set_deferred_thinking("💭 Thinking...")
+                                    if stream_on and ctrl.buffer.has_tool_results() and ctrl.stream_live is None:
+                                        ctrl.stop_loading()
+                                        ctrl.status_start_time = datetime.now()
+                                        ctrl.ensure_live_running()
+                                    if not has_pending_display:
+                                        ctrl.stop_loading()
+                                        if ctrl.buffer.has_tool_results() and self.console:
+                                            _print_tool_result_lines(self.console, ctrl.buffer.accumulated_tool_result_lines)
+                                            # STREAM=0: clear tool results after printing to avoid multi-round accumulation
+                                            ctrl.buffer.accumulated_tool_result_lines.clear()
+                                            ctrl.buffer.displayed_tool_result_lines = 0
+                                        ctrl.start_loading("💭 Thinking...")
+                                
+                                # Handle StepOutput - don't interrupt Thinking status
+                                elif isinstance(output, StepOutput):
+                                    pass
+
+                                # Handle ChunkOutput - accumulate token and tool_calls stats, refresh display in real-time
+                                elif isinstance(output, ChunkOutput):
+                                    received_chunk_output = True
+                                    ctrl.streaming_mode = True
+                                    stream_on = self._streaming_output_enabled()
+                                    chunk = output.data if hasattr(output, "data") else getattr(output, "data", None)
+                                    elapsed_sec = (datetime.now() - ctrl.status_start_time).total_seconds() if ctrl.status_start_time else None
+                                    if active_event_mode and chunk:
+                                        if content := getattr(chunk, "content", None):
+                                            self._buffer_active_steering_message_chunk(content)
+                                    if stream_on and chunk:
+                                        if content := getattr(chunk, "content", None):
+                                            ctrl.buffer.accumulated_content += content
+                                        if tool_calls := getattr(chunk, "tool_calls", None):
+                                            ctrl.buffer.accumulated_tool_calls = list(tool_calls)
+                                    meta = getattr(output, "metadata", None) or {}
+                                    out_tok = meta.get("output_tokens")
+                                    inp_tok = meta.get("input_tokens")
+                                    tc_count = meta.get("tool_calls_count")
+                                    tc_content_len = meta.get("tool_calls_content_length")
+                                    out_est = meta.get("output_tokens_estimated", False)
+                                    inp_est = meta.get("input_tokens_estimated", False)
+                                    tc_est = meta.get("tool_calls_count_estimated", False)
+                                    tc_content_est = meta.get("tool_calls_content_estimated", False)
+                                    agent_id = meta.get("agent_id")
+                                    agent_name = meta.get("agent_name")
+                                    if out_tok is None or inp_tok is None or tc_count is None:
+                                        chunk = output.data if hasattr(output, "data") else getattr(output, "data", None)
+                                        if chunk:
+                                            u = getattr(chunk, "usage", None) or {}
+                                            if out_tok is None:
+                                                out_tok = u.get("completion_tokens")
+                                                if out_tok is None or out_tok == 0:
+                                                    content = getattr(chunk, "content", None) or ""
+                                                    out_tok = max(0, len(content) // 4)
+                                                    out_est = True
+                                            if inp_tok is None:
+                                                inp_tok = u.get("prompt_tokens")
+                                                if inp_tok is None or inp_tok == 0:
+                                                    inp_est = True
+                                            if tc_count is None:
+                                                tc_count = len(getattr(chunk, "tool_calls", None) or [])
+                                                tc_est = True
+                                            if tc_content_len is None and getattr(chunk, "tool_calls", None):
+                                                tc_content_len = sum(
+                                                    len(getattr(getattr(tc, "function", None), "arguments", None) or "")
+                                                    for tc in chunk.tool_calls
+                                                )
+                                                tc_content_est = True
+                                    if agent_id is None or agent_name is None:
+                                        if hasattr(self.swarm, "cur_agent") and self.swarm.cur_agent:
+                                            agent_id = agent_id or getattr(self.swarm.cur_agent, "id", lambda: None)()
+                                            agent_name = agent_name or getattr(self.swarm.cur_agent, "name", None)
+                                    model_name = meta.get("model_name")
+                                    # 🔧 FIX: Update token stats and log the update
+                                    if out_tok is not None or inp_tok is not None or tc_count is not None:
+                                        logger.debug(f"📊 Updating token stats - agent: {agent_name}, model: {model_name}, input: {inp_tok}, output: {out_tok}, tool_calls: {tc_count}")
+                                        context_window = resolve_stream_context_window(
+                                            self.swarm, model_name=model_name,
+                                            agent_id=agent_id, agent_name=agent_name,
+                                            context=task.context, task_id=task.id, output=output,
+                                        )
+                                        stream_token_stats.update(
+                                            agent_id, agent_name,
+                                            out_tok if out_tok is not None else 0,
+                                            inp_tok,
+                                            tc_count if tc_count is not None else 0,
+                                            output_estimated=out_est,
+                                            input_estimated=inp_est,
+                                            tool_calls_estimated=tc_est,
+                                            tool_calls_content_length=tc_content_len,
+                                            tool_calls_content_estimated=tc_content_est,
+                                            tool_calls=ctrl.buffer.accumulated_tool_calls if ctrl.buffer.accumulated_tool_calls else None,
+                                            content=ctrl.buffer.accumulated_content if ctrl.buffer.accumulated_content else None,
+                                            model_name=context_window.model_name,
+                                            context_window=context_window.tokens,
+                                            context_window_source=context_window.source,
+                                        )
+                                        logger.debug(f"📊 Token stats updated successfully - current stats: {stream_token_stats.get_current_stats()}")
+                                        current_tool_name = None
+                                        current_tool_calls = ctrl.buffer.accumulated_tool_calls or getattr(chunk, "tool_calls", None) or []
+                                        if current_tool_calls:
+                                            first_tool = current_tool_calls[0]
+                                            tool_data = getattr(first_tool, "data", first_tool)
+                                            function = getattr(tool_data, "function", None)
+                                            current_tool_name = getattr(function, "name", None)
+                                        self._publish_hud_stream_update(
+                                            task_id=task.id,
+                                            stream_token_stats=stream_token_stats,
+                                            current_tool=current_tool_name,
+                                            elapsed_seconds=elapsed_sec,
+                                        )
+                                        await self._emit_task_progress_hook(
+                                            {
+                                                "task_id": task.id,
+                                                "session_id": self.session_id,
+                                                "current_tool": current_tool_name,
+                                                "elapsed_seconds": elapsed_sec,
+                                                "usage": stream_token_stats.to_hud_usage(),
+                                            },
+                                        )
+                                    else:
+                                        logger.debug(f"📊 No token data to update - out_tok: {out_tok}, inp_tok: {inp_tok}, tc_count: {tc_count}")
+                                    if checkpoint_mode:
+                                        current_tool_calls = ctrl.buffer.accumulated_tool_calls or getattr(chunk, "tool_calls", None) or []
+                                        if current_tool_calls:
+                                            first_tool = current_tool_calls[0]
+                                            tool_data = getattr(first_tool, "data", first_tool)
+                                            function = getattr(tool_data, "function", None)
+                                            current_tool_name = getattr(function, "name", None)
+                                            if await self._should_pause_for_queued_steering_checkpoint(
+                                                task_id=task.id,
+                                                checkpoint="before_tool_call",
+                                                current_tool=current_tool_name,
+                                                partial_answer=answer,
+                                            ):
+                                                raise _PauseForQueuedSteeringCheckpoint()
+                                            if active_event_mode and current_tool_name:
+                                                self._emit_active_steering_status(f"Calling {current_tool_name}")
+                                        if active_event_mode:
+                                            continue
+                                    # When STREAM=1: buffer content; Live display is refreshed at fixed interval
+                                    if stream_on and self.console and (ctrl.buffer.has_content() or ctrl.buffer.has_tool_calls() or ctrl.buffer.has_tool_results() or stream_token_stats.get_current_stats()):
+                                        ctrl.ensure_live_running()
+
+                                # Handle other output types
+                                else:
+                                    ctrl.stop_loading()
+                                    
+                                    # Try to extract answer
+                                    extracted_answer = self._extract_answer_from_output(output)
+                                    if extracted_answer:
+                                        answer = extracted_answer or answer
+                                    
+                                    # Show generic output if it has meaningful content
+                                    if hasattr(output, 'data') and output.data:
+                                        data_str = str(output.data)
+                                        if data_str.strip() and len(data_str) > 10:
+                                            meta = getattr(output, "metadata", None) or {}
+                                            print_all = meta.get("print_all", False)
+                                            max_len = int(os.environ.get("AWORLD_CLI_MAX_RESULT_DISPLAY_LENGTH", "20000"))
+                                            display_str = data_str if print_all else data_str[:max_len]
+                                            if not print_all and len(data_str) > max_len:
+                                                display_str += f"\n\n[dim]... ({len(data_str) - max_len} more characters) ...[/dim]"
+                                            title = meta.get("title") or type(output).__name__
+                                            generic_panel = Panel(
+                                                display_str,
+                                                title=f"[dim]📦 {title}[/dim]",
+                                                border_style="dim",
+                                                padding=(1, 2)
+                                            )
+                                            self.console.print(generic_panel)
+                                            self.console.print()
+                        finally:
+                            await ctrl.wait_for_display_done()
+                            ctrl.stop_loading()
+                            # 🔧 FIX: Log final token stats before exiting consume_stream
+                            logger.info(f"📊 Finishing consume_stream - final token stats: {stream_token_stats.get_current_stats() if stream_token_stats else None}")
+                    
+                    except (asyncio.CancelledError, KeyboardInterrupt):
+                        logger.info(f"📊 consume_stream interrupted - token stats: {stream_token_stats.get_current_stats() if stream_token_stats else None}")
+                        raise  # Re-raise so caller can handle (e.g. continue to next prompt)
+                    except Exception as e:
+                        logger.error(
+                            "📊 consume_stream error - error_type=%s token_stats=%s",
+                            type(e).__name__,
+                            stream_token_stats.get_current_stats()
+                            if stream_token_stats
+                            else None,
+                        )
+                        if self.console and not active_event_mode:
+                            error_body = Text("Error in stream consumption: ")
+                            error_body.append(str(e))
+                            error_panel = Panel(
+                                error_body,
+                                title="[bold red]❌ Stream Error[/bold red]",
+                                border_style="red",
+                                padding=(1, 2)
+                            )
+                            self.console.print(error_panel)
+                            self.console.print()
+                        raise
+                
+                # Consume all stream events (Ctrl+C raises CancelledError/KeyboardInterrupt → abort and return)
+                try:
+                    await consume_stream()
+                except _PauseForQueuedSteeringCheckpoint:
+                    self._reset_active_steering_buffer()
+                    self._publish_hud_task_finished(task.id, task_status="idle")
+                    return answer or ""
+                except (asyncio.CancelledError, KeyboardInterrupt):
+                    self._reset_active_steering_buffer()
+                    if self._active_steering_event_mode_enabled():
+                        self._emit_active_steering_event("system_notice", text="Interrupted.")
+                    elif self.console:
+                        self.console.print("\n[yellow]⏹ Interrupted.[/yellow]")
+                    return await self._handle_task_interrupted(task, answer=answer)
+
+                def _coerce_final_answer(value: Any) -> str:
+                    if value is None:
+                        return ""
+                    if isinstance(value, str):
+                        return value.strip()
+                    if isinstance(value, Observation):
+                        return str(value.content or "").strip()
+                    content = getattr(value, "content", None)
+                    if isinstance(content, str):
+                        return content.strip()
+                    return str(value).strip()
+
+                hook_system_message = ""
+                visited_outputs = getattr(outputs, "_visited_outputs", None) or []
+                for visited_output in reversed(visited_outputs):
+                    metadata = getattr(visited_output, "metadata", None) or {}
+                    system_message = metadata.get("system_message")
+                    if system_message:
+                        hook_system_message = str(system_message).strip()
+                        break
+
+                final_task_response = outputs.response() if hasattr(outputs, "response") else None
+                if isinstance(final_task_response, TaskResponse):
+                    self.last_task_response = final_task_response
+                    final_answer = _coerce_final_answer(final_task_response.answer)
+                    if hook_system_message and hook_system_message not in final_answer:
+                        final_answer = f"{hook_system_message}\n{final_answer}".strip()
+                    if final_answer:
+                        answer = final_answer
+                        if not last_message_output:
+                            root_agent = getattr(self.swarm, "communicate_agent", None)
+                            if isinstance(root_agent, list):
+                                root_agent = root_agent[0] if root_agent else None
+                            agent_name = None
+                            if root_agent:
+                                agent_name = getattr(root_agent, "name", None)
+                                if callable(agent_name):
+                                    agent_name = agent_name()
+                                if not agent_name:
+                                    agent_id = getattr(root_agent, "id", None)
+                                    agent_name = agent_id() if callable(agent_id) else agent_id
+                            resolved_agent_name = agent_name or "Assistant"
+                            if self._active_steering_event_mode_enabled():
+                                if self._active_steering_buffer().has_pending_message():
+                                    self._flush_active_steering_message_buffer(
+                                        agent_name=resolved_agent_name,
+                                    )
+                                else:
+                                    self._emit_active_steering_message(
+                                        text=answer,
+                                        agent_name=resolved_agent_name,
+                                    )
+                            elif self.console:
+                                self.console.print(f"🤖 [bold]{resolved_agent_name}[/bold]")
+                                self.console.print(answer)
+                                self.console.print()
+                
+                # 🔥 Hook: POST_RUN_TASK
+                hook_kwargs = {
+                    'task': task,
+                    'result': answer,
+                    'task_id': task.id,
+                    'session_id': task.session_id
+                }
+                hook_result = await self._execute_hooks(ExecutorHookPoint.POST_RUN_TASK, **hook_kwargs)
+                # Get updated result from kwargs
+                answer = hook_kwargs.get('result', answer)
+
+                # Try to get final result if task is still running.
+                # If stream consumption ended early, the producer may already have been cancelled.
+                if hasattr(outputs, '_run_impl_task') and outputs._run_impl_task and not outputs.is_complete:
+                    try:
+                        # Wait with timeout to avoid hanging
+                        # A completed stream can precede durable finalization.
+                        # Waiting one second used to cancel that producer and
+                        # incorrectly promote a partial streamed answer.
+                        final_result = await outputs._run_impl_task
+                        if self.console:
+                            self.console.print(f"[dim]📋 Final result received: {type(final_result)}[/dim]")
+                        
+                        # Extract answer from final result
+                        if final_result and isinstance(final_result, dict):
+                            if task.id in final_result:
+                                task_response = final_result[task.id]
+                                if self.console:
+                                    self.console.print(f"[dim]📋 TaskResponse type: {type(task_response)}[/dim]")
+                                if isinstance(task_response, TaskResponse):
+                                    self.last_task_response = task_response
+                                    final_task_response = task_response
+                                
+                                # Try different ways to get the answer
+                                if hasattr(task_response, 'answer'):
+                                    answer = task_response.answer or answer
+                                    if self.console:
+                                        self.console.print(f"[dim]✅ Got answer from .answer attribute[/dim]")
+                                elif isinstance(task_response, dict):
+                                    answer = task_response.get('answer', '') or answer
+                                    if self.console:
+                                        self.console.print(f"[dim]✅ Got answer from dict[/dim]")
+                                else:
+                                    answer = str(task_response) if task_response else answer
+                                    if self.console:
+                                        self.console.print(f"[dim]✅ Got answer from str conversion[/dim]")
+                            else:
+                                if self.console:
+                                    self.console.print(f"[yellow]⚠️ Task ID '{task.id}' not found in result[/yellow]")
+                                    self.console.print(f"[dim]Available keys: {list(final_result.keys())}[/dim]")
+                    except asyncio.CancelledError:
+                        # Task was cancelled, which is normal after stream completes
+                        # No need to display this to the user as it's expected behavior
+                        pass
+                    except asyncio.TimeoutError:
+                        # Task is still running, but we'll use what we have
+                        logger.error(f"console|TimeoutError: Task still running, using streamed answer")
+                        # if self.console:
+                        #     self.console.print(f"[dim]ℹ️ Task still running, using streamed answer[/dim]")
+                    except Exception as e:
+                        logger.error(f"console|Exception: Error waiting for final result: {e}")
+
+                final_llm_calls = []
+                if isinstance(final_task_response, TaskResponse) and isinstance(final_task_response.llm_calls, list):
+                    final_llm_calls = copy.deepcopy(final_task_response.llm_calls)
+                elif getattr(task, "context", None) is not None and hasattr(task.context, "get_llm_calls"):
+                    final_llm_calls = copy.deepcopy(task.context.get_llm_calls())
+                elif getattr(task, "context", None) is not None:
+                    final_llm_calls = copy.deepcopy(task.context.context_info.get("llm_calls", []))
+
+                final_usage = self._publish_hud_llm_observability(task.id, final_llm_calls)
+                self.last_llm_usage = build_complete_llm_usage_summary(
+                    final_llm_calls,
+                )
+                self.last_llm_diagnostics = build_llm_diagnostics_summary(
+                    final_llm_calls,
+                )
+                
+                # Return answer without printing (already displayed in stream)
+                # 💾 Save query to history (only if not already saved per round)
+                try:
+                    if not saved_any_round:
+                        from ..history import JSONLHistory
+                        
+                        history_path = Path.home() / ".aworld" / "cli_history.jsonl"
+                        history_path.parent.mkdir(parents=True, exist_ok=True)
+                        history = JSONLHistory(str(history_path), session_id=self.session_id)
+                        
+                        stats = stream_token_stats.get_stats_for_history() if stream_token_stats else None
+                        logger.info(
+                            "💾 Final save - "
+                            f"stream_token_stats_exists={stream_token_stats is not None} "
+                            f"usage={_usage_log_summary(stats)}"
+                        )
+                        
+                        # If no stats from stream, try to extract from last_message_output
+                        if not stats and last_message_output:
+                            logger.info(f"💾 No stats from stream, trying to extract from last_message_output")
+                            try:
+                                # Try to get usage from message output
+                                usage = None
+                                if hasattr(last_message_output, 'usage'):
+                                    usage = last_message_output.usage
+                                elif hasattr(last_message_output, 'data') and hasattr(last_message_output.data, 'usage'):
+                                    usage = last_message_output.data.usage
+                                
+                                if usage:
+                                    # Extract token counts from usage
+                                    usage_summary = _usage_log_summary(usage)
+                                    input_tokens = usage_summary["input_tokens"] or 0
+                                    output_tokens = usage_summary["output_tokens"] or 0
+                                    
+                                    # Get model name (original LLM model) and agent name
+                                    model_name = None
+                                    agent_name = "unknown"
+                                    if hasattr(last_message_output, 'metadata') and last_message_output.metadata:
+                                        model_name = last_message_output.metadata.get('model_name')
+                                        agent_name = last_message_output.metadata.get('agent_name') or last_message_output.metadata.get('from_agent') or "unknown"
+                                    if not model_name and hasattr(last_message_output, 'source') and last_message_output.source:
+                                        model_name = getattr(last_message_output.source, 'model', None)
+                                    if not agent_name and hasattr(self.swarm, 'cur_agent') and self.swarm.cur_agent:
+                                        agent_name = getattr(self.swarm.cur_agent, 'name', None) or "unknown"
+                                    
+                                    stats = {
+                                        "input_tokens": input_tokens,
+                                        "output_tokens": output_tokens,
+                                        "model_name": model_name,
+                                        "agent_name": agent_name,
+                                    }
+                                    logger.info(
+                                        "💾 Extracted stats from last_message_output: "
+                                        f"usage={usage_summary} "
+                                        f"model={str(model_name)[:128]} "
+                                        f"agent={str(agent_name)[:128]}"
+                                    )
+                            except Exception as extract_error:
+                                logger.warning(f"💾 Failed to extract stats from last_message_output: {extract_error}")
+                        
+                        # Prepare token_stats for JSONLHistory.store_string()
+                        # Stats by model_name and by agent_name; each agent records context_window_tokens
+                        token_stats = None
+                        if stats:
+                            duration_seconds = time.time() - chat_start_time
+                            input_tokens = _bounded_token_count(stats.get("input_tokens")) or 0
+                            output_tokens = _bounded_token_count(stats.get("output_tokens")) or 0
+                            total_tokens = input_tokens + output_tokens
+                            model_name = str(stats.get("model_name") or "unknown")[:256]
+                            agent_name = str(stats.get("agent_name") or "unknown")[:256]
+                            token_stats = {
+                                "input_tokens": input_tokens,
+                                "output_tokens": output_tokens,
+                                "total_tokens": total_tokens,
+                                "model_name": model_name,
+                                "agent_name": agent_name,
+                                "context_window_tokens": input_tokens,
+                                "duration_seconds": duration_seconds,
+                            }
+                            logger.info(
+                                "💾 Prepared token_stats for history: "
+                                f"input_tokens={input_tokens} "
+                                f"output_tokens={output_tokens} "
+                                f"model={model_name[:128]} "
+                                f"agent={agent_name[:128]}"
+                            )
+                        else:
+                            logger.warning(f"💾 No token stats available - saving query without token info")
+                        
+                        # Store to history
+                        history.store_string(task_content, token_stats=token_stats)
+                        logger.info(f"💾 Successfully saved query to history with token_stats: {token_stats is not None}")
+                    
+                except Exception as e:
+                        logger.error(f"💾 Failed to save to history: {e}")
+                        logger.error(f"💾 Traceback: {traceback.format_exc()}")
+                        # Don't fail the whole request if history save fails
+
+                completion_assessment_payload = None
+                assess_completion = getattr(
+                    getattr(task, "context", None),
+                    "assess_completion_contract",
+                    None,
+                )
+                if callable(assess_completion):
+                    try:
+                        completion_assessment = assess_completion(
+                            agent_claimed_finished=True
+                        )
+                    except Exception as exc:
+                        logger.debug(
+                            f"Unable to project completion assessment to task hook: {exc}"
+                        )
+                    else:
+                        if completion_assessment is not None:
+                            completion_assessment_payload = {
+                                "mode": getattr(
+                                    getattr(completion_assessment, "mode", None),
+                                    "value",
+                                    getattr(completion_assessment, "mode", None),
+                                ),
+                                "status": getattr(
+                                    getattr(completion_assessment, "status", None),
+                                    "value",
+                                    getattr(completion_assessment, "status", None),
+                                ),
+                                "reason_codes": list(
+                                    getattr(completion_assessment, "reason_codes", ())
+                                )[:8],
+                                "diagnostic_codes": list(
+                                    getattr(
+                                        completion_assessment,
+                                        "diagnostic_codes",
+                                        (),
+                                    )
+                                )[:8],
+                            }
+
+                task_completed_event = {
+                        "task_id": task.id,
+                        "session_id": self.session_id,
+                        "task_status": "idle",
+                        "semantic_status": getattr(final_task_response, "semantic_status", None),
+                        "completion_reason": getattr(final_task_response, "completion_reason", None),
+                        "recoverable": getattr(final_task_response, "recoverable", None),
+                        "completion_assessment": completion_assessment_payload,
+                        "task_epoch": getattr(task.context, "task_epoch", None),
+                        "final_answer": answer,
+                        "usage": final_usage,
+                        "llm_calls": final_llm_calls,
+                    }
+                task_completed_results = await self._run_plugin_task_hook(
+                    "task_completed",
+                    task_completed_event,
+                )
+                self._publish_hud_task_finished(task.id, task_status="idle")
+                self._reset_active_steering_buffer()
+                if not internal_acceptance_segment:
+                    self._record_cli_session_transcript_turn(
+                        task_content=task_content,
+                        answer=answer,
+                        task_id=task.id,
+                    )
+                for _, result in task_completed_results:
+                    system_message = getattr(result, "system_message", None)
+                    if system_message:
+                        if self._active_steering_event_mode_enabled():
+                            self._emit_active_steering_event(
+                                "system_notice",
+                                text=str(system_message).strip(),
+                            )
+                        elif self.console:
+                            self.console.print(f"[dim]{system_message}[/dim]")
+
+                    action = str(getattr(result, "action", "allow") or "allow").strip().lower()
+                    if action != "block_and_continue":
+                        continue
+
+                    follow_up_prompt = self._resolve_hook_text(
+                        getattr(result, "follow_up_prompt", None) or getattr(result, "updated_input", None)
+                    )
+                    if follow_up_prompt:
+                        return _GoalContinuation(
+                            follow_up_prompt,
+                            task.context if isinstance(task, Task) else None,
+                            _origin_user_input,
+                            _logical_task_state,
+                            _direct_acceptance_state,
+                            "goal_hook",
+                        )
+                direct_response = (
+                    final_task_response
+                    if isinstance(final_task_response, TaskResponse)
+                    else None
+                )
+                try:
+                    direct_continuation = await self._direct_acceptance_continuation(
+                        task=task,
+                        response=direct_response,
+                        answer=answer,
+                        event=task_completed_event,
+                        origin_user_input=_origin_user_input,
+                        logical_task_state=_logical_task_state or {},
+                        acceptance_state=_direct_acceptance_state,
+                        explicit_goal_owned_segment=explicit_goal_owned_segment,
+                    )
+                except Exception as exc:
+                    # Acceptance supervision is advisory. A controller or
+                    # telemetry bug must never replace useful task output with
+                    # a new infrastructure failure.
+                    direct_continuation = None
+                    telemetry = (
+                        dict(getattr(direct_response, "execution_protocol", None) or {})
+                        if direct_response is not None
+                        else {}
+                    )
+                    if telemetry:
+                        telemetry["acceptance_controller_error_count"] = min(
+                            1_000_000,
+                            int(
+                                telemetry.get(
+                                    "acceptance_controller_error_count", 0
+                                )
+                                or 0
+                            )
+                            + 1,
+                        )
+                        direct_response.execution_protocol = telemetry
+                        self.last_execution_protocol = telemetry
+                    logger.warning(
+                        "Direct acceptance failed open; error_type=%s",
+                        type(exc).__name__,
+                    )
+                if direct_continuation is not None:
+                    return direct_continuation
+                return answer
+                
+            except Exception as err:
+                # 🔥 Hook: ON_TASK_ERROR
+                try:
+                    await self._execute_hooks(
+                        ExecutorHookPoint.ON_TASK_ERROR,
+                        error=err,
+                        task_id=getattr(task, 'id', None) if 'task' in locals() else None,
+                        session_id=self.session_id
+                    )
+                except Exception as hook_err:
+                    # Don't let hook errors mask the original error
+                    if self.console:
+                        self.console.print(f"[yellow]⚠️ Hook error: {hook_err}[/yellow]")
+                failure_code = str(
+                    getattr(err, "failure_code", "execution_error")
+                )
+                self.last_task_response = TaskResponse(
+                    success=False, answer="", status="failed",
+                    failure_origin="infrastructure", failure_code=failure_code,
+                    semantic_status="incomplete", completion_reason=failure_code,
+                    recoverable=True,
+                )
+                task_error_results = await self._run_plugin_task_hook(
+                    "task_error",
+                    {
+                        "task_id": getattr(task, 'id', None) if 'task' in locals() else None,
+                        "session_id": self.session_id,
+                        "task_epoch": getattr(getattr(task, "context", None), "task_epoch", None),
+                        "task_status": "error",
+                        "error": str(err),
+                        "error_type": type(err).__name__,
+                    },
+                )
+
+                error_msg = f"Error: {err}, traceback: {traceback.format_exc()}"
+                self._reset_active_steering_buffer()
+                if self._active_steering_event_mode_enabled():
+                    self._emit_active_steering_event("error", text=error_msg)
+                elif self.console:
+                    self.console.print("[red]❌ [/red]", end=" ")
+                    self.console.print(error_msg, markup=False)
+                self._publish_hud_task_finished(task.id, task_status="error")
+                for _, result in task_error_results:
+                    if getattr(result, "action", None) == "block_and_continue":
+                        prompt = self._resolve_hook_text(getattr(result, "follow_up_prompt", None))
+                        if prompt:
+                            return _GoalContinuation(
+                                prompt,
+                                task.context,
+                                _origin_user_input,
+                                _logical_task_state,
+                                _direct_acceptance_state,
+                                "goal_error_hook",
+                            )
+                raise
+    
+    # Note: _format_tool_call, _format_tool_calls, _render_message_output,
+    # _render_tool_result_output, _extract_answer_from_output are now inherited from BaseAgentExecutor
+
+    async def _create_workspace(self, session_id: str):
+        """Create local workspace for the session.
+        
+        Args:
+            session_id: Session ID for the workspace
+            
+        Returns:
+            WorkSpace instance or None if WorkSpace is not available
+        """
+        if WorkSpace is None:
+            return None
+        
+        # Keep framework workspace state separate from task artifacts when the
+        # caller supplied an isolated control root.
+        workspace_base = runtime_state_path(
+            "workspaces",
+            default=Path.cwd() / ".aworld" / "workspaces",
+        )
+        os.environ['WORKSPACE_PATH'] = str(workspace_base)
+        workspace_base.mkdir(parents=True, exist_ok=True)
+        
+        # Create workspace storage path
+        workspace_path = workspace_base / session_id
+        
+        # Create local workspace
+        workspace = WorkSpace.from_local_storages(
+            session_id=session_id,
+            storage_path=str(workspace_path)
+        )
+        
+        return workspace
+    
+    def get_skill_status(self) -> Dict[str, Any]:
+        """
+        Get skill status from swarm agents.
+        
+        Returns:
+            Dictionary with 'total', 'active', 'inactive' counts, and 'active_names' list
+            
+        Example:
+            >>> executor = LocalAgentExecutor(swarm)
+            >>> status = executor.get_skill_status()
+            >>> print(f"Total: {status['total']}, Active: {status['active']}, Inactive: {status['inactive']}")
+            >>> print(f"Active skills: {status['active_names']}")
+        """
+        total = 0
+        active = 0
+        inactive = 0
+        active_names = []
+        
+        try:
+            # Collect all skills from all agents in swarm
+            all_skills = {}
+            
+            # Try multiple ways to get agents from swarm
+            agents_to_check = []
+            
+            # Method 1: Try agent_graph.agents (most reliable after initialization)
+            if hasattr(self.swarm, 'agent_graph') and self.swarm.agent_graph:
+                if hasattr(self.swarm.agent_graph, 'agents') and self.swarm.agent_graph.agents:
+                    if isinstance(self.swarm.agent_graph.agents, dict):
+                        agents_to_check.extend(self.swarm.agent_graph.agents.values())
+                    elif isinstance(self.swarm.agent_graph.agents, (list, tuple)):
+                        agents_to_check.extend(self.swarm.agent_graph.agents)
+            
+            # Method 2: Try swarm.agents (direct access)
+            if not agents_to_check and hasattr(self.swarm, 'agents') and self.swarm.agents:
+                if isinstance(self.swarm.agents, dict):
+                    agents_to_check.extend(self.swarm.agents.values())
+                elif isinstance(self.swarm.agents, (list, tuple)):
+                    agents_to_check.extend(self.swarm.agents)
+                else:
+                    agents_to_check.append(self.swarm.agents)
+            
+            # Method 3: Try _communicate_agent (root agent)
+            if not agents_to_check and hasattr(self.swarm, '_communicate_agent'):
+                communicate_agent = self.swarm._communicate_agent
+                if communicate_agent:
+                    if isinstance(communicate_agent, list):
+                        agents_to_check.extend(communicate_agent)
+                    else:
+                        agents_to_check.append(communicate_agent)
+            
+            # Method 4: Try topology (initial agents)
+            if not agents_to_check and hasattr(self.swarm, 'topology') and self.swarm.topology:
+                for item in self.swarm.topology:
+                    if hasattr(item, 'skill_configs'):
+                        agents_to_check.append(item)
+                    elif isinstance(item, (list, tuple)):
+                        agents_to_check.extend([a for a in item if hasattr(a, 'skill_configs')])
+            
+            # Collect skills from all found agents
+            for agent in agents_to_check:
+                if hasattr(agent, 'skill_configs') and agent.skill_configs:
+                    if isinstance(agent.skill_configs, dict):
+                        all_skills.update(agent.skill_configs)
+            
+            total = len(all_skills)
+            
+            # Count active and inactive skills, collect active names
+            for skill_name, skill_config in all_skills.items():
+                if isinstance(skill_config, dict):
+                    # Check if skill is marked as active in config
+                    if skill_config.get('active', False):
+                        active += 1
+                        active_names.append(skill_name)
+                    else:
+                        inactive += 1
+                else:
+                    # If skill_config is not a dict, count as inactive
+                    inactive += 1
+                    
+        except Exception:
+            # If any error occurs, return zeros
+            # Don't print error to avoid cluttering startup message
+            pass
+        
+        return {
+            'total': total,
+            'active': active,
+            'inactive': inactive,
+            'active_names': active_names
+        }
+
+__all__ = ["LocalAgentExecutor"]

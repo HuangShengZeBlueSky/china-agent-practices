@@ -158,3 +158,7 @@
 
 以上是由所读实现推导的实验方向；尚无本仓库自己的运行结果支持效果比较。结构化记录见 `catalog/sources.json` 中同名来源；新增记录的整合由仓库维护流程完成。
 
+
+## 2026-11-20 AWorld 专项补核
+
+[AWorld 激活与任务证据](../research/solutions/aworld-skill-activation-attestation.md)补固定新版、包指纹失败分支与提示加载；[冻结长任务技能](../research/solutions/aworld-long-running-evidence-contract.md)补入口、两份引用和版本反证。当前 HEAD 与本节历史版本不同，原结论保留在其版本范围内。新版指定文件节选不等于整仓归档；静态核对，未实跑。

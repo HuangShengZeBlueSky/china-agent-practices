@@ -111,3 +111,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-19
 
 [UI-TARS 实验 SDK 状态](solutions/ui-tars-sdk-terminal-status.md)与[飞书 stdin 恢复](solutions/lark-stdin-confirmation-replay.md)补执行及恢复证据，专项24/31。[当日记录](log/2026-11-19.md)
+
+## 2026-11-20
+
+[AWorld 激活与证据](solutions/aworld-skill-activation-attestation.md)补新旧版本、任务归属和渐进展示；[长任务技能](solutions/aworld-long-running-evidence-contract.md)完成冻结入口及两份直接引用阅读，运行协议待核。国内专项25/31，新增入口累计2组、完整技能组0。详见[日志](log/2026-11-20.md)。
