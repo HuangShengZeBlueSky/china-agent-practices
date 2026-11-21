@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-21",
+  "base": "62b7f1a559d0b18c455307e18f9ea20c21842ab7",
+  "skills": {
+    "groups": 3085,
+    "occurrences": 6235,
+    "entry_states": {
+      "not_read": 3078,
+      "entry_read": 2,
+      "prior_entry_read_only": 5
+    },
+    "complete": 0,
+    "executed": 0
+  },
+  "source_records": 79,
+  "source_type_status_counts": {
+    "official_code / prior_static_review": 31,
+    "third_party_archive / prior_static_review": 3,
+    "official_docs / prior_static_review": 1,
+    "official_spec_and_code / selected_files_read": 1,
+    "official_spec / selected_files_read": 1,
+    "official_docs / relevant_sections_read": 3,
+    "official_engineering / article_read": 1,
+    "official_docs / entry_opened": 1,
+    "official_engineering / entry_opened": 1,
+    "author_paper / abstract_read_only": 6,
+    "discovery_target / pending_discovery": 28,
+    "official_blog / discovered_excerpt_only": 1,
+    "author_paper / search_excerpt_only": 1
+  },
+  "main_tasks": {
+    "done": 3,
+    "in_progress": 1,
+    "pending": 50
+  },
+  "reviewed_published_log_sample": [
+    "2026-11-17",
+    "2026-11-18",
+    "2026-11-19",
+    "2026-11-20"
+  ],
+  "sample_throughput": {
+    "batches": 4,
+    "new_domestic_specialist_records": 5,
+    "solution_cards": 9,
+    "new_entry_groups": 1,
+    "new_complete_skill_groups": 0,
+    "new_main_task_acceptances": 0,
+    "measured_hours": null
+  },
+  "current_batch": {
+    "specialist_records": 1,
+    "solution_cards": 2,
+    "new_entry_groups": 0
+  },
+  "remaining_estimate": {
+    "specialist_records": 5,
+    "batches_at_observed_1_to_2_per_batch": [
+      3,
+      5
+    ],
+    "scope": "records only; no completion date for archives/P1/skills",
+    "skill_completion_date": null
+  },
+  "evidence_corrections": [
+    "RTC exit 0 may mean structured block via dispatcher or fail-open; not business success",
+    "AWorld save return may be memory projection without durable writer; terminal save exception blocks submission",
+    "26/31 specialist records does not certify all current versions archived"
+  ],
+  "frozen_scope_unchanged": true
+}

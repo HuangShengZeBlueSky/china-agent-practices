@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-21",
+  "scope": "incremental_pool_only; no frozen baseline change",
+  "searches": [
+    {
+      "q": "site.arxiv.org agent harness verification skill failure",
+      "recency": 30
+    },
+    {
+      "q": "site.arxiv.org 智能体 技能 验证 评测",
+      "recency": 90
+    }
+  ],
+  "candidates": [
+    {
+      "url": "https://arxiv.org/abs/2611.22299",
+      "title": "Harnesses That Improve Themselves: A Unifying Framework for Self-Improving Agent Harnesses",
+      "status": "search_excerpt_only",
+      "version": null,
+      "full_text_read": false,
+      "why": "harness editable components and recovery candidate; metadata and claims require primary full-text verification"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.32285",
+      "title": "Trial by Trace: Benchmarking AI Agent Harnesses for Reliability and Failure Attribution",
+      "status": "search_excerpt_only",
+      "version": null,
+      "full_text_read": false,
+      "why": "failure-attribution evaluator candidate; no experimental claims adopted"
+    }
+  ],
+  "exclusions": "community mirrors only discovery; existing skill-induced-failure candidate not counted anew; search recency filters do not establish publication dates"
+}

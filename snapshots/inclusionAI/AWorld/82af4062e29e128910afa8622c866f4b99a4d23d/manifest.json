@@ -442,6 +442,22 @@
       "git_blob": "7f652190472c9ebf7e395ad5381a1916bf02235c",
       "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld/core/context/amni/services/skill_service.py",
       "checked_on": "2026-11-20"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/core/execution_protocol/store.py",
+      "bytes": 10008,
+      "sha256": "5fe0d5e05cda8d3870b0777e2a9f9871954b043d00de8f2f7441f498effafed9",
+      "git_blob": "50ca6b1d92b893e5312ee326f4a3a5dbe2132d82"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/core/context/execution_state.py",
+      "bytes": 48254,
+      "sha256": "2289df6bf8d012b6966a83dd23cd9b0e72fb93905626556afdeea92ab55bf750",
+      "git_blob": "8232423619c23dd50ad78e758296cbefd9d672d2"
     }
   ],
   "skills": [
@@ -634,6 +650,15 @@
       ],
       "evidence": "research/evidence/2026-11-20/aworld-review.json",
       "note": "指定文件补展开；旧整仓分片与整包哈希未重新下载验算。"
+    },
+    {
+      "date": "2026-11-21",
+      "paths": [
+        "aworld/core/execution_protocol/store.py",
+        "aworld/core/context/execution_state.py"
+      ],
+      "evidence": "research/evidence/2026-11-21/source-review.json",
+      "note": "原文整文件节选；execution_state 仅读 state_context 与 checkpoint_execution_state，旧整仓未重新验算"
     }
   ]
 }

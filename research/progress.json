@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-20",
+  "updated_at": "2026-11-21",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "P1-01 接续 Tencent-RTC/agent-skills 等余6条专项与版本归档；技能优先恢复 long-running-agent 冻结版 execution_protocol 的控制字段与状态归属，lark两组宿主/SDK依赖继续保留。恢复 VitaBench 展开原文与飞书前次 SDK 未发布批次。",
+  "next_action": "P1-01 接续 MiniMax-AI/skills 等余5条专项与版本归档；技能恢复 AWorld 冻结 controller/models、真实 Context 原子接口和 runner 调用点。保留 lark 宿主/SDK 及 VitaBench 原文展开恢复待办。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -32,15 +32,15 @@
     "partial_dependency_reviews": 3
   },
   "today_outputs": [
-    "research/ownership-review-2026-11-20.md",
-    "research/solutions/aworld-skill-activation-attestation.md",
-    "research/solutions/aworld-long-running-evidence-contract.md",
-    "research/evidence/2026-11-20/aworld-review.json",
-    "research/evidence/2026-11-20/long-running-skill.json"
+    "research/ownership-review-2026-11-21.md",
+    "research/solutions/trtc-stop-gate-boundaries.md",
+    "research/solutions/aworld-protocol-persistence-boundary.md",
+    "research/review-2026-11-21.md",
+    "research/evidence/2026-11-21/source-review.json"
   ],
-  "last_log": "research/log/2026-11-20.md",
+  "last_log": "research/log/2026-11-21.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "专项25/31，余6项；按近期每批约一条估计约6批专项记录，完整版本归档和阶段验收另计。没有完整技能组吞吐样本，不能外推3085组完成日。",
+  "estimate_note": "专项26/31，余5条，样本每批1—2条约3—5批专项记录；归档、P1验收另计。完整技能组吞吐为0，无可靠全量完成日期。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,
@@ -49,5 +49,5 @@
     "checked_on": "2026-10-26",
     "scope_note": "上述31/21/10继承该日固定审计，不是2026-11-07全部HEAD刷新；部分后续核查另见来源记录。"
   },
-  "weekend_review": "research/review-2026-11-15.md"
+  "weekend_review": "research/review-2026-11-21.md"
 }

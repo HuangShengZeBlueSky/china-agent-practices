@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-20",
+  "updated_at": "2026-11-21",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -808,13 +808,27 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
-        "checked_on": "2026-10-26",
-        "head": "ec0afda9a277c2f9fd5ab00bebbffbe49c1b3a8f",
+        "checked_on": "2026-11-21",
+        "head": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
         "default_branch": "main",
         "archived": false,
         "head_backed_up": false,
-        "evidence": "research/repository-audit-2026-10-26.md"
-      }
+        "backup_scope": "8 selected files; full archive missing",
+        "evidence": "research/ownership-review-2026-11-21.md"
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-21",
+          "version": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+          "evidence": [
+            "research/ownership-review-2026-11-21.md",
+            "research/solutions/trtc-stop-gate-boundaries.md"
+          ],
+          "manifest": "research/evidence/2026-11-21/source-review.json",
+          "execution_status": "static_only",
+          "scope": "stop guard and dispatcher subchains; installer wiring and apply unverified"
+        }
+      ]
     },
     {
       "id": "prior-tencent-skillhub",

@@ -115,3 +115,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-20
 
 [AWorld 激活与证据](solutions/aworld-skill-activation-attestation.md)补新旧版本、任务归属和渐进展示；[长任务技能](solutions/aworld-long-running-evidence-contract.md)完成冻结入口及两份直接引用阅读，运行协议待核。国内专项25/31，新增入口累计2组、完整技能组0。详见[日志](log/2026-11-20.md)。
+
+## 2026-11-21
+
+[RTC停止门禁](solutions/trtc-stop-gate-boundaries.md)与[AWorld协议保存](solutions/aworld-protocol-persistence-boundary.md)区分结束、状态保存与业务验收。[周末复核](review-2026-11-21.md)确认专项26/31、完整技能组0，P1继续。详见[日志](log/2026-11-21.md)。

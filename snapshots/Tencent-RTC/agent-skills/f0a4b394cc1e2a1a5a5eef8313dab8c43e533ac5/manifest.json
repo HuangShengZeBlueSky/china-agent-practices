@@ -1,0 +1,76 @@
+{
+  "repository": "Tencent-RTC/agent-skills",
+  "commit": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+  "captured_at": "2026-11-21",
+  "license": "MIT; copyright Tencent RTC retained",
+  "archive_scope": "selected_files_only",
+  "archive_parts": [],
+  "whole_archive_status": "not_acquired",
+  "files": [
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+      "path": "README.md",
+      "bytes": 9390,
+      "sha256": "f1b4f3abe4679b4ad5529d44e687f8d581138b6a90d21d79a694c1aa124fe3d4",
+      "git_blob": "9d19c6b0421fa12b4de895139d4a017de5a07d1f"
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+      "path": "LICENSE",
+      "bytes": 1068,
+      "sha256": "cb177342f780ec7449d8eb3d04414e30685dc6835668b50758edbc10c7f0c7a0",
+      "git_blob": "bcc31d5786e306a094c98b935d71b22407be2a70"
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+      "path": "hooks/hooks.json",
+      "bytes": 2143,
+      "sha256": "92fd30feb31bdf008b8e900a3564d3aa7acc6b145b20c2332ff09fcf80b0e634",
+      "git_blob": "e83f0b99129bcbf5e206b53474186e72f210f6c9"
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+      "path": "skills/trtc/hooks/stop_require_apply_evidence.py",
+      "bytes": 3770,
+      "sha256": "e7708eabab72cb1ff64edd79ad1692e2f9e7d83bba5848b584919db1645045f4",
+      "git_blob": "5520961d9ca90f0c6b1a86781d328a8bb4b85b07"
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+      "path": "skills/trtc/tools/session.py",
+      "bytes": 49914,
+      "sha256": "e9aa88844fe25cb52e7b4fece810976965b76ac57864794bb71dbed02f9b6c1a",
+      "git_blob": "2bbdbb800457d58e0e71ac7f3d751b14ed5381fe"
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+      "path": "skills/trtc/runtime/normalize-hook.js",
+      "bytes": 5541,
+      "sha256": "5cdd5e9d703df75f080eed193665cb3035a94fd0e4cee8c5d2115554ee2064f5",
+      "git_blob": "9a18a1ecd5b5bc9db3d2a9b3491cec8f381baa77"
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+      "path": "skills/trtc/runtime/stop-hook-dispatcher.cjs",
+      "bytes": 7829,
+      "sha256": "a7e220d31067c4c793c383f298fe3a02647054239cd5f5196f009eac8f925878",
+      "git_blob": "37e7d62b29cf4b86e58d9ef2d4d4bcf41bbc9ea3"
+    },
+    {
+      "repository": "Tencent-RTC/agent-skills",
+      "commit": "f0a4b394cc1e2a1a5a5eef8313dab8c43e533ac5",
+      "path": "skills/trtc/tools/state_machine.py",
+      "bytes": 24519,
+      "sha256": "e8901ed7c61a2a53ebab6d218af6a7bab2b3ecc3daae5c6621e4251d8b6c3682",
+      "git_blob": "0327fcd16566f0f2cb7496034d974c24a2a540de"
+    }
+  ],
+  "reading_scope": "README and selected stop hooks; state_machine current_scope/advance and session load/transaction/atomic_write/flock only; normalize-hook is separately read, connection to dispatcher not assumed"
+}

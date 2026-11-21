@@ -109,10 +109,14 @@
         "research/evidence/2026-11-19/source-review.json",
         "research/ownership-review-2026-11-20.md",
         "research/solutions/aworld-skill-activation-attestation.md",
-        "research/evidence/2026-11-20/aworld-review.json"
+        "research/evidence/2026-11-20/aworld-review.json",
+        "research/ownership-review-2026-11-21.md",
+        "research/solutions/trtc-stop-gate-boundaries.md",
+        "research/evidence/2026-11-21/source-review.json",
+        "research/review-2026-11-21.md"
       ],
       "open_questions": [
-        "31仓中25条有专项记录，本批补AWorld，余6条待专项；专项记录不等于完整版本归档验收。",
+        "31仓中26条有专项记录，余5条；整仓版本、差异和归属边界未全部验收。",
         "十个10-26新HEAD的变更影响与备份安排；CloudBase两版已补节选与整包下载哈希，整包未发布，分发/宿主仍待核。 Qwen Code 10-26 与当前版本已保存节选，整包仍缺。 OpenSandbox 两版已补节选，整包仍缺。",
         "Kimi新实现等价；AgentScope目标请求/事件、Session schema、运行代次与取消确认映射（旧Runtime子链已读，不代表2.0等价）",
         "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界",
@@ -121,7 +125,8 @@
         "openJiuwen 现版本整仓及跨平台提交等价待补；VitaBench 六份评分原文展开，飞书前次 SDK 方案与节选仍待恢复。",
         "BrowserSkill 10-26 与当前 HEAD 均仅有版本缺口记录，当前保存 11 份节选，整包及完整版本差异待补。",
         "UI-TARS Desktop 今日 archived=true，归档日期未知；packages/ui-tars/sdk 与 multimodal SDK 的实际 Desktop 接线待核。",
-        "AWorld 当前 HEAD bef598f 仅17份指定节选，整仓与完整版本差异待补；任务初始激活证据不覆盖已证明的全程动态激活，执行协议待核。"
+        "AWorld 当前 HEAD bef598f 仅17份指定节选，整仓与完整版本差异待补；任务初始激活证据不覆盖已证明的全程动态激活，执行协议待核。",
+        "Tencent RTC 当前 f0a4b39 仅8份指定节选，历史两版差异和完整归档、安装器宿主接线与apply验证器待核。"
       ],
       "execution_status": "static_metadata_review"
     },
@@ -787,8 +792,8 @@
       "id": "frontier-delta",
       "status": "active",
       "acceptance": "新增论文和版本有来源与影响分类，纳入下一轮需显式记范围",
-      "latest_evidence": "research/evidence/2026-11-15/weekend-audit.json"
+      "latest_evidence": "research/evidence/2026-11-21/discovery.json"
     }
   ],
-  "updated_at": "2026-11-20"
+  "updated_at": "2026-11-21"
 }

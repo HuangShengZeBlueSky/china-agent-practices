@@ -162,3 +162,7 @@
 ## 2026-11-20 AWorld 专项补核
 
 [AWorld 激活与任务证据](../research/solutions/aworld-skill-activation-attestation.md)补固定新版、包指纹失败分支与提示加载；[冻结长任务技能](../research/solutions/aworld-long-running-evidence-contract.md)补入口、两份引用和版本反证。当前 HEAD 与本节历史版本不同，原结论保留在其版本范围内。新版指定文件节选不等于整仓归档；静态核对，未实跑。
+
+## 2026-11-21 RTC停止与AWorld协议保存补核
+
+[RTC当前固定版本](../research/solutions/trtc-stop-gate-boundaries.md)核Stop守卫和包装器，不扩大为完整SDK验收；[AWorld冻结协议](../research/solutions/aworld-protocol-persistence-boundary.md)补状态保存失败边界。历史版本结论保留，当前仅源码静态核对，未运行。
