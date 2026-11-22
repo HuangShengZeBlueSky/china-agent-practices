@@ -1,0 +1,63 @@
+{
+  "repository": "MiniMax-AI/skills",
+  "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+  "captured_at": "2026-11-22",
+  "license": "MIT for selected files; preserve MiniMax attribution and CREDITS; no assertion all upstream-derived packages MIT",
+  "archive_scope": "selected_files_only",
+  "archive_parts": [],
+  "whole_archive_status": "not_acquired",
+  "files": [
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": "README.md",
+      "bytes": 7865,
+      "sha256": "a82475844a437bf210fcd1590ce75c17a0721db72ae60654d3ced61670381b6c",
+      "git_blob": "12164fda6cd7a53f93a228a41894f4b7736a671c"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "eed4ccce37c2d24822da3bd9d5bee7bc12d494741de56ada513d0b97f537fcd0",
+      "git_blob": "132dd20ee3294d09a1c613a6bd4c8094c496fbf9"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": "CONTRIBUTING.md",
+      "bytes": 5487,
+      "sha256": "a0629904a0f52043ec5c9cbca86faf18f8aa40ab0c8580ff546c21a4cba75134",
+      "git_blob": "f02c42155627f78048961efdddfc69815a247cd0"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": "CREDITS.md",
+      "bytes": 2609,
+      "sha256": "536cfa5cf8171d6c9418a7520d732ce5a382fa68947654bd5f037bdfc6368897",
+      "git_blob": "020d3e18068a5491d2081afb16f09a7a27af7da1"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": ".claude/skills/pr-review/SKILL.md",
+      "bytes": 2476,
+      "sha256": "c4b12fa291ee11d58285c7db9bbc2bbf5be23d56d34456411202b958c6365292",
+      "git_blob": "a86e1fba0c76a1de2d2f61de695444e590d8d726"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": ".claude/skills/pr-review/scripts/validate_skills.py",
+      "bytes": 7208,
+      "sha256": "a46cb671734cbd067e57eb465250dce9507cb798a2f24b71d1dbf33555dd7d2b",
+      "git_blob": "a17702e02909062fe431e11aeda10153b74d3dd6"
+    }
+  ],
+  "dependencies": {
+    "frozen_pr_review": "entry + 2 references + validation script read at 60aaae52bb2af8162732751a4332f62a5fef518b",
+    "current_review": "entry and script equal to frozen; current references and host version equivalence not proven"
+  }
+}

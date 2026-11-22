@@ -6,7 +6,7 @@
 
 ## 当前状态
 
-截至2026-11-20：5组保留历史入口阅读等级，另2组新增入口阅读；3,078组仍为 not_read。lark-doc、lark-shared 与 long-running-agent 三组有部分依赖核查，完整研究组0、真实执行0。目录文件读完不自动等于运行时传递依赖和宿主验收；既有证据与每个 occurrence 状态分别保留。
+截至2026-11-22：5组保留历史入口阅读等级，另3组新增入口阅读；3,077组仍为 not_read。lark-doc、lark-shared、long-running-agent 与 MiniMax pr-review 四组有部分依赖核查，完整研究组0、真实执行0。目录文件读完不自动等于运行时传递依赖和宿主验收；既有证据与每个 occurrence 状态分别保留。
 
 ## 记录结构
 
@@ -45,3 +45,7 @@ content_id 表示入口内容组。occurrences 保留每个 source_id、仓库�
 ## 2026-11-20
 
 从分片6完成 [AWorld 长任务入口及两份引用](../../research/solutions/aworld-long-running-evidence-contract.md)的完整阅读；唯一冻结 occurrence 保留部分依赖与宿主状态。新版复核规则另记版本增量，未替换冻结组。
+
+## 2026-11-22
+
+[MiniMax审查技能](../../research/solutions/minimax-skill-review-validator-boundaries.md)完成冻结入口、两引用和脚本阅读；目录4/4，宿主/CI仍待核。[AWorld控制器](../../research/solutions/aworld-controller-error-boundary.md)接续部分传递依赖，整组仍未验收。

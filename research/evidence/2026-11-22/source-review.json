@@ -1,0 +1,206 @@
+{
+  "date": "2026-11-22",
+  "base": "505a7414ca9978961d0958b9c67efbe2ac7e6afa",
+  "task": "P1-01",
+  "source_id": "prior-minimax-official-skills",
+  "repository": "MiniMax-AI/skills",
+  "metadata": {
+    "head": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+    "default_branch": "main",
+    "archived": false,
+    "head_check": "git/ref/heads/main and commit search",
+    "previous_commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+    "head_backed_up": false,
+    "new_backup_scope": "6 selected files only"
+  },
+  "attribution": {
+    "organization": "https://github.com/MiniMax-AI",
+    "evidence": "organization profile links minimax.io and pins skills; root LICENSE says copyright 2026 MiniMax",
+    "official_site_reverse_link_to_this_repo": "not_acquired_in_this_batch",
+    "content_boundary": "README distinguishes official/community; CREDITS names upstreams. Not all organization content claimed original or MIT."
+  },
+  "searches": [
+    {
+      "engine": "system2",
+      "queries": [
+        "site.minimax.io skills github MiniMax-AI",
+        "site.minimaxi.com skills 官方 开源 技能"
+      ]
+    },
+    {
+      "engine": "system1",
+      "recency": 90,
+      "queries": [
+        "site.minimax.io \"MiniMax-AI/skills\"",
+        "site.minimaxi.com \"skills\" 开源 GitHub"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": "README.md",
+      "bytes": 7865,
+      "sha256": "a82475844a437bf210fcd1590ce75c17a0721db72ae60654d3ced61670381b6c",
+      "git_blob": "12164fda6cd7a53f93a228a41894f4b7736a671c"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "eed4ccce37c2d24822da3bd9d5bee7bc12d494741de56ada513d0b97f537fcd0",
+      "git_blob": "132dd20ee3294d09a1c613a6bd4c8094c496fbf9"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": "CONTRIBUTING.md",
+      "bytes": 5487,
+      "sha256": "a0629904a0f52043ec5c9cbca86faf18f8aa40ab0c8580ff546c21a4cba75134",
+      "git_blob": "f02c42155627f78048961efdddfc69815a247cd0"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": "CREDITS.md",
+      "bytes": 2609,
+      "sha256": "536cfa5cf8171d6c9418a7520d732ce5a382fa68947654bd5f037bdfc6368897",
+      "git_blob": "020d3e18068a5491d2081afb16f09a7a27af7da1"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": ".claude/skills/pr-review/SKILL.md",
+      "bytes": 2476,
+      "sha256": "c4b12fa291ee11d58285c7db9bbc2bbf5be23d56d34456411202b958c6365292",
+      "git_blob": "a86e1fba0c76a1de2d2f61de695444e590d8d726"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+      "path": ".claude/skills/pr-review/scripts/validate_skills.py",
+      "bytes": 7208,
+      "sha256": "a46cb671734cbd067e57eb465250dce9507cb798a2f24b71d1dbf33555dd7d2b",
+      "git_blob": "a17702e02909062fe431e11aeda10153b74d3dd6"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "eed4ccce37c2d24822da3bd9d5bee7bc12d494741de56ada513d0b97f537fcd0",
+      "git_blob": "132dd20ee3294d09a1c613a6bd4c8094c496fbf9"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude/skills/pr-review/SKILL.md",
+      "bytes": 2476,
+      "sha256": "c4b12fa291ee11d58285c7db9bbc2bbf5be23d56d34456411202b958c6365292",
+      "git_blob": "a86e1fba0c76a1de2d2f61de695444e590d8d726"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude/skills/pr-review/scripts/validate_skills.py",
+      "bytes": 7208,
+      "sha256": "a46cb671734cbd067e57eb465250dce9507cb798a2f24b71d1dbf33555dd7d2b",
+      "git_blob": "a17702e02909062fe431e11aeda10153b74d3dd6"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude/skills/pr-review/references/structure-rules.md",
+      "bytes": 1815,
+      "sha256": "a1a71e13c3c5647c9ef4052dc4fe835c9840d9df8de96f3a26e7dacc0c2ad129",
+      "git_blob": "2be084e82563ff5775804d1edbcf2adf0b47ed45"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude/skills/pr-review/references/quality-guidelines.md",
+      "bytes": 2662,
+      "sha256": "202b6063d7d61beb0d0eef4b5b201ab50428894aad1aa2af4de469cf111d97a5",
+      "git_blob": "12b742803f030743f88d2e45df0bf58e3ef95b87"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/core/execution_protocol/controller.py",
+      "bytes": 50442,
+      "sha256": "1f4603802f7582c44b7d8d57a5302e569dee94359b2877feb5ec941cf93a6923",
+      "git_blob": "1456fc9cda961d934d9caee5720afeb9012bb68c"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/core/execution_protocol/models.py",
+      "bytes": 97444,
+      "sha256": "d0ce1e427a75bda7c1ca03a3036038cb4f0a7f201417844245fe0264538850d8",
+      "git_blob": "b99e1cc7d7b205499a5a53f3e5f3cba14bb8d546"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "LICENSE",
+      "bytes": 1071,
+      "sha256": "7a6308fd98e53e0ef59b98fab14f9312ef32f4edae093b1604e56c7ade56e3b5",
+      "git_blob": "43e80c00dfa6a7aeb48ed20103821f84ddb03657"
+    }
+  ],
+  "verification": {
+    "sha256_and_git_blob_verified": 14,
+    "new_expanded_files": 8,
+    "reused_expanded_files": 6,
+    "upstream_scripts": "not_run",
+    "model": "not_run",
+    "synthetic": "not_run",
+    "website": "not_deployed"
+  },
+  "reading_scope": {
+    "minimax_frozen": "pr-review directory4/4 full; root LICENSE full",
+    "minimax_current": "README, CONTRIBUTING, CREDITS, LICENSE, pr-review entry and script full",
+    "aworld_controller": "safe_transition full; transition type/OFF/MODEL_EXECUTION_PROFILE branches only",
+    "aworld_models": "Mode/Horizon/Phase enums; Policy fields and initial validation; Event fields and initial validation; State fields and initial validation only"
+  },
+  "frozen_skill": {
+    "content_id": "c4b12fa291ee11d58285c7db9bbc2bbf5be23d56d34456411202b958c6365292",
+    "occurrences": [
+      {
+        "source_id": "eaa04793ab329aa06418b21f",
+        "repository": "MiniMax-AI/skills",
+        "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+        "path": ".claude/skills/pr-review/SKILL.md",
+        "prior_reading": null,
+        "dependency_status": "partially_reviewed",
+        "host_status": "requirements_read_not_verified",
+        "review_status": "in_progress",
+        "execution_status": "not_run",
+        "equivalence_evidence": null,
+        "evidence_file": "research/evidence/2026-11-22/source-review.json",
+        "direct_dependency_review": {
+          "read": 4,
+          "total": 4,
+          "scope": "entry, two references and script; excludes host/CI wiring and review environment"
+        },
+        "open_questions": [
+          "宿主和CI如何调用脚本、捕获无输入/警告/错误并装入模型上下文",
+          "维护者审批与真实技能业务验收",
+          "当前版本两份引用、宿主与依赖环境尚未证明等价"
+        ]
+      }
+    ],
+    "entry_script_license_equal_between_versions": true,
+    "current_references_equivalent": "not_checked",
+    "host_equivalence": false
+  },
+  "open_questions": [
+    "MiniMax current full archive and whole-version diff",
+    "official-site reverse chain for exact skills repository",
+    "MiniMax host/CI wiring and business acceptance",
+    "AWorld full controller/model schemas/Runner/Context",
+    "prior VitaBench original expansion and lark SDK recovery"
+  ]
+}

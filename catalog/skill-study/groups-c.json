@@ -1718,9 +1718,9 @@
     },
     {
       "content_id": "c4b12fa291ee11d58285c7db9bbc2bbf5be23d56d34456411202b958c6365292",
-      "entry_status": "not_read",
-      "analysis_file": null,
-      "solution_file": null,
+      "entry_status": "entry_read",
+      "analysis_file": "research/solutions/minimax-skill-review-validator-boundaries.md",
+      "solution_file": "research/solutions/minimax-skill-review-validator-boundaries.md",
       "occurrences": [
         {
           "source_id": "eaa04793ab329aa06418b21f",
@@ -1728,11 +1728,22 @@
           "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
           "path": ".claude/skills/pr-review/SKILL.md",
           "prior_reading": null,
-          "dependency_status": "not_checked",
-          "host_status": "not_checked",
-          "review_status": "pending",
+          "dependency_status": "partially_reviewed",
+          "host_status": "requirements_read_not_verified",
+          "review_status": "in_progress",
           "execution_status": "not_run",
-          "equivalence_evidence": null
+          "equivalence_evidence": null,
+          "evidence_file": "research/evidence/2026-11-22/source-review.json",
+          "direct_dependency_review": {
+            "read": 4,
+            "total": 4,
+            "scope": "entry, two references and script; excludes host/CI wiring and review environment"
+          },
+          "open_questions": [
+            "宿主和CI如何调用脚本、捕获无输入/警告/错误并装入模型上下文",
+            "维护者审批与真实技能业务验收",
+            "当前版本两份引用、宿主与依赖环境尚未证明等价"
+          ]
         }
       ]
     },

@@ -3515,7 +3515,8 @@
             "控制字段签名、崩溃恢复、deadline、取消及业务验证器未实跑",
             "Workbench 与协作者属条件性依赖，未核具体宿主能力",
             "新版 reviewer value lease 与冻结版不等价，不能迁移完整结论",
-            "store.py 已全文静态核对；execution_state.py 仅 state_context/checkpoint_execution_state；controller/models/runner 与真实 Context 原子接口继续待核"
+            "store.py 已全文静态核对；execution_state.py 仅 state_context/checkpoint_execution_state；controller/models/runner 与真实 Context 原子接口继续待核",
+            "controller仅核safe_transition及OFF/模型分类分支；models仅核枚举、Policy默认与Event/State部分定义；完整计划/复核、真实Context与Runner待核"
           ],
           "direct_dependency_review": {
             "read": 3,
@@ -3523,12 +3524,14 @@
             "scope": "entry plus two direct references; excludes runtime transitive dependencies"
           },
           "supplementary_evidence": [
-            "research/evidence/2026-11-21/source-review.json"
+            "research/evidence/2026-11-21/source-review.json",
+            "research/evidence/2026-11-22/source-review.json"
           ]
         }
       ],
       "supplementary_analysis": [
-        "research/solutions/aworld-protocol-persistence-boundary.md"
+        "research/solutions/aworld-protocol-persistence-boundary.md",
+        "research/solutions/aworld-controller-error-boundary.md"
       ]
     },
     {

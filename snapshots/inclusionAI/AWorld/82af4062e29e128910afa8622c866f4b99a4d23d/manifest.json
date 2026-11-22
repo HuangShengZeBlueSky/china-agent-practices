@@ -458,6 +458,22 @@
       "bytes": 48254,
       "sha256": "2289df6bf8d012b6966a83dd23cd9b0e72fb93905626556afdeea92ab55bf750",
       "git_blob": "8232423619c23dd50ad78e758296cbefd9d672d2"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/core/execution_protocol/controller.py",
+      "bytes": 50442,
+      "sha256": "1f4603802f7582c44b7d8d57a5302e569dee94359b2877feb5ec941cf93a6923",
+      "git_blob": "1456fc9cda961d934d9caee5720afeb9012bb68c"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/core/execution_protocol/models.py",
+      "bytes": 97444,
+      "sha256": "d0ce1e427a75bda7c1ca03a3036038cb4f0a7f201417844245fe0264538850d8",
+      "git_blob": "b99e1cc7d7b205499a5a53f3e5f3cba14bb8d546"
     }
   ],
   "skills": [
@@ -659,6 +675,15 @@
       ],
       "evidence": "research/evidence/2026-11-21/source-review.json",
       "note": "原文整文件节选；execution_state 仅读 state_context 与 checkpoint_execution_state，旧整仓未重新验算"
+    },
+    {
+      "date": "2026-11-22",
+      "paths": [
+        "aworld/core/execution_protocol/controller.py",
+        "aworld/core/execution_protocol/models.py"
+      ],
+      "scope": "selected functions/classes read; full files archived, not full protocol study",
+      "evidence": "research/evidence/2026-11-22/source-review.json"
     }
   ]
 }

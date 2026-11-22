@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-22",
+  "base": "505a7414ca9978961d0958b9c67efbe2ac7e6afa",
+  "skills": {
+    "groups": 3085,
+    "occurrences": 6235,
+    "entry_states": {
+      "not_read": 3077,
+      "entry_read": 3,
+      "prior_entry_read_only": 5
+    },
+    "review_status": {
+      "pending": 6229,
+      "in_progress": 6
+    },
+    "execution_status": {
+      "not_run": 6235
+    }
+  },
+  "source_records": 79,
+  "source_type_status": {
+    "official_code/prior_static_review": 31,
+    "third_party_archive/prior_static_review": 3,
+    "official_docs/prior_static_review": 1,
+    "official_spec_and_code/selected_files_read": 1,
+    "official_spec/selected_files_read": 1,
+    "official_docs/relevant_sections_read": 3,
+    "official_engineering/article_read": 1,
+    "official_docs/entry_opened": 1,
+    "official_engineering/entry_opened": 1,
+    "author_paper/abstract_read_only": 6,
+    "discovery_target/pending_discovery": 28,
+    "official_blog/discovered_excerpt_only": 1,
+    "author_paper/search_excerpt_only": 1
+  },
+  "scope_note": "frozen baseline unchanged; current version supplementary review not a new source",
+  "coverage": {
+    "domestic_specialist_records": 27,
+    "domestic_remaining": 4,
+    "overseas": "6 existing partial/entry records; P1-02 not accepted",
+    "papers": "6 abstract +1 search-excerpt existing records; prior incremental pool separate; no full-text acceptance added",
+    "community": "28 discovery targets remain; A2A/framework callchains not accepted",
+    "verticals": "10-domain map not accepted"
+  },
+  "published_reference": {
+    "log": "research/log/2026-11-21.md",
+    "specialist_records_added": 1,
+    "solution_cards_added": 2,
+    "new_entry_groups": 0
+  },
+  "this_batch": {
+    "specialist_records": 1,
+    "solution_cards": 2,
+    "new_entry_groups": 1,
+    "full_skill_groups": 0,
+    "upstream_runs": 0,
+    "full_archive_gaps_closed": 0
+  },
+  "remaining_batches": [
+    2,
+    4
+  ],
+  "estimate_scope": "specialist documents only; no hours measured and no whole-skill throughput",
+  "evidence_findings": [
+    "no skill directories exit0 does not certify expected inventory",
+    "minimal frontmatter parser not YAML parser",
+    "policy class OFF default cannot infer runtime OFF",
+    "partial controller reading cannot be counted as full-file interpretation"
+  ]
+}

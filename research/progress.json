@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-21",
+  "updated_at": "2026-11-22",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "P1-01 接续 MiniMax-AI/skills 等余5条专项与版本归档；技能恢复 AWorld 冻结 controller/models、真实 Context 原子接口和 runner 调用点。保留 lark 宿主/SDK 及 VitaBench 原文展开恢复待办。",
+  "next_action": "P1-01 接续 Open-AutoGLM 等余4条专项及版本归档；技能核MiniMax pr-review宿主/CI调用和AWorld冻结Runner/Policy来源、剩余计划/复核分支。保留飞书SDK与VitaBench原文展开恢复待办。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,20 +27,20 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "5组历史入口等级保留，另2组新入口已读；long-running-agent 冻结目录3/3已读，运行协议/传递依赖待核；lark-doc/lark-shared原有宿主与SDK待办未删除。完整组0、实跑0。",
-    "new_entry_reviews": 2,
-    "partial_dependency_reviews": 3
+    "note": "5历史入口保留，新增入口累计3组；pr-review目录4/4已读，宿主/CI未验收。AWorld控制器仅部分分支已读，lark两组宿主/SDK依赖继续。完整组0、实跑0。",
+    "new_entry_reviews": 3,
+    "partial_dependency_reviews": 4
   },
   "today_outputs": [
-    "research/ownership-review-2026-11-21.md",
-    "research/solutions/trtc-stop-gate-boundaries.md",
-    "research/solutions/aworld-protocol-persistence-boundary.md",
-    "research/review-2026-11-21.md",
-    "research/evidence/2026-11-21/source-review.json"
+    "research/ownership-review-2026-11-22.md",
+    "research/solutions/minimax-skill-review-validator-boundaries.md",
+    "research/solutions/aworld-controller-error-boundary.md",
+    "research/review-2026-11-22.md",
+    "research/evidence/2026-11-22/source-review.json"
   ],
-  "last_log": "research/log/2026-11-21.md",
+  "last_log": "research/log/2026-11-22.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "专项26/31，余5条，样本每批1—2条约3—5批专项记录；归档、P1验收另计。完整技能组吞吐为0，无可靠全量完成日期。",
+  "estimate_note": "专项27/31，余4条，按样本每批1—2条约2—4批专项记录；归档和阶段验收另计。本批新增当前版本整包缺口未闭合，完整技能组吞吐仍0，不提供全量完成日。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,
@@ -49,5 +49,5 @@
     "checked_on": "2026-10-26",
     "scope_note": "上述31/21/10继承该日固定审计，不是2026-11-07全部HEAD刷新；部分后续核查另见来源记录。"
   },
-  "weekend_review": "research/review-2026-11-21.md"
+  "weekend_review": "research/review-2026-11-22.md"
 }

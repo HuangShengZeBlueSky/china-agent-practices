@@ -119,3 +119,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-21
 
 [RTC停止门禁](solutions/trtc-stop-gate-boundaries.md)与[AWorld协议保存](solutions/aworld-protocol-persistence-boundary.md)区分结束、状态保存与业务验收。[周末复核](review-2026-11-21.md)确认专项26/31、完整技能组0，P1继续。详见[日志](log/2026-11-21.md)。
+
+## 2026-11-22
+
+[MiniMax审查覆盖](solutions/minimax-skill-review-validator-boundaries.md)与[AWorld控制异常](solutions/aworld-controller-error-boundary.md)补程序放行和验收边界；专项27/31，新增入口累计3组、完整组0。[周末增量复核](review-2026-11-22.md) · [日志](log/2026-11-22.md)。

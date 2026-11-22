@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-21",
+  "updated_at": "2026-11-22",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -901,13 +901,28 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
-        "checked_on": "2026-10-26",
-        "head": "60aaae52bb2af8162732751a4332f62a5fef518b",
+        "checked_on": "2026-11-22",
+        "head": "02853d885acb1abc157477ce00c4d98a8ed14a71",
         "default_branch": "main",
         "archived": false,
-        "head_backed_up": true,
-        "evidence": "research/repository-audit-2026-10-26.md"
-      }
+        "head_backed_up": false,
+        "backup_scope": "6 selected files only; full archive missing",
+        "evidence": "research/ownership-review-2026-11-22.md"
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-22",
+          "version": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+          "previous_version": "60aaae52bb2af8162732751a4332f62a5fef518b",
+          "evidence": [
+            "research/ownership-review-2026-11-22.md",
+            "research/solutions/minimax-skill-review-validator-boundaries.md"
+          ],
+          "manifest": "research/evidence/2026-11-22/source-review.json",
+          "scope": "static pr-review package4/4 at frozen version; current entry/script equality only",
+          "execution_status": "static_only"
+        }
+      ]
     },
     {
       "id": "prior-minimax-mcp-media",
