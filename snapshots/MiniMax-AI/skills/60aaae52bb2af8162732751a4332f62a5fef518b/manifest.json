@@ -1890,6 +1890,22 @@
       "path": "skills/vision-analysis/SKILL.md",
       "bytes": 5427,
       "sha256": "a3b4720bfc5f1083cc6c2670bd4d7d5b673f3c86e84b536169f5e545206de157"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude-plugin/plugin.json",
+      "bytes": 650,
+      "sha256": "369faaa156d418b95241715a7b041a640f5c62e6d3dc3a60813ac524164be56c",
+      "git_blob": "d32756834e18043f6143883b1497d898169c8905"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude-plugin/marketplace.json",
+      "bytes": 561,
+      "sha256": "d61328f0ee6b7afb8c0547e2166b711a19c1202b52990f06facb823a01a64b9f",
+      "git_blob": "d46f86935f1704e55c2928aaa028a7c42c190cd5"
     }
   ],
   "skills": [
@@ -2056,5 +2072,16 @@
     }
   ],
   "git_history_included": false,
-  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。",
+  "expanded_file_additions": [
+    {
+      "date": "2026-11-23",
+      "paths": [
+        ".claude-plugin/plugin.json",
+        ".claude-plugin/marketplace.json"
+      ],
+      "evidence": "research/evidence/2026-11-23/source-review.json",
+      "note": "指定文件补展开；既有整包分片未重新下载验算，阅读范围另记"
+    }
+  ]
 }

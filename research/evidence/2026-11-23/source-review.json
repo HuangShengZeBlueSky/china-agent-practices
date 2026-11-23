@@ -1,0 +1,237 @@
+{
+  "date": "2026-11-23",
+  "base": "7918a591a7e3fce1b9bcda361395bb35f9d3d452",
+  "task": "P1-01",
+  "source_id": "prior-zhipu-open-autoglm",
+  "metadata": {
+    "repository": "zai-org/Open-AutoGLM",
+    "head": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+    "default_branch": "main",
+    "archived": false,
+    "head_check": "git/ref/heads/main corroborated by commit search",
+    "head_same_as_initial_and_2026_10_26": true,
+    "prior_full_archive": "existing manifest retained; archive parts not downloaded/rehashed"
+  },
+  "ownership": {
+    "official_blog": "https://autoglm.z.ai/blog/",
+    "published_on": "2025-12-08",
+    "read_scope": "body describing open model/code and phone framework; product/privacy/performance claims not verified",
+    "repository": "https://github.com/zai-org/Open-AutoGLM",
+    "note": "official project domain and repository self-links establish consistent public identity; blog rendered text mentions GitHub without retrieved exact outbound repository URL",
+    "license": "Apache-2.0 code; upstream privacy_policy retained; model license not audited or weights mirrored",
+    "web_backup": "not mirrored; webpage redistribution permission not established"
+  },
+  "searches": [
+    {
+      "engine": "system2",
+      "queries": [
+        "site.z.ai Open-AutoGLM github",
+        "site.bigmodel.cn AutoGLM 开源 Open-AutoGLM"
+      ]
+    },
+    {
+      "engine": "system1",
+      "recency": 90,
+      "queries": [
+        "site.z.ai \"Open-AutoGLM\"",
+        "site.bigmodel.cn \"Open-AutoGLM\""
+      ]
+    }
+  ],
+  "files": [
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "README.md",
+      "bytes": 33041,
+      "sha256": "de9c289c418218d40cdf1731775158af771d010266d7ea2aa398f2dc91f22acc",
+      "git_blob": "2af1de1ecb44f51c31256cd0bd2aa12842866423"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "LICENSE",
+      "bytes": 11342,
+      "sha256": "af69329b4667040c498cc87dfcc165db1f5f9452fe2ad3024ad7eef63d467666",
+      "git_blob": "c935269480d6880233aa9e07df4217d84acd0730"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "resources/privacy_policy.txt",
+      "bytes": 12830,
+      "sha256": "18743704b20ab96fa22258d7f8ef35c704d8b9fb825110a0d0a0343e5ba6d751",
+      "git_blob": "55953602806b9f55162873b0fe99ba8c85bc9d63"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/agent.py",
+      "bytes": 8161,
+      "sha256": "686f1f11064b89ff0ea4f604ece20045bb77cd8183f0953e3da910c0878cab1f",
+      "git_blob": "36427917488ba2cc95a9941184f8a239665570c6"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/actions/handler.py",
+      "bytes": 15602,
+      "sha256": "1553261c277f768e013737cfa6e9bc5a952e197d10725b4147d2efd30164160a",
+      "git_blob": "0bef1c3a2de3a465ef68555c500898a2403a3a70"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/model/client.py",
+      "bytes": 9707,
+      "sha256": "be9916a2a2541137786bd3f67d01c900c76154342800bc81c9bf5ba538033df6",
+      "git_blob": "72377a619661c3f3125f50680b8dc2287c55b6fe"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/device_factory.py",
+      "bytes": 5050,
+      "sha256": "483cc9ce15ab65f0e46a1da6800792e1c8601e32c72780ce060aff0eeebd2285",
+      "git_blob": "915ff52b696ee4e5b4cc160b747677064524b27b"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/adb/device.py",
+      "bytes": 6712,
+      "sha256": "bd86ba77ba210c781c3dedf08c7a0920f357f2e2158034471cc04738edd84af3",
+      "git_blob": "995336a16d3adb1bd2dda10357716e4bbb90694f"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/adb/screenshot.py",
+      "bytes": 3186,
+      "sha256": "f4c14ebe800a5745371f9ce39fc990caa80b5aa430212b7196bff88ad14ef9c7",
+      "git_blob": "bdc5b0922b06400a777e20ef04075b0286dbb66c"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/config/prompts_en.py",
+      "bytes": 2630,
+      "sha256": "b7c0bd60b6a296d83c915945b58beadedf4476d30613c1dab2d4df0e1e410143",
+      "git_blob": "d734b80150677b2aa25146e856695f53d63487fc"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/config/__init__.py",
+      "bytes": 1322,
+      "sha256": "9ad54bd87616e6be54ac67a30ac4c379f5d39cbbe97f1ac9a2ebdfa9cd89692f",
+      "git_blob": "7a082a8ff3ae178f339a8ba1391fa31db8071a01"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/adb/__init__.py",
+      "bytes": 950,
+      "sha256": "c3708148646ff9c40f304f90f81c76b5b2ff5899296fd46a993da894d2bd4d9c",
+      "git_blob": "004beaf7e188682a2497439c09c1ceb17034eafa"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": "README.md",
+      "bytes": 7865,
+      "sha256": "a82475844a437bf210fcd1590ce75c17a0721db72ae60654d3ced61670381b6c",
+      "git_blob": "12164fda6cd7a53f93a228a41894f4b7736a671c"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": "LICENSE",
+      "bytes": 1064,
+      "sha256": "eed4ccce37c2d24822da3bd9d5bee7bc12d494741de56ada513d0b97f537fcd0",
+      "git_blob": "132dd20ee3294d09a1c613a6bd4c8094c496fbf9"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude/skills/pr-review/SKILL.md",
+      "bytes": 2476,
+      "sha256": "c4b12fa291ee11d58285c7db9bbc2bbf5be23d56d34456411202b958c6365292",
+      "git_blob": "a86e1fba0c76a1de2d2f61de695444e590d8d726"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude/skills/pr-review/scripts/validate_skills.py",
+      "bytes": 7208,
+      "sha256": "a46cb671734cbd067e57eb465250dce9507cb798a2f24b71d1dbf33555dd7d2b",
+      "git_blob": "a17702e02909062fe431e11aeda10153b74d3dd6"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude-plugin/plugin.json",
+      "bytes": 650,
+      "sha256": "369faaa156d418b95241715a7b041a640f5c62e6d3dc3a60813ac524164be56c",
+      "git_blob": "d32756834e18043f6143883b1497d898169c8905"
+    },
+    {
+      "repository": "MiniMax-AI/skills",
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "path": ".claude-plugin/marketplace.json",
+      "bytes": 561,
+      "sha256": "d61328f0ee6b7afb8c0547e2166b711a19c1202b52990f06facb823a01a64b9f",
+      "git_blob": "d46f86935f1704e55c2928aaa028a7c42c190cd5"
+    }
+  ],
+  "verification": {
+    "source_sha256_and_git_blob_match": 18,
+    "new_expanded_files": 9,
+    "reused_expanded_files": 9,
+    "upstream_scripts": "not_run",
+    "model": "not_run",
+    "device": "not_connected",
+    "synthetic": "not_run",
+    "website": "not_deployed"
+  },
+  "reading_scope": {
+    "open_autoglm_full": [
+      "LICENSE",
+      "resources/privacy_policy.txt",
+      "phone_agent/agent.py",
+      "phone_agent/model/client.py",
+      "phone_agent/device_factory.py",
+      "phone_agent/adb/screenshot.py",
+      "phone_agent/config/prompts_en.py",
+      "phone_agent/config/__init__.py",
+      "phone_agent/adb/__init__.py"
+    ],
+    "open_autoglm_selected": [
+      "README project identity, architecture, safety/usage and model-code distinction; deployment instructions not executed",
+      "handler: execute/ActionResult, Tap, default callbacks and parse_action",
+      "adb/device: get_current_app,tap,launch_app"
+    ],
+    "minimax_full": [
+      ".claude-plugin/plugin.json",
+      ".claude-plugin/marketplace.json",
+      ".claude/skills/pr-review/SKILL.md"
+    ],
+    "minimax_selected": [
+      "README contribution/install sections",
+      "validator main/exit reporting and prior-call contract"
+    ],
+    "minimax_tree": {
+      "commit": "60aaae52bb2af8162732751a4332f62a5fef518b",
+      "truncated": false,
+      "entries": 472,
+      "github_entries": [],
+      "interpretation": "no .github in this fixed committed tree; external CI and host implementation unknown"
+    }
+  },
+  "remaining": [
+    "default Chinese prompt, HDC/iOS and input/connection paths",
+    "business acceptance, cancellation, checkpointing, return-code propagation",
+    "MiniMax actual host discovery/call/output assembly and external CI",
+    "prior lark SDK and VitaBench originals recovery"
+  ]
+}

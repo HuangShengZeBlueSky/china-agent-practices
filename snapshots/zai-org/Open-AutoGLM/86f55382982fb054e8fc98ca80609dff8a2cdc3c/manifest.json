@@ -55,9 +55,81 @@
       "path": "resources/privacy_policy.txt",
       "bytes": 12830,
       "sha256": "18743704b20ab96fa22258d7f8ef35c704d8b9fb825110a0d0a0343e5ba6d751"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/model/client.py",
+      "bytes": 9707,
+      "sha256": "be9916a2a2541137786bd3f67d01c900c76154342800bc81c9bf5ba538033df6",
+      "git_blob": "72377a619661c3f3125f50680b8dc2287c55b6fe"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/device_factory.py",
+      "bytes": 5050,
+      "sha256": "483cc9ce15ab65f0e46a1da6800792e1c8601e32c72780ce060aff0eeebd2285",
+      "git_blob": "915ff52b696ee4e5b4cc160b747677064524b27b"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/adb/device.py",
+      "bytes": 6712,
+      "sha256": "bd86ba77ba210c781c3dedf08c7a0920f357f2e2158034471cc04738edd84af3",
+      "git_blob": "995336a16d3adb1bd2dda10357716e4bbb90694f"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/adb/screenshot.py",
+      "bytes": 3186,
+      "sha256": "f4c14ebe800a5745371f9ce39fc990caa80b5aa430212b7196bff88ad14ef9c7",
+      "git_blob": "bdc5b0922b06400a777e20ef04075b0286dbb66c"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/config/prompts_en.py",
+      "bytes": 2630,
+      "sha256": "b7c0bd60b6a296d83c915945b58beadedf4476d30613c1dab2d4df0e1e410143",
+      "git_blob": "d734b80150677b2aa25146e856695f53d63487fc"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/config/__init__.py",
+      "bytes": 1322,
+      "sha256": "9ad54bd87616e6be54ac67a30ac4c379f5d39cbbe97f1ac9a2ebdfa9cd89692f",
+      "git_blob": "7a082a8ff3ae178f339a8ba1391fa31db8071a01"
+    },
+    {
+      "repository": "zai-org/Open-AutoGLM",
+      "commit": "86f55382982fb054e8fc98ca80609dff8a2cdc3c",
+      "path": "phone_agent/adb/__init__.py",
+      "bytes": 950,
+      "sha256": "c3708148646ff9c40f304f90f81c76b5b2ff5899296fd46a993da894d2bd4d9c",
+      "git_blob": "004beaf7e188682a2497439c09c1ceb17034eafa"
     }
   ],
   "skills": [],
   "git_history_included": false,
-  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。",
+  "expanded_file_additions": [
+    {
+      "date": "2026-11-23",
+      "paths": [
+        "phone_agent/model/client.py",
+        "phone_agent/device_factory.py",
+        "phone_agent/adb/device.py",
+        "phone_agent/adb/screenshot.py",
+        "phone_agent/config/prompts_en.py",
+        "phone_agent/config/__init__.py",
+        "phone_agent/adb/__init__.py"
+      ],
+      "evidence": "research/evidence/2026-11-23/source-review.json",
+      "note": "指定文件补展开；既有整包分片未重新下载验算，阅读范围另记"
+    }
+  ]
 }

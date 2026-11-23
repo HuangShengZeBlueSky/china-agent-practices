@@ -198,3 +198,7 @@
 ## 2026-11-22 MiniMax审查专项
 
 [冻结PR Review与新版校验器](../research/solutions/minimax-skill-review-validator-boundaries.md)补目录覆盖、无输入、简化解析与凭据模式边界。[归属/版本核查](../research/ownership-review-2026-11-22.md)保留旧版，当前版本只存节选，官网反向链仍待补；静态核对，未实跑。
+
+## 2026-11-23 设备完成与宿主审查补核
+
+[Open-AutoGLM固定循环](../research/solutions/open-autoglm-finish-and-observation.md)补模型输入、错误、截图和ADB返回边界；[MiniMax宿主证据](../research/solutions/minimax-review-host-evidence.md)补包元数据和CI可见范围。两者均静态核对，不能据终止信号宣称业务验收。详见[归属专项](../research/ownership-review-2026-11-23.md)。

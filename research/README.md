@@ -123,3 +123,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-22
 
 [MiniMax审查覆盖](solutions/minimax-skill-review-validator-boundaries.md)与[AWorld控制异常](solutions/aworld-controller-error-boundary.md)补程序放行和验收边界；专项27/31，新增入口累计3组、完整组0。[周末增量复核](review-2026-11-22.md) · [日志](log/2026-11-22.md)。
+
+## 2026-11-23
+
+[Open-AutoGLM截图与结束](solutions/open-autoglm-finish-and-observation.md)补Android子链；[MiniMax宿主证据](solutions/minimax-review-host-evidence.md)区分知识包与强制审查。专项28/31，完整技能组0。[当日记录](log/2026-11-23.md)。

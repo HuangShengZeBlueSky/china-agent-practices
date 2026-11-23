@@ -1742,9 +1742,16 @@
           "open_questions": [
             "宿主和CI如何调用脚本、捕获无输入/警告/错误并装入模型上下文",
             "维护者审批与真实技能业务验收",
-            "当前版本两份引用、宿主与依赖环境尚未证明等价"
+            "当前版本两份引用、宿主与依赖环境尚未证明等价",
+            "冻结树无.github且元数据未声明校验命令；外部CI、宿主发现/触发与回传仍未验证，不能以缺可见配置推断无CI"
+          ],
+          "supplementary_evidence": [
+            "research/evidence/2026-11-23/source-review.json"
           ]
         }
+      ],
+      "supplementary_analysis": [
+        "research/solutions/minimax-review-host-evidence.md"
       ]
     },
     {

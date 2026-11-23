@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-22",
+  "updated_at": "2026-11-23",
   "timezone": "Asia/Shanghai",
   "current_phase": "P1",
   "current_task": "P1-01",
-  "next_action": "P1-01 接续 Open-AutoGLM 等余4条专项及版本归档；技能核MiniMax pr-review宿主/CI调用和AWorld冻结Runner/Policy来源、剩余计划/复核分支。保留飞书SDK与VitaBench原文展开恢复待办。",
+  "next_action": "P1-01 接续 JoyAgent-JDGenie、LobsterAI、第三方归档余3条专项，另清版本归档/归属缺口；技能继续MiniMax具体宿主发现/回传及AWorld冻结Runner配置，保留飞书SDK/VitaBench恢复待办。",
   "phase_status": {
     "P0": "done",
     "P1": "in_progress",
@@ -27,20 +27,19 @@
     "fully_researched_groups": 0,
     "executed": 0,
     "queue": "catalog/skill-study/index.json",
-    "note": "5历史入口保留，新增入口累计3组；pr-review目录4/4已读，宿主/CI未验收。AWorld控制器仅部分分支已读，lark两组宿主/SDK依赖继续。完整组0、实跑0。",
+    "note": "5历史入口保留，新增入口累计3组；MiniMax pr-review新增冻结元数据/树清点，宿主/CI仍未验证。AWorld与lark两组传递依赖待核，完整组0、实跑0。",
     "new_entry_reviews": 3,
     "partial_dependency_reviews": 4
   },
   "today_outputs": [
-    "research/ownership-review-2026-11-22.md",
-    "research/solutions/minimax-skill-review-validator-boundaries.md",
-    "research/solutions/aworld-controller-error-boundary.md",
-    "research/review-2026-11-22.md",
-    "research/evidence/2026-11-22/source-review.json"
+    "research/ownership-review-2026-11-23.md",
+    "research/solutions/open-autoglm-finish-and-observation.md",
+    "research/solutions/minimax-review-host-evidence.md",
+    "research/evidence/2026-11-23/source-review.json"
   ],
-  "last_log": "research/log/2026-11-22.md",
+  "last_log": "research/log/2026-11-23.md",
   "estimated_full_skill_completion": null,
-  "estimate_note": "专项27/31，余4条，按样本每批1—2条约2—4批专项记录；归档和阶段验收另计。本批新增当前版本整包缺口未闭合，完整技能组吞吐仍0，不提供全量完成日。",
+  "estimate_note": "专项28/31，余3条，按近期每批1—2条约2—3批专项记录；完整版本归档、归属补证与P1验收另计。完整技能组吞吐仍0，无全量完成日。",
   "blocking_issues": [],
   "repository_audit": {
     "repositories": 31,

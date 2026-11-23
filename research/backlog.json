@@ -117,10 +117,13 @@
         "research/ownership-review-2026-11-22.md",
         "research/solutions/minimax-skill-review-validator-boundaries.md",
         "research/evidence/2026-11-22/source-review.json",
-        "research/review-2026-11-22.md"
+        "research/review-2026-11-22.md",
+        "research/ownership-review-2026-11-23.md",
+        "research/solutions/open-autoglm-finish-and-observation.md",
+        "research/evidence/2026-11-23/source-review.json"
       ],
       "open_questions": [
-        "31仓中27条有专项记录，余4条；归属边界、版本差异和完整归档尚未全部验收。",
+        "31仓中28条有专项记录，余3条；归属边界、版本差异和完整归档仍未全部验收。",
         "十个10-26新HEAD的变更影响与备份安排；CloudBase两版已补节选与整包下载哈希，整包未发布，分发/宿主仍待核。 Qwen Code 10-26 与当前版本已保存节选，整包仍缺。 OpenSandbox 两版已补节选，整包仍缺。",
         "Kimi新实现等价；AgentScope目标请求/事件、Session schema、运行代次与取消确认映射（旧Runtime子链已读，不代表2.0等价）",
         "第三方归档旧来源字段与实际备份状态不一致，逐项纠正并记录许可边界",
@@ -131,7 +134,8 @@
         "UI-TARS Desktop 今日 archived=true，归档日期未知；packages/ui-tars/sdk 与 multimodal SDK 的实际 Desktop 接线待核。",
         "AWorld 当前 HEAD bef598f 仅17份指定节选，整仓与完整版本差异待补；任务初始激活证据不覆盖已证明的全程动态激活，执行协议待核。",
         "Tencent RTC 当前 f0a4b39 仅8份指定节选，历史两版差异和完整归档、安装器宿主接线与apply验证器待核。",
-        "MiniMax Skills当前02853d8仅6份指定节选，完整归档/整版差异和官网反向链接待补；入口与脚本相同不证明宿主/依赖全等价。"
+        "MiniMax Skills当前02853d8仅6份指定节选，完整归档/整版差异和官网反向链接待补；入口与脚本相同不证明宿主/依赖全等价。",
+        "Open-AutoGLM当前固定版本已补ADB观察/结束子链；默认中文、HDC/iOS、真实设备、回传/业务验收及确切官网反向链接仍待核。"
       ],
       "execution_status": "static_metadata_review"
     },
@@ -800,5 +804,5 @@
       "latest_evidence": "research/evidence/2026-11-21/discovery.json"
     }
   ],
-  "updated_at": "2026-11-22"
+  "updated_at": "2026-11-23"
 }
