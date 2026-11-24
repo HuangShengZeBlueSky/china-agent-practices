@@ -3516,7 +3516,8 @@
             "Workbench 与协作者属条件性依赖，未核具体宿主能力",
             "新版 reviewer value lease 与冻结版不等价，不能迁移完整结论",
             "store.py 已全文静态核对；execution_state.py 仅 state_context/checkpoint_execution_state；controller/models/runner 与真实 Context 原子接口继续待核",
-            "controller仅核safe_transition及OFF/模型分类分支；models仅核枚举、Policy默认与Event/State部分定义；完整计划/复核、真实Context与Runner待核"
+            "controller仅核safe_transition及OFF/模型分类分支；models仅核枚举、Policy默认与Event/State部分定义；完整计划/复核、真实Context与Runner待核",
+            "2026-11-24已核真实策略解析/发布/读取：默认success-first OBSERVE；完整候选/复核/修复事件回传、CLI构造与Context原子/持久接口仍待核，不将active或Policy类默认当实际模式"
           ],
           "direct_dependency_review": {
             "read": 3,
@@ -3525,13 +3526,24 @@
           },
           "supplementary_evidence": [
             "research/evidence/2026-11-21/source-review.json",
-            "research/evidence/2026-11-22/source-review.json"
-          ]
+            "research/evidence/2026-11-22/source-review.json",
+            "research/evidence/2026-11-24/source-review.json"
+          ],
+          "policy_configuration_review": {
+            "checked_on": "2026-11-24",
+            "version": "82af4062e29e128910afa8622c866f4b99a4d23d",
+            "scope": "LLMAgent resolver -> Runner configure -> policy reader, ranges in source-review evidence",
+            "default_success_first": "observe with terminal gate, not Guide; explicit policy class default off separate",
+            "status": "static_subchain_reviewed",
+            "full_runner_read": false,
+            "actual_host_verified": false
+          }
         }
       ],
       "supplementary_analysis": [
         "research/solutions/aworld-protocol-persistence-boundary.md",
-        "research/solutions/aworld-controller-error-boundary.md"
+        "research/solutions/aworld-controller-error-boundary.md",
+        "research/solutions/aworld-policy-resolution-and-runtime.md"
       ]
     },
     {

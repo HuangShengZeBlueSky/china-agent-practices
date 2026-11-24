@@ -34,17 +34,26 @@
     {
       "path": "LICENSE",
       "bytes": 10292,
-      "sha256": "e359035ed218e1da4cd009b72242f1531ba3001a66d1217bda8c556749c00835"
+      "sha256": "e359035ed218e1da4cd009b72242f1531ba3001a66d1217bda8c556749c00835",
+      "git_blob": "587d3dcc197412eba6b4d713b803db89d9c7e580",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/LICENSE",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "NOTICE-Third Party",
       "bytes": 34181,
-      "sha256": "a521d0e5ee6973fc1fdad624a0696530916c679fe3f832922bd5ccd0dfcc3ea1"
+      "sha256": "a521d0e5ee6973fc1fdad624a0696530916c679fe3f832922bd5ccd0dfcc3ea1",
+      "git_blob": "1e7e8e5e085c25a9f0384573846ba83398a35c45",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/NOTICE-Third%20Party",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "README.md",
       "bytes": 21104,
-      "sha256": "be98aa2744f6c8b377f9321330b1f1efa2214b8ca0567d0bceca1f1f6f719ff0"
+      "sha256": "be98aa2744f6c8b377f9321330b1f1efa2214b8ca0567d0bceca1f1f6f719ff0",
+      "git_blob": "d53eff2b4b63605f892625e6a409b68066895243",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/README.md",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "README_DataAgent.md",
@@ -64,25 +73,124 @@
     {
       "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/BaseAgent.java",
       "bytes": 5159,
-      "sha256": "67a464057976dc041f0852f89d584d43ab92d28ca95196e9e5ac68259e84711f"
+      "sha256": "67a464057976dc041f0852f89d584d43ab92d28ca95196e9e5ac68259e84711f",
+      "git_blob": "3567d12354cf1de5b69ab476e82d590acae952d2",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/agent/BaseAgent.java",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/ExecutorAgent.java",
       "bytes": 8788,
-      "sha256": "44df1978063f292f36617a850f2c3f7caf5853dd7214312d29772a0064feb7ec"
+      "sha256": "44df1978063f292f36617a850f2c3f7caf5853dd7214312d29772a0064feb7ec",
+      "git_blob": "617c83448ea84c011c078def1c550b9b3a66eee2",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/agent/ExecutorAgent.java",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/PlanningAgent.java",
       "bytes": 8447,
-      "sha256": "731cd8067bb56cbec7f1c50fbdf7816d94a47eda9ff4b1c86b330e43c45d0904"
+      "sha256": "731cd8067bb56cbec7f1c50fbdf7816d94a47eda9ff4b1c86b330e43c45d0904",
+      "git_blob": "e5443057341ef3c8183fdd8ad7b592426baed041",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/agent/PlanningAgent.java",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "genie-backend/src/main/java/com/jd/genie/agent/tool/common/PlanningTool.java",
       "bytes": 7497,
       "sha256": "bf60af7744666ad38b6bee23233f753e49b42c90ad24394920d03d2f2cb4e8bb"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/ReActAgent.java",
+      "bytes": 4558,
+      "sha256": "0ea92e1a02e159d2d702e843d5e7584621cd3ad5976cf033c169460d8a8f24b2",
+      "git_blob": "d37b3bdd6918a64b9343f81bf9dd67b9aebf2dc7",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/agent/ReActAgent.java",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/dto/Memory.java",
+      "bytes": 2225,
+      "sha256": "dfeff75a2fb63d203adcbb3ae554f8e81808e988634c53f1093c37559f3ea3a9",
+      "git_blob": "be4a06a3284d2c3897069765515084e5128ace03",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/dto/Memory.java",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/dto/tool/ToolResult.java",
+      "bytes": 5120,
+      "sha256": "3cd2193919ff1df2f1e9e8179c018e66089f7ba590b1fcfbbe1f5bee906c07b2",
+      "git_blob": "05a8cc027271a2ff0c8ea5b8ba0f1f4391fa2291",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/dto/tool/ToolResult.java",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/llm/LLM.java",
+      "bytes": 58326,
+      "sha256": "d1b525a3f94da7e909b58527f4385a4d7e6eda4e7f9eba86dfade8502b86e77b",
+      "git_blob": "81bdc8322fc908697b5f2fdb1a93c39c2303bda2",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/llm/LLM.java",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/prompt/ToolCallPrompt.java",
+      "bytes": 2943,
+      "sha256": "c46c67dd7c12e149b2750a82641ce1c0cec73745fdcfeb07f7f85bec8c2a1ef3",
+      "git_blob": "0a7586fb5c7fe9054a34c3353adb08760bf369ea",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/prompt/ToolCallPrompt.java",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/tool/ToolCollection.java",
+      "bytes": 2968,
+      "sha256": "70cc871afcc436a6dd90b23341394dbd6f56e81e1a176571184a0562cc017faa",
+      "git_blob": "9bee795ef6966fa51cbbdeb880251ef3786c09ec",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/tool/ToolCollection.java",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/util/FileUtil.java",
+      "bytes": 968,
+      "sha256": "4d50ac465d8b179413a5afe4df0bd5674d81cd76ea0b3e5fc75fd20553c0bf76",
+      "git_blob": "0b0d67c6eb58e9def3236031793402cfd4db6b5e",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/util/FileUtil.java",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/util/ThreadUtil.java",
+      "bytes": 1353,
+      "sha256": "820854f3356c9966df85042e3b5e13cd5f3e243aac1aa0cb82da0822914dcb23",
+      "git_blob": "acac7a3a752affc93cb68cfb5ee4ecabada2e882",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/agent/util/ThreadUtil.java",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "genie-backend/src/main/java/com/jd/genie/service/impl/PlanSolveHandlerImpl.java",
+      "bytes": 7189,
+      "sha256": "f629ab8f1bc06f100298d5c303408789fb8da4af6826a1bbfc23fc4d1ad4049d",
+      "git_blob": "30c8b4b3ddb0577fe1876a641570cf326ee980f3",
+      "source_url": "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/genie-backend/src/main/java/com/jd/genie/service/impl/PlanSolveHandlerImpl.java",
+      "checked_on": "2026-11-24"
     }
   ],
   "skills": [],
   "git_history_included": false,
-  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。"
+  "submodule_lfs_note": "源码归档不包括子模块内容、Git 历史及未内嵌的 LFS 对象；符号链接保存在原归档，不作为本地可执行链接展开。",
+  "expanded_file_additions": [
+    {
+      "checked_on": "2026-11-24",
+      "files": [
+        "genie-backend/src/main/java/com/jd/genie/agent/agent/ReActAgent.java",
+        "genie-backend/src/main/java/com/jd/genie/agent/dto/Memory.java",
+        "genie-backend/src/main/java/com/jd/genie/agent/dto/tool/ToolResult.java",
+        "genie-backend/src/main/java/com/jd/genie/agent/llm/LLM.java",
+        "genie-backend/src/main/java/com/jd/genie/agent/prompt/ToolCallPrompt.java",
+        "genie-backend/src/main/java/com/jd/genie/agent/tool/ToolCollection.java",
+        "genie-backend/src/main/java/com/jd/genie/agent/util/FileUtil.java",
+        "genie-backend/src/main/java/com/jd/genie/agent/util/ThreadUtil.java",
+        "genie-backend/src/main/java/com/jd/genie/service/impl/PlanSolveHandlerImpl.java"
+      ],
+      "evidence": "research/evidence/2026-11-24/source-review.json",
+      "scope": "selected complete files; reading ranges separately recorded; historical archive parts retained, not redownloaded or rehashed"
+    }
+  ]
 }

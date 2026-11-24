@@ -1,0 +1,11259 @@
+# coding: utf-8
+# Copyright (c) 2025 inclusionAI.
+import time
+
+import asyncio
+import contextvars
+import copy
+import inspect
+import json
+import math
+import os
+import re
+import threading
+import traceback
+import uuid
+from collections import OrderedDict
+from dataclasses import dataclass, replace
+from datetime import datetime
+from enum import Enum
+from typing import Dict, Any, List, Callable, Mapping, Optional, Sequence, Union
+
+import aworld.trace as trace
+from aworld.config.conf import (
+    AgentConfig,
+    TaskConfig,
+    TaskRunMode,
+    resolve_provider_native_cache_intent,
+)
+from aworld.core.agent.agent_desc import get_agent_desc
+from aworld.core.agent.base import (
+    BaseAgent,
+    AgentResult,
+    is_agent_by_name,
+    is_agent,
+    AgentFactory,
+)
+from aworld.core.common import (
+    ActionResult,
+    Observation,
+    ActionModel,
+    Config,
+    TaskItem,
+    TaskStatusValue,
+)
+from aworld.core.context.amni.prompt.assembly import (
+    DefaultPromptAssemblyProvider,
+    PROMPT_SECTION_NAME_HINT_KEY,
+    PROMPT_STABILITY_HINT_KEY,
+    sanitize_prompt_messages,
+    validated_amni_system_sections,
+)
+from aworld.core.context.base import Context
+from aworld.core.context.generation_budget import (
+    GenerationBudgetController,
+    GenerationBudgetExceeded,
+    GenerationBudgetPolicy,
+    GenerationPhase,
+    GenerationStopReason,
+)
+from aworld.core.context.compiler.frozen_json import canonical_json_hash
+from aworld.core.context.compiler import CandidateRequestNotEnforceable
+from aworld.core.context.compiler.turn_economics import TurnCauseCode
+from aworld.core.execution_protocol import (
+    ControllerAction,
+    DecisionReason,
+    ExecutionProtocolPolicy,
+    ExecutionProtocolStore,
+    ProtocolPhase,
+    ProtocolMode,
+)
+from aworld.core.context.compiler.parity import (
+    ContextEntryPoint,
+    _ContextEntrypointClaim,
+    _bind_context_entrypoint_claim,
+    _issue_context_entrypoint_claim,
+)
+from aworld.core.trajectory import TRAJECTORY_LLM_CALL_ID_HEADER
+from aworld.core.context.prompts import StringPromptTemplate
+from aworld.core.event.base import (
+    Message,
+    ToolMessage,
+    Constants,
+    AgentMessage,
+    GroupMessage,
+    TopicType,
+    MemoryEventType as MemoryType,
+    MemoryEventMessage,
+    ChunkMessage,
+)
+from aworld.core.exceptions import AWorldRuntimeException, AWorldTransientModelError
+from aworld.core.model_output_parser import ModelOutputParser
+from aworld.core.tool.tool_desc import get_tool_desc
+from aworld.core.tool.surface import (
+    CapabilityProbe,
+    RequiredToolSurfaceUnavailable,
+    ToolCapabilitySpec,
+    ToolSurfaceProfile,
+    reconcile_tool_surface,
+)
+from aworld.events import eventbus
+from aworld.events.util import send_message, send_message_with_future
+from aworld.logs.prompt_log import PromptLogger
+from aworld.logs.util import (
+    logger,
+    Color,
+    digest_logger,
+    summarize_llm_payload_for_log,
+)
+from aworld.mcp_client.utils import (
+    mcp_tool_desc_transform,
+    process_mcp_tools,
+    skill_translate_tools,
+)
+from aworld.memory.main import MemoryFactory
+from aworld.memory.tool_call_compaction import collect_replay_message_metrics
+from aworld.memory.models import (
+    MemoryItem,
+    MemoryAIMessage,
+    MemoryMessage,
+    MemorySystemMessage,
+    MemoryToolMessage,
+)
+from aworld.memory.history_replay import causalize_memory_history
+from aworld.models.llm import (
+    ModelResponseParser,
+    acall_llm_model,
+    acall_llm_model_stream,
+    apply_chat_template,
+    bind_llm_context_call_id,
+    get_llm_model,
+)
+from aworld.models.model_response import ModelResponse
+from aworld.models.prompt_cache import (
+    resolve_provider_prompt_cache_key,
+    supports_provider_native_prompt_cache,
+    should_request_provider_native_cache,
+)
+from aworld.models.usage import normalize_usage
+from aworld.models.utils import (
+    tool_desc_transform,
+    agent_desc_transform,
+    usage_process,
+    ModelUtils,
+)
+from aworld.output import Outputs
+from aworld.output.base import MessageOutput, Output
+from aworld.runners.hook.hooks import HookPoint
+from aworld.runners.hook.utils import run_hooks
+from aworld.runners.post_tool_progress import (
+    acknowledge_semantic_checkpoint,
+    increment_watchdog_metric,
+    mark_post_tool_progress_llm_started,
+    post_tool_turn_for_continuation,
+    record_adaptive_context_metrics,
+    semantic_progress_for_agent,
+)
+from aworld.sandbox import Sandbox
+from aworld.utils.common import sync_exec, nest_dict_counter
+from aworld.utils.serialized_util import to_serializable
+from aworld.utils.task_grounding import (
+    anchor_matches_text,
+    extract_required_anchors,
+    extract_path_candidates,
+)
+from aworld.memory.tool_result_compaction import compact_tool_result_for_memory
+import aworld.runners.hook.agent_hooks
+
+
+# Provider SDKs are expected to cooperate with cancellation, but the framework
+# deadline must not depend on that cooperation.  This short grace only gives
+# transports a chance to release resources before their task is detached.
+_GENERATION_CLEANUP_GRACE_SECONDS = 0.1
+_MAX_CONFIGURED_PENDING_GENERATION_TASKS = 256
+_DETACHED_GENERATION_TASKS: set[asyncio.Task] = set()
+_ACTIVE_GENERATION_TASKS: set[asyncio.Task] = set()
+_GENERATION_TASKS_LOCK = threading.Lock()
+_LONG_HORIZON_EXECUTION_PROFILE_PARAM = "__aworld_execution_profile"
+_LONG_HORIZON_PLAN_UPDATE_PARAM = "__aworld_plan_update"
+_LONG_HORIZON_DECISION_TOOL = "aworld__execution_decision"
+_LONG_HORIZON_DECISION_BOUNDARY_ATTR = "_aworld_execution_decision_boundary"
+_LONG_HORIZON_HYPOTHESIS_PARAM = "__aworld_hypothesis_id"
+_ARTIFACT_OBSERVATION_TOOL = "observe_artifact"
+_ARTIFACT_MEDIA_CAPABILITY_SCHEMA = "aworld.artifact-media-capability/v1"
+_ARTIFACT_MEDIA_RECOVERY_SCHEMA = "aworld.artifact-media-recovery/v1"
+_PUBLIC_PROBE_PARAM = "__aworld_public_probe"
+_ACCEPTANCE_PROBE_PARAM = "__aworld_acceptance_probe"
+_REVIEW_DECISION_PARAM = "__aworld_review_decision"
+INDEPENDENT_ACCEPTANCE_CRITIC_ENV = "AWORLD_INDEPENDENT_ACCEPTANCE_CRITIC"
+SEMANTIC_PROGRESS_LEDGER_ENV = "AWORLD_SEMANTIC_PROGRESS_LEDGER"
+_PREPARED_TOOLS_UNSET = object()
+_ADAPTIVE_MEMORY_OCCURRENCE_KEY = "__aworld_internal_memory_occurrence_id"
+_ADAPTIVE_MEMORY_PROJECTION_LIMIT = 128
+_DEFER_ADAPTIVE_MEMORY_PROJECTION = contextvars.ContextVar(
+    "aworld_defer_adaptive_memory_projection",
+    default=False,
+)
+
+
+@dataclass(frozen=True, slots=True)
+class _LongHorizonControlOffer:
+    carrier_function_name: str | None = None
+    owned_parameters: frozenset[str] = frozenset()
+    injected_parameters: frozenset[str] = frozenset()
+    profile_schema_offered: bool = False
+    decision_boundary: str | None = None
+    decision_tool_names: frozenset[str] = frozenset()
+    decision_tool_aliases: tuple[tuple[str, str], ...] = ()
+
+    def matches(self, action: ActionModel) -> bool:
+        carrier = self.carrier_function_name
+        if carrier is None:
+            return False
+        tool_name = str(getattr(action, "tool_name", "") or "")
+        action_name = str(getattr(action, "action_name", "") or "")
+        return carrier in {
+            tool_name,
+            action_name,
+            f"{tool_name}__{action_name}",
+            f"{tool_name}:{action_name}",
+        }
+
+
+class _LongHorizonDecisionSchemaOverflow(ValueError):
+    """The complete trusted Tool-name enum cannot fit the decision surface."""
+
+
+# Only stable provider signals may enter task-level model recovery.  Human
+# error text is intentionally excluded: it is provider-specific, mutable, and
+# can turn deterministic request failures into unsafe retry loops.
+_TRANSIENT_MODEL_STATUS_CODES = frozenset({408, 425, 429, 500, 502, 503, 504})
+_TRANSIENT_MODEL_ERROR_CODES = frozenset(
+    {
+        "api_connection_error",
+        "connection_error",
+        "gateway_timeout",
+        "rate_limit_exceeded",
+        "server_error",
+        "service_unavailable",
+        "timeout",
+        "upstream_connection_error",
+        "upstream_disconnect",
+    }
+)
+_TRANSIENT_MODEL_EXCEPTION_TYPES = frozenset(
+    {
+        "APIConnectionError",
+        "APITimeoutError",
+        "ClientConnectionError",
+        "ClientConnectorError",
+        "ClientOSError",
+        "ClientPayloadError",
+        "ConnectError",
+        "ConnectTimeout",
+        "ConnectionResetError",
+        "IncompleteRead",
+        "InternalServerError",
+        "PoolTimeout",
+        "ReadError",
+        "ReadTimeout",
+        "RemoteProtocolError",
+        "ServerDisconnectedError",
+        "TimeoutError",
+        "WriteError",
+        "WriteTimeout",
+    }
+)
+
+# Provider transport success does not make a length-stopped or malformed model
+# action executable.  These reasons are produced only by
+# ``_incomplete_model_response_reason`` and remain task/model-owned: a normal
+# tool-capable turn may repair them while caller time and Agent step budget
+# remain.  Recovery is nevertheless bounded per unchanged observation so a
+# provider that repeatedly spends its entire output allowance on reasoning
+# cannot consume the caller deadline without producing an executable action.
+_RECOVERABLE_MODEL_RESPONSE_REASONS = frozenset(
+    {
+        "incomplete_tool_arguments",
+        "invalid_tool_arguments",
+        "malformed_tool_call_batch",
+        "model_output_interrupted",
+        "model_output_truncated",
+        "model_stream_ended_without_finish_reason",
+        "reasoning_only_response",
+    }
+)
+_MODEL_RESPONSE_RECOVERY_CONTEXT_KEY = "model_response_recovery_context"
+_MODEL_RESPONSE_RECOVERY_MAX_CONTINUATIONS = 3
+_LONG_HORIZON_REVIEW_DEADLINE_KEY = "long_horizon_review_deadline"
+_LONG_HORIZON_REVIEW_DEADLINE_SCHEMA = "aworld.review-deadline/v1"
+_LONG_HORIZON_DECISION_TIMEOUT_SECONDS = 45.0
+_TERMINAL_MODEL_LATENCY_KEY = "terminal_model_latency"
+_TERMINAL_MODEL_LATENCY_SCHEMA = "aworld.terminal-model-latency/v1"
+_TERMINAL_MODEL_LATENCY_SAMPLE_LIMIT = 16
+_TERMINAL_MODEL_LATENCY_FLOOR_SECONDS = 20.0
+_TERMINAL_MODEL_LATENCY_CAP_SECONDS = 180.0
+_PUBLIC_DELIVERABLE_SCHEMA = "aworld.public-deliverables/v1"
+_PUBLIC_CAPABILITY_SCHEMA = "aworld.public-capabilities/v1"
+_PUBLIC_DELIVERABLE_AUTHORITY = "public_task_advisory"
+_PUBLIC_DELIVERABLE_PROMPT_MARKER = "AWorld public deliverable milestones"
+
+
+def _default_on_env(name: str) -> bool:
+    raw = os.environ.get(name)
+    return raw is None or raw.strip().lower() not in {"0", "false", "no", "off"}
+
+
+def _one_shot_process_cleanup_enabled() -> bool:
+    value = os.environ.get("AWORLD_DIRECT_RUN_SHUTDOWN_TIMEOUT_SECONDS", "")
+    return bool(value.strip())
+
+
+def _configured_pending_generation_capacity() -> int | None:
+    raw = os.environ.get("AWORLD_MAX_PENDING_GENERATION_TASKS", "").strip()
+    if not raw:
+        return None
+    try:
+        value = int(raw)
+    except ValueError:
+        return None
+    return min(max(1, value), _MAX_CONFIGURED_PENDING_GENERATION_TASKS)
+
+
+DEFAULT_LLM_EXECUTION_TIMEOUT_SECONDS = 360.0
+EXECUTION_PROTOCOL_REVIEW_UNARMED_ENV = (
+    "AWORLD_EXECUTION_PROTOCOL_REVIEW_UNARMED_CANDIDATES"
+)
+SUCCESS_FIRST_ENV = "AWORLD_SUCCESS_FIRST"
+SUCCESS_FIRST_TERMINAL_GATE_ENV = "AWORLD_SUCCESS_FIRST_TERMINAL_GATE"
+
+
+def _success_first_enabled() -> bool:
+    """Return whether success-first semantics are enabled (the default)."""
+
+    raw = os.environ.get(SUCCESS_FIRST_ENV)
+    return raw is None or raw.strip().lower() not in {"0", "false", "no", "off"}
+
+
+def _success_first_terminal_gate_enabled() -> bool:
+    """Return whether success-first retains bounded terminal control."""
+
+    raw = os.environ.get(SUCCESS_FIRST_TERMINAL_GATE_ENV)
+    return raw is None or raw.strip().lower() not in {"0", "false", "no", "off"}
+
+
+def _monotonic_now() -> float:
+    """Return the process-local clock used by bounded review windows."""
+
+    return time.monotonic()
+
+
+@dataclass(frozen=True)
+class _ValidationRepairContinuation:
+    observation: Observation
+    kwargs: dict
+    validation_feedback: str = ""
+
+
+@dataclass(frozen=True)
+class _ExecutionDecisionContinuation:
+    observation: Observation
+    kwargs: dict
+
+
+@dataclass(frozen=True)
+class _LongHorizonReviewContinuation:
+    observation: Observation
+    kwargs: dict
+    fallback_actions: tuple[ActionModel, ...]
+
+
+class ToolCallParseIssueCode(str, Enum):
+    """Provider-neutral reasons why a declared tool call cannot be executed."""
+
+    MISSING_CALL_ID = "missing_call_id"
+    DUPLICATE_CALL_ID = "duplicate_call_id"
+    MISSING_FUNCTION = "missing_function"
+    MISSING_TOOL_NAME = "missing_tool_name"
+    EMPTY_ARGUMENTS = "empty_arguments"
+    INVALID_ARGUMENTS_JSON = "invalid_arguments_json"
+    ARGUMENTS_NOT_OBJECT = "arguments_not_object"
+    TOOL_NOT_IN_LIVE_SURFACE = "tool_not_in_live_surface"
+    MEDIA_CAPABILITY_UNAVAILABLE = "media_capability_unavailable"
+
+
+@dataclass(frozen=True, slots=True)
+class ModelToolCallSurface:
+    """Immutable authorization snapshot for one provider invocation."""
+
+    agent_id: str
+    task_id: str | None
+    task_epoch: int | None
+    tool_names: frozenset[str]
+    media_unavailable_reason: str | None = None
+
+    def rejection_code(self, name: str) -> ToolCallParseIssueCode | None:
+        if name in self.tool_names:
+            return None
+        if (
+            LLMAgent._is_artifact_observation_tool_name(name)
+            and self.media_unavailable_reason is not None
+        ):
+            return ToolCallParseIssueCode.MEDIA_CAPABILITY_UNAVAILABLE
+        return ToolCallParseIssueCode.TOOL_NOT_IN_LIVE_SURFACE
+
+
+@dataclass(frozen=True)
+class ToolCallParseIssue:
+    """Structured evidence for one malformed tool call in a model response."""
+
+    call_index: int
+    call_id: Optional[str]
+    code: ToolCallParseIssueCode
+
+
+class ToolCallBatchParseError(AWorldRuntimeException):
+    """Raised when a declared tool-call batch cannot be parsed atomically."""
+
+    def __init__(self, issues: List[ToolCallParseIssue]):
+        self.issues = tuple(issues)
+        summary = ", ".join(
+            f"#{issue.call_index + 1}:{issue.code.value}" for issue in self.issues
+        )
+        super().__init__(
+            f"Malformed tool-call batch; no tool calls were emitted ({summary})"
+        )
+
+
+class LlmOutputParser(ModelOutputParser[ModelResponse, AgentResult]):
+    async def parse(self, resp: ModelResponse, **kwargs) -> AgentResult:
+        """Parse agent result based ModelResponse."""
+
+        if not resp:
+            logger.warning("⚠️ no valid content to parse!")
+            return AgentResult(actions=[], current_state=None)
+
+        agent_id = kwargs.get("agent_id")
+        if not agent_id:
+            logger.warning("⚠️ need agent_id param.")
+            raise RuntimeError("no `agent_id` param.")
+
+        results = []
+        is_call_tool = False
+        content = "" if resp.content is None else resp.content
+
+        # Log parsing start
+        logger.debug(
+            f"🔍 [Agent:{agent_id}] Starting to parse model response, has_tool_calls={bool(resp.tool_calls)}, content_length={len(content)}"
+        )
+
+        if resp.tool_calls:
+            logger.info(
+                f"🛠️ [Agent:{agent_id}] Processing {len(resp.tool_calls)} tool call(s)"
+            )
+            parsed_tool_calls = []
+            parse_issues = []
+            seen_call_ids = set()
+            for idx, tool_call in enumerate(resp.tool_calls):
+                call_id = getattr(tool_call, "id", None)
+                function = getattr(tool_call, "function", None)
+                if not isinstance(call_id, str) or not call_id.strip():
+                    parse_issues.append(
+                        ToolCallParseIssue(
+                            call_index=idx,
+                            call_id=call_id,
+                            code=ToolCallParseIssueCode.MISSING_CALL_ID,
+                        )
+                    )
+                    continue
+                if call_id in seen_call_ids:
+                    parse_issues.append(
+                        ToolCallParseIssue(
+                            call_index=idx,
+                            call_id=call_id,
+                            code=ToolCallParseIssueCode.DUPLICATE_CALL_ID,
+                        )
+                    )
+                    continue
+                seen_call_ids.add(call_id)
+                if function is None:
+                    parse_issues.append(
+                        ToolCallParseIssue(
+                            call_index=idx,
+                            call_id=call_id,
+                            code=ToolCallParseIssueCode.MISSING_FUNCTION,
+                        )
+                    )
+                    continue
+
+                full_name = getattr(function, "name", None)
+                if not isinstance(full_name, str) or not full_name.strip():
+                    parse_issues.append(
+                        ToolCallParseIssue(
+                            call_index=idx,
+                            call_id=call_id,
+                            code=ToolCallParseIssueCode.MISSING_TOOL_NAME,
+                        )
+                    )
+                    continue
+
+                agent_info = kwargs.get("agent")
+                tool_call_surface = kwargs.get("tool_call_surface")
+                if isinstance(tool_call_surface, ModelToolCallSurface):
+                    rejection_code = tool_call_surface.rejection_code(full_name)
+                    if rejection_code is not None:
+                        parse_issues.append(
+                            ToolCallParseIssue(
+                                call_index=idx,
+                                call_id=call_id,
+                                code=rejection_code,
+                            )
+                        )
+                        continue
+                action_guard = getattr(agent_info, "is_model_tool_call_allowed", None)
+                if (
+                    not isinstance(tool_call_surface, ModelToolCallSurface)
+                    and callable(action_guard)
+                ):
+                    try:
+                        action_allowed = action_guard(full_name)
+                    except Exception:
+                        action_allowed = False
+                    if action_allowed is not True:
+                        rejection_code = ToolCallParseIssueCode.TOOL_NOT_IN_LIVE_SURFACE
+                        rejection_resolver = getattr(
+                            agent_info,
+                            "model_tool_call_rejection_code",
+                            None,
+                        )
+                        if callable(rejection_resolver):
+                            try:
+                                resolved_code = rejection_resolver(full_name)
+                            except Exception:
+                                resolved_code = None
+                            if isinstance(resolved_code, ToolCallParseIssueCode):
+                                rejection_code = resolved_code
+                        parse_issues.append(
+                            ToolCallParseIssue(
+                                call_index=idx,
+                                call_id=call_id,
+                                code=rejection_code,
+                            )
+                        )
+                        continue
+
+                logger.info(
+                    f"🔧 [Agent:{agent_id}] Processing tool call #{idx + 1}: {full_name}, call_id={tool_call.id}"
+                )
+
+                raw_arguments = getattr(function, "arguments", None)
+                if not isinstance(raw_arguments, str) or not raw_arguments.strip():
+                    parse_issues.append(
+                        ToolCallParseIssue(
+                            call_index=idx,
+                            call_id=call_id,
+                            code=ToolCallParseIssueCode.EMPTY_ARGUMENTS,
+                        )
+                    )
+                    continue
+
+                try:
+                    params = json.loads(raw_arguments)
+                except (json.JSONDecodeError, TypeError, ValueError):
+                    parse_issues.append(
+                        ToolCallParseIssue(
+                            call_index=idx,
+                            call_id=call_id,
+                            code=ToolCallParseIssueCode.INVALID_ARGUMENTS_JSON,
+                        )
+                    )
+                    continue
+                if not isinstance(params, dict):
+                    parse_issues.append(
+                        ToolCallParseIssue(
+                            call_index=idx,
+                            call_id=call_id,
+                            code=ToolCallParseIssueCode.ARGUMENTS_NOT_OBJECT,
+                        )
+                    )
+                    continue
+
+                parsed_tool_calls.append((tool_call, full_name, params))
+                logger.debug(
+                    f"✅ [Agent:{agent_id}] Successfully parsed tool arguments for {full_name}: {len(params)} param(s)"
+                )
+
+            if parse_issues:
+                logger.warning(
+                    f"⚠️ [Agent:{agent_id}] Rejected malformed tool-call batch: "
+                    + ", ".join(
+                        f"#{issue.call_index + 1}:{issue.code.value}"
+                        for issue in parse_issues
+                    )
+                )
+                raise ToolCallBatchParseError(parse_issues)
+
+            for tool_call, full_name, params in parsed_tool_calls:
+                # format in framework
+                # agent_info = AgentFactory.agent_instance(agent_id)
+                agent_info = kwargs.get("agent")
+                original_name = full_name
+                if (
+                    not full_name.startswith("mcp__")
+                    and agent_info
+                    and agent_info.sandbox
+                    and agent_info.sandbox.mcpservers
+                    and agent_info.sandbox.mcpservers.mcp_servers
+                ):
+                    # The friendly-name mapping is Agent-scoped.  A shared
+                    # Sandbox can serve multiple agents with disjoint MCP
+                    # allowlists; reading its mutable compatibility mapping
+                    # lets the last initialized agent redirect earlier calls.
+                    agent_tool_mapping = getattr(agent_info, "tool_mapping", {})
+                    if agent_tool_mapping:
+                        _original_tool = agent_tool_mapping.get(full_name)
+                        if _original_tool:
+                            # map_tool_list maps friendly name to original "server__tool" format
+                            # e.g., "bash" → "terminal__mcp_execute_command"
+                            full_name = f"mcp__{_original_tool}"
+                            logger.info(
+                                f"🔄 [Agent:{agent_id}] Mapped tool name: {original_name} -> {full_name} (via agent tool_mapping)"
+                            )
+                    else:
+                        tmp_names = full_name.split("__")
+                        tmp_tool_name = tmp_names[0]
+                        if tmp_tool_name in agent_info.sandbox.mcpservers.mcp_servers:
+                            full_name = f"mcp__{full_name}"
+                            logger.info(
+                                f"🔄 [Agent:{agent_id}] Mapped tool name: {original_name} -> {full_name} (via mcp_servers)"
+                            )
+
+                names = full_name.split("__")
+                tool_name = names[0]
+                if is_agent_by_name(full_name):
+                    param_info = (
+                        params.get("content", "") + " " + params.get("info", "")
+                    )
+                    results.append(
+                        ActionModel(
+                            tool_name=full_name,
+                            model_visible_tool_name=original_name,
+                            tool_call_id=tool_call.id,
+                            agent_name=agent_id,
+                            params=params,
+                            policy_info=content + param_info,
+                        )
+                    )
+                    is_call_tool = True
+                    logger.debug(
+                        f"🤖 [Agent:{agent_id}] Added agent action: {full_name}"
+                    )
+                else:
+                    action_name = "__".join(names[1:]) if len(names) > 1 else ""
+                    results.append(
+                        ActionModel(
+                            tool_name=tool_name,
+                            model_visible_tool_name=original_name,
+                            tool_call_id=tool_call.id,
+                            action_name=action_name,
+                            agent_name=agent_id,
+                            params=params,
+                            policy_info=content,
+                        )
+                    )
+                    is_call_tool = True
+                    logger.info(
+                        f"🔨 [Agent:{agent_id}] Added tool action: {tool_name}_{action_name}"
+                    )
+        if not is_call_tool:
+            if not content and resp.reasoning_content:
+                logger.info(
+                    f"💬 [Agent:{agent_id}] No tool calls or content, added reasoning content to action"
+                )
+                content = resp.reasoning_content
+            results.append(ActionModel(agent_name=agent_id, policy_info=content))
+            logger.debug(
+                f"💬 [Agent:{agent_id}] No tool calls, added text response action (content_length={len(content)})"
+            )
+
+        logger.info(
+            f"✅ [Agent:{agent_id}] Parse completed: {len(results)} action(s), is_call_tool={is_call_tool}"
+        )
+        return AgentResult(
+            actions=results, current_state=None, is_call_tool=is_call_tool
+        )
+
+
+class LLMAgent(BaseAgent[Observation, List[ActionModel]]):
+    """Basic agent for unified protocol within the framework."""
+
+    def __init__(
+        self,
+        name: str,
+        conf: Config | None = None,
+        desc: str = None,
+        agent_id: str = None,
+        *,
+        task: Any = None,
+        tool_names: List[str] = None,
+        agent_names: List[str] = None,
+        mcp_servers: List[str] = None,
+        mcp_config: Dict[str, Any] = None,
+        feedback_tool_result: bool = True,
+        wait_tool_result: bool = False,
+        sandbox: Sandbox = None,
+        system_prompt: str = None,
+        need_reset: bool = True,
+        step_reset: bool = True,
+        use_tools_in_prompt: bool = False,
+        black_tool_actions: Dict[str, List[str]] = None,
+        model_output_parser: Union[
+            ModelOutputParser[..., AgentResult],
+            Callable[[ModelResponse, Any], AgentResult],
+        ] = LlmOutputParser(),
+        tool_aggregate_func: Callable[..., Any] = None,
+        event_handler_name: str = None,
+        event_driven: bool = True,
+        skill_configs: Dict[str, Any] = None,
+        llm_max_attempts: int = 2,
+        llm_retry_delay: float = 10.0,
+        generation_budget_policy: GenerationBudgetPolicy | None = None,
+        execution_protocol_policy: ExecutionProtocolPolicy | None = None,
+        tool_surface_specs: Sequence[ToolCapabilitySpec] | None = None,
+        tool_surface_profile: ToolSurfaceProfile | None = None,
+        tool_surface_probes: Sequence[CapabilityProbe] | None = None,
+        enable_subagent: bool = False,
+        subagent_search_paths: List[str] = None,
+        **kwargs,
+    ):
+        """A api class implementation of agent, using the `Observation` and `List[ActionModel]` protocols.
+
+        Args:
+            system_prompt: Instruction of the agent.
+            need_reset: Whether need to reset the status in start.
+            step_reset: Reset the status at each step
+            use_tools_in_prompt: Whether the tool description in prompt.
+            black_tool_actions: Black list of actions of the tool.
+            model_output_parser: Llm response parse function for the agent result, transform llm response.
+            output_converter: Function to convert ModelResponse to AgentResult.
+            tool_aggregate_func: Aggregation strategy for multiple tool results.
+            event_handler_name: Custom handlers for certain types of events.
+            llm_max_attempts: Maximum number of attempts to call LLM. Default is 2. Includes stream and non-stream retries with exponential backoff.
+            llm_retry_delay: Base delay in seconds between retry attempts. Default is 10.0s. Uses exponential backoff (10s, 20s, 40s...).
+            generation_budget_policy: Optional typed model-generation deadline
+                                      policy. By default it is resolved from
+                                      ``llm_config.context_compiler``.
+            execution_protocol_policy: Optional developer override for AWorld's
+                                       default domain-independent convergence
+                                       policy. Ordinary callers should omit it;
+                                       explicit off/observe policies are retained
+                                       for rollback and controlled experiments.
+            enable_subagent: Enable subagent delegation capability. When True, agent can spawn specialized subagents
+                             to handle subtasks autonomously. Automatically adds spawn_subagent tool and scans for
+                             available subagents (TeamSwarm members + agent.md files). Default: False.
+            subagent_search_paths: Custom directories to search for agent.md files. If None, uses default paths:
+                                   ['./.aworld/agents', '~/.aworld/agents', './agents']. Only used when enable_subagent=True.
+        """
+        if conf is None:
+            model_name = os.getenv("LLM_MODEL_NAME")
+            api_key = os.getenv("LLM_API_KEY")
+            base_url = os.getenv("LLM_BASE_URL")
+
+            assert api_key and model_name, (
+                "LLM_MODEL_NAME and LLM_API_KEY (environment variables) must be set, or pass AgentConfig explicitly"
+            )
+            logger.info(
+                f"AgentConfig is empty, using env variables:\n LLM_BASE_URL={base_url}\n"
+                f"LLM_MODEL_NAME={model_name}"
+            )
+
+            conf = AgentConfig(
+                llm_provider=os.getenv("LLM_PROVIDER", "openai"),
+                llm_model_name=model_name,
+                llm_api_key=api_key,
+                llm_base_url=base_url,
+                llm_temperature=float(os.getenv("LLM_TEMPERATURE", "0.7")),
+            )
+        serialized_generation_fields = kwargs.pop(
+            "_generation_budget_explicit_fields", None
+        )
+        if serialized_generation_fields is None:
+            source_llm_config = (
+                conf.get("llm_config")
+                if isinstance(conf, dict)
+                else getattr(conf, "llm_config", None)
+            )
+            source_compiler_config = (
+                source_llm_config.get("context_compiler")
+                if isinstance(source_llm_config, dict)
+                else getattr(source_llm_config, "context_compiler", None)
+            )
+            source_fields = (
+                source_compiler_config.keys()
+                if isinstance(source_compiler_config, dict)
+                else getattr(source_compiler_config, "model_fields_set", set())
+            )
+        else:
+            source_fields = serialized_generation_fields
+        self._generation_budget_explicit_fields = frozenset(
+            str(name) for name in source_fields if str(name).startswith("generation_")
+        )
+        super(Agent, self).__init__(
+            name,
+            conf,
+            desc,
+            agent_id,
+            task=task,
+            tool_names=tool_names,
+            agent_names=agent_names,
+            mcp_servers=mcp_servers,
+            mcp_config=mcp_config,
+            black_tool_actions=black_tool_actions,
+            feedback_tool_result=feedback_tool_result,
+            wait_tool_result=wait_tool_result,
+            sandbox=sandbox,
+            skill_configs=skill_configs,
+            **kwargs,
+        )
+        conf = self.conf
+        self.model_name = conf.llm_config.llm_model_name
+        self._llm = None
+        self.memory_config = conf.memory_config
+        self.system_prompt: str = system_prompt if system_prompt else conf.system_prompt
+        self.event_driven = event_driven
+
+        self.need_reset = need_reset if need_reset else conf.need_reset
+        # whether to keep contextual information, False means keep, True means reset in every step by the agent call
+        self.step_reset = step_reset
+
+        # Initialize output parser and converter
+        # Agent layer parsing (conversion to AgentResult) happens here
+        self.output_converter = model_output_parser or LlmOutputParser()
+
+        # To maintain compatibility, we use a new parser class for the Model layer
+        # if the user hasn't explicitly set one in llm_config.
+        # LLM layer parsing (e.g. tool extraction) happens there,
+        if self.conf.llm_config and not self.conf.llm_config.llm_response_parser:
+            self.conf.llm_config.llm_response_parser = ModelResponseParser()
+
+        self.use_tools_in_prompt = (
+            use_tools_in_prompt if use_tools_in_prompt else conf.use_tools_in_prompt
+        )
+        self.tools_aggregate_func = (
+            tool_aggregate_func if tool_aggregate_func else self._tools_aggregate_func
+        )
+        self.event_handler_name = event_handler_name
+        self.context = kwargs.get("context", None)
+        self._runtime_completion_contract = kwargs.get("completion_contract")
+        self._runtime_completion_mode = kwargs.get("completion_mode")
+        self._runtime_completion_evidence_resolver = kwargs.get(
+            "completion_evidence_resolver"
+        )
+        self.llm_max_attempts = max(1, llm_max_attempts)  # Ensure at least 1 attempt
+        self.llm_retry_delay = llm_retry_delay
+        if generation_budget_policy is not None and not isinstance(
+            generation_budget_policy, GenerationBudgetPolicy
+        ):
+            raise TypeError(
+                "generation_budget_policy must be a GenerationBudgetPolicy or None"
+            )
+        self._explicit_generation_budget_policy = generation_budget_policy
+        if execution_protocol_policy is not None and not isinstance(
+            execution_protocol_policy, ExecutionProtocolPolicy
+        ):
+            raise TypeError(
+                "execution_protocol_policy must be ExecutionProtocolPolicy or None"
+            )
+        self._explicit_execution_protocol_policy = execution_protocol_policy
+        self._tool_surface_specs = tuple(tool_surface_specs or ())
+        self._tool_surface_profile = tool_surface_profile or ToolSurfaceProfile()
+        self._tool_surface_probes = tuple(tool_surface_probes or ())
+        if not all(
+            isinstance(spec, ToolCapabilitySpec) for spec in self._tool_surface_specs
+        ):
+            raise TypeError("tool_surface_specs must contain ToolCapabilitySpec values")
+        if not isinstance(self._tool_surface_profile, ToolSurfaceProfile):
+            raise TypeError("tool_surface_profile must be a ToolSurfaceProfile")
+        if not all(
+            isinstance(probe, CapabilityProbe) for probe in self._tool_surface_probes
+        ):
+            raise TypeError("tool_surface_probes must contain CapabilityProbe values")
+        self.tool_surface_receipt = None
+
+        # Initialize subagent capability if enabled
+        self.enable_subagent = enable_subagent
+        self.subagent_manager = None
+        if enable_subagent:
+            self._init_subagent(subagent_search_paths)
+
+    def _init_subagent(self, search_paths: List[str] = None):
+        """
+        Initialize subagent delegation capability.
+
+        Creates SubagentManager with lazy initialization for agent.md scanning.
+        Scanning is deferred until first spawn() call to avoid sync_exec in __init__.
+
+        Note: TeamSwarm member registration happens lazily in async_desc_transform
+        when Swarm topology is available.
+
+        Args:
+            search_paths: Custom directories to search for agent.md files.
+                         Will be used for lazy scanning on first spawn.
+        """
+        from aworld.core.agent.subagent_manager import SubagentManager
+
+        try:
+            # Step 1: Create SubagentManager with lazy initialization
+            # agent.md files will be scanned on first spawn() call (async context)
+            # This avoids sync_exec in __init__ which can cause nested event loop issues
+            self.subagent_manager = SubagentManager(
+                agent=self, agent_md_search_paths=search_paths
+            )
+            logger.info(
+                f"Agent '{self.name()}': SubagentManager created "
+                f"(agent.md scanning deferred until first spawn)"
+            )
+
+            # Step 2: Check if spawn_subagent tool is in tool_names
+            # SpawnSubagentTool is globally registered via @ToolFactory.register decorator.
+            # Each agent instance will have its own SubagentManager, which will be
+            # accessed by the tool at runtime via BaseAgent._get_current_agent().
+            # Users must explicitly add 'async_spawn_subagent' (or 'spawn_subagent') to tool_names
+            # if they want spawn capability.
+            # Note: AsyncTool is registered with 'async_' prefix by ToolFactory
+            has_spawn_tool = (
+                "async_spawn_subagent" in self.tool_names
+                or "spawn_subagent" in self.tool_names
+            )
+            if has_spawn_tool:
+                logger.info(
+                    f"Agent '{self.name()}': Subagent capability enabled with spawn_subagent tool. "
+                    f"This agent can delegate tasks to subagents."
+                )
+            else:
+                logger.info(
+                    f"Agent '{self.name()}': Subagent capability enabled (can be spawned by other agents). "
+                    f"To enable spawning subagents, add 'async_spawn_subagent' to tool_names."
+                )
+
+            # Step 3: System prompt update deferred
+            # Available subagents section will be generated on first spawn after scanning
+            # This is acceptable because:
+            # - System prompt is primarily for LLM guidance, not critical for execution
+            # - Subagents are discovered dynamically and can be listed via spawn errors
+            # - Avoids sync_exec overhead in __init__
+            logger.debug(
+                f"Agent '{self.name()}': System prompt subagent section will be "
+                f"generated on first spawn (lazy initialization)"
+            )
+
+        except Exception as e:
+            logger.error(
+                f"Agent '{self.name()}': Failed to initialize subagent capability: {e}"
+            )
+            # Disable subagent on initialization failure
+            self.enable_subagent = False
+            self.subagent_manager = None
+
+    def configure_completion_contract(
+        self,
+        contract,
+        *,
+        mode,
+        evidence_resolver=None,
+    ) -> None:
+        """Bind a runtime contract that is installed into every execution Context."""
+        from aworld.core.context.compiler import CompletionContract, CompletionMode
+
+        if not isinstance(contract, CompletionContract):
+            raise TypeError("contract must be a CompletionContract")
+        self._runtime_completion_contract = contract
+        self._runtime_completion_mode = CompletionMode(mode)
+        if evidence_resolver is not None and not callable(evidence_resolver):
+            raise TypeError("evidence_resolver must be callable or None")
+        self._runtime_completion_evidence_resolver = evidence_resolver
+
+    def _install_runtime_completion_contract(self, context: Context) -> None:
+        contract = self._runtime_completion_contract
+        if contract is None:
+            return
+        from aworld.core.context.compiler import CompletionMode
+
+        mode = self._runtime_completion_mode or getattr(
+            self.llm, "_context_completion_mode", "off"
+        )
+        existing = context.completion_contract
+        owned_extension = existing is getattr(
+            context, "_goal_completion_owned_contract", None
+        )
+        if (
+            existing is not None
+            and owned_extension
+            and any(
+                contract is getattr(context, attribute, None)
+                for attribute in ("_goal_completion_base_contract",)
+            )
+        ):
+            # The local executor appended explicit goal verification to this
+            # caller contract. Reinstalling it would silently drop those checks.
+            return
+        if existing is not None and existing != contract:
+            raise ValueError(
+                "the Context and primary Agent supply conflicting completion contracts"
+            )
+        if (
+            existing == contract
+            and context.completion_mode is CompletionMode(mode)
+            and getattr(context, "_completion_evidence_resolver", None)
+            is self._runtime_completion_evidence_resolver
+        ):
+            return
+        context.configure_completion_contract(
+            contract,
+            mode=CompletionMode(mode),
+            evidence_resolver=self._runtime_completion_evidence_resolver,
+        )
+
+    def _resolve_execution_protocol_policy(
+        self, context: Context | None = None
+    ) -> ExecutionProtocolPolicy:
+        """Use an explicit override or AWorld's default convergence policy."""
+        if self._explicit_execution_protocol_policy is not None:
+            return self._explicit_execution_protocol_policy
+        success_first = _success_first_enabled()
+        if success_first:
+            # Benchmark callers already own a hard task deadline, per-call
+            # timeouts, and process-tree cleanup. Keep ordinary execution in
+            # observe mode, but retain one bounded terminal path so a finished
+            # candidate cannot spend the entire caller budget on further
+            # inspection without ever reaching review and finalization.
+            terminal_gate = _success_first_terminal_gate_enabled()
+            policy = ExecutionProtocolPolicy(
+                mode=ProtocolMode.OBSERVE,
+                review_unarmed_candidates=False,
+                terminal_review_gate_enabled=terminal_gate,
+                independent_acceptance_enabled=False,
+                semantic_progress_enabled=True,
+                max_final_reviews=2 if terminal_gate else None,
+                max_repairs=1 if terminal_gate else None,
+                finalization_reserve_seconds=60.0 if terminal_gate else 0.0,
+                candidate_decision_reserve_seconds=(
+                    240.0 if terminal_gate else 0.0
+                ),
+                final_review_timeout_seconds=120.0 if terminal_gate else None,
+            )
+        else:
+            skill = (self.skill_configs or {}).get("long-running-agent")
+            active = isinstance(skill, dict) and skill.get("active") is True
+            # Convergence is a baseline AWorld capability, not a Skill toggle.
+            # The long-running Skill retains only its broader review behavior;
+            # callers may still pass an explicit OFF/OBSERVE policy for rollback or
+            # controlled experiments.
+            review_unarmed_candidates = _default_on_env(
+                EXECUTION_PROTOCOL_REVIEW_UNARMED_ENV
+            )
+            policy = ExecutionProtocolPolicy(
+                mode=ProtocolMode.GUIDE,
+                review_unarmed_candidates=(
+                    review_unarmed_candidates if active else False
+                ),
+                independent_acceptance_enabled=_default_on_env(
+                    INDEPENDENT_ACCEPTANCE_CRITIC_ENV
+                ),
+                semantic_progress_enabled=_default_on_env(
+                    SEMANTIC_PROGRESS_LEDGER_ENV
+                ),
+            )
+        if context is None or (
+            success_first and not policy.terminal_review_gate_enabled
+        ):
+            return policy
+
+        # Derive a stable three-part deadline once from typed Task budget:
+        # solve window -> bounded finalization -> caller-owned persistence.
+        # ``Task.timeout`` is the original lifetime, so this does not shrink on
+        # every policy lookup as ``remaining_seconds()`` would.
+        get_task = getattr(context, "get_task", None)
+        try:
+            task = get_task() if callable(get_task) else None
+            total = getattr(task, "timeout", None)
+            external_reserve = getattr(task, "completion_reserve_seconds", None)
+        except Exception:
+            return policy
+        if isinstance(total, bool) or not isinstance(total, (int, float)) or total <= 0:
+            return policy
+        if (
+            isinstance(external_reserve, bool)
+            or not isinstance(external_reserve, (int, float))
+            or external_reserve < 0
+        ):
+            external_reserve = 0.0
+        available = max(0.0, float(total) - float(external_reserve))
+        # Reserve scheduling is distinct from the semantic review timeout.
+        # ``configure_execution_protocol`` derives the latter from the caller
+        # budget when no explicit value is supplied; this small fallback only
+        # sizes the earlier finalization reserve.
+        review_reserve_cap = (
+            float(policy.final_review_timeout_seconds)
+            if policy.final_review_timeout_seconds is not None
+            else 45.0
+        )
+        finalization_window = min(review_reserve_cap, 0.15 * available)
+        protocol_reserve = float(external_reserve) + max(0.1, finalization_window)
+        # Even malformed caller budgets must leave a non-empty solve window.
+        protocol_reserve = min(
+            protocol_reserve,
+            max(0.0, float(total) - min(0.1, float(total) * 0.5)),
+        )
+        delivery_window = min(300.0, max(120.0, float(total) * 0.1))
+        candidate_reserve = min(
+            protocol_reserve + delivery_window,
+            max(0.0, float(total) - min(0.1, float(total) * 0.5)),
+        )
+        return replace(
+            policy,
+            finalization_reserve_seconds=protocol_reserve,
+            candidate_decision_reserve_seconds=candidate_reserve,
+        )
+
+    def _long_horizon_skill_active(self) -> bool:
+        skill = (self.skill_configs or {}).get("long-running-agent")
+        return isinstance(skill, dict) and skill.get("active") is True
+
+    def _candidate_review_boundary_available(
+        self,
+        context: Context,
+        *,
+        tools: List[Dict[str, Any]] | None,
+    ) -> bool:
+        """Return whether a candidate can enter a meaningful review boundary.
+
+        Baseline GUIDE remains available for observed long work, but a bare
+        Agent cannot answer the typed horizon question when the long-running
+        controls or every ordinary Tool are absent.  Sending that unclassified
+        candidate through ``CANDIDATE_FINAL`` would manufacture a review turn
+        solely because the unreachable profile defaults to ``unknown``.
+        Explicit review policy, an existing profile, an armed observation
+        state, and already-entered review/finalization phases remain intact.
+        """
+
+        from aworld.runners.execution_protocol import (
+            execution_protocol_control_eligible,
+            execution_protocol_policy,
+        )
+
+        try:
+            policy = execution_protocol_policy(context, self.id())
+            state = ExecutionProtocolStore(context, self.id(), policy).load()
+        except Exception:
+            # Protocol accounting is advisory at this boundary.  Preserve the
+            # established path when state cannot be inspected safely.
+            return True
+        if policy.mode is ProtocolMode.OFF:
+            return False
+        if (
+            state.review_pending
+            or state.phase in {ProtocolPhase.REVIEW, ProtocolPhase.FINALIZE}
+            or state.long_horizon_armed
+            or policy.review_unarmed_candidates
+            or policy.independent_acceptance_enabled
+        ):
+            return True
+        return execution_protocol_control_eligible(context, self.id()) and bool(tools)
+
+    @staticmethod
+    def _long_horizon_execution_profile_schema() -> dict[str, Any]:
+        return {
+            "type": "object",
+            "description": (
+                "Required model-owned horizon choice at AWorld's initial decision "
+                "boundary. Choose unknown when evidence is insufficient; the "
+                "framework does not infer or override this classification."
+            ),
+            "additionalProperties": False,
+            "properties": {
+                "horizon": {
+                    "type": "string",
+                    "enum": ["unknown", "short", "long"],
+                },
+                "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+                "milestone_count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64,
+                },
+                "expected_tool_actions": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 1024,
+                },
+                "verification_required": {"type": "boolean"},
+                "workspace_mutation_required": {
+                    "type": "boolean",
+                    "description": (
+                        "True only when satisfying the public task requires creating "
+                        "or modifying workspace state; false for inspection, diagnosis, "
+                        "explanation, or other read-only outcomes."
+                    ),
+                },
+            },
+            "required": [
+                "horizon",
+                "confidence",
+                "milestone_count",
+                "expected_tool_actions",
+                "verification_required",
+                "workspace_mutation_required",
+            ],
+        }
+
+    @staticmethod
+    def _bounded_tool_argument_contract(parameters: Any) -> str | None:
+        """Describe top-level Tool arguments without copying recursive schemas."""
+
+        if not isinstance(parameters, dict):
+            return "{}"
+        properties = parameters.get("properties")
+        if not isinstance(properties, dict):
+            return "{}"
+        required = {
+            name for name in parameters.get("required", ()) if isinstance(name, str)
+        }
+        eligible: list[tuple[str, Any]] = []
+        for name, field_schema in properties.items():
+            if not isinstance(name, str) or not name or len(name) > 64:
+                if name in required:
+                    return None
+                continue
+            eligible.append((name, field_schema))
+        eligible.sort(key=lambda item: (item[0] not in required, item[0]))
+        if len(required) > 16:
+            return None
+        fields: list[str] = []
+        for name, field_schema in eligible[:16]:
+            schema = field_schema if isinstance(field_schema, dict) else {}
+            raw_type = schema.get("type")
+            if isinstance(raw_type, str):
+                kind = (
+                    raw_type
+                    if raw_type
+                    in {
+                        "array",
+                        "boolean",
+                        "integer",
+                        "null",
+                        "number",
+                        "object",
+                        "string",
+                    }
+                    else "value"
+                )
+            elif isinstance(raw_type, list):
+                kinds = [
+                    item
+                    for item in raw_type[:4]
+                    if isinstance(item, str)
+                    and item
+                    in {
+                        "array",
+                        "boolean",
+                        "integer",
+                        "null",
+                        "number",
+                        "object",
+                        "string",
+                    }
+                ]
+                kind = "|".join(dict.fromkeys(kinds)) or "value"
+            else:
+                kind = "value"
+            fields.append(
+                f"{json.dumps(name, ensure_ascii=False)}:{kind}"
+                + ("!" if name in required else "")
+            )
+        if not required.issubset({name for name, _ in eligible[:16]}):
+            return None
+        if len(eligible) > len(fields):
+            fields.append("…")
+        contract = "{" + ",".join(fields) + "}"
+        return contract if len(contract) <= 1024 else None
+
+    @classmethod
+    def _long_horizon_plan_update_schema(
+        cls,
+        available_tools: Sequence[Dict[str, Any]] = (),
+    ) -> dict[str, Any]:
+        catalog_names: list[str] = []
+        contract_candidates: list[tuple[str, str]] = []
+        seen_names: set[str] = set()
+        for schema in available_tools:
+            function = schema.get("function") if isinstance(schema, dict) else None
+            name = function.get("name") if isinstance(function, dict) else None
+            if (
+                not isinstance(name, str)
+                or not name.strip()
+                or len(name.strip()) > 256
+                or name == _LONG_HORIZON_DECISION_TOOL
+                or name.strip() in seen_names
+            ):
+                continue
+            normalized_name = name.strip()
+            seen_names.add(normalized_name)
+            catalog_names.append(normalized_name)
+            contract = cls._bounded_tool_argument_contract(function.get("parameters"))
+            if contract is None:
+                continue
+            contract_candidates.append((normalized_name, contract))
+        catalog_names.sort()
+        tool_contracts = sorted(contract_candidates)
+        next_action_tool_schema: dict[str, Any] = {
+            "anyOf": [{"type": "null"}],
+            "description": (
+                "Exact available Tool function expected for the next action, "
+                "or null only when no Tool action is planned. AWorld compares "
+                "this typed identity without parsing next_action prose."
+            ),
+        }
+        if catalog_names:
+            next_action_tool_schema["anyOf"].insert(
+                0,
+                {"type": "string", "enum": catalog_names},
+            )
+        argument_description = (
+            "JSON object string containing the exact arguments for "
+            "next_action_tool, or null only for submit_current or "
+            "submit_uncertain. AWorld "
+            "stores only a fingerprint and compares it with the next observed "
+            "Tool action. Bounded top-level contracts keyed by exact Tool name "
+            "(! means required): "
+        )
+        next_action_arguments_schema: dict[str, Any] = {
+            "anyOf": [
+                {"type": "string", "maxLength": 4096},
+                {"type": "null"},
+            ],
+            "description": argument_description
+            + json.dumps(
+                dict(tool_contracts),
+                ensure_ascii=False,
+                separators=(",", ":"),
+            ),
+        }
+        schema = {
+            "type": "object",
+            "description": (
+                "Required model-owned decision at an AWorld planning checkpoint. "
+                "Choose continue or replan and state the next bounded action. Its "
+                "statements are planning claims, never verification evidence."
+            ),
+            "additionalProperties": False,
+            "properties": {
+                "decision": {
+                    "type": "string",
+                    "enum": ["continue", "replan"],
+                },
+                "horizon": {
+                    "type": "string",
+                    "enum": ["unknown", "short", "long"],
+                },
+                "milestone": {"type": "string", "maxLength": 512},
+                "next_action": {"type": "string", "maxLength": 1024},
+                "next_action_tool": next_action_tool_schema,
+                "next_action_arguments": next_action_arguments_schema,
+                "verification_plan": {"type": "string", "maxLength": 1024},
+                "completion_assessment": {
+                    "type": "string",
+                    "enum": ["in_progress", "uncertain", "candidate_ready"],
+                },
+                "delivery_intent": {
+                    "type": "string",
+                    "enum": [
+                        "continue_exploration",
+                        "produce_candidate",
+                        "validate_candidate",
+                        "submit_current",
+                        "submit_uncertain",
+                    ],
+                    "description": (
+                        "The model-owned delivery choice for the next bounded "
+                        "step. AWorld records later alignment but does not "
+                        "select a command or decide correctness."
+                    ),
+                },
+                "delivery_rationale": {
+                    "type": "string",
+                    "maxLength": 1024,
+                    "description": (
+                        "Evidence-linked reason for the delivery choice, "
+                        "including why further exploration is justified when "
+                        "a candidate is deferred."
+                    ),
+                },
+                "assumptions": {
+                    "type": "array",
+                    "maxItems": 8,
+                    "items": {"type": "string", "maxLength": 512},
+                },
+                "retired_approaches": {
+                    "type": "array",
+                    "maxItems": 8,
+                    "items": {"type": "string", "maxLength": 512},
+                },
+                "evidence_refs": {
+                    "type": "array",
+                    "maxItems": 16,
+                    "items": {"type": "string", "maxLength": 256},
+                },
+                "selected_candidate_id": {
+                    "anyOf": [
+                        {"type": "string", "maxLength": 128},
+                        {"type": "null"},
+                    ]
+                },
+            },
+            "required": [
+                "decision",
+                "horizon",
+                "milestone",
+                "next_action",
+                "next_action_tool",
+                "next_action_arguments",
+                "verification_plan",
+                "completion_assessment",
+                "delivery_intent",
+                "delivery_rationale",
+                "assumptions",
+                "retired_approaches",
+                "evidence_refs",
+                "selected_candidate_id",
+            ],
+        }
+
+        def serialized_size() -> int:
+            return len(
+                json.dumps(
+                    schema,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+            )
+
+        while serialized_size() >= 8_000 and tool_contracts:
+            tool_contracts.pop()
+            next_action_arguments_schema["description"] = (
+                argument_description
+                + json.dumps(
+                    dict(tool_contracts),
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+            )
+        if serialized_size() >= 8_000:
+            raise _LongHorizonDecisionSchemaOverflow(
+                "complete decision Tool catalog exceeds the bounded schema"
+            )
+        return schema
+
+    @staticmethod
+    def _public_probe_schema() -> dict[str, Any]:
+        return {
+            "type": "object",
+            "description": (
+                "Optional model-designed public self-check attached to the Tool "
+                "call that executes it. Describe the concrete hypothesis and "
+                "highest-risk counterexample. AWorld binds the observed result "
+                "to the public request and current candidate as advisory evidence; "
+                "it never represents benchmark reward or canonical acceptance."
+            ),
+            "additionalProperties": False,
+            "properties": {
+                "hypothesis_id": {"type": "string", "maxLength": 128},
+                "highest_risk_counterexample": {
+                    "type": "string",
+                    "maxLength": 1024,
+                },
+                "probe_kind": {
+                    "type": "string",
+                    "enum": ["smoke", "regression", "counterexample", "invariant"],
+                },
+            },
+            "required": [
+                "hypothesis_id",
+                "highest_risk_counterexample",
+                "probe_kind",
+            ],
+        }
+
+    @staticmethod
+    def _long_horizon_control_carrier(
+        tools: List[Dict[str, Any]],
+    ) -> tuple[int, str] | None:
+        reserved = {
+            _LONG_HORIZON_EXECUTION_PROFILE_PARAM,
+            _LONG_HORIZON_PLAN_UPDATE_PARAM,
+            _LONG_HORIZON_HYPOTHESIS_PARAM,
+            _PUBLIC_PROBE_PARAM,
+        }
+        candidates: list[tuple[int, int, str]] = []
+        for index, schema in enumerate(tools):
+            function = schema.get("function") if isinstance(schema, dict) else None
+            parameters = (
+                function.get("parameters") if isinstance(function, dict) else None
+            )
+            properties = (
+                parameters.get("properties") if isinstance(parameters, dict) else None
+            )
+            name = function.get("name") if isinstance(function, dict) else None
+            if (
+                not isinstance(name, str)
+                or not name
+                or not isinstance(properties, dict)
+                or reserved.intersection(properties)
+            ):
+                continue
+            normalized = name.casefold()
+            priority = (
+                0
+                if "terminal" in normalized
+                and any(token in normalized for token in ("execute", "run", "shell"))
+                else 1
+                if any(
+                    token in normalized for token in ("execute", "run", "write", "edit")
+                )
+                else 2
+            )
+            candidates.append((priority, index, name))
+        if not candidates:
+            return None
+        _, index, name = min(candidates)
+        return index, name
+
+    def _with_long_horizon_execution_profile(
+        self,
+        tools: List[Dict[str, Any]] | None,
+        context: Context,
+    ) -> tuple[List[Dict[str, Any]] | None, _LongHorizonControlOffer]:
+        """Expose an explicit planning boundary or optional per-Tool probes."""
+        empty_offer = _LongHorizonControlOffer()
+        from aworld.runners.execution_protocol import (
+            acceptance_critic_active,
+            execution_protocol_model_decision_boundary,
+            execution_protocol_policy,
+        )
+
+        # Strict acceptance uses a fresh, independently constrained request.
+        # Solver planning and self-check controls must not enter that surface.
+        if acceptance_critic_active(context, self.id()):
+            return tools, empty_offer
+        policy = execution_protocol_policy(context, self.id())
+        boundary = execution_protocol_model_decision_boundary(context, self.id())
+        try:
+            protocol_state = ExecutionProtocolStore(
+                context,
+                self.id(),
+                policy,
+            ).load()
+        except Exception:
+            protocol_state = None
+        terminal_checkpoint = bool(
+            protocol_state is not None
+            and protocol_state.decision_checkpoint_pending
+            and protocol_state.decision_checkpoint_reason
+            is DecisionReason.CANDIDATE_DECISION_RESERVE
+        )
+        # OBSERVE is telemetry-only until the explicitly enabled terminal gate
+        # reaches its one bounded candidate-decision checkpoint.  That
+        # checkpoint is control-plane owned and must be exposed even though the
+        # earlier success-first execution phase deliberately remains OBSERVE.
+        if policy.mode is not ProtocolMode.GUIDE and boundary is None:
+            return tools, empty_offer
+        if boundary == "initial" and not self._long_horizon_skill_active():
+            contract = getattr(context, "context_info", {}).get(
+                "public_deliverable_contract"
+            )
+            contract_declared = bool(
+                isinstance(contract, dict)
+                and contract.get("schema_version") == _PUBLIC_DELIVERABLE_SCHEMA
+                and contract.get("authority") == _PUBLIC_DELIVERABLE_AUTHORITY
+                and contract.get("source") == "public_task_text"
+            )
+            # Default GUIDE stays prompt-inert for genuinely short/unprofiled
+            # work.  Once runtime observations arm the task, or the public task
+            # declares a delivery contract, the framework-owned checkpoint is
+            # reachable even without the optional long-running Skill.
+            if not (
+                protocol_state is not None
+                and (protocol_state.long_horizon_armed or contract_declared)
+            ):
+                return tools, empty_offer
+        if not tools and boundary is not None and not terminal_checkpoint:
+            return tools, empty_offer
+        if boundary is not None:
+            # This internal control action consumes no user Tool authority and
+            # selects no task strategy. The model must own both classification
+            # and next-step choice before ordinary Tool execution resumes.
+            # The framework namespace is reserved. Ignore a colliding task Tool
+            # rather than letting it suppress or impersonate the pending
+            # control-plane checkpoint.
+            ordinary_tools = [
+                schema
+                for schema in (tools or ())
+                if not (
+                    isinstance(schema, dict)
+                    and schema.get("function", {}).get("name")
+                    == _LONG_HORIZON_DECISION_TOOL
+                )
+            ]
+            decision_tool_names = frozenset(
+                name.strip()
+                for schema in ordinary_tools
+                if isinstance(schema, dict)
+                for function in (schema.get("function", {}),)
+                if isinstance(function, dict)
+                for name in (function.get("name"),)
+                if isinstance(name, str)
+                and name.strip()
+                and len(name.strip()) <= 256
+                and name != _LONG_HORIZON_DECISION_TOOL
+            )
+            raw_tool_mapping = getattr(self, "tool_mapping", {}) or {}
+            decision_tool_aliases = tuple(
+                sorted(
+                    (name, target.strip())
+                    for name in decision_tool_names
+                    for target in (raw_tool_mapping.get(name),)
+                    if isinstance(target, str)
+                    and target.strip()
+                    and len(target.strip()) <= 256
+                )
+            )[:256]
+            try:
+                plan_update_schema = self._long_horizon_plan_update_schema(
+                    ordinary_tools
+                )
+            except _LongHorizonDecisionSchemaOverflow:
+                from aworld.runners.execution_protocol import (
+                    record_model_decision_unavailable,
+                )
+
+                record_model_decision_unavailable(
+                    context,
+                    self.id(),
+                    boundary=boundary,
+                    reason="decision_schema_overflow",
+                )
+                # The typed fail-open transition owns the next finalization
+                # turn. Never leak ordinary task Tools from the failed
+                # checkpoint request.
+                return ([] if terminal_checkpoint else tools), empty_offer
+            properties = {_LONG_HORIZON_PLAN_UPDATE_PARAM: plan_update_schema}
+            required = [_LONG_HORIZON_PLAN_UPDATE_PARAM]
+            injected = {_LONG_HORIZON_PLAN_UPDATE_PARAM}
+            if boundary == "initial":
+                properties[_LONG_HORIZON_EXECUTION_PROFILE_PARAM] = (
+                    self._long_horizon_execution_profile_schema()
+                )
+                required.insert(0, _LONG_HORIZON_EXECUTION_PROFILE_PARAM)
+                injected.add(_LONG_HORIZON_EXECUTION_PROFILE_PARAM)
+            return [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": _LONG_HORIZON_DECISION_TOOL,
+                        "description": (
+                            "AWorld internal model-owned execution checkpoint. "
+                            "Record the requested bounded decision; no user Tool "
+                            "is executed by this action."
+                        ),
+                        "parameters": {
+                            "type": "object",
+                            "additionalProperties": False,
+                            "properties": properties,
+                            "required": required,
+                        },
+                    },
+                }
+            ], _LongHorizonControlOffer(
+                carrier_function_name=_LONG_HORIZON_DECISION_TOOL,
+                owned_parameters=frozenset(injected),
+                injected_parameters=frozenset(injected),
+                profile_schema_offered=boundary == "initial",
+                decision_boundary=boundary,
+                decision_tool_names=decision_tool_names,
+                decision_tool_aliases=decision_tool_aliases,
+            )
+
+        if not tools:
+            return tools, empty_offer
+
+        augmented = copy.deepcopy(tools)
+        carrier = self._long_horizon_control_carrier(augmented)
+        if carrier is None:
+            return augmented, empty_offer
+        carrier_index, carrier_name = carrier
+        properties = augmented[carrier_index]["function"]["parameters"]["properties"]
+        injected: set[str] = set()
+        properties[_PUBLIC_PROBE_PARAM] = self._public_probe_schema()
+        injected.add(_PUBLIC_PROBE_PARAM)
+        properties[_LONG_HORIZON_HYPOTHESIS_PARAM] = {
+            "type": "string",
+            "maxLength": 128,
+            "description": (
+                "Optional stable id for the hypothesis this Tool call tests. "
+                "AWorld removes it before Tool execution."
+            ),
+        }
+        injected.add(_LONG_HORIZON_HYPOTHESIS_PARAM)
+        return augmented, _LongHorizonControlOffer(
+            carrier_function_name=carrier_name,
+            owned_parameters=frozenset(
+                {
+                    _LONG_HORIZON_EXECUTION_PROFILE_PARAM,
+                    _LONG_HORIZON_PLAN_UPDATE_PARAM,
+                    _LONG_HORIZON_HYPOTHESIS_PARAM,
+                    _PUBLIC_PROBE_PARAM,
+                }
+            ),
+            injected_parameters=frozenset(injected),
+        )
+
+    def _consume_long_horizon_execution_profile(
+        self,
+        result: AgentResult,
+        context: Context,
+        *,
+        offer: _LongHorizonControlOffer,
+    ) -> str:
+        """Consume a decision boundary or strip optional per-Tool metadata."""
+        profiles: list[Any] = []
+        plan_updates: list[Any] = []
+        hypotheses: dict[str, str] = {}
+        matched_actions = [
+            action for action in (result.actions or ()) if offer.matches(action)
+        ]
+        for action in matched_actions:
+            params = getattr(action, "params", None)
+            if not isinstance(params, dict):
+                continue
+            if _LONG_HORIZON_EXECUTION_PROFILE_PARAM in params and (
+                _LONG_HORIZON_EXECUTION_PROFILE_PARAM in offer.owned_parameters
+            ):
+                value = params.pop(_LONG_HORIZON_EXECUTION_PROFILE_PARAM)
+                if _LONG_HORIZON_EXECUTION_PROFILE_PARAM in offer.injected_parameters:
+                    profiles.append(value)
+            if _LONG_HORIZON_PLAN_UPDATE_PARAM in params and (
+                _LONG_HORIZON_PLAN_UPDATE_PARAM in offer.owned_parameters
+            ):
+                value = params.pop(_LONG_HORIZON_PLAN_UPDATE_PARAM)
+                if _LONG_HORIZON_PLAN_UPDATE_PARAM in offer.injected_parameters:
+                    plan_updates.append(value)
+            hypothesis = (
+                params.pop(_LONG_HORIZON_HYPOTHESIS_PARAM, None)
+                if _LONG_HORIZON_HYPOTHESIS_PARAM in offer.injected_parameters
+                else None
+            )
+            if (
+                isinstance(hypothesis, str)
+                and hypothesis.strip()
+                and isinstance(action.tool_call_id, str)
+            ):
+                hypotheses[action.tool_call_id] = hypothesis.strip()[:128]
+        if hypotheses:
+            from aworld.runners.execution_protocol import record_tool_hypotheses
+
+            record_tool_hypotheses(context, self.id(), hypotheses)
+        if offer.decision_boundary is None:
+            return "not_offered"
+        if (
+            len(matched_actions) != 1
+            or len(result.actions or ()) != 1
+            or len(plan_updates) != 1
+            or (offer.profile_schema_offered and len(profiles) != 1)
+            or (not offer.profile_schema_offered and profiles)
+        ):
+            from aworld.runners.execution_protocol import (
+                record_model_decision_attempt_failure,
+            )
+
+            return (
+                "retry"
+                if record_model_decision_attempt_failure(
+                    context,
+                    self.id(),
+                    boundary=offer.decision_boundary,
+                )
+                else "fail_open"
+            )
+        from aworld.runners.execution_protocol import (
+            record_model_decision_attempt_failure,
+            record_model_decision_boundary,
+        )
+
+        acknowledged = record_model_decision_boundary(
+            context,
+            self.id(),
+            boundary=offer.decision_boundary,
+            execution_profile=(profiles[0] if profiles else None),
+            plan_update=plan_updates[0],
+            available_tool_names=offer.decision_tool_names,
+            available_tool_aliases=dict(offer.decision_tool_aliases),
+            decision_tool_call_id=matched_actions[0].tool_call_id,
+        )
+        if acknowledged:
+            return "acknowledged"
+        return (
+            "retry"
+            if record_model_decision_attempt_failure(
+                context,
+                self.id(),
+                boundary=offer.decision_boundary,
+            )
+            else "fail_open"
+        )
+
+    def _consume_public_probe_controls(
+        self,
+        result: AgentResult,
+        context: Context,
+        *,
+        offer: _LongHorizonControlOffer,
+    ) -> int:
+        """Strip and bind optional public self-check metadata before dispatch."""
+        from aworld.runners.execution_protocol import record_public_probe_plan
+
+        recorded = 0
+        for action in result.actions or ():
+            if (
+                _PUBLIC_PROBE_PARAM not in offer.injected_parameters
+                or not offer.matches(action)
+            ):
+                continue
+            params = getattr(action, "params", None)
+            if not isinstance(params, dict):
+                continue
+            value = params.pop(_PUBLIC_PROBE_PARAM, None)
+            if value is None:
+                continue
+            if record_public_probe_plan(
+                context,
+                self.id(),
+                tool_call_id=str(action.tool_call_id or ""),
+                tool_identity=f"{action.tool_name or ''}:{action.action_name or ''}",
+                arguments_projection=params,
+                value=value,
+            ):
+                recorded += 1
+        return recorded
+
+    @staticmethod
+    def _acceptance_probe_schema() -> dict[str, Any]:
+        return {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "hypothesis_id": {"type": "string", "maxLength": 128},
+                "highest_risk_counterexample": {
+                    "type": "string",
+                    "maxLength": 1024,
+                },
+                "probe_kind": {
+                    "type": "string",
+                    "enum": ["independent_cross_check"],
+                },
+            },
+            "required": [
+                "hypothesis_id",
+                "highest_risk_counterexample",
+                "probe_kind",
+            ],
+            "description": (
+                "Required only during AWorld independent acceptance review. "
+                "Describe the single highest-risk counterexample tested by this "
+                "fresh probe. Only a framework/caller pre-registered completion "
+                "validation command can produce acceptance evidence. The "
+                "framework removes this object before execution."
+            ),
+        }
+
+    def _with_acceptance_probe_control(
+        self,
+        tools: List[Dict[str, Any]] | None,
+        context: Context,
+    ) -> List[Dict[str, Any]] | None:
+        from aworld.runners.execution_protocol import (
+            acceptance_critic_active,
+            load_acceptance_critic_state,
+        )
+
+        if (
+            not tools
+            or not acceptance_critic_active(context, self.id())
+            or load_acceptance_critic_state(context, self.id()).get("status")
+            == "observed"
+        ):
+            return tools
+        augmented = []
+        for schema in tools:
+            candidate = copy.deepcopy(schema)
+            function = (
+                candidate.get("function") if isinstance(candidate, dict) else None
+            )
+            parameters = (
+                function.get("parameters") if isinstance(function, dict) else None
+            )
+            properties = (
+                parameters.get("properties") if isinstance(parameters, dict) else None
+            )
+            if isinstance(properties, dict):
+                properties[_ACCEPTANCE_PROBE_PARAM] = self._acceptance_probe_schema()
+                required = parameters.get("required")
+                required = list(required) if isinstance(required, list) else []
+                if _ACCEPTANCE_PROBE_PARAM not in required:
+                    required.append(_ACCEPTANCE_PROBE_PARAM)
+                parameters["required"] = required
+            augmented.append(candidate)
+        return augmented
+
+    @staticmethod
+    def _review_decision_schema() -> dict[str, Any]:
+        return {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "decision": {"type": "string", "enum": ["repair"]},
+                "reason": {"type": "string", "maxLength": 1024},
+            },
+            "required": ["decision", "reason"],
+            "description": (
+                "Optional only during model-owned completion reflection. Set "
+                "this object on the concrete Tool call that begins a necessary "
+                "repair after observing a material gap. Omit it for inspection "
+                "or verification. AWorld removes it before Tool execution."
+            ),
+        }
+
+    def _with_model_review_control(
+        self,
+        tools: List[Dict[str, Any]] | None,
+        context: Context,
+    ) -> List[Dict[str, Any]] | None:
+        from aworld.runners.execution_protocol import model_owned_review_active
+
+        if not tools or not model_owned_review_active(context, self.id()):
+            return tools
+        augmented = []
+        for schema in tools:
+            candidate = copy.deepcopy(schema)
+            function = (
+                candidate.get("function") if isinstance(candidate, dict) else None
+            )
+            parameters = (
+                function.get("parameters") if isinstance(function, dict) else None
+            )
+            if isinstance(parameters, dict):
+                properties = parameters.get("properties")
+                if not isinstance(properties, dict):
+                    properties = {}
+                    parameters["properties"] = properties
+                properties[_REVIEW_DECISION_PARAM] = self._review_decision_schema()
+            augmented.append(candidate)
+        return augmented
+
+    def _consume_model_review_control(
+        self, result: AgentResult, context: Context
+    ) -> bool:
+        """Strip review controls and apply only one strict repair marker."""
+        values = []
+        for action in result.actions or ():
+            params = getattr(action, "params", None)
+            if not isinstance(params, dict):
+                continue
+            if _REVIEW_DECISION_PARAM in params:
+                values.append(params.pop(_REVIEW_DECISION_PARAM))
+        if len(values) != 1:
+            return False
+        from aworld.runners.execution_protocol import (
+            record_review_repair_decision,
+        )
+
+        transition = record_review_repair_decision(context, self.id(), values[0])
+        return bool(
+            transition is not None
+            and transition.decision.action is ControllerAction.REQUEST_REPAIR
+        )
+
+    def _consume_acceptance_probe_control(
+        self, result: AgentResult, context: Context
+    ) -> bool:
+        """Strip and bind one independently identified critic probe."""
+        from aworld.runners.execution_protocol import record_acceptance_probe_plan
+
+        actions = tuple(result.actions or ())
+        if len(actions) != 1:
+            return False
+        action = actions[0]
+        params = getattr(action, "params", None)
+        if not isinstance(params, dict):
+            return False
+        value = params.pop(_ACCEPTANCE_PROBE_PARAM, None)
+        if not isinstance(value, dict):
+            return False
+        if set(value) != {
+            "hypothesis_id",
+            "highest_risk_counterexample",
+            "probe_kind",
+        }:
+            return False
+        return record_acceptance_probe_plan(
+            context,
+            self.id(),
+            tool_call_id=str(action.tool_call_id or ""),
+            hypothesis_id=value.get("hypothesis_id"),
+            highest_risk_counterexample=value.get("highest_risk_counterexample"),
+            tool_identity=f"{action.tool_name or ''}:{action.action_name or ''}",
+            arguments_projection=params,
+            probe_kind=value.get("probe_kind"),
+        )
+
+    def _fresh_acceptance_messages(self, context: Context) -> list[dict[str, str]]:
+        from aworld.core.execution_protocol import (
+            AcceptanceProbeReceipt,
+            fresh_acceptance_critic_messages,
+        )
+        from aworld.runners.execution_protocol import (
+            load_acceptance_critic_state,
+            load_candidate_fallback,
+        )
+        from aworld.runners.post_tool_progress import semantic_progress_for_agent
+
+        fallback = load_candidate_fallback(context, self.id()) or ()
+        candidate = (
+            str(getattr(fallback[0], "policy_info", "") or "") if fallback else ""
+        )
+        critic_state = load_acceptance_critic_state(context, self.id())
+        receipt = None
+        if isinstance(critic_state.get("receipt"), dict):
+            try:
+                receipt = AcceptanceProbeReceipt.from_dict(critic_state["receipt"])
+            except (TypeError, ValueError):
+                receipt = None
+        return fresh_acceptance_critic_messages(
+            public_request=self._authoritative_request_from_context(context),
+            candidate=candidate,
+            evidence=semantic_progress_for_agent(context, agent_id=self.id()),
+            probe_receipt=receipt,
+            probe_hypothesis_id=critic_state.get("hypothesis_id"),
+            probe_counterexample=critic_state.get("highest_risk_counterexample"),
+        )
+
+    async def _completion_feedback_if_unsatisfied(
+        self, *, context: Context, final_response_text: str
+    ) -> str | None:
+        contract = context.completion_contract
+        if contract is None:
+            return None
+        from aworld.core.context.compiler import CompletionMode, CompletionStatus
+
+        if final_response_text.strip():
+            context.record_completion_final_evidence("agent_final_response")
+        try:
+            await context.resolve_completion_evidence()
+        except Exception as exc:
+            logger.warning(
+                "Completion evidence resolver failed for agent "
+                f"{self.id()}: {type(exc).__name__}: {str(exc)[:500]}"
+            )
+            context.context_info[f"completion_evidence_error:{self.id()}"] = {
+                "error_type": type(exc).__name__,
+                "message": str(exc)[:500],
+            }
+        finally:
+            context.context_info[
+                f"completion_evidence_resolved_this_turn:{self.id()}"
+            ] = context.get_agent_step(self.id())
+        assessment = context.assess_completion_contract(agent_claimed_finished=True)
+        enforcement_explicit = context.context_info.get(
+            "completion_enforcement_explicit",
+            True,
+        )
+        if (
+            assessment is None
+            or assessment.mode is CompletionMode.OFF
+            or assessment.status is CompletionStatus.SATISFIED
+            or enforcement_explicit is False
+        ):
+            return None
+        reasons = ", ".join(assessment.reason_codes)
+        diagnostics = ", ".join(assessment.diagnostic_codes)
+        if assessment.status is CompletionStatus.REPAIR_REQUIRED:
+            context.increment_completion_repair_attempt()
+        return (
+            "The runtime completion contract rejected the completion claim "
+            f"({reasons})."
+            + (
+                f" Stable validation diagnostics: {diagnostics}."
+                if diagnostics
+                else ""
+            )
+            + " Continue working, gather new evidence, and rerun focused checks."
+        )
+
+    @staticmethod
+    def _public_deliverable_artifacts(context: Context) -> tuple[dict[str, str], ...]:
+        """Return validated advisory output declarations from public task text."""
+
+        value = context.context_info.get("public_deliverable_contract")
+        if (
+            not isinstance(value, dict)
+            or value.get("schema_version") != _PUBLIC_DELIVERABLE_SCHEMA
+        ):
+            return ()
+        if (
+            value.get("authority") != _PUBLIC_DELIVERABLE_AUTHORITY
+            or value.get("source") != "public_task_text"
+        ):
+            return ()
+        artifacts = value.get("artifacts")
+        if not isinstance(artifacts, list) or len(artifacts) > 16:
+            return ()
+        validated = []
+        for item in artifacts:
+            if not isinstance(item, dict) or item.get("kind") != "file":
+                return ()
+            if item.get("authority") != _PUBLIC_DELIVERABLE_AUTHORITY:
+                return ()
+            path = item.get("path")
+            display_path = item.get("display_path")
+            deliverable_id = item.get("deliverable_id")
+            if not all(
+                isinstance(field, str) and 0 < len(field) <= 4096
+                for field in (path, display_path, deliverable_id)
+            ):
+                return ()
+            validated.append(
+                {
+                    "deliverable_id": deliverable_id,
+                    "path": path,
+                    "display_path": display_path,
+                }
+            )
+        return tuple(validated)
+
+    def _public_deliverable_feedback_if_unsatisfied(
+        self, context: Context
+    ) -> str | None:
+        """Block a success claim when an explicit public output is not a candidate.
+
+        This is a narrow inspectability milestone, not content validation or
+        verifier acceptance. It rejects only missing, blank, or known whole-file
+        placeholders and cannot turn an eligible file into canonical task success.
+        """
+
+        from aworld.runners.public_deliverables import inspect_public_deliverable
+
+        artifacts = self._public_deliverable_artifacts(context)
+        if not artifacts:
+            return None
+        observations = []
+        missing = []
+        for item in artifacts:
+            inspection = inspect_public_deliverable(item["path"])
+            observations.append(
+                {
+                    "deliverable_id": item["deliverable_id"],
+                    "path": item["path"],
+                    "exists": inspection.exists,
+                    "candidate_eligible": inspection.candidate_eligible,
+                    "rejection_reason": inspection.rejection_reason,
+                }
+            )
+            if not inspection.candidate_eligible:
+                missing.append(item)
+        context.context_info["public_deliverable_observations"] = {
+            "schema_version": _PUBLIC_DELIVERABLE_SCHEMA,
+            "artifacts": observations,
+        }
+        if not missing:
+            return None
+        names = ", ".join(item["display_path"] for item in missing)
+        return (
+            "The public task explicitly names deliverable file(s) that are "
+            f"missing, blank, or still placeholders: {names}. Treat the task "
+            "as unfinished. Create a minimally inspectable candidate, then "
+            "verify its existence and contents "
+            "before proposing another final response. This advisory milestone "
+            "does not replace any content validator or canonical verifier."
+        )
+
+    @staticmethod
+    def _public_executable_hints(context: Context) -> tuple[str, ...]:
+        value = context.context_info.get("public_capability_hints")
+        if (
+            not isinstance(value, dict)
+            or value.get("schema_version") != _PUBLIC_CAPABILITY_SCHEMA
+            or value.get("authority") != _PUBLIC_DELIVERABLE_AUTHORITY
+            or value.get("source") != "public_task_text"
+        ):
+            return ()
+        rows = value.get("executables")
+        if not isinstance(rows, list) or len(rows) > 16:
+            return ()
+        result = []
+        for row in rows:
+            executable = row.get("executable") if isinstance(row, dict) else None
+            if (
+                not isinstance(executable, str)
+                or not executable
+                or len(executable) > 64
+                or row.get("authority") != _PUBLIC_DELIVERABLE_AUTHORITY
+            ):
+                return ()
+            result.append(executable)
+        return tuple(result)
+
+    def _record_llm_call_request(
+        self,
+        message: Message,
+        messages: List[Dict[str, Any]],
+        *,
+        started_at: str | None = None,
+        tools: List[Dict[str, Any]] | None = None,
+        request_params: Dict[str, Any] | None = None,
+        reserved_call_id: str | None = None,
+    ) -> str:
+        """Persist one request snapshot without overwriting prior LLM call state."""
+        started_at = started_at or datetime.now().isoformat()
+        call_id = reserved_call_id or uuid.uuid4().hex
+        if isinstance(getattr(message, "headers", None), dict):
+            message.headers[TRAJECTORY_LLM_CALL_ID_HEADER] = call_id
+        serializable_messages = to_serializable(messages)
+        context = message.context
+        context_info = context.context_info
+        context.append_llm_call(
+            {
+                "capture_stage": "compiled",
+                "call_id": call_id,
+                "record_kind": "agent_observability",
+                "step_id": message.context.current_step_id()
+                if message.context
+                else None,
+                "agent_id": self.id(),
+                "started_at": started_at,
+                "request": {
+                    "messages": serializable_messages,
+                    "tools": to_serializable(tools),
+                    "params": to_serializable(request_params or {}),
+                },
+                "request_metrics": collect_replay_message_metrics(
+                    serializable_messages
+                ),
+            },
+            event_type="compiler_request_captured",
+        )
+        # Backward-compatible aliases for current readers.
+        context_info["llm_input"] = serializable_messages
+        context_info["llm_call_start_time"] = started_at
+        return call_id
+
+    def _safe_record_llm_call_request(self, *args, **kwargs) -> str:
+        """Reserve correlation even when optional Agent-side capture fails."""
+        call_id = uuid.uuid4().hex
+        try:
+            return self._record_llm_call_request(
+                *args, reserved_call_id=call_id, **kwargs
+            )
+        except Exception as exc:
+            logger.warning(
+                f"Agent LLM request capture failed; error_type={type(exc).__name__}"
+            )
+            return call_id
+
+    def _record_llm_call_response(
+        self,
+        message: Message,
+        call_id: str,
+        llm_response: ModelResponse | None,
+    ) -> None:
+        """Attach response/usage to the matching call record and preserve legacy aliases."""
+        context = message.context
+        context_info = context.context_info
+        llm_calls = context.get_llm_calls()
+        serialized_response = None
+        serialized_usage = None
+        if llm_response is not None:
+            serialized_response = (
+                llm_response.to_dict()
+                if hasattr(llm_response, "to_dict")
+                else to_serializable(llm_response)
+            )
+            serialized_usage = to_serializable(getattr(llm_response, "usage", None))
+            cache_usage_recorder = getattr(
+                context,
+                "record_append_only_prompt_cache_usage",
+                None,
+            )
+            if callable(cache_usage_recorder) and isinstance(
+                serialized_usage, dict
+            ):
+                try:
+                    normalized_cache_usage = normalize_usage(serialized_usage)
+                    cache_usage_recorder(
+                        namespace=self.id(),
+                        cache_hit_tokens=normalized_cache_usage.get(
+                            "cache_hit_tokens", 0
+                        ),
+                        cache_write_tokens=normalized_cache_usage.get(
+                            "cache_write_tokens", 0
+                        ),
+                    )
+                except Exception as exc:
+                    logger.warning(
+                        "Amini prompt cache evidence recording failed; "
+                        f"error_type={type(exc).__name__}"
+                    )
+
+        prompt_session_receipt = None
+        runtime_state_reader = getattr(context, "read_task_runtime_state", None)
+        if callable(runtime_state_reader):
+            try:
+                from aworld.core.context.amni.prompt.session import (
+                    PROMPT_SESSION_STATE_KEY,
+                )
+
+                prompt_session_state = runtime_state_reader(
+                    self.id(), PROMPT_SESSION_STATE_KEY
+                )
+                if isinstance(prompt_session_state, dict) and isinstance(
+                    prompt_session_state.get("last_transition"), dict
+                ):
+                    prompt_session_receipt = dict(
+                        prompt_session_state["last_transition"]
+                    )
+            except Exception as exc:
+                logger.warning(
+                    "Amini prompt session receipt projection failed; "
+                    f"error_type={type(exc).__name__}"
+                )
+
+        for index in range(len(llm_calls) - 1, -1, -1):
+            record = llm_calls[index]
+            if isinstance(record, dict) and record.get("call_id") == call_id:
+                updated_record = dict(record)
+                if serialized_response is not None:
+                    updated_record["response"] = serialized_response
+                if serialized_usage is not None:
+                    updated_record["usage"] = serialized_usage
+                metadata = updated_record.get("assembly_observability")
+                if isinstance(metadata, dict):
+                    metadata = dict(metadata)
+                    if self._usage_has_cache_tokens(serialized_usage):
+                        metadata["provider_native_cache"] = True
+                    if prompt_session_receipt is not None:
+                        metadata["amni_prompt_session"] = prompt_session_receipt
+                        metadata["append_only_session"] = True
+                        metadata["prompt_epoch_id"] = prompt_session_receipt[
+                            "epoch_id"
+                        ]
+                        if prompt_session_receipt.get("lane_id"):
+                            metadata["prompt_lane_id"] = prompt_session_receipt[
+                                "lane_id"
+                            ]
+                    updated_record["assembly_observability"] = metadata
+                context.replace_llm_call(
+                    index,
+                    updated_record,
+                    event_type="agent_response_captured",
+                )
+                break
+
+        context_info["llm_output"] = llm_response
+
+    def _safe_record_llm_call_response(self, *args, **kwargs) -> None:
+        """Keep response capture from replacing provider success or failure."""
+        try:
+            self._record_llm_call_response(*args, **kwargs)
+        except Exception as exc:
+            logger.warning(
+                f"Agent LLM response capture failed; error_type={type(exc).__name__}"
+            )
+
+    def _update_llm_call_observability(
+        self,
+        message: Message,
+        call_id: str,
+        metadata: Dict[str, Any],
+    ) -> None:
+        """Attach prompt-assembly metadata to the matching call record."""
+        if not isinstance(metadata, dict):
+            return
+        context = message.context
+        llm_calls = context.get_llm_calls()
+        for index in range(len(llm_calls) - 1, -1, -1):
+            record = llm_calls[index]
+            if isinstance(record, dict) and record.get("call_id") == call_id:
+                updated_record = dict(record)
+                updated_record["assembly_observability"] = dict(metadata)
+                context.replace_llm_call(
+                    index,
+                    updated_record,
+                    event_type="assembly_observability_updated",
+                )
+                break
+
+    def _safe_update_llm_call_observability(self, *args, **kwargs) -> None:
+        """Keep assembly metadata capture observational and fail open."""
+        try:
+            self._update_llm_call_observability(*args, **kwargs)
+        except Exception as exc:
+            logger.warning(
+                f"Agent LLM assembly capture failed; error_type={type(exc).__name__}"
+            )
+
+    def _current_provider_name(self) -> str:
+        provider_name = getattr(getattr(self, "_llm", None), "provider_name", None)
+        if provider_name:
+            return provider_name
+        llm_config = getattr(self.conf, "llm_config", None)
+        if llm_config and getattr(llm_config, "llm_provider", None):
+            return llm_config.llm_provider
+        if getattr(self.conf, "llm_provider", None):
+            return self.conf.llm_provider
+        return "openai"
+
+    @staticmethod
+    def _is_artifact_observation_tool_name(name: Any) -> bool:
+        return (
+            isinstance(name, str)
+            and name.strip().split("__")[-1] == _ARTIFACT_OBSERVATION_TOOL
+        )
+
+    def _artifact_media_recovery_state(
+        self, context: Context | None
+    ) -> dict[str, Any] | None:
+        context_info = getattr(context, "context_info", None)
+        if not hasattr(context_info, "get"):
+            return None
+        value = context_info.get(f"artifact_media_recovery:{self.id()}")
+        if (
+            isinstance(value, dict)
+            and value.get("schema_version") == _ARTIFACT_MEDIA_RECOVERY_SCHEMA
+        ):
+            return value
+        return None
+
+    def _artifact_media_capability_reason(
+        self, context: Context | None = None
+    ) -> str | None:
+        """Return why artifact media is unavailable, without model-name guesses."""
+
+        if getattr(self.conf, "use_vision", False) is not True:
+            return "agent_vision_disabled"
+        if (
+            getattr(
+                self.conf,
+                "artifact_observation_media_capability",
+                "unsupported",
+            )
+            != "supported"
+        ):
+            return "artifact_observation_media_capability_undeclared"
+        recovery = self._artifact_media_recovery_state(context)
+        if recovery is not None and recovery.get("status") in {
+            "text_only_recovery",
+            "recovery_exhausted",
+        }:
+            return "artifact_media_empty_response"
+        try:
+            provider = getattr(self.llm, "provider", None)
+        except Exception:
+            return "provider_media_capability_unavailable"
+        resolver = getattr(provider, "provider_media_projection_capability", None)
+        if not callable(resolver):
+            return "provider_media_capability_undeclared"
+        from aworld.models.provider_media import ProviderMediaProjectionCapability
+
+        try:
+            capability = resolver()
+        except Exception:
+            return "provider_media_capability_unavailable"
+        if not isinstance(capability, ProviderMediaProjectionCapability):
+            return "provider_media_capability_undeclared"
+        return None
+
+    def _record_artifact_media_capability(
+        self,
+        context: Context | None,
+        *,
+        reason: str | None,
+    ) -> None:
+        context_info = getattr(context, "context_info", None)
+        if not (
+            hasattr(context_info, "get")
+            and hasattr(context_info, "__setitem__")
+        ):
+            return
+        context_info[f"artifact_media_capability:{self.id()}"] = {
+            "schema_version": _ARTIFACT_MEDIA_CAPABILITY_SCHEMA,
+            "available": reason is None,
+            "reason": reason,
+        }
+
+    @classmethod
+    def _without_artifact_observation_tools(
+        cls, tools: List[Dict[str, Any]] | None
+    ) -> List[Dict[str, Any]] | None:
+        if tools is None:
+            return None
+        return [
+            tool
+            for tool in tools
+            if not cls._is_artifact_observation_tool_name(
+                (tool.get("function") or {}).get("name")
+                if isinstance(tool, dict)
+                else None
+            )
+        ]
+
+    def _filter_artifact_observation_tools(
+        self,
+        tools: List[Dict[str, Any]] | None,
+        context: Context | None,
+    ) -> List[Dict[str, Any]] | None:
+        reason = self._artifact_media_capability_reason(context)
+        self._record_artifact_media_capability(context, reason=reason)
+        if reason is None:
+            return tools
+        return self._without_artifact_observation_tools(tools)
+
+    def _artifact_vision_enabled(self, context: Context | None = None) -> bool:
+        """Require Agent opt-in and an explicit provider media contract."""
+
+        return self._artifact_media_capability_reason(context) is None
+
+    def _model_tool_call_surface(
+        self,
+        tools: List[Dict[str, Any]] | None,
+        context: Context | None,
+    ) -> ModelToolCallSurface:
+        presented_names = {
+            name.strip()
+            for tool in tools or ()
+            if isinstance(tool, dict)
+            for function in (tool.get("function"),)
+            if isinstance(function, dict)
+            for name in (function.get("name"),)
+            if isinstance(name, str) and name.strip()
+        }
+        names = set(presented_names)
+        tool_mapping = getattr(self, "tool_mapping", {}) or {}
+        for presented_name in presented_names:
+            original_name = tool_mapping.get(presented_name)
+            if isinstance(original_name, str) and original_name.strip():
+                original_name = original_name.strip()
+                names.add(original_name)
+                names.add(
+                    original_name
+                    if original_name.startswith("mcp__")
+                    else f"mcp__{original_name}"
+                )
+        raw_task_id = getattr(context, "task_id", None)
+        task_id = (
+            str(raw_task_id)[:256]
+            if raw_task_id is not None
+            else None
+        )
+        raw_epoch = getattr(context, "task_epoch", None)
+        task_epoch = (
+            raw_epoch
+            if isinstance(raw_epoch, int) and not isinstance(raw_epoch, bool)
+            else None
+        )
+        return ModelToolCallSurface(
+            agent_id=self.id(),
+            task_id=task_id,
+            task_epoch=task_epoch,
+            tool_names=frozenset(names),
+            media_unavailable_reason=(
+                self._artifact_media_capability_reason(context)
+                if not any(
+                    self._is_artifact_observation_tool_name(name)
+                    for name in names
+                )
+                else None
+            ),
+        )
+
+    def _apply_reasoning_phase_policy(
+        self,
+        request_kwargs: Dict[str, Any],
+        *,
+        phase: str,
+    ) -> tuple[Dict[str, Any], dict[str, Any]]:
+        """Resolve one immutable AWorld-owned reasoning selection.
+
+        Static caller/provider parameters establish precedence only. The
+        returned request is per-call and never mutates shared ModelConfig state.
+        """
+
+        from aworld.models.reasoning_policy import (
+            ReasoningPhasePolicy,
+            resolve_reasoning_request,
+        )
+
+        llm_config = getattr(self.conf, "llm_config", None)
+        policy = ReasoningPhasePolicy.from_value(
+            getattr(llm_config, "reasoning_phase_policy", None)
+        )
+        configured = getattr(llm_config, "params", None)
+        selection_input = dict(configured) if isinstance(configured, dict) else {}
+        selection_input.update(dict(request_kwargs))
+        provider_adapter = getattr(self.llm, "provider", None)
+        capability_resolver = getattr(
+            provider_adapter, "reasoning_transport_capability", None
+        )
+        transport_capability = (
+            capability_resolver() if callable(capability_resolver) else None
+        )
+        resolved, receipt = resolve_reasoning_request(
+            phase=phase,
+            model_name=getattr(llm_config, "llm_model_name", None) or self.model_name,
+            provider=getattr(llm_config, "llm_provider", None)
+            or self._current_provider_name(),
+            request_kwargs=selection_input,
+            policy=policy,
+            reasoning_transport=getattr(llm_config, "reasoning_transport", "auto"),
+            transport_capability=transport_capability,
+        )
+        updated = dict(request_kwargs)
+        if receipt.applied:
+            for alias in ("thinking", "enable_thinking", "chat_template_kwargs"):
+                updated.pop(alias, None)
+            updated["reasoning_effort"] = resolved["reasoning_effort"]
+            if "extra_body" in resolved:
+                updated["extra_body"] = resolved["extra_body"]
+        return updated, receipt.to_dict()
+
+    @staticmethod
+    def _reasoning_phase_for_turn(
+        *,
+        decision_boundary: str | None,
+        independent_acceptance_review: bool,
+        model_owned_review: bool,
+        tool_free_finalization: bool,
+        role_reasoning_phase: str | None = None,
+    ) -> str:
+        if decision_boundary is not None:
+            return "plan"
+        if independent_acceptance_review or model_owned_review:
+            return "review"
+        if tool_free_finalization:
+            return "finalize"
+        if role_reasoning_phase in {"plan", "execute", "review", "finalize"}:
+            return role_reasoning_phase
+        return "execute"
+
+    @staticmethod
+    def _execution_state_resolution_mode_for_turn(
+        *,
+        decision_boundary: str | None,
+        independent_acceptance_review: bool,
+        model_owned_review: bool,
+        tool_free_finalization: bool,
+    ) -> str:
+        if (
+            decision_boundary is not None
+            or independent_acceptance_review
+            or model_owned_review
+            or tool_free_finalization
+        ):
+            return "control"
+        return "ordinary"
+
+    def _context_compiler_mode_value(self) -> str:
+        """Read optional compiler capability without assuming an LLMModel."""
+        llm = getattr(self, "llm", None)
+        mode = getattr(llm, "context_compiler_mode", None)
+        value = getattr(mode, "value", mode)
+        return value if value in {"observe", "shadow", "enforce"} else "off"
+
+    def _bind_context_output_budget(self, request_kwargs: dict[str, Any]) -> None:
+        """Bind the reserved Context output budget to the real model request.
+
+        The compiler cannot reason about an input budget while the corresponding
+        provider output remains unbounded. Explicit caller/model limits win.
+        A compiler reserve is not itself a provider output limit: silently
+        imposing the default reserve can truncate reasoning models.
+        """
+        if request_kwargs.get("max_tokens") is not None:
+            return
+        llm_config = getattr(self.conf, "llm_config", None)
+        params = getattr(llm_config, "params", None)
+        configured_limit = getattr(llm_config, "max_tokens", None)
+        if configured_limit is None and isinstance(params, dict):
+            configured_limit = params.get("max_tokens")
+        if configured_limit is None:
+            return
+        if (
+            isinstance(configured_limit, bool)
+            or not isinstance(configured_limit, int)
+            or configured_limit < 1
+        ):
+            raise ValueError("model max_tokens must be a positive integer")
+        request_kwargs["max_tokens"] = configured_limit
+
+    def _get_agent_context_cache_config(self, context: Any):
+        if context is None or not hasattr(context, "get_agent_context_config"):
+            return None
+        namespaces = [self.id(), self.name(), "default"]
+        for namespace in namespaces:
+            try:
+                config = context.get_agent_context_config(namespace)
+            except Exception:
+                continue
+            if config is not None and hasattr(config, "context_cache"):
+                return config.context_cache
+        return None
+
+    def _get_model_context_cache_config(self):
+        llm_config = getattr(self.conf, "llm_config", None)
+        if llm_config is not None and hasattr(llm_config, "context_cache"):
+            return llm_config.context_cache
+        return None
+
+    def _is_context_cache_enabled(self, context: Any) -> bool:
+        agent_config = self._get_agent_context_cache_config(context)
+        model_config = self._get_model_context_cache_config()
+        agent_enabled = (
+            True
+            if agent_config is None
+            else bool(getattr(agent_config, "enabled", True))
+        )
+        model_enabled = (
+            True
+            if model_config is None
+            else bool(getattr(model_config, "enabled", True))
+        )
+        return agent_enabled and model_enabled
+
+    def _allow_provider_native_cache(self, context: Any) -> bool:
+        if not self._is_context_cache_enabled(context):
+            return False
+        agent_config = self._get_agent_context_cache_config(context)
+        model_config = self._get_model_context_cache_config()
+        configs = tuple(
+            config for config in (agent_config, model_config) if config is not None
+        )
+        return resolve_provider_native_cache_intent(configs)
+
+    def _usage_has_cache_tokens(self, usage: Dict[str, Any] | None) -> bool:
+        if not isinstance(usage, dict):
+            return False
+        normalized_usage = normalize_usage(usage)
+        return (normalized_usage.get("cache_hit_tokens", 0) or 0) > 0 or (
+            normalized_usage.get("cache_write_tokens", 0) or 0
+        ) > 0
+
+    def _provider_native_cache_requested(
+        self,
+        context: Any,
+        provider_name: str,
+        request_kwargs: Dict[str, Any] | None,
+        *,
+        stable_prefix_hash: str | None = None,
+    ) -> bool:
+        if not supports_provider_native_prompt_cache(provider_name):
+            return False
+        # A caller-provided OpenAI cache key is itself an explicit per-request
+        # opt-in. Framework-derived stable hashes still require the typed
+        # Context policy opt-in below.
+        if resolve_provider_prompt_cache_key(provider_name, request_kwargs):
+            return True
+        if not self._allow_provider_native_cache(context):
+            return False
+        return should_request_provider_native_cache(
+            provider_name,
+            request_kwargs,
+            stable_prefix_hash=stable_prefix_hash,
+        )
+
+    @staticmethod
+    def _forward_legacy_prompt_assembly_plan(
+        provider_name: str, context_compiler_mode: str
+    ) -> bool:
+        return (
+            context_compiler_mode != "enforce"
+            and supports_provider_native_prompt_cache(provider_name)
+        )
+
+    def _build_prompt_assembly_state(
+        self,
+        *,
+        context: Any = None,
+        messages: List[Dict[str, Any]],
+        tools: List[Dict[str, Any]] | None = None,
+        request_kwargs: Dict[str, Any] | None = None,
+    ):
+        metadata = self._build_prompt_assembly_metadata(
+            context=context, request_kwargs=request_kwargs
+        )
+        provider = self._get_prompt_assembly_provider(context)
+        plan = provider.build_plan(messages=messages, tools=tools, metadata=metadata)
+        provider_name = metadata.get("provider_name") or self._current_provider_name()
+        stable_hash = getattr(plan, "stable_hash", None)
+        provider_native_cache = self._provider_native_cache_requested(
+            context,
+            provider_name,
+            request_kwargs,
+            stable_prefix_hash=stable_hash,
+        )
+        metadata["provider_native_cache"] = provider_native_cache
+        prompt_cache_key = (
+            resolve_provider_prompt_cache_key(
+                provider_name,
+                request_kwargs,
+                stable_prefix_hash=stable_hash,
+            )
+            if provider_native_cache
+            else None
+        )
+        if prompt_cache_key:
+            metadata["prompt_cache_key"] = prompt_cache_key
+
+        assembled_messages = (
+            plan.to_model_messages()
+            if hasattr(plan, "to_model_messages")
+            else to_serializable(getattr(plan, "messages", messages))
+        )
+        # Custom PromptAssemblyProvider implementations may preserve unknown
+        # message keys. Framework stability hints are never provider wire
+        # fields, so strip them again at the shared model boundary.
+        assembled_messages = sanitize_prompt_messages(assembled_messages)
+        observability = dict(metadata)
+        plan_observability = getattr(plan, "observability", None)
+        if isinstance(plan_observability, dict):
+            observability.update(plan_observability)
+        observability["provider_native_cache"] = provider_native_cache
+        if prompt_cache_key:
+            observability["prompt_cache_key"] = prompt_cache_key
+        observability.setdefault("assembly_provider", provider.__class__.__name__)
+        if stable_hash:
+            observability.setdefault("stable_prefix_hash", stable_hash)
+        context_observations = self._redacted_context_observations(context)
+        if context_observations:
+            observability["context_observations"] = context_observations
+        return plan, to_serializable(assembled_messages), observability
+
+    def _publish_prompt_assembly_system_sections(
+        self,
+        *,
+        context: Any,
+        plan: Any,
+        messages: List[Dict[str, Any]],
+        provider: Any,
+    ) -> bool:
+        """Publish exact framework-owned stable/dynamic system semantics.
+
+        Custom PromptAssembly providers remain fail-closed: an arbitrary
+        provider cannot promote its own content into the stable cache prefix.
+        Explicit Amni folded/section ownership also wins over this fallback.
+        """
+        from aworld.core.context.amni.prompt.assembly import (
+            CacheAwarePromptAssemblyProvider,
+        )
+
+        if type(provider) is not CacheAwarePromptAssemblyProvider:
+            return False
+        observations = context.get_context_observations(namespace=self.id())
+        if any(
+            sidecar.owner
+            in {
+                "amni.folded_system",
+                "amni.restored_folded_system",
+                "amni.system_sections",
+            }
+            for sidecar in observations
+        ):
+            return False
+        sections = getattr(plan, "system_sections", None)
+        if not isinstance(sections, list) or not sections:
+            return False
+        from aworld.agents.final_context_adapter import (
+            adapt_prompt_assembly_system_sections,
+        )
+        from aworld.core.context.compiler import ContextObservationSidecar
+
+        source_identity = (
+            f"agent-prompt-assembly://{self.id()}/task-{context.task_id}/"
+            f"epoch-{context.task_epoch}"
+        )
+        result = adapt_prompt_assembly_system_sections(
+            sections=sections,
+            messages=messages,
+            source_identity=source_identity,
+            task_id=context.task_id,
+            task_epoch=context.task_epoch,
+            agent_id=self.id(),
+            user_controlled=self._is_amni_context(context),
+        )
+        context.publish_context_observation(
+            ContextObservationSidecar.from_adapter_result(
+                owner="agent.prompt_assembly_system_sections",
+                namespace=self.id(),
+                source_identity=source_identity,
+                result=result,
+                task_epoch=context.task_epoch,
+            )
+        )
+        return True
+
+    def _redacted_context_observations(
+        self, context: Any = None
+    ) -> List[Dict[str, Any]]:
+        """Read owner sidecars after assembly without feeding them into assembly."""
+        getter = getattr(context, "get_context_observations", None)
+        if not callable(getter):
+            return []
+        try:
+            sidecars = getter(namespace=self.id())
+            return [sidecar.to_redacted_dict() for sidecar in sidecars]
+        except Exception as exc:
+            logger.warning(
+                "Agent Context sidecar observation failed; "
+                f"error_type={type(exc).__name__}"
+            )
+            return []
+
+    def _get_prompt_assembly_provider(self, context: Any = None):
+        provider = None
+        if context is not None:
+            provider_getter = getattr(context, "get_prompt_assembly_provider", None)
+            if callable(provider_getter):
+                try:
+                    provider = provider_getter(agent=self)
+                except TypeError:
+                    provider = provider_getter()
+            if provider is None:
+                provider = getattr(context, "prompt_assembly_provider", None)
+        if provider is None:
+            provider = getattr(self, "prompt_assembly_provider", None)
+        if provider is None:
+            provider = DefaultPromptAssemblyProvider()
+            self.prompt_assembly_provider = provider
+        return provider
+
+    def _build_prompt_assembly_metadata(
+        self,
+        *,
+        context: Any = None,
+        request_kwargs: Dict[str, Any] | None = None,
+    ) -> Dict[str, Any]:
+        provider_name = self._current_provider_name()
+        return {
+            "provider_name": provider_name,
+            "cache_aware_assembly": False,
+            "provider_native_cache": self._provider_native_cache_requested(
+                context, provider_name, request_kwargs
+            ),
+        }
+
+    def _build_prompt_assembly(
+        self,
+        *,
+        context: Any = None,
+        messages: List[Dict[str, Any]],
+        tools: List[Dict[str, Any]] | None = None,
+        request_kwargs: Dict[str, Any] | None = None,
+    ) -> tuple[List[Dict[str, Any]], Dict[str, Any]]:
+        _, assembled_messages, observability = self._build_prompt_assembly_state(
+            context=context,
+            messages=messages,
+            tools=tools,
+            request_kwargs=request_kwargs,
+        )
+        return assembled_messages, observability
+
+    def _build_prompt_assembly_observability(
+        self,
+        *,
+        context: Any = None,
+        messages: List[Dict[str, Any]],
+        tools: List[Dict[str, Any]] | None = None,
+        request_kwargs: Dict[str, Any] | None = None,
+    ) -> Dict[str, Any]:
+        """Build request-side prompt assembly metadata from the active prompt assembly provider."""
+        _, observability = self._build_prompt_assembly(
+            context=context,
+            messages=messages,
+            tools=tools,
+            request_kwargs=request_kwargs,
+        )
+        return observability
+
+    @property
+    def llm(self):
+        # lazy
+        if self._llm is None:
+            llm_config = self.conf.llm_config or None
+            conf = (
+                llm_config
+                if llm_config
+                and (
+                    llm_config.llm_provider
+                    or llm_config.llm_base_url
+                    or llm_config.llm_api_key
+                    or llm_config.llm_model_name
+                )
+                else self.conf
+            )
+            self._llm = get_llm_model(conf)
+        return self._llm
+
+    def desc_transform(self, context: Context) -> None:
+        """Transform of descriptions of supported tools, agents, and MCP servers in the framework to support function calls of LLM."""
+        sync_exec(self.async_desc_transform, context)
+
+    async def async_desc_transform(self, context: Context) -> None:
+        """Transform of descriptions of supported tools, agents, and MCP servers in the framework to support function calls of LLM."""
+
+        # Register TeamSwarm members as subagents if subagent capability is enabled
+        if self.enable_subagent and self.subagent_manager:
+            try:
+                swarm = context.swarm if hasattr(context, "swarm") else None
+                if swarm:
+                    # Register team members (idempotent operation)
+                    await self.subagent_manager.register_team_members(swarm)
+
+                    # Update system prompt with newly registered subagents
+                    subagent_section = (
+                        self.subagent_manager.generate_system_prompt_section()
+                    )
+                    if subagent_section:
+                        # Replace old subagent section while preserving content after it
+                        if "## Available Subagents" in self.system_prompt:
+                            # Split on section header
+                            parts = self.system_prompt.split(
+                                "## Available Subagents", 1
+                            )
+                            before_section = parts[0].rstrip()
+
+                            # Find the next section marker (##) after Available Subagents
+                            after_section = ""
+                            if len(parts) > 1:
+                                remaining = parts[1]
+                                # Look for next top-level section (## )
+                                next_section_match = remaining.find("\n## ")
+                                if next_section_match != -1:
+                                    # Preserve everything from the next section onward
+                                    after_section = "\n" + remaining[
+                                        next_section_match:
+                                    ].lstrip("\n")
+
+                            # Reconstruct: before + new subagent section + after
+                            self.system_prompt = (
+                                before_section
+                                + "\n\n"
+                                + subagent_section
+                                + after_section
+                            )
+                        else:
+                            # Append new section
+                            self.system_prompt += "\n\n" + subagent_section
+
+                        logger.debug(
+                            f"Agent '{self.name()}': Updated system prompt with "
+                            f"{len(self.subagent_manager._available_subagents)} available subagents "
+                            f"(including team members)"
+                        )
+            except Exception as e:
+                logger.error(
+                    f"Agent '{self.name()}': Failed to register team members as subagents: {e}"
+                )
+
+        # Stateless tool
+        try:
+            tool_names = self.tool_names or []
+            if getattr(
+                context.get_agent_context_config(self.id()),
+                "automated_reasoning_orchestrator",
+                None,
+            ):
+                from aworld.core.context.amni.tool.context_planning_tool import (
+                    CONTEXT_PLANNING,
+                )
+
+                if CONTEXT_PLANNING not in tool_names:
+                    tool_names.extend([CONTEXT_PLANNING])
+
+            if getattr(
+                context.get_agent_context_config(self.id()),
+                "automated_cognitive_ingestion",
+                None,
+            ):
+                from aworld.core.context.amni.tool.context_knowledge_tool import (
+                    CONTEXT_KNOWLEDGE,
+                )
+
+                if CONTEXT_KNOWLEDGE not in tool_names:
+                    tool_names.extend([CONTEXT_KNOWLEDGE])
+            self.tools = tool_desc_transform(
+                get_tool_desc(),
+                tools=tool_names,
+                black_tool_actions=self.black_tool_actions,
+            )
+        except:
+            logger.warning(
+                f"{self.id()} get tools desc fail, no tool to use. error: {traceback.format_exc()}"
+            )
+        recovery_tool = self._context_budget_recovery_tool(context)
+        if recovery_tool and not any(
+            tool.get("function", {}).get("name") == recovery_tool["function"]["name"]
+            for tool in self.tools
+        ):
+            self.tools.append(recovery_tool)
+        # Agents as tool
+        try:
+            self.tools.extend(
+                agent_desc_transform(
+                    get_agent_desc(), agents=self.handoffs if self.handoffs else []
+                )
+            )
+        except:
+            logger.warning(
+                f"{self.id()} get agent desc fail, no agent as tool to use. error: {traceback.format_exc()}"
+            )
+        # MCP servers are tools
+        try:
+            if (
+                self.sandbox
+                and hasattr(self.sandbox, "mcpservers")
+                and self.sandbox.mcpservers
+            ):
+                # Sandbox owns provider discovery, capability filtering, and
+                # transport details. Agent ``mcp_servers`` is retained only as
+                # a compatibility capability allowlist during this migration.
+                filtered_mcp_tools = await self.sandbox.list_tools(
+                    context,
+                    server_names=self.mcp_servers,
+                    black_tool_actions=self.black_tool_actions,
+                )
+
+                processed_tools, tool_mapping = await process_mcp_tools(
+                    filtered_mcp_tools
+                )
+                self.tools.extend(processed_tools)
+                self.tool_mapping = tool_mapping
+
+                root_task_id = (
+                    context.root.task_id
+                    if hasattr(context, "root") and context.root.task_id
+                    else context.task_id
+                )
+                if self.sandbox.metadata is None:
+                    self.sandbox.metadata = {}
+                task_list = self.sandbox.metadata.get("task_list")
+                if task_list is None:
+                    task_list = []
+                    self.sandbox.metadata["task_list"] = task_list
+                if root_task_id and root_task_id not in task_list:
+                    task_list.append(root_task_id)
+            else:
+                self.tools.extend(
+                    await mcp_tool_desc_transform(self.mcp_servers, self.mcp_config)
+                )
+        except:
+            logger.warning(
+                f"{self.id()} get MCP desc fail, no MCP to use. error: {traceback.format_exc()}"
+            )
+
+        await self.process_by_ptc(self.tools, context)
+        self._reconcile_live_tool_surface(context)
+
+    def _reconcile_live_tool_surface(self, context: Context) -> None:
+        """Bind declared capabilities to this Agent's final live schemas."""
+
+        if not self._tool_surface_specs:
+            self.tool_surface_receipt = None
+            return
+        receipt = reconcile_tool_surface(
+            self._tool_surface_specs,
+            live_tool_schemas=tuple(self.tools),
+            probes=self._tool_surface_probes,
+            profile=self._tool_surface_profile,
+        )
+        self.tool_surface_receipt = receipt
+        try:
+            context_info = getattr(context, "context_info", None)
+            if context_info is None:
+                raise TypeError("context has no context_info state")
+            existing = context_info.get("tool_surface_receipts") or {}
+            receipts = dict(existing) if isinstance(existing, dict) else {}
+            receipts[self.id()] = receipt.to_dict()
+            context_info["tool_surface_receipts"] = receipts
+        except Exception as exc:
+            logger.warning(
+                "Failed to record Tool surface receipt; "
+                f"error_type={type(exc).__name__}"
+            )
+        if not receipt.ready:
+            raise RequiredToolSurfaceUnavailable(receipt)
+
+    def messages_transform(
+        self,
+        content: str,
+        image_urls: List[str] = None,
+        observation: Observation = None,
+        message: Message = None,
+        **kwargs,
+    ) -> List[Dict[str, Any]]:
+        return sync_exec(
+            self.async_messages_transform,
+            image_urls=image_urls,
+            observation=observation,
+            message=message,
+            **kwargs,
+        )
+
+    def _is_amni_context(self, context: Context):
+        from aworld.core.context.amni import AmniContext
+
+        return isinstance(context, AmniContext)
+
+    def _build_memory_filters(
+        self, context: Context, additional_filters: Dict[str, Any] = None
+    ) -> Dict[str, Any]:
+        filters = {"agent_id": self.id()}
+
+        agent_memory_config = context.get_agent_memory_config(self.id())
+
+        query_scope = (
+            agent_memory_config.history_scope
+            if agent_memory_config and agent_memory_config.history_scope
+            else "task"
+        )
+        task = context.get_task()
+
+        if query_scope == "user":
+            # Pass user_id when query_scope is user
+            if hasattr(context, "user_id") and context.user_id:
+                filters["user_id"] = context.user_id
+            elif hasattr(task, "user_id") and task.user_id:
+                filters["user_id"] = task.user_id
+        elif query_scope == "session":
+            # Pass session_id when query_scope is session
+            if task and task.session_id:
+                filters["session_id"] = task.session_id
+        else:  # query_scope == "task" or default
+            # Pass task_id when query_scope is task
+            if task and task.session_id:
+                filters["session_id"] = task.session_id
+            if task and task.id:
+                filters["task_id"] = task.id
+
+        # Add additional filter conditions
+        if additional_filters:
+            filters.update(additional_filters)
+
+        return filters
+
+    def _adaptive_occurrence_tracking_enabled(self) -> bool:
+        return (
+            self._context_compiler_mode_value() != "off"
+            and getattr(self.llm, "_context_checkpoint_policy", "explicit")
+            in {"adaptive", "budget_pressure"}
+        )
+
+    def _adaptive_state_scope(self, context: Context) -> dict[str, Any]:
+        get_task = getattr(context, "get_task", None)
+        task = get_task() if callable(get_task) else None
+        values = {
+            "session_id": getattr(context, "session_id", None)
+            or getattr(task, "session_id", None),
+            "task_id": getattr(context, "task_id", None)
+            or getattr(task, "id", None),
+            "task_epoch": getattr(context, "task_epoch", 0),
+            "agent_id": self.id(),
+        }
+        return {
+            key: value[:256]
+            if isinstance(value, str)
+            else value
+            if isinstance(value, int) and not isinstance(value, bool)
+            else None
+            for key, value in values.items()
+        }
+
+    def _finalize_adaptive_memory_projection(
+        self,
+        messages: List[Dict[str, Any]],
+        context: Context,
+    ) -> List[Dict[str, Any]]:
+        """Strip private Memory occurrence IDs and retain an aligned sidecar."""
+        occurrence_ids: list[str | None] = []
+        cleaned: List[Dict[str, Any]] = []
+        for message in messages:
+            value = dict(message)
+            occurrence_id = value.pop(_ADAPTIVE_MEMORY_OCCURRENCE_KEY, None)
+            occurrence_ids.append(
+                occurrence_id
+                if isinstance(occurrence_id, str) and 0 < len(occurrence_id) <= 256
+                else None
+            )
+            cleaned.append(value)
+
+        event_manager = getattr(context, "event_manager", None)
+        owner = (
+            getattr(event_manager, "context", None)
+            if event_manager is not None
+            else None
+        ) or context
+        sidecar_key = f"adaptive_memory_projection:{self.id()}"
+        if self._adaptive_occurrence_tracking_enabled():
+            occurrences = [
+                {"index": index, "occurrence_id": occurrence_id}
+                for index, occurrence_id in enumerate(occurrence_ids)
+                if occurrence_id is not None
+            ][-_ADAPTIVE_MEMORY_PROJECTION_LIMIT:]
+            owner.context_info[sidecar_key] = {
+                "schema_version": "aworld.context.adaptive-memory-projection/v2",
+                "scope": self._adaptive_state_scope(context),
+                "messages_hash": canonical_json_hash(cleaned),
+                "message_count": len(cleaned),
+                "occurrences": occurrences,
+            }
+        else:
+            owner.context_info.pop(sidecar_key, None)
+        return cleaned
+
+    @staticmethod
+    def _observation_answers_pending_tool_call(observation: Optional[Observation]) -> bool:
+        """Whether the observation is the result produced for the trailing tool call.
+
+        An observation branded with the tool or agent that produced it
+        (``observer``) or with an ``ability`` is the counterpart of the call the
+        agent was invoked for. The trailing tool-call messages are then pending
+        rather than redundant, and reclaiming them drops the call this result is
+        paired with, which the runtime later reports as ``tool_calls mismatch!``
+        (issue #761).
+        """
+        if observation is None:
+            return False
+        return bool(
+            getattr(observation, "observer", None)
+            or getattr(observation, "ability", None)
+        )
+
+    def _clean_redundant_tool_call_messages(
+        self, histories: List[MemoryItem], *, protected: bool = False
+    ) -> None:
+        """Reclaim trailing tool-call messages that no longer have a pending result.
+
+        ``protected`` marks the replay path, where the incoming observation is
+        the counterpart of the trailing call and must keep its call message.
+        """
+        if protected:
+            return
+        try:
+            for i in range(len(histories) - 1, -1, -1):
+                his = histories[i]
+                if (
+                    his.metadata
+                    and "tool_calls" in his.metadata
+                    and his.metadata["tool_calls"]
+                ):
+                    logger.info(
+                        f"Agent {self.id()} deleted tool call messages from memory: {his}"
+                    )
+                    MemoryFactory.instance().delete(his.id)
+                else:
+                    break
+        except Exception:
+            logger.error(
+                f"Agent {self.id()} clean redundant tool_call_messages error: {traceback.format_exc()}"
+            )
+
+    def postprocess_terminate_loop(self, message: Message):
+        logger.info(f"Agent {self.id()} postprocess_terminate_loop: {self.loop_step}")
+        super().postprocess_terminate_loop(message)
+        try:
+            filters = self._build_memory_filters(
+                message.context, additional_filters={"memory_type": "message"}
+            )
+            histories = MemoryFactory.instance().get_all(filters=filters)
+            self._clean_redundant_tool_call_messages(histories)
+        except Exception:
+            logger.error(
+                f"Agent {self.id()} postprocess_terminate_loop error: {traceback.format_exc()}"
+            )
+
+    async def async_messages_transform(
+        self,
+        image_urls: List[str] = None,
+        observation: Observation = None,
+        message: Message = None,
+        **kwargs,
+    ) -> List[Dict[str, Any]]:
+        """Transform the original content to LLM messages of native format.
+
+        Args:
+            observation: Observation by env.
+            image_urls: List of images encoded using base64.
+            message: Event received by the Agent.
+        Returns:
+            Message list for LLM.
+        """
+        defer_adaptive_projection = _DEFER_ADAPTIVE_MEMORY_PROJECTION.get()
+        messages = []
+        track_occurrences = self._adaptive_occurrence_tracking_enabled()
+
+        def projected_memory_message(
+            history: MemoryItem,
+            value: Mapping[str, Any],
+            *,
+            suffix: int = 0,
+        ) -> Dict[str, Any]:
+            projected = dict(value)
+            memory_id = getattr(history, "id", None)
+            if track_occurrences and isinstance(memory_id, str) and memory_id:
+                projected[_ADAPTIVE_MEMORY_OCCURRENCE_KEY] = (
+                    f"memory:{memory_id}:{suffix}"
+                )
+            return projected
+        # append sys_prompt to memory
+        content = await self.custom_system_prompt(
+            context=message.context, content=observation.content, tool_list=self.tools
+        )
+        if self.system_prompt:
+            await self._add_message_to_memory(
+                context=message.context, payload=content, message_type=MemoryType.SYSTEM
+            )
+
+        filters = self._build_memory_filters(
+            message.context, additional_filters={"memory_type": "message"}
+        )
+        histories = MemoryFactory.instance().get_all(filters=filters)
+
+        # append observation to memory
+        tool_result_added = False
+        if observation.is_tool_result:
+            # Tool already writes results to memory in tool layer. Skip here to avoid duplication.
+            tool_result_added = True
+
+        if not tool_result_added:
+            self._clean_redundant_tool_call_messages(
+                histories,
+                protected=self._observation_answers_pending_tool_call(observation),
+            )
+            content = observation.content
+            if image_urls:
+                urls = [{"type": "text", "text": content}]
+                for image_url in image_urls:
+                    urls.append({"type": "image_url", "image_url": {"url": image_url}})
+                content = urls
+            await self._add_message_to_memory(
+                payload={"content": content, "memory_type": "init"},
+                message_type=MemoryType.HUMAN,
+                context=message.context,
+            )
+
+        memory = MemoryFactory.instance()
+        # from memory get last n messages
+        filters = self._build_memory_filters(message.context)
+        # load pending message
+        try:
+            pending_filters = self._build_memory_filters(message.context)
+            pending_filters["memory_type"] = "pending"
+            pending_items = memory.memory_store.get_all(pending_filters)
+            if pending_items:
+                for pending_item in pending_items:
+                    pending_item.created_at = datetime.now().isoformat()
+                    pending_item.memory_type = "message"
+        except Exception as e:
+            logger.warning(f"Agent {self.id()} load pending message error: {e}")
+
+        agent_memory_config = self.memory_config
+        if self._is_amni_context(message.context):
+            agent_context_config = (
+                message.context.get_config().get_agent_context_config(self.id())
+            )
+            agent_memory_config = agent_context_config.to_memory_config()
+        histories = memory.get_last_n(
+            agent_memory_config.history_rounds,
+            filters=filters,
+            agent_memory_config=agent_memory_config,
+        )
+        histories = causalize_memory_history(histories or [])
+        if histories:
+            tool_calls_map = {}
+            tool_artifact_map = {}
+            last_tool_calls = []
+            matched_tool_call_ids = set()
+
+            def _is_tool_history(history) -> bool:
+                if isinstance(history, MemoryMessage):
+                    return isinstance(history, MemoryToolMessage)
+                return history.metadata.get("role") == "tool"
+
+            def _drop_incomplete_tool_call_turn(reason: str):
+                nonlocal tool_calls_map, tool_artifact_map, last_tool_calls
+                if not last_tool_calls:
+                    return
+                dropped_message = None
+                if (
+                    messages
+                    and messages[-1].get("role") == "assistant"
+                    and messages[-1].get("tool_calls")
+                ):
+                    dropped_message = messages.pop()
+                logger.warning(
+                    "Skip incomplete tool-call turn in memory replay: "
+                    f"reason={reason}, missing_tool_call_ids={last_tool_calls}, "
+                    f"matched_tool_result_ids={list(tool_calls_map.keys())}, "
+                    f"dropped_assistant_message={bool(dropped_message)}, agent={self.id()}"
+                )
+                tool_calls_map = {}
+                tool_artifact_map = {}
+                last_tool_calls = []
+
+            def _append_complete_tool_results():
+                nonlocal tool_calls_map, tool_artifact_map, last_tool_calls
+                for tool_call_id in last_tool_calls:
+                    if tool_call_id not in tool_calls_map:
+                        _drop_incomplete_tool_call_turn(
+                            f"missing tool result for {tool_call_id}"
+                        )
+                        return
+                    messages.append(tool_calls_map.get(tool_call_id))
+                    matched_tool_call_ids.add(tool_call_id)
+                if tool_artifact_map:
+                    from aworld.sandbox.artifact_observation import (
+                        artifact_prompt_message,
+                    )
+
+                    artifact_message = artifact_prompt_message(
+                        [
+                            tool_artifact_map[tool_call_id]
+                            for tool_call_id in last_tool_calls
+                            if tool_call_id in tool_artifact_map
+                        ]
+                    )
+                    if artifact_message is not None:
+                        if track_occurrences:
+                            observation_ids = ":".join(
+                                str(tool_artifact_map[tool_call_id].get("observation_id", ""))
+                                for tool_call_id in last_tool_calls
+                                if tool_call_id in tool_artifact_map
+                            )
+                            artifact_message[_ADAPTIVE_MEMORY_OCCURRENCE_KEY] = (
+                                "artifact-observation:" + observation_ids
+                            )[:256]
+                        messages.append(artifact_message)
+                tool_calls_map = {}
+                tool_artifact_map = {}
+                last_tool_calls = []
+
+            for history in histories:
+                if len(last_tool_calls) > 0 and len(tool_calls_map) == len(
+                    last_tool_calls
+                ):
+                    # Maintain the order of tool calls
+                    _append_complete_tool_results()
+                elif last_tool_calls and not _is_tool_history(history):
+                    _drop_incomplete_tool_call_turn("next non-tool message encountered")
+
+                if isinstance(history, MemoryMessage):
+                    if isinstance(history, MemoryToolMessage):
+                        if last_tool_calls and history.tool_call_id in last_tool_calls:
+                            tool_calls_map[history.tool_call_id] = (
+                                projected_memory_message(
+                                    history,
+                                    history.to_openai_message(),
+                                )
+                            )
+                            ext_info = history.metadata.get("ext_info", {})
+                            if isinstance(ext_info, dict) and isinstance(
+                                ext_info.get("artifact_observation"), dict
+                            ):
+                                tool_artifact_map[history.tool_call_id] = dict(
+                                    ext_info["artifact_observation"]
+                                )
+                        elif history.tool_call_id in matched_tool_call_ids:
+                            logger.warning(
+                                f"Skip duplicate tool result in memory replay: "
+                                f"tool_call_id={history.tool_call_id}, agent={self.id()}"
+                            )
+                        else:
+                            logger.warning(
+                                "Skip orphan tool result in memory replay: "
+                                f"tool_call_id={history.tool_call_id}, agent={self.id()}"
+                            )
+                    else:
+                        system_sections = self._amni_system_section_messages(history)
+                        if system_sections is not None:
+                            messages.extend(
+                                projected_memory_message(
+                                    history,
+                                    section,
+                                    suffix=index,
+                                )
+                                for index, section in enumerate(system_sections)
+                            )
+                        else:
+                            messages.append(
+                                projected_memory_message(
+                                    history,
+                                    history.to_openai_message(),
+                                )
+                            )
+                        if isinstance(history, MemoryAIMessage) and history.tool_calls:
+                            last_tool_calls.extend(
+                                [tool_call.id for tool_call in history.tool_calls]
+                            )
+                else:
+                    role = history.metadata["role"]
+                    if role == "tool":
+                        tool_call_id = history.metadata.get("tool_call_id")
+                        if last_tool_calls and tool_call_id in last_tool_calls:
+                            msg = {
+                                "role": history.metadata["role"],
+                                "content": history.content,
+                                "tool_call_id": tool_call_id,
+                            }
+                            tool_calls_map[tool_call_id] = projected_memory_message(
+                                history,
+                                msg,
+                            )
+                            ext_info = history.metadata.get("ext_info", {})
+                            if isinstance(ext_info, dict) and isinstance(
+                                ext_info.get("artifact_observation"), dict
+                            ):
+                                tool_artifact_map[tool_call_id] = dict(
+                                    ext_info["artifact_observation"]
+                                )
+                        elif tool_call_id in matched_tool_call_ids:
+                            logger.warning(
+                                f"Skip duplicate tool result in memory replay: "
+                                f"tool_call_id={tool_call_id}, agent={self.id()}"
+                            )
+                        else:
+                            logger.warning(
+                                "Skip orphan tool result in memory replay: "
+                                f"tool_call_id={tool_call_id}, agent={self.id()}"
+                            )
+                    else:
+                        if not self.use_tools_in_prompt and history.metadata.get(
+                            "tool_calls"
+                        ):
+                            messages.append(
+                                projected_memory_message(
+                                    history,
+                                    {
+                                        "role": history.metadata["role"],
+                                        "content": history.content,
+                                        "tool_calls": [
+                                            history.metadata["tool_calls"]
+                                        ],
+                                    },
+                                )
+                            )
+                            last_tool_calls.extend(
+                                [
+                                    tool_call.get("id")
+                                    for tool_call in history.metadata["tool_calls"]
+                                ]
+                            )
+                        else:
+                            messages.append(
+                                projected_memory_message(
+                                    history,
+                                    {
+                                        "role": history.metadata["role"],
+                                        "content": history.content,
+                                        "tool_call_id": history.metadata.get(
+                                            "tool_call_id"
+                                        ),
+                                    },
+                                )
+                            )
+                if len(last_tool_calls) > 0 and len(tool_calls_map) == len(
+                    last_tool_calls
+                ):
+                    # Maintain the order of tool calls
+                    _append_complete_tool_results()
+                elif len(tool_calls_map) > len(last_tool_calls):
+                    _drop_incomplete_tool_call_turn("more tool results than tool calls")
+            if last_tool_calls and len(tool_calls_map) == len(last_tool_calls):
+                _append_complete_tool_results()
+            else:
+                _drop_incomplete_tool_call_turn("end of history reached")
+
+        messages = self._restore_current_tool_turn(
+            messages,
+            observation=observation,
+            message=message,
+            include_internal_occurrence_ids=track_occurrences,
+        )
+        messages = self._prepend_task_input_messages(messages, message.context)
+        if defer_adaptive_projection:
+            return messages
+        return self._finalize_adaptive_memory_projection(messages, message.context)
+
+    def _restore_current_tool_turn(
+        self,
+        messages: List[Dict[str, Any]],
+        *,
+        observation: Observation,
+        message: Message,
+        include_internal_occurrence_ids: bool = False,
+    ) -> List[Dict[str, Any]]:
+        """Provide read-your-write consistency for the current Tool turn.
+
+        Amni Memory remains the durable history authority.  This fallback only
+        repairs the causal turn named by the event's continuation token when
+        event-driven persistence is not query-visible quickly enough.  It never
+        invents a Tool result or reaches into benchmark-specific state.
+        """
+        if not getattr(observation, "is_tool_result", False):
+            return messages
+        headers = getattr(message, "headers", None) or {}
+        continuation_token = headers.get("post_tool_continuation_token")
+        turn = post_tool_turn_for_continuation(
+            message.context,
+            agent_id=self.id(),
+            continuation_token=continuation_token,
+        )
+        if not isinstance(turn, dict):
+            return messages
+
+        def attach_continuation_work_state(
+            values: List[Dict[str, Any]],
+        ) -> List[Dict[str, Any]]:
+            policy_name = getattr(self.llm, "_context_checkpoint_policy", "explicit")
+            if policy_name == "explicit":
+                return values
+            from aworld.core.context.compiler import (
+                ADAPTIVE_WORK_STATE_PREFIX,
+                attach_adaptive_work_state,
+            )
+
+            projected = attach_adaptive_work_state(
+                values,
+                turn.get("adaptive_work_state"),
+            )
+            work_state = turn.get("adaptive_work_state")
+            revision = (
+                work_state.get("revision")
+                if isinstance(work_state, Mapping)
+                else None
+            )
+            if include_internal_occurrence_ids and isinstance(revision, int):
+                for item in projected:
+                    if (
+                        item.get("role") == "user"
+                        and isinstance(item.get("content"), str)
+                        and item["content"].startswith(ADAPTIVE_WORK_STATE_PREFIX)
+                    ):
+                        item[_ADAPTIVE_MEMORY_OCCURRENCE_KEY] = (
+                            f"adaptive-work-state:{revision}"
+                        )
+            return projected
+
+        actions = turn.get("actions")
+        observation_value = turn.get("followup_observation")
+        result_values = (
+            observation_value.get("action_result")
+            if isinstance(observation_value, dict)
+            else None
+        )
+        if (
+            not isinstance(actions, list)
+            or not actions
+            or not isinstance(result_values, list)
+        ):
+            return attach_continuation_work_state(messages)
+
+        call_ids = [
+            action.get("tool_call_id")
+            for action in actions
+            if isinstance(action, dict)
+            and isinstance(action.get("tool_call_id"), str)
+            and action.get("tool_call_id")
+        ]
+        if not call_ids:
+            return attach_continuation_work_state(messages)
+        expected_ids = set(call_ids)
+        replay_assistant_ids: set[str] = set()
+        replay_tool_ids: set[str] = set()
+        for item in messages:
+            if item.get("role") == "assistant":
+                replay_assistant_ids.update(
+                    call.get("id")
+                    for call in (item.get("tool_calls") or [])
+                    if isinstance(call, dict) and isinstance(call.get("id"), str)
+                )
+            elif item.get("role") == "tool" and isinstance(
+                item.get("tool_call_id"), str
+            ):
+                replay_tool_ids.add(item["tool_call_id"])
+        if expected_ids.issubset(replay_assistant_ids) and expected_ids.issubset(
+            replay_tool_ids
+        ):
+            return attach_continuation_work_state(messages)
+
+        # Remove a partial version of this exact group before appending the
+        # immutable Action/Observation pair in provider-valid causal order.
+        repaired: List[Dict[str, Any]] = []
+        for item in messages:
+            if item.get("role") == "assistant" and any(
+                isinstance(call, dict) and call.get("id") in expected_ids
+                for call in (item.get("tool_calls") or [])
+            ):
+                continue
+            if item.get("role") == "tool" and item.get("tool_call_id") in expected_ids:
+                continue
+            repaired.append(item)
+
+        tool_calls = []
+        for action in actions:
+            if (
+                not isinstance(action, dict)
+                or action.get("tool_call_id") not in expected_ids
+            ):
+                continue
+            params = action.get("params")
+            try:
+                arguments = json.dumps(
+                    params if isinstance(params, dict) else {},
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                )
+            except TypeError:
+                arguments = "{}"
+            tool_calls.append(
+                {
+                    "id": action["tool_call_id"],
+                    "type": "function",
+                    "function": {
+                        "name": action.get("action_name")
+                        or action.get("tool_name")
+                        or "unknown",
+                        "arguments": arguments,
+                    },
+                }
+            )
+        if not tool_calls:
+            return messages
+        assistant_message = {
+            "role": "assistant",
+            "content": "",
+            "tool_calls": tool_calls,
+        }
+        if include_internal_occurrence_ids and isinstance(
+            continuation_token, str
+        ):
+            assistant_message[_ADAPTIVE_MEMORY_OCCURRENCE_KEY] = (
+                f"continuation:{continuation_token}:assistant"
+            )
+        repaired.append(assistant_message)
+
+        results_by_id = {
+            value.get("tool_call_id"): value
+            for value in result_values
+            if isinstance(value, dict) and isinstance(value.get("tool_call_id"), str)
+        }
+        artifact_descriptors = []
+        for action_index, action in enumerate(actions):
+            if not isinstance(action, dict):
+                continue
+            call_id = action.get("tool_call_id")
+            if call_id not in expected_ids:
+                continue
+            value = results_by_id.get(call_id)
+            if value is None:
+                value = (
+                    result_values[action_index]
+                    if action_index < len(result_values)
+                    and isinstance(result_values[action_index], dict)
+                    else None
+                )
+            if not isinstance(value, dict):
+                return attach_continuation_work_state(messages)
+            try:
+                result = ActionResult(**value)
+                content = self._format_tool_result_for_followup(result)
+                from aworld.sandbox.artifact_observation import (
+                    artifact_memory_descriptor,
+                )
+
+                descriptor = artifact_memory_descriptor(
+                    result,
+                    context=message.context,
+                    tool_call_id=call_id,
+                )
+                if descriptor is not None:
+                    artifact_descriptors.append(descriptor)
+            except Exception:
+                content = str(value.get("content", ""))
+            tool_message = {
+                "role": "tool",
+                "tool_call_id": call_id,
+                "content": content,
+            }
+            if include_internal_occurrence_ids and isinstance(
+                continuation_token, str
+            ):
+                tool_message[_ADAPTIVE_MEMORY_OCCURRENCE_KEY] = (
+                    f"continuation:{continuation_token}:tool:{call_id}"
+                )
+            repaired.append(tool_message)
+        if artifact_descriptors:
+            from aworld.sandbox.artifact_observation import artifact_prompt_message
+
+            artifact_message = artifact_prompt_message(artifact_descriptors)
+            if artifact_message is not None:
+                repaired.append(artifact_message)
+        increment_watchdog_metric(message.context, "current_tool_turn_repaired_count")
+        return attach_continuation_work_state(repaired)
+
+    @staticmethod
+    def _prepend_task_input_messages(
+        messages: List[Dict[str, Any]], context: Context = None
+    ) -> List[Dict[str, Any]]:
+        task_input = (
+            getattr(context, "task_input_object", None) if context is not None else None
+        )
+        task_messages = getattr(task_input, "messages", None) or []
+        restored_messages = []
+        for item in task_messages:
+            if isinstance(item, dict):
+                message = dict(item)
+            elif hasattr(item, "model_dump"):
+                message = item.model_dump()
+            else:
+                continue
+            if message.get("role") in {"user", "assistant", "tool"}:
+                restored_messages.append(message)
+        if not restored_messages:
+            return messages
+
+        insert_at = 0
+        for index, item in enumerate(messages):
+            if not isinstance(item, dict) or item.get("role") != "system":
+                break
+            insert_at = index + 1
+        return messages[:insert_at] + restored_messages + messages[insert_at:]
+
+    async def init_observation(self, observation: Observation) -> Observation:
+        # default use origin observation
+        return observation
+
+    def _log_messages(
+        self, messages: List[Dict[str, Any]], context: Context, **kwargs
+    ) -> None:
+        PromptLogger.log_agent_call_llm_messages(
+            self, messages=messages, context=context, **kwargs
+        )
+
+    def _agent_result(
+        self, actions: List[ActionModel], caller: str, input_message: Message
+    ):
+        if not actions:
+            return Message(
+                payload=[
+                    ActionModel(
+                        agent_name=self.id(),
+                        policy_info=f"{self.id()} no action decision has been made.",
+                    )
+                ],
+                caller=caller,
+                sender=self.id(),
+                category=self.event_handler_name,
+                session_id=input_message.context.session_id
+                if input_message.context
+                else "",
+                headers=self._update_headers(input_message),
+            )
+        if self.event_handler_name:
+            return Message(
+                payload=actions,
+                caller=caller,
+                sender=self.id(),
+                receiver=actions[0].tool_name,
+                category=self.event_handler_name,
+                session_id=input_message.context.session_id
+                if input_message.context
+                else "",
+                headers=self._update_headers(input_message),
+            )
+
+        tools = OrderedDict()
+        agents = []
+        for action in actions:
+            if is_agent(action):
+                agents.append(action)
+            else:
+                if action.tool_name not in tools:
+                    tools[action.tool_name] = []
+                tools[action.tool_name].append(action)
+
+        _group_name = None
+        # agents and tools exist simultaneously, more than one agent/tool name
+        if (
+            (agents and tools)
+            or len(agents) > 1
+            or len(tools) > 1
+            or (len(agents) == 1 and agents[0].tool_name)
+        ):
+            _group_name = f"{self.id()}_{uuid.uuid1().hex}"
+
+        # complex processing
+        if _group_name:
+            return GroupMessage(
+                payload=actions,
+                caller=caller,
+                sender=self.id(),
+                receiver=actions[0].tool_name,
+                session_id=input_message.context.session_id
+                if input_message.context
+                else "",
+                group_id=_group_name,
+                topic=TopicType.GROUP_ACTIONS,
+                headers=self._update_headers(input_message),
+            )
+        elif agents:
+            payload = actions
+            receiver = actions[0].tool_name
+            if self.wait_tool_result and any(
+                action.params.get("is_tool_result", False) for action in actions
+            ):
+                content = ""
+                content += "\n\n".join(action.policy_info for action in actions)
+                action_result = [
+                    ActionResult(content=action.policy_info) for action in actions
+                ]
+                payload = Observation(content=content, action_result=action_result)
+                if self.feedback_tool_result:
+                    # wait tool result and need feedback tool result, will be back to the agent
+                    receiver = self.id()
+
+            return AgentMessage(
+                payload=payload,
+                caller=caller,
+                sender=self.id(),
+                receiver=receiver,
+                session_id=input_message.context.session_id
+                if input_message.context
+                else "",
+                headers=self._update_headers(input_message),
+            )
+
+        else:
+            return ToolMessage(
+                payload=actions,
+                caller=caller,
+                sender=self.id(),
+                receiver=actions[0].tool_name,
+                session_id=input_message.context.session_id
+                if input_message.context
+                else "",
+                headers=self._update_headers(input_message),
+            )
+
+    def post_run(
+        self,
+        policy_result: List[ActionModel],
+        policy_input: Observation,
+        message: Message = None,
+    ) -> Message:
+        return self._agent_result(
+            policy_result,
+            policy_input.from_agent_name
+            if policy_input.from_agent_name
+            else policy_input.observer,
+            message,
+        )
+
+    async def async_post_run(
+        self,
+        policy_result: List[ActionModel],
+        policy_input: Observation,
+        message: Message = None,
+    ) -> Message:
+        # Check for pending messages in memory store
+        memory = MemoryFactory.instance()
+        filters = self._build_memory_filters(message.context)
+        filters["memory_type"] = "pending"
+        pending_items = memory.memory_store.get_all(filters)
+        if pending_items:
+            logger.info(
+                f"🧠 [Agent:{self.id()}] Found {len(pending_items)} pending memory items, "
+                f"holding task execution. Pending content: {pending_items[0]}..."
+            )
+            self._finished = False
+        if self._finished:
+            from aworld.core.context.amni import AmniContext
+
+            duration = None
+            if isinstance(message.context, AmniContext):
+                agent_start_times = message.context.get("agent_start_times") or {}
+                if isinstance(agent_start_times, dict):
+                    start_time = agent_start_times.get(self.id())
+                    if isinstance(start_time, (int, float)):
+                        duration = round(time.time() - start_time, 2)
+            if duration is None:
+                duration = round(
+                    time.time() - getattr(message.context, "_start", time.time()), 2
+                )
+            digest_logger.info(
+                f"agent_run|{self.id()}|{getattr(message.context, 'user', 'default')}|{message.context.session_id}|{message.context.task_id}|{duration}|success"
+            )
+        return self._agent_result(
+            policy_result,
+            policy_input.from_agent_name
+            if policy_input.from_agent_name
+            else policy_input.observer,
+            message,
+        )
+
+    def policy(
+        self,
+        observation: Observation,
+        info: Dict[str, Any] = {},
+        message: Message = None,
+        **kwargs,
+    ) -> List[ActionModel]:
+        """The strategy of an agent can be to decide which tools to use in the environment, or to delegate tasks to other agents.
+
+        Args:
+            observation: The state observed from tools in the environment.
+            info: Extended information is used to assist the agent to decide a policy.
+
+        Returns:
+            ActionModel sequence from agent policy
+        """
+        return sync_exec(self.async_policy, observation, info, message, **kwargs)
+
+    @staticmethod
+    async def _current_task_status(context: Optional[Context]) -> Optional[str]:
+        if context is None or not hasattr(context, "get_task_status"):
+            return None
+        try:
+            return await context.get_task_status()
+        except Exception as exc:
+            logger.debug(
+                f"Failed to inspect task status for interruption handling: {exc}"
+            )
+            return None
+
+    async def _raise_if_task_interrupted(
+        self,
+        context: Optional[Context],
+        *,
+        reason: str,
+        source_exception: Exception | None = None,
+    ) -> None:
+        current_task = asyncio.current_task()
+        if current_task and current_task.cancelling():
+            logger.info(f"{self.id()} treating LLM flow as cancelled: {reason}")
+            if source_exception is None:
+                raise asyncio.CancelledError(reason)
+            raise asyncio.CancelledError(reason) from source_exception
+
+        task_status = await self._current_task_status(context)
+        if task_status in {TaskStatusValue.INTERRUPTED, TaskStatusValue.CANCELLED}:
+            cancel_reason = f"{reason} ({task_status})"
+            logger.info(
+                f"{self.id()} treating LLM flow as task interruption: {cancel_reason}"
+            )
+            if source_exception is None:
+                raise asyncio.CancelledError(cancel_reason)
+            raise asyncio.CancelledError(cancel_reason) from source_exception
+
+    async def _apply_adaptive_context_policy(
+        self,
+        *,
+        context: Context,
+        messages: List[Dict[str, Any]],
+        context_compiler_mode: str,
+    ) -> List[Dict[str, Any]]:
+        """Checkpoint and compact from generic pressure/progress signals."""
+        policy_name = getattr(self.llm, "_context_checkpoint_policy", "explicit")
+        if context_compiler_mode == "off" or policy_name == "explicit":
+            return messages
+
+        from aworld.core.context.compiler import (
+            ADAPTIVE_WORK_STATE_KEY,
+            AdaptiveCheckpointPolicy,
+            AdaptiveEscalationStage,
+            adaptive_escalation_message,
+            advance_adaptive_continuation_sequence,
+            advance_adaptive_escalation,
+            attach_adaptive_work_state,
+            compact_duplicate_tool_results,
+            compact_message_history,
+            estimate_canonical_json_tokens,
+            evaluate_adaptive_checkpoint,
+            LifecycleAction,
+            restore_adaptive_continuation,
+        )
+
+        progress = semantic_progress_for_agent(context, agent_id=self.id())
+        prompt_tokens = int(estimate_canonical_json_tokens(messages).value or 0)
+        input_budget = int(getattr(self.llm, "_context_input_budget", 0) or 0)
+        state_key = f"adaptive_context_state:{self.id()}"
+        runtime_state_key = "adaptive_context_state"
+        continuation_key = "adaptive_continuation_capsule"
+        event_manager = getattr(context, "event_manager", None)
+        state_context = (
+            getattr(event_manager, "context", None)
+            if event_manager is not None
+            else None
+        )
+        if state_context is None:
+            state_context = context
+        shared_reader = getattr(state_context, "read_task_runtime_state", None)
+        shared_writer = getattr(state_context, "write_task_runtime_state", None)
+        get_working_state = getattr(state_context, "get", None)
+        put_working_state = getattr(state_context, "put", None)
+        current_scope = self._adaptive_state_scope(context)
+        adaptive_state_source = None
+        adaptive_state = None
+        if callable(shared_reader):
+            adaptive_state = shared_reader(self.id(), runtime_state_key)
+            if isinstance(adaptive_state, dict):
+                adaptive_state_source = "task_runtime"
+        if not isinstance(adaptive_state, dict):
+            adaptive_state = state_context.context_info.get(state_key)
+            if isinstance(adaptive_state, dict):
+                adaptive_state_source = "context_fallback"
+        if not isinstance(adaptive_state, dict) and callable(get_working_state):
+            try:
+                adaptive_state = get_working_state(state_key)
+                if isinstance(adaptive_state, dict):
+                    adaptive_state_source = "working_state_fallback"
+            except Exception:
+                adaptive_state = None
+        if not isinstance(adaptive_state, dict):
+            adaptive_state = {}
+        stale_scope_state = False
+        stored_scope = adaptive_state.get("scope")
+        if isinstance(stored_scope, Mapping):
+            if dict(stored_scope) != current_scope:
+                stale_scope_state = True
+                adaptive_state = {}
+        elif adaptive_state and adaptive_state_source == "context_fallback":
+            # Legacy task-runtime and Amni WorkingState records are scoped by
+            # their owner. An unscoped ad-hoc context_info fallback may belong
+            # to another task and is never eligible for migration.
+            stale_scope_state = True
+            adaptive_state = {}
+        if stale_scope_state:
+            state_context.context_info.pop(state_key, None)
+            if adaptive_state_source == "task_runtime" and callable(shared_writer):
+                shared_writer(self.id(), runtime_state_key, None)
+            if callable(put_working_state):
+                try:
+                    put_working_state(state_key, None)
+                except Exception:
+                    pass
+
+        def save_adaptive_state() -> None:
+            state_context.context_info[state_key] = adaptive_state
+            if callable(shared_writer):
+                shared_writer(self.id(), runtime_state_key, adaptive_state)
+            if callable(put_working_state):
+                try:
+                    put_working_state(state_key, adaptive_state)
+                except Exception:
+                    pass
+
+        continuation_capsule = None
+        shared_capsule = (
+            shared_reader(self.id(), continuation_key)
+            if callable(shared_reader)
+            else None
+        )
+        continuation_state_key = f"{continuation_key}:{self.id()}"
+
+        def capsule_messages(value: Any, *, allow_legacy: bool) -> list | None:
+            if isinstance(value, Mapping):
+                if (
+                    value.get("schema_version")
+                    == "aworld.context.adaptive-continuation-capsule/v2"
+                    and value.get("scope") == current_scope
+                    and isinstance(value.get("messages"), list)
+                ):
+                    return [
+                        dict(item)
+                        for item in value["messages"]
+                        if isinstance(item, Mapping)
+                    ]
+                return None
+            if allow_legacy and isinstance(value, list):
+                return [dict(item) for item in value if isinstance(item, Mapping)]
+            return None
+
+        continuation_capsule = capsule_messages(shared_capsule, allow_legacy=True)
+        stale_scope_capsule = (
+            isinstance(shared_capsule, Mapping)
+            and continuation_capsule is None
+        )
+        if continuation_capsule is None:
+            fallback_capsule = state_context.context_info.get(
+                continuation_state_key
+            )
+            continuation_capsule = capsule_messages(
+                fallback_capsule,
+                allow_legacy=False,
+            )
+            stale_scope_capsule = stale_scope_capsule or (
+                isinstance(fallback_capsule, Mapping)
+                and continuation_capsule is None
+            )
+        if continuation_capsule is None and callable(get_working_state):
+            try:
+                continuation_capsule = capsule_messages(
+                    get_working_state(continuation_state_key),
+                    allow_legacy=True,
+                )
+            except Exception:
+                continuation_capsule = None
+        if stale_scope_state or stale_scope_capsule:
+            state_context.context_info.pop(continuation_state_key, None)
+            continuation_capsule = None
+            if callable(shared_writer):
+                shared_writer(self.id(), continuation_key, None)
+            if callable(put_working_state):
+                try:
+                    put_working_state(continuation_state_key, None)
+                except Exception:
+                    pass
+
+        def save_continuation_capsule(values: List[Dict[str, Any]]) -> None:
+            envelope = {
+                "schema_version": "aworld.context.adaptive-continuation-capsule/v2",
+                "scope": current_scope,
+                "messages": values,
+            }
+            state_context.context_info[continuation_state_key] = envelope
+            if callable(shared_writer):
+                shared_writer(self.id(), continuation_key, envelope)
+            if callable(put_working_state):
+                try:
+                    put_working_state(continuation_state_key, envelope)
+                except Exception:
+                    pass
+
+        if (
+            adaptive_state.get("compaction_active") is True
+            and continuation_capsule is None
+        ):
+            adaptive_state = {}
+
+        source_messages = [dict(message) for message in messages]
+        projection = state_context.context_info.get(
+            f"adaptive_memory_projection:{self.id()}"
+        )
+        occurrence_ids: list[str | None] = [None] * len(source_messages)
+        if (
+            isinstance(projection, Mapping)
+            and projection.get("schema_version")
+            == "aworld.context.adaptive-memory-projection/v2"
+            and projection.get("scope") == current_scope
+            and projection.get("messages_hash")
+            == canonical_json_hash(source_messages)
+            and projection.get("message_count") == len(source_messages)
+            and isinstance(projection.get("occurrences"), list)
+        ):
+            for entry in projection["occurrences"][-_ADAPTIVE_MEMORY_PROJECTION_LIMIT:]:
+                if not isinstance(entry, Mapping):
+                    continue
+                index = entry.get("index")
+                occurrence_id = entry.get("occurrence_id")
+                if (
+                    isinstance(index, int)
+                    and not isinstance(index, bool)
+                    and 0 <= index < len(occurrence_ids)
+                    and isinstance(occurrence_id, str)
+                ):
+                    occurrence_ids[index] = occurrence_id
+        previous_continuation_sequence = adaptive_state.get(
+            "continuation_sequence"
+        )
+        continuation_sequence_was_present = isinstance(
+            previous_continuation_sequence, Mapping
+        )
+        continuation_delta, next_continuation_sequence = (
+            advance_adaptive_continuation_sequence(
+                source_messages,
+                previous_continuation_sequence,
+                occurrence_ids=occurrence_ids,
+                scope=current_scope,
+                legacy_retained_messages=(
+                    continuation_capsule
+                    if (
+                        not isinstance(previous_continuation_sequence, Mapping)
+                        or previous_continuation_sequence.get("schema_version")
+                        != "aworld.context.adaptive-continuation-sequence/v2"
+                    )
+                    else None
+                ),
+            )
+        )
+        # Replace any legacy/untrusted cursor immediately so every later save
+        # path persists only the bounded, scoped v2 representation.
+        adaptive_state["continuation_sequence"] = next_continuation_sequence
+        if next_continuation_sequence.get("reset_reason") in {
+            "no_occurrence_authority",
+            "scope_mismatch",
+        }:
+            # Missing occurrence authority or a mismatched cursor scope cannot
+            # safely extend a compacted Memory capsule. Use the fresh scoped
+            # request as-is instead of freezing or resurrecting stale history.
+            continuation_capsule = None
+            adaptive_state["compaction_active"] = False
+
+        work_state_key = f"{ADAPTIVE_WORK_STATE_KEY}:{self.id()}"
+        adaptive_work_state = (
+            shared_reader(self.id(), ADAPTIVE_WORK_STATE_KEY)
+            if callable(shared_reader)
+            else None
+        )
+        if not isinstance(adaptive_work_state, dict):
+            adaptive_work_state = state_context.context_info.get(work_state_key)
+        if not isinstance(adaptive_work_state, dict):
+            if callable(get_working_state):
+                try:
+                    adaptive_work_state = get_working_state(work_state_key)
+                except Exception:
+                    adaptive_work_state = None
+
+        def attach_work_state(values):
+            return attach_adaptive_work_state(values, adaptive_work_state)
+
+        if adaptive_state.get("compaction_active") is True:
+            messages = restore_adaptive_continuation(
+                source_messages,
+                continuation_capsule,
+                continuation_delta=continuation_delta,
+                # The previous capsule is the committed prefix for this
+                # checkpoint epoch.  Merge only newly replayed occurrences;
+                # never trim or replace it between explicit checkpoints.
+                keep_recent=None,
+            )
+            prompt_tokens = int(estimate_canonical_json_tokens(messages).value or 0)
+
+        def adaptive_state_count(key: str) -> int:
+            value = adaptive_state.get(key, 0)
+            return (
+                value
+                if isinstance(value, int) and not isinstance(value, bool) and value >= 0
+                else 0
+            )
+
+        turn_coordinate = context.context_lifecycle_state.turn_epoch
+        get_agent_step = getattr(state_context, "get_agent_step", None)
+        if callable(get_agent_step):
+            shared_agent_step = get_agent_step(self.id())
+            if isinstance(shared_agent_step, int) and not isinstance(
+                shared_agent_step, bool
+            ):
+                turn_coordinate = max(turn_coordinate, shared_agent_step)
+        raw_last_checkpoint_turn = adaptive_state.get("last_checkpoint_turn")
+        last_checkpoint_turn = (
+            raw_last_checkpoint_turn
+            if isinstance(raw_last_checkpoint_turn, int)
+            and not isinstance(raw_last_checkpoint_turn, bool)
+            and raw_last_checkpoint_turn >= 0
+            else None
+        )
+        adaptive_policy = AdaptiveCheckpointPolicy()
+        decision = evaluate_adaptive_checkpoint(
+            policy_name=policy_name,
+            prompt_tokens=prompt_tokens,
+            input_budget=input_budget,
+            repetition_count=int(progress.get("repetition_count", 0) or 0),
+            low_information_gain_count=int(
+                progress.get("low_information_gain_count", 0) or 0
+            ),
+            no_goal_progress_count=int(progress.get("no_goal_progress_count", 0) or 0),
+            turn_epoch=turn_coordinate,
+            last_checkpoint_turn=last_checkpoint_turn,
+            policy=adaptive_policy,
+        )
+        previous_no_progress_checkpoints = adaptive_state_count(
+            "no_progress_checkpoint_count"
+        )
+        escalation = advance_adaptive_escalation(
+            previous_no_progress_checkpoints=previous_no_progress_checkpoints,
+            checkpoint_reasons=decision.reasons if decision.checkpoint else (),
+            goal_progress=progress.get("goal_progress") is True,
+        )
+        if escalation.progress_reset:
+            adaptive_state.update(
+                {
+                    "schema_version": "aworld.context.adaptive-state/v3",
+                    "scope": current_scope,
+                    "no_progress_checkpoint_count": 0,
+                    "escalation_stage": AdaptiveEscalationStage.NONE.value,
+                    "goal_progress_reset_count": adaptive_state_count(
+                        "goal_progress_reset_count"
+                    )
+                    + 1,
+                }
+            )
+            record_adaptive_context_metrics(state_context, progress_reset=True)
+            save_adaptive_state()
+        if not decision.checkpoint:
+            if adaptive_state.get("compaction_active") is True:
+                effective_prompt_tokens = int(
+                    estimate_canonical_json_tokens(messages).value or 0
+                )
+                adaptive_state["last_prompt_tokens"] = prompt_tokens
+                adaptive_state["last_effective_prompt_tokens"] = effective_prompt_tokens
+                adaptive_state["last_estimated_saved_prompt_tokens"] = max(
+                    0, prompt_tokens - effective_prompt_tokens
+                )
+                adaptive_state["continuation_sequence"] = (
+                    next_continuation_sequence
+                )
+                save_continuation_capsule(messages)
+                save_adaptive_state()
+                return messages
+            if continuation_sequence_was_present:
+                adaptive_state.update(
+                    {
+                        "schema_version": "aworld.context.adaptive-state/v3",
+                        "scope": current_scope,
+                        "continuation_sequence": next_continuation_sequence,
+                    }
+                )
+                save_adaptive_state()
+            return messages
+
+        # Destructive compaction is legal only at the explicit Context
+        # checkpoint below.  Replacing duplicate Tool bodies on every normal
+        # turn would otherwise invalidate an already committed provider prefix.
+        messages, duplicate_receipt = compact_duplicate_tool_results(messages)
+        if duplicate_receipt is not None:
+            increment_watchdog_metric(
+                context,
+                "duplicate_tool_result_compaction_count",
+                int(duplicate_receipt["compacted_message_count"]),
+            )
+            increment_watchdog_metric(
+                context,
+                "duplicate_tool_result_saved_chars",
+                int(duplicate_receipt["saved_chars"]),
+            )
+
+        keep_recent = adaptive_policy.keep_recent_messages
+        if policy_name == "budget_pressure":
+            keep_recent = max(keep_recent, len(messages) // 2)
+        while True:
+            compacted, receipt = compact_message_history(
+                messages, keep_recent=keep_recent
+            )
+            if (
+                policy_name != "budget_pressure"
+                or keep_recent <= adaptive_policy.keep_recent_messages
+                or estimate_canonical_json_tokens(compacted).value <= input_budget * 0.8
+            ):
+                break
+            keep_recent = max(adaptive_policy.keep_recent_messages, keep_recent // 2)
+        compacted = attach_work_state(compacted)
+        reasons = [reason.value for reason in decision.reasons]
+        no_progress_checkpoint = (
+            escalation.no_progress_checkpoint_count > previous_no_progress_checkpoints
+        )
+        escalation_levels = {
+            AdaptiveEscalationStage.NONE: 0,
+            AdaptiveEscalationStage.REASSESS: 1,
+            AdaptiveEscalationStage.DIVERSIFY: 2,
+            AdaptiveEscalationStage.RECOVER: 3,
+        }
+        adaptive_state.update(
+            {
+                "schema_version": "aworld.context.adaptive-state/v3",
+                "scope": current_scope,
+                "last_checkpoint_turn": turn_coordinate,
+                # The checkpoint cannot contain its own repository id.  Mark
+                # the prepared state explicitly, persist all continuity data,
+                # then replace this marker in the live state after snapshot().
+                "last_checkpoint_id": None,
+                "checkpoint_snapshot_state": "prepared",
+                "last_reasons": reasons,
+                "last_prompt_tokens": prompt_tokens,
+                "last_input_budget": input_budget,
+                "last_compaction_receipt": receipt,
+                "compaction_active": receipt is not None,
+                "continuation_sequence": next_continuation_sequence,
+                "work_state_revision": (
+                    int(adaptive_work_state.get("revision", 0) or 0)
+                    if isinstance(adaptive_work_state, dict)
+                    else 0
+                ),
+                "no_progress_checkpoint_count": (
+                    escalation.no_progress_checkpoint_count
+                ),
+                "escalation_stage": escalation.stage.value,
+            }
+        )
+        decisions = list(adaptive_state.get("decisions") or [])
+        decisions.append(
+            {
+                "turn_epoch": turn_coordinate,
+                "reasons": reasons,
+                "prompt_tokens": prompt_tokens,
+                "input_budget": input_budget,
+                "compacted": receipt is not None,
+                "no_progress_checkpoint_count": (
+                    escalation.no_progress_checkpoint_count
+                ),
+                "escalation_stage": escalation.stage.value,
+            }
+        )
+        adaptive_state["decisions"] = decisions[-32:]
+        acknowledge_semantic_checkpoint(context, agent_id=self.id())
+        record_adaptive_context_metrics(
+            state_context,
+            checkpoint=True,
+            no_progress_checkpoint=no_progress_checkpoint,
+            escalation_level=(
+                escalation_levels[escalation.stage] if no_progress_checkpoint else 0
+            ),
+        )
+        progress_signal = {
+            "role": "user",
+            "content": adaptive_escalation_message(
+                escalation.stage
+                if no_progress_checkpoint
+                else AdaptiveEscalationStage.NONE
+            ),
+        }
+        compacted = list(compacted)
+        if policy_name == "adaptive":
+            compacted.append(progress_signal)
+        effective_prompt_tokens = int(
+            estimate_canonical_json_tokens(compacted).value or 0
+        )
+        adaptive_state["last_effective_prompt_tokens"] = effective_prompt_tokens
+        adaptive_state["last_estimated_saved_prompt_tokens"] = max(
+            0, prompt_tokens - effective_prompt_tokens
+        )
+        adaptive_state["decisions"][-1].update(
+            {
+                "effective_prompt_tokens": effective_prompt_tokens,
+                "estimated_saved_prompt_tokens": max(
+                    0, prompt_tokens - effective_prompt_tokens
+                ),
+            }
+        )
+        save_continuation_capsule(compacted)
+        save_adaptive_state()
+        # Snapshot only after the continuation capsule and adaptive decision
+        # are in Amni WorkingState.  A resumed checkpoint therefore contains
+        # the exact bounded work state projected into the next provider call.
+        checkpoint_context = (
+            state_context if self._is_amni_context(state_context) else context
+        )
+        if self._is_amni_context(checkpoint_context):
+            checkpoint = (
+                await checkpoint_context.snapshot(checkpoint_only=True)
+                if receipt is not None
+                else await checkpoint_context.snapshot(
+                    checkpoint_only=True,
+                    cache_boundary=False,
+                )
+            )
+        else:
+            checkpoint = (
+                await checkpoint_context.snapshot()
+                if receipt is not None
+                else await checkpoint_context.snapshot(cache_boundary=False)
+            )
+        # Both Context.snapshot() and Amni save_context_checkpoint() own the
+        # lifecycle transition so the persisted snapshot contains the exact
+        # epoch it creates.  A transport/deep-copy Context is not mutated by
+        # that root snapshot; mirror the same single boundary there only after
+        # persistence succeeds.
+        if receipt is not None and checkpoint_context is not context:
+            context.advance_context_lifecycle(LifecycleAction.CHECKPOINT)
+        adaptive_state["last_checkpoint_id"] = getattr(checkpoint, "id", None)
+        adaptive_state["checkpoint_snapshot_state"] = "captured"
+        save_adaptive_state()
+        logger.info(
+            f"Adaptive Context checkpoint for agent {self.id()}: "
+            f"reasons={reasons} compacted={receipt is not None}"
+        )
+        return compacted
+
+    @staticmethod
+    def _coerce_loop_budget_final_response(
+        response: ModelResponse,
+    ) -> ModelResponse:
+        """Remove executable intent from the one tool-free finalization response."""
+        sanitized = copy.copy(response)
+        content = (response.content or "").strip()
+        if response.tool_calls:
+            logger.warning(
+                "Model returned %s tool call(s) during a tool-free budget "
+                "finalization turn; executable intent was discarded",
+                len(response.tool_calls),
+            )
+        sanitized.content = content
+        sanitized.tool_calls = []
+        if isinstance(response.message, dict):
+            sanitized.message = dict(response.message)
+            sanitized.message["content"] = content
+            sanitized.message.pop("tool_calls", None)
+        return sanitized
+
+    @staticmethod
+    def _remaining_before_completion_reserve(
+        context: Context | None,
+        *,
+        cap_seconds: float | None,
+    ) -> float:
+        """Return agent-owned time without consuming caller persistence time."""
+        if context is None:
+            return max(0.1, float(cap_seconds or 3600.0))
+        get_task = getattr(context, "get_task", None)
+        try:
+            task = get_task() if callable(get_task) else None
+            remaining = task.remaining_seconds() if task is not None else None
+            external_reserve = (
+                getattr(task, "completion_reserve_seconds", 0.0)
+                if task is not None
+                else 0.0
+            )
+        except Exception:
+            return max(0.1, float(cap_seconds or 3600.0))
+        if isinstance(remaining, bool) or not isinstance(remaining, (int, float)):
+            return max(0.1, float(cap_seconds or 3600.0))
+        if (
+            isinstance(external_reserve, bool)
+            or not isinstance(external_reserve, (int, float))
+            or external_reserve < 0
+        ):
+            external_reserve = 0.0
+        available = max(0.1, float(remaining) - float(external_reserve))
+        return (
+            min(max(0.1, float(cap_seconds)), available)
+            if cap_seconds is not None
+            else available
+        )
+
+    async def async_finalize_at_loop_budget(
+        self, message: Message, **kwargs
+    ) -> Message | None:
+        """Use the configured boundary step for one tool-free synthesis turn."""
+        try:
+            await self.async_pre_run(message)
+            policy_result = await self.async_policy(
+                message.payload,
+                message=message,
+                _loop_budget_finalization=True,
+                **kwargs,
+            )
+            if not any(
+                str(getattr(action, "policy_info", "") or "").strip()
+                for action in policy_result or []
+            ):
+                raise AWorldRuntimeException(
+                    "bounded finalization returned no textual response"
+                )
+            final_result = await self.async_post_run(
+                policy_result, message.payload, message
+            )
+            message.context.context_info[f"agent_loop_budget_finalized:{self.id()}"] = (
+                True
+            )
+            return final_result
+        except asyncio.CancelledError:
+            raise
+        except Exception as exc:
+            message.context.context_info[
+                f"agent_loop_budget_finalization_error:{self.id()}"
+            ] = {"error_type": type(exc).__name__}
+            logger.warning(
+                "Bounded finalization failed for agent %s; preserving hard-stop "
+                "behavior (error_type=%s)",
+                self.id(),
+                type(exc).__name__,
+            )
+            return None
+
+    @staticmethod
+    def _transient_model_failure_details(
+        exc: BaseException,
+    ) -> dict[str, Any] | None:
+        """Classify provider liveness failures from types and stable codes only."""
+
+        if isinstance(exc, AWorldTransientModelError):
+            return {
+                "status_code": exc.status_code,
+                "error_code": exc.error_code,
+                "source_error_type": exc.source_error_type or type(exc).__name__,
+            }
+
+        status_codes: list[int] = []
+        error_codes: list[str] = []
+        exception_types: list[str] = []
+        seen_mappings: set[int] = set()
+        current: BaseException | None = exc
+        seen: set[int] = set()
+
+        def collect_mapping(value: Any) -> None:
+            if not isinstance(value, dict) or id(value) in seen_mappings:
+                return
+            seen_mappings.add(id(value))
+            status = value.get("status_code", value.get("status"))
+            if isinstance(status, str) and status.isdigit():
+                status = int(status)
+            if isinstance(status, int) and not isinstance(status, bool):
+                status_codes.append(status)
+            code = value.get("code", value.get("type"))
+            if isinstance(code, str) and code.strip():
+                error_codes.append(code.strip().lower())
+            nested = value.get("error")
+            if isinstance(nested, dict) and nested is not value:
+                collect_mapping(nested)
+
+        while current is not None and id(current) not in seen:
+            seen.add(id(current))
+            exception_types.append(type(current).__name__)
+            status = getattr(current, "status_code", None)
+            if isinstance(status, str) and status.isdigit():
+                status = int(status)
+            if isinstance(status, int) and not isinstance(status, bool):
+                status_codes.append(status)
+            code = getattr(current, "code", None)
+            if isinstance(code, str) and code.strip():
+                error_codes.append(code.strip().lower())
+            collect_mapping(getattr(current, "error_details", None))
+            collect_mapping(getattr(current, "body", None))
+            response = getattr(current, "response", None)
+            if isinstance(response, dict):
+                collect_mapping(response)
+            elif response is not None:
+                response_status = getattr(response, "status_code", None)
+                if isinstance(response_status, int) and not isinstance(
+                    response_status, bool
+                ):
+                    status_codes.append(response_status)
+            current = current.__cause__ or current.__context__
+
+        transient_status = next(
+            (
+                status
+                for status in status_codes
+                if status in _TRANSIENT_MODEL_STATUS_CODES
+            ),
+            None,
+        )
+        transient_code = next(
+            (code for code in error_codes if code in _TRANSIENT_MODEL_ERROR_CODES),
+            None,
+        )
+        transient_type = next(
+            (
+                name
+                for name in exception_types
+                if name in _TRANSIENT_MODEL_EXCEPTION_TYPES
+            ),
+            None,
+        )
+        if (
+            transient_status is None
+            and transient_code is None
+            and transient_type is None
+        ):
+            return None
+        # An explicit deterministic status wins over a generic transport class.
+        if status_codes and transient_status is None:
+            return None
+        return {
+            "status_code": transient_status,
+            "error_code": transient_code,
+            "source_error_type": transient_type or exception_types[-1],
+        }
+
+    def _long_horizon_transient_recovery_window(
+        self,
+        context: Context,
+        *,
+        allow_unarmed_decision_fail_open: bool = False,
+    ) -> float | None:
+        """Return solve time left before the protocol/caller finalization reserve."""
+
+        try:
+            from aworld.runners.execution_protocol import (
+                execution_protocol_control_eligible,
+            )
+
+            policy = self._resolve_execution_protocol_policy(context)
+            state = ExecutionProtocolStore(context, self.id(), policy).load()
+        except Exception:
+            return None
+        if (
+            not execution_protocol_control_eligible(context, self.id())
+            and not allow_unarmed_decision_fail_open
+        ) or state.phase not in {
+            ProtocolPhase.EXECUTE,
+            ProtocolPhase.REPAIR,
+        }:
+            return None
+        get_task = getattr(context, "get_task", None)
+        try:
+            task = get_task() if callable(get_task) else None
+            remaining = task.remaining_seconds() if task is not None else None
+        except Exception:
+            return None
+        if (
+            isinstance(remaining, bool)
+            or not isinstance(remaining, (int, float))
+            or not math.isfinite(float(remaining))
+        ):
+            # Recovery without a caller deadline could retry forever.
+            return None
+        return max(
+            0.0,
+            float(remaining) - float(policy.finalization_reserve_seconds),
+        )
+
+    @staticmethod
+    def _transient_model_recovery_backoff_seconds(
+        consecutive_failures: int,
+    ) -> float:
+        """Use bounded backoff while leaving the task deadline as the hard cap."""
+
+        if consecutive_failures <= 0:
+            return 0.0
+        return min(30.0, float(2 ** min(consecutive_failures - 1, 5)))
+
+    def _record_transient_model_recovery(
+        self,
+        context: Context,
+        *,
+        outcome: str,
+        reason: str,
+        details: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        key = "transient_model_recovery_metrics"
+        metrics = context.context_info.get(key)
+        if not isinstance(metrics, dict):
+            metrics = {}
+        metrics["last_outcome"] = outcome
+        metrics["last_reason"] = reason
+        metrics[f"outcome:{outcome}"] = (
+            int(metrics.get(f"outcome:{outcome}", 0) or 0) + 1
+        )
+        if outcome == "scheduled":
+            metrics["attempt_count"] = int(metrics.get("attempt_count", 0) or 0) + 1
+            metrics["consecutive_failure_count"] = (
+                int(metrics.get("consecutive_failure_count", 0) or 0) + 1
+            )
+        elif outcome == "recovered":
+            metrics["consecutive_failure_count"] = 0
+        if isinstance(details, dict):
+            for field in ("status_code", "error_code", "source_error_type"):
+                value = details.get(field)
+                if isinstance(value, (str, int)) and not isinstance(value, bool):
+                    metrics[f"last_{field}"] = value
+        context.context_info[key] = metrics
+        return metrics
+
+    async def _schedule_transient_model_recovery(
+        self,
+        context: Context,
+        *,
+        reason: str,
+        details: dict[str, Any] | None = None,
+        allow_unarmed_decision_fail_open: bool = False,
+    ) -> bool:
+        """Wait within solve time and schedule one ordinary model/tool turn."""
+
+        available = self._long_horizon_transient_recovery_window(
+            context,
+            allow_unarmed_decision_fail_open=allow_unarmed_decision_fail_open,
+        )
+        if available is None or available <= 0.1:
+            return False
+        current = context.context_info.get("transient_model_recovery_metrics")
+        consecutive = (
+            int(current.get("consecutive_failure_count", 0) or 0)
+            if isinstance(current, dict)
+            else 0
+        )
+        delay = self._transient_model_recovery_backoff_seconds(consecutive)
+        if delay + 0.1 >= available:
+            return False
+        if delay:
+            await asyncio.sleep(delay)
+            available = self._long_horizon_transient_recovery_window(
+                context,
+                allow_unarmed_decision_fail_open=allow_unarmed_decision_fail_open,
+            )
+            if available is None or available <= 0.1:
+                return False
+        metrics = self._record_transient_model_recovery(
+            context,
+            outcome="scheduled",
+            reason=reason,
+            details=details,
+        )
+        schedule_turn_cause = getattr(context, "schedule_turn_cause", None)
+        if callable(schedule_turn_cause):
+            try:
+                schedule_turn_cause(
+                    TurnCauseCode.FRAMEWORK_RETRY,
+                    evidence_hash=canonical_json_hash(
+                        {
+                            "reason": reason,
+                            "recovery_attempt": metrics["attempt_count"],
+                        }
+                    ),
+                )
+            except Exception as exc:
+                logger.warning(
+                    "Failed to type transient model recovery turn; "
+                    f"error_type={type(exc).__name__}"
+                )
+        from aworld.core.context.execution_state import record_execution_state
+
+        record_execution_state(
+            context,
+            self.id(),
+            "running",
+            "transient_model_recovery_scheduled",
+            recoverable=True,
+        )
+        return True
+
+    def _transient_model_recovery_exhausted(
+        self,
+        context: Context,
+        *,
+        details: dict[str, Any] | None = None,
+    ) -> List[ActionModel]:
+        from aworld.core.context.execution_state import record_execution_state
+
+        record_execution_state(
+            context,
+            self.id(),
+            "incomplete",
+            "transient_model_recovery_deadline_exhausted",
+            recoverable=True,
+        )
+        self._record_transient_model_recovery(
+            context,
+            outcome="deadline_exhausted",
+            reason="transient_provider_failure",
+            details=details,
+        )
+        self._finished = True
+        return [
+            ActionModel(
+                agent_name=self.id(),
+                policy_info=(
+                    "A transient model-provider failure persisted until the "
+                    "task's reserved finalization boundary. Work already "
+                    "completed in the environment is preserved, but the task "
+                    "could not continue. This response does not claim "
+                    "successful completion."
+                ),
+            )
+        ]
+
+    def _recoverable_model_response_state(
+        self, context: Context | None
+    ) -> dict[str, Any] | None:
+        """Return this Agent's scoped, retryable model-action state."""
+
+        if context is None:
+            return None
+        from aworld.core.context.execution_state import get_execution_state
+
+        state = get_execution_state(context)
+        if not isinstance(state, dict):
+            return None
+        if (
+            state.get("agent_id") != self.id()
+            or state.get("status") != "incomplete"
+            or state.get("recoverable") is not True
+            or state.get("reason") not in _RECOVERABLE_MODEL_RESPONSE_REASONS
+        ):
+            return None
+        return state
+
+    @staticmethod
+    def _model_response_recovery_deadline_open(context: Context | None) -> bool:
+        """Keep caller persistence time outside model-response recovery."""
+
+        if context is None:
+            return True
+        get_task = getattr(context, "get_task", None)
+        try:
+            task = get_task() if callable(get_task) else None
+            remaining = task.remaining_seconds() if task is not None else None
+            reserve = (
+                getattr(task, "completion_reserve_seconds", 0.0)
+                if task is not None
+                else 0.0
+            )
+        except Exception:
+            return True
+        if (
+            isinstance(remaining, bool)
+            or not isinstance(remaining, (int, float))
+            or not math.isfinite(float(remaining))
+        ):
+            return True
+        if (
+            isinstance(reserve, bool)
+            or not isinstance(reserve, (int, float))
+            or not math.isfinite(float(reserve))
+            or reserve < 0
+        ):
+            reserve = 0.0
+        return float(remaining) > float(reserve)
+
+    def _record_model_response_recovery(
+        self,
+        context: Context,
+        *,
+        outcome: str,
+        reason: str,
+    ) -> None:
+        """Publish bounded counters without making them a recovery budget."""
+
+        key = "model_response_recovery_metrics"
+        metrics = context.context_info.get(key)
+        if not isinstance(metrics, dict):
+            metrics = {}
+        metrics["last_outcome"] = outcome
+        metrics["last_reason"] = reason
+        metrics[f"outcome:{outcome}"] = min(
+            1_000_000,
+            int(metrics.get(f"outcome:{outcome}", 0) or 0) + 1,
+        )
+        if outcome == "scheduled":
+            metrics["continuation_count"] = min(
+                1_000_000,
+                int(metrics.get("continuation_count", 0) or 0) + 1,
+            )
+            metrics["consecutive_continuation_count"] = min(
+                _MODEL_RESPONSE_RECOVERY_MAX_CONTINUATIONS,
+                int(metrics.get("consecutive_continuation_count", 0) or 0) + 1,
+            )
+        elif outcome == "recovered":
+            metrics["consecutive_continuation_count"] = 0
+        context.context_info[key] = metrics
+
+    @staticmethod
+    def _model_response_recovery_continuations(context: Context) -> int:
+        metrics = context.context_info.get("model_response_recovery_metrics")
+        if not isinstance(metrics, Mapping):
+            return 0
+        value = metrics.get("consecutive_continuation_count", 0)
+        if isinstance(value, bool) or not isinstance(value, int):
+            return 0
+        return max(0, value)
+
+    @staticmethod
+    def _incomplete_action_recovery_kwargs(
+        kwargs: dict[str, Any],
+        *,
+        max_output_tokens: int | None = None,
+    ) -> dict[str, Any]:
+        """Bound reasoning on a forced action retry without inventing support.
+
+        Only an already-declared reasoning transport is changed. Providers
+        without such a declaration retain their original request unchanged.
+        """
+
+        updated = dict(kwargs)
+        from aworld.models.reasoning_policy import (
+            AWORLD_REASONING_SELECTION_KWARG,
+        )
+
+        updated.pop(AWORLD_REASONING_SELECTION_KWARG, None)
+        declared = isinstance(updated.get("reasoning_effort"), str)
+        top_template = updated.get("chat_template_kwargs")
+        if isinstance(top_template, Mapping) and isinstance(
+            top_template.get("reasoning_effort"), str
+        ):
+            declared = True
+            template = dict(top_template)
+            template["reasoning_effort"] = "low"
+            template["thinking"] = True
+            updated["chat_template_kwargs"] = template
+        extra_body = updated.get("extra_body")
+        if isinstance(extra_body, Mapping):
+            extra = dict(extra_body)
+            if isinstance(extra.get("reasoning_effort"), str):
+                declared = True
+                extra["reasoning_effort"] = "low"
+            nested_template = extra.get("chat_template_kwargs")
+            if isinstance(nested_template, Mapping) and isinstance(
+                nested_template.get("reasoning_effort"), str
+            ):
+                declared = True
+                nested = dict(nested_template)
+                nested["reasoning_effort"] = "low"
+                nested["thinking"] = True
+                extra["chat_template_kwargs"] = nested
+            updated["extra_body"] = extra
+        if declared:
+            updated["reasoning_effort"] = "low"
+        if (
+            isinstance(max_output_tokens, int)
+            and not isinstance(max_output_tokens, bool)
+            and max_output_tokens > 0
+        ):
+            bounded_existing = False
+            for key in ("max_tokens", "max_completion_tokens"):
+                value = updated.get(key)
+                if isinstance(value, int) and not isinstance(value, bool):
+                    updated[key] = min(value, max_output_tokens)
+                    bounded_existing = True
+            if not bounded_existing:
+                updated["max_completion_tokens"] = max_output_tokens
+        return updated
+
+    def _model_response_action_projection_kwargs(
+        self,
+        kwargs: dict[str, Any],
+        *,
+        max_output_tokens: int | None,
+        context: Context | None,
+    ) -> dict[str, Any]:
+        """Project an incomplete response onto one bounded concrete action.
+
+        A reasoning-only or truncated response is evidence that another open-
+        ended model turn is the wrong retry shape.  Reuse the reviewed
+        reasoning transport capability when it exists.  The output cap is
+        optional because ordinary response recovery must preserve the caller's
+        output allowance unless bounded action repair was explicitly enabled.
+        """
+
+        updated = self._incomplete_action_recovery_kwargs(
+            kwargs,
+            max_output_tokens=max_output_tokens,
+        )
+        from aworld.models.reasoning_policy import (
+            ReasoningPhasePolicy,
+            ReasoningProfile,
+            resolve_reasoning_request,
+        )
+
+        llm_config = getattr(self.conf, "llm_config", None)
+        provider_adapter = getattr(self.llm, "provider", None)
+        capability_resolver = getattr(
+            provider_adapter, "reasoning_transport_capability", None
+        )
+        transport_capability = (
+            capability_resolver() if callable(capability_resolver) else None
+        )
+        recovery_policy = ReasoningPhasePolicy(
+            policy_id="model-response-action-projection/v1",
+            execute=ReasoningProfile(reasoning_effort="low"),
+        )
+        resolved, receipt = resolve_reasoning_request(
+            phase="execute",
+            model_name=getattr(llm_config, "llm_model_name", None)
+            or self.model_name,
+            provider=getattr(llm_config, "llm_provider", None)
+            or self._current_provider_name(),
+            request_kwargs=updated,
+            policy=recovery_policy,
+            reasoning_transport=getattr(
+                llm_config, "reasoning_transport", "auto"
+            ),
+            transport_capability=transport_capability,
+        )
+        if receipt.applied:
+            for alias in ("thinking", "enable_thinking", "chat_template_kwargs"):
+                updated.pop(alias, None)
+            updated["reasoning_effort"] = resolved["reasoning_effort"]
+            if "extra_body" in resolved:
+                updated["extra_body"] = resolved["extra_body"]
+        if context is not None:
+            metrics = context.context_info.get("model_response_recovery_metrics")
+            if not isinstance(metrics, dict):
+                metrics = {}
+            metrics["last_action_projection"] = receipt.to_dict()
+            metrics["last_action_projection_max_output_tokens"] = (
+                max_output_tokens
+            )
+            metrics["last_action_projection_output_cap_applied"] = (
+                max_output_tokens is not None
+            )
+            context.context_info["model_response_recovery_metrics"] = metrics
+        return updated
+
+    @staticmethod
+    def _model_response_action_projection_output_cap(
+        policy: GenerationBudgetPolicy,
+    ) -> int | None:
+        """Return the independently opt-in cap for response recovery.
+
+        Response recovery and timeout-oriented action repair are separate
+        mechanisms.  Reusing the action-repair default made an explicit policy
+        that only configured a deadline silently shrink otherwise valid long
+        Tool arguments to 1024 tokens.
+        """
+
+        return policy.response_recovery_max_output_tokens
+
+    @staticmethod
+    def _staged_action_recovery_guidance(
+        reason: str,
+        *,
+        repeated: bool,
+    ) -> str:
+        """Steer truncated Tool payloads away from an identical retry loop."""
+
+        if reason not in {"incomplete_tool_arguments", "model_output_truncated"}:
+            return ""
+        prefix = (
+            "A prior recovery was also truncated. Do not repeat the same "
+            "oversized Tool payload. "
+            if repeated
+            else (
+                "If the previous response was cut off while encoding a large "
+                "Tool payload, do not repeat that oversized payload unchanged. "
+            )
+        )
+        return (
+            " "
+            + prefix
+            + "Use a smaller staged Tool action, such as a bounded first chunk "
+            "or a minimal valid skeleton, and extend it in later turns."
+        )
+
+    @staticmethod
+    def _model_response_recovery_kwargs(kwargs: dict[str, Any]) -> dict[str, Any]:
+        """Drop request-local compiler products before the next normal turn."""
+
+        return {
+            key: value
+            for key, value in kwargs.items()
+            if key
+            not in {
+                "prepared_tools",
+                "prompt_assembly_plan",
+                "provider_native_prompt_cache",
+                "response_parse_args",
+            }
+        }
+
+    def _model_response_recovery_context_key(self) -> str:
+        return f"{_MODEL_RESPONSE_RECOVERY_CONTEXT_KEY}:{self.id()}"
+
+    def _long_horizon_review_deadline_context_key(self) -> str:
+        return f"{_LONG_HORIZON_REVIEW_DEADLINE_KEY}:{self.id()}"
+
+    def _long_horizon_review_deadline_scope(self, context: Context) -> dict[str, Any]:
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context) or context
+        return {
+            "task_id": getattr(owner, "task_id", None),
+            "task_epoch": getattr(owner, "task_epoch", None),
+            "agent_id": self.id(),
+            # ``time.monotonic`` values are meaningful only in this process.
+            # A restored task starts a fresh bounded review episode rather than
+            # comparing clocks from unrelated interpreter lifetimes.
+            "process_id": os.getpid(),
+        }
+
+    def _clear_long_horizon_review_deadline(self, context: Context | None) -> None:
+        if context is None:
+            return
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context) or context
+        writer = getattr(owner, "write_task_runtime_state", None)
+        if callable(writer):
+            writer(self.id(), _LONG_HORIZON_REVIEW_DEADLINE_KEY, None)
+        key = self._long_horizon_review_deadline_context_key()
+        owner.context_info.pop(key, None)
+        if owner is not context:
+            context.context_info.pop(key, None)
+
+    def _load_long_horizon_review_deadline(
+        self, context: Context | None
+    ) -> float | None:
+        if context is None:
+            return None
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context) or context
+        reader = getattr(owner, "read_task_runtime_state", None)
+        value = (
+            reader(self.id(), _LONG_HORIZON_REVIEW_DEADLINE_KEY)
+            if callable(reader)
+            else None
+        )
+        if not isinstance(value, dict):
+            value = owner.context_info.get(
+                self._long_horizon_review_deadline_context_key()
+            )
+        deadline = value.get("deadline") if isinstance(value, dict) else None
+        valid = bool(
+            isinstance(value, dict)
+            and value.get("schema_version") == _LONG_HORIZON_REVIEW_DEADLINE_SCHEMA
+            and value.get("scope") == self._long_horizon_review_deadline_scope(context)
+            and isinstance(deadline, (int, float))
+            and not isinstance(deadline, bool)
+            and math.isfinite(float(deadline))
+        )
+        if not valid:
+            if value is not None:
+                self._clear_long_horizon_review_deadline(context)
+            return None
+        return float(deadline)
+
+    def _ensure_long_horizon_review_deadline(
+        self,
+        context: Context,
+        *,
+        timeout_seconds: float,
+    ) -> float:
+        deadline = self._load_long_horizon_review_deadline(context)
+        if deadline is not None:
+            return deadline
+        deadline = _monotonic_now() + max(0.0, float(timeout_seconds))
+        value = {
+            "schema_version": _LONG_HORIZON_REVIEW_DEADLINE_SCHEMA,
+            "scope": self._long_horizon_review_deadline_scope(context),
+            "deadline": deadline,
+        }
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context) or context
+        writer = getattr(owner, "write_task_runtime_state", None)
+        if callable(writer):
+            writer(self.id(), _LONG_HORIZON_REVIEW_DEADLINE_KEY, value)
+        key = self._long_horizon_review_deadline_context_key()
+        owner.context_info[key] = copy.deepcopy(value)
+        if owner is not context:
+            context.context_info[key] = copy.deepcopy(value)
+        return deadline
+
+    def _bounded_model_response_recovery_context(
+        self,
+        response: ModelResponse | None,
+        *,
+        limit: int,
+    ) -> str:
+        """Retain bounded, non-executable context from an incomplete action."""
+
+        if response is None or limit <= 0:
+            return ""
+        partial = next(
+            (
+                value.strip()
+                for value in (
+                    getattr(response, "reasoning_content", None),
+                    getattr(response, "content", None),
+                )
+                if isinstance(value, str) and value.strip()
+            ),
+            "",
+        )
+        sections = [partial] if partial else []
+        projections = []
+        argument_limit = max(64, min(2048, limit // 2))
+        for index, call in enumerate((getattr(response, "tool_calls", None) or ())[:4]):
+            function = getattr(call, "function", None)
+            name = getattr(function, "name", None)
+            arguments = getattr(function, "arguments", None)
+            if not isinstance(name, str) and not isinstance(arguments, str):
+                continue
+            projections.append(
+                {
+                    "call_index": index,
+                    "tool_name": str(name or "")[:256],
+                    "arguments_fragment": str(arguments or "")[-argument_limit:],
+                    "complete": False,
+                    "executable": False,
+                }
+            )
+        if projections:
+            sections.append(
+                "Non-executable partial tool-call reference; reconstruct and "
+                "validate a fresh call before use:\n"
+                + json.dumps(
+                    projections,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+            )
+        if not sections:
+            return ""
+        return self._bounded_partial_for_repair("\n\n".join(sections), limit=limit)
+
+    @staticmethod
+    def _bounded_action_recovery_messages(
+        messages: Sequence[Dict[str, Any]],
+        *,
+        recovery_context: str,
+        limit: int,
+    ) -> List[Dict[str, str]]:
+        """Build a history-independent action capsule after an incomplete turn."""
+
+        budget = max(2048, min(int(limit), 32_768))
+
+        def bounded(value: Any, allowance: int) -> str:
+            text = str(value or "").strip()
+            if len(text) <= allowance:
+                return text
+            head = max(1, allowance * 2 // 3)
+            tail = max(1, allowance - head - 32)
+            return f"{text[:head]}\n...[bounded capsule]...\n{text[-tail:]}"
+
+        system = next(
+            (
+                item.get("content", "")
+                for item in messages
+                if item.get("role") == "system" and item.get("content")
+            ),
+            "",
+        )
+        task = next(
+            (
+                item.get("content", "")
+                for item in messages
+                if item.get("role") == "user" and item.get("content")
+            ),
+            "",
+        )
+        latest_observation = next(
+            (
+                item.get("content", "")
+                for item in reversed(messages)
+                if item.get("role") in {"tool", "user"}
+                and item.get("content")
+                and item.get("content") != task
+            ),
+            "",
+        )
+        allocations = {
+            "system": budget * 20 // 100,
+            "task": budget * 32 // 100,
+            "observation": budget * 22 // 100,
+            "recovery": budget * 20 // 100,
+        }
+        capsule: List[Dict[str, str]] = []
+        if system:
+            capsule.append(
+                {"role": "system", "content": bounded(system, allocations["system"])}
+            )
+        if task:
+            capsule.append(
+                {"role": "user", "content": bounded(task, allocations["task"])}
+            )
+        if latest_observation:
+            capsule.append(
+                {
+                    "role": "user",
+                    "content": "Latest accepted observation:\n"
+                    + bounded(latest_observation, allocations["observation"]),
+                }
+            )
+        if recovery_context:
+            capsule.append(
+                {
+                    "role": "assistant",
+                    "content": (
+                        "Non-executable incomplete action context; not a final "
+                        "answer or executable action:\n"
+                    )
+                    + bounded(recovery_context, allocations["recovery"]),
+                }
+            )
+        return capsule
+
+    def _store_model_response_recovery_context(
+        self,
+        context: Context | None,
+        *,
+        reason: str,
+        content: str,
+    ) -> None:
+        if context is None or not content:
+            return
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context) or context
+        value = {
+            "agent_id": self.id(),
+            "task_id": getattr(context, "task_id", None),
+            "task_epoch": getattr(context, "task_epoch", None),
+            "reason": reason,
+            "content": content,
+        }
+        key = self._model_response_recovery_context_key()
+        owner.context_info[key] = value
+        if owner is not context:
+            context.context_info[key] = dict(value)
+
+    def _load_model_response_recovery_context(
+        self,
+        context: Context | None,
+        *,
+        reason: str,
+    ) -> str:
+        if context is None:
+            return ""
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context) or context
+        value = owner.context_info.get(self._model_response_recovery_context_key())
+        if not isinstance(value, dict):
+            return ""
+        expected_scope = (
+            self.id(),
+            getattr(context, "task_id", None),
+            getattr(context, "task_epoch", None),
+            reason,
+        )
+        observed_scope = (
+            value.get("agent_id"),
+            value.get("task_id"),
+            value.get("task_epoch"),
+            value.get("reason"),
+        )
+        content = value.get("content")
+        return (
+            content
+            if observed_scope == expected_scope and isinstance(content, str)
+            else ""
+        )
+
+    def _clear_model_response_recovery_context(
+        self,
+        context: Context | None,
+    ) -> None:
+        if context is None:
+            return
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context) or context
+        key = self._model_response_recovery_context_key()
+        owner.context_info.pop(key, None)
+        if owner is not context:
+            context.context_info.pop(key, None)
+
+    async def async_policy(
+        self,
+        observation: Observation,
+        info: Dict[str, Any] = {},
+        message: Message = None,
+        **kwargs,
+    ) -> List[ActionModel]:
+        """Continue completion repairs without recursive stack growth."""
+        repair_feedback = None
+        transient_recovery_turn = False
+        model_response_recovery_turn = False
+        long_horizon_review_deadline = None
+        loop_budget_finalization = bool(kwargs.get("_loop_budget_finalization", False))
+        from aworld.runners.execution_protocol import (
+            clear_candidate_fallback,
+            execution_protocol_policy,
+            load_candidate_fallback,
+        )
+
+        long_horizon_fallback = load_candidate_fallback(message.context, self.id())
+        if long_horizon_fallback is not None:
+            policy = execution_protocol_policy(message.context, self.id())
+            review_pending = (
+                ExecutionProtocolStore(message.context, self.id(), policy)
+                .load()
+                .review_pending
+            )
+            if not review_pending:
+                # A fallback is meaningful only while its exact review episode
+                # is pending.  Never let a stale candidate wrap a later repair
+                # or normal task turn in the review deadline.
+                clear_candidate_fallback(message.context, self.id())
+                long_horizon_fallback = None
+        if long_horizon_fallback is None:
+            self._clear_long_horizon_review_deadline(message.context)
+        else:
+            long_horizon_review_deadline = self._load_long_horizon_review_deadline(
+                message.context
+            )
+        while True:
+            try:
+                if long_horizon_fallback is None:
+                    result = await self._async_policy_once(
+                        observation, info=info, message=message, **kwargs
+                    )
+                else:
+                    policy = execution_protocol_policy(message.context, self.id())
+                    configured_review_timeout = policy.final_review_timeout_seconds
+                    if (
+                        configured_review_timeout is not None
+                        and long_horizon_review_deadline is None
+                    ):
+                        long_horizon_review_deadline = (
+                            self._ensure_long_horizon_review_deadline(
+                                message.context,
+                                timeout_seconds=float(configured_review_timeout),
+                            )
+                        )
+                    review_remaining = (
+                        long_horizon_review_deadline - _monotonic_now()
+                        if long_horizon_review_deadline is not None
+                        else None
+                    )
+                    if review_remaining is not None and review_remaining <= 0:
+                        raise asyncio.TimeoutError(
+                            "long-horizon final review deadline exhausted"
+                        )
+                    timeout = self._remaining_before_completion_reserve(
+                        message.context,
+                        cap_seconds=review_remaining,
+                    )
+                    result = await asyncio.wait_for(
+                        self._async_policy_once(
+                            observation, info=info, message=message, **kwargs
+                        ),
+                        timeout=timeout,
+                    )
+            except Exception as exc:
+                if long_horizon_fallback is not None:
+                    from aworld.runners.execution_protocol import (
+                        clear_acceptance_critic_state,
+                        clear_candidate_fallback,
+                        record_review_error,
+                        record_validated_terminal_fallback_submission,
+                    )
+                    from aworld.core.context.execution_state import (
+                        record_execution_state,
+                    )
+
+                    review_fallback = long_horizon_fallback
+                    policy = execution_protocol_policy(message.context, self.id())
+                    protocol_state = ExecutionProtocolStore(
+                        message.context, self.id(), policy
+                    ).load()
+                    repair_already_requested = bool(
+                        protocol_state.phase is ProtocolPhase.REPAIR
+                        and not protocol_state.review_pending
+                    )
+                    # A typed critic/model decision is authoritative as soon as
+                    # the controller enters REPAIR.  A later memory or hook
+                    # failure must not be reclassified as an uncertain review
+                    # (nor accept the stale candidate).
+                    transition = None
+                    if not repair_already_requested:
+                        if (
+                            policy.terminal_review_gate_enabled
+                            and not policy.independent_acceptance_enabled
+                        ):
+                            transition = await record_validated_terminal_fallback_submission(
+                                message.context, self.id()
+                            )
+                        else:
+                            transition = record_review_error(
+                                message.context, self.id()
+                            )
+                    clear_candidate_fallback(message.context, self.id())
+                    clear_acceptance_critic_state(message.context, self.id())
+                    self._clear_long_horizon_review_deadline(message.context)
+                    long_horizon_fallback = None
+                    long_horizon_review_deadline = None
+                    if (
+                        repair_already_requested
+                        or policy.independent_acceptance_enabled
+                    ):
+                        if repair_already_requested or (
+                            transition is not None
+                            and transition.decision.action
+                            is ControllerAction.REQUEST_REPAIR
+                        ):
+                            text = (
+                                (
+                                    "The review already requested repair before "
+                                    "follow-up processing was interrupted. "
+                                )
+                                if repair_already_requested
+                                else (
+                                    "Independent acceptance review could not produce "
+                                    "a typed, probe-backed decision within its bounded "
+                                    "review window. The candidate is not accepted. "
+                                )
+                            ) + (
+                                "Resume normal tool-enabled execution, inspect the "
+                                "actual deliverable state, and repair the highest-"
+                                "risk evidence gap before proposing another final "
+                                "result."
+                            )
+                            record_execution_state(
+                                message.context,
+                                self.id(),
+                                "running",
+                                (
+                                    "review_repair_continuation_scheduled"
+                                    if repair_already_requested
+                                    else "independent_acceptance_review_repair_scheduled"
+                                ),
+                                recoverable=False,
+                            )
+                            self._finished = False
+                            observation = Observation(
+                                observer=self.id(),
+                                from_agent_name=self.id(),
+                                to_agent_name=self.id(),
+                                content=text,
+                            )
+                            kwargs = self._model_response_recovery_kwargs(kwargs)
+                            message.context.update_agent_step(self.id())
+                            self.loop_step += 1
+                            await asyncio.sleep(0)
+                            continue
+                        record_execution_state(
+                            message.context,
+                            self.id(),
+                            "incomplete",
+                            "independent_acceptance_review_error",
+                            recoverable=True,
+                        )
+                        self._finished = True
+                        return list(review_fallback)
+                    if policy.terminal_review_gate_enabled:
+                        fallback_submitted = bool(
+                            transition is not None
+                            and transition.decision.action
+                            is ControllerAction.SUBMIT_CURRENT_RESULT
+                        )
+                        record_execution_state(
+                            message.context,
+                            self.id(),
+                            "succeeded" if fallback_submitted else "incomplete",
+                            (
+                                "terminal_review_unavailable_submit_current"
+                                if fallback_submitted
+                                else "terminal_review_fallback_transition_failed"
+                            ),
+                            recoverable=not fallback_submitted,
+                        )
+                        self._finished = True
+                        return list(review_fallback)
+                    record_execution_state(
+                        message.context,
+                        self.id(),
+                        "incomplete",
+                        "model_owned_review_error_unverified",
+                        recoverable=True,
+                    )
+                    self._finished = True
+                    return list(review_fallback)
+                transient_details = self._transient_model_failure_details(exc)
+                automatic_timeout = self._is_long_horizon_auto_generation_timeout(
+                    exc, message.context
+                )
+                if not loop_budget_finalization and (
+                    transient_details is not None or automatic_timeout
+                ):
+                    recovery_reason = (
+                        "transient_provider_failure"
+                        if transient_details is not None
+                        else exc.reason.value
+                    )
+                    decision_boundary = getattr(
+                        exc, _LONG_HORIZON_DECISION_BOUNDARY_ATTR, None
+                    )
+                    decision_fail_open_recorded = False
+                    if decision_boundary is not None:
+                        from aworld.runners.execution_protocol import (
+                            record_model_decision_unavailable,
+                        )
+
+                        decision_fail_open_recorded = record_model_decision_unavailable(
+                            message.context,
+                            self.id(),
+                            boundary=decision_boundary,
+                            reason="provider_unavailable",
+                        )
+                    if await self._schedule_transient_model_recovery(
+                        message.context,
+                        reason=recovery_reason,
+                        details=transient_details,
+                        allow_unarmed_decision_fail_open=(decision_fail_open_recorded),
+                    ):
+                        transient_recovery_turn = True
+                        kwargs = dict(kwargs)
+                        kwargs["_transient_model_recovery_turn"] = True
+                        kwargs["_transient_model_recovery_reason"] = recovery_reason
+                        await asyncio.sleep(0)
+                        continue
+                    if transient_details is not None:
+                        window = self._long_horizon_transient_recovery_window(
+                            message.context
+                        )
+                        if window is not None:
+                            return self._transient_model_recovery_exhausted(
+                                message.context,
+                                details=transient_details,
+                            )
+                if automatic_timeout:
+                    return await self._recover_long_horizon_generation_timeout(
+                        exc=exc,
+                        observation=observation,
+                        info=info,
+                        message=message,
+                        kwargs=kwargs,
+                    )
+                if (
+                    repair_feedback is None
+                    or not self._should_degrade_result_validation_retry_error(exc)
+                ):
+                    raise
+                return await self._degrade_result_validation_retry(
+                    message, repair_feedback, exc
+                )
+            if long_horizon_fallback is not None and not isinstance(
+                result, _LongHorizonReviewContinuation
+            ):
+                policy = execution_protocol_policy(message.context, self.id())
+                review_pending = (
+                    ExecutionProtocolStore(message.context, self.id(), policy)
+                    .load()
+                    .review_pending
+                )
+                if not review_pending:
+                    # A typed review decision may return a validation-repair
+                    # continuation.  Synchronize the outer loop immediately so
+                    # that repair is a normal Tool-enabled task turn, not part
+                    # of the completed review episode.
+                    clear_candidate_fallback(message.context, self.id())
+                    self._clear_long_horizon_review_deadline(message.context)
+                    long_horizon_fallback = None
+                    long_horizon_review_deadline = None
+            if transient_recovery_turn:
+                self._record_transient_model_recovery(
+                    message.context,
+                    outcome="recovered",
+                    reason="normal_tool_turn_available",
+                )
+                transient_recovery_turn = False
+                kwargs = dict(kwargs)
+                kwargs.pop("_transient_model_recovery_turn", None)
+                kwargs.pop("_transient_model_recovery_reason", None)
+            recoverable_model_state = self._recoverable_model_response_state(
+                message.context
+            )
+            if (
+                recoverable_model_state is not None
+                and not loop_budget_finalization
+                and not isinstance(
+                    result,
+                    (
+                        _ExecutionDecisionContinuation,
+                        _LongHorizonReviewContinuation,
+                        _ValidationRepairContinuation,
+                    ),
+                )
+            ):
+                reason = str(recoverable_model_state["reason"])
+                step_budget_exhausted = await self.should_terminate_loop(message)
+                deadline_open = self._model_response_recovery_deadline_open(
+                    message.context
+                )
+                if step_budget_exhausted or not deadline_open:
+                    self._record_model_response_recovery(
+                        message.context,
+                        outcome=(
+                            "step_budget_exhausted"
+                            if step_budget_exhausted
+                            else "deadline_exhausted"
+                        ),
+                        reason=reason,
+                    )
+                    # The typed incomplete state remains authoritative. Mark the
+                    # Agent finished only so the event runner publishes that
+                    # task-owned state instead of trying to synthesize success.
+                    self._finished = True
+                    return result
+                if (
+                    self._model_response_recovery_continuations(message.context)
+                    >= _MODEL_RESPONSE_RECOVERY_MAX_CONTINUATIONS
+                ):
+                    self._record_model_response_recovery(
+                        message.context,
+                        outcome="continuation_exhausted",
+                        reason=reason,
+                    )
+                    self._finished = True
+                    return result
+
+                schedule_turn_cause = getattr(
+                    message.context, "schedule_turn_cause", None
+                )
+                if callable(schedule_turn_cause):
+                    try:
+                        schedule_turn_cause(
+                            TurnCauseCode.FRAMEWORK_RETRY,
+                            evidence_hash=canonical_json_hash(
+                                {"reason": reason, "recovery": "model_response"}
+                            ),
+                        )
+                    except Exception as exc:
+                        logger.warning(
+                            "Failed to type model-response recovery turn; "
+                            f"error_type={type(exc).__name__}"
+                        )
+                from aworld.core.context.execution_state import (
+                    record_execution_state,
+                )
+
+                record_execution_state(
+                    message.context,
+                    self.id(),
+                    "running",
+                    "model_response_recovery_scheduled",
+                    recoverable=True,
+                )
+                self._record_model_response_recovery(
+                    message.context,
+                    outcome="scheduled",
+                    reason=reason,
+                )
+                message.context.update_agent_step(self.id())
+                self.loop_step += 1
+                retained_context = self._load_model_response_recovery_context(
+                    message.context,
+                    reason=reason,
+                )
+                retained_guidance = (
+                    "\n\nRetained bounded tail from the previous incomplete "
+                    "model action (working context only, not completion "
+                    "evidence):\n<retained-incomplete-context>\n"
+                    f"{retained_context}\n"
+                    "</retained-incomplete-context>"
+                    if retained_context
+                    else ""
+                )
+                observation = Observation(
+                    observer=self.id(),
+                    from_agent_name=self.id(),
+                    to_agent_name=self.id(),
+                    content=(
+                        "Runtime response recovery: the previous model action "
+                        f"ended incomplete ({reason}). Continue from retained "
+                        "task and tool evidence. Do not restart or recompute the "
+                        "discarded analysis. Produce one complete, minimal next "
+                        "action. If Tools are available, call one Tool that "
+                        "advances the task; otherwise return only the concise, "
+                        "accurate final answer. When the request names a concrete "
+                        "deliverable and its core format is known, create or "
+                        "update an inspectable candidate before finalizing."
+                        + self._staged_action_recovery_guidance(
+                            reason,
+                            repeated=True,
+                        )
+                        + retained_guidance
+                    ),
+                )
+                kwargs = self._model_response_recovery_kwargs(kwargs)
+                kwargs["_model_response_recovery_turn"] = True
+                model_response_recovery_turn = True
+                await asyncio.sleep(0)
+                continue
+            if model_response_recovery_turn:
+                self._record_model_response_recovery(
+                    message.context,
+                    outcome="recovered",
+                    reason="normal_tool_turn_available",
+                )
+                model_response_recovery_turn = False
+                kwargs.pop("_model_response_recovery_turn", None)
+            if isinstance(result, _LongHorizonReviewContinuation):
+                long_horizon_fallback = result.fallback_actions
+                await self._raise_if_task_interrupted(
+                    message.context, reason="long-horizon final review interrupted"
+                )
+                if await self.should_terminate_loop(message):
+                    from aworld.runners.execution_protocol import (
+                        clear_acceptance_critic_state,
+                        clear_candidate_fallback,
+                        record_review_error,
+                        record_validated_terminal_fallback_submission,
+                    )
+                    from aworld.core.context.execution_state import (
+                        record_execution_state,
+                    )
+
+                    review_fallback = long_horizon_fallback
+                    policy = execution_protocol_policy(message.context, self.id())
+                    transition = None
+                    if (
+                        policy.terminal_review_gate_enabled
+                        and not policy.independent_acceptance_enabled
+                    ):
+                        transition = await record_validated_terminal_fallback_submission(
+                            message.context, self.id()
+                        )
+                    else:
+                        transition = record_review_error(
+                            message.context, self.id()
+                        )
+                    clear_candidate_fallback(message.context, self.id())
+                    clear_acceptance_critic_state(message.context, self.id())
+                    self._clear_long_horizon_review_deadline(message.context)
+                    long_horizon_fallback = None
+                    long_horizon_review_deadline = None
+                    if policy.independent_acceptance_enabled:
+                        record_execution_state(
+                            message.context,
+                            self.id(),
+                            "incomplete",
+                            "independent_acceptance_review_budget_stop",
+                            recoverable=True,
+                        )
+                        self._finished = True
+                        return list(review_fallback)
+                    if policy.terminal_review_gate_enabled:
+                        fallback_submitted = bool(
+                            transition is not None
+                            and transition.decision.action
+                            is ControllerAction.SUBMIT_CURRENT_RESULT
+                        )
+                        record_execution_state(
+                            message.context,
+                            self.id(),
+                            "succeeded" if fallback_submitted else "incomplete",
+                            (
+                                "terminal_review_budget_stop_submit_current"
+                                if fallback_submitted
+                                else "terminal_review_fallback_transition_failed"
+                            ),
+                            recoverable=not fallback_submitted,
+                        )
+                        self._finished = True
+                        return list(review_fallback)
+                    record_execution_state(
+                        message.context,
+                        self.id(),
+                        "incomplete",
+                        "model_owned_review_budget_stop_unverified",
+                        recoverable=True,
+                    )
+                    self._finished = True
+                    return list(review_fallback)
+                message.context.update_agent_step(self.id())
+                self.loop_step += 1
+                observation, kwargs = result.observation, result.kwargs
+                await asyncio.sleep(0)
+                continue
+            if isinstance(result, _ExecutionDecisionContinuation):
+                await self._raise_if_task_interrupted(
+                    message.context,
+                    reason="model-owned execution checkpoint interrupted",
+                )
+                # This is an internal planning boundary, not a user Tool step.
+                # Caller time/deadline finalization remains the liveness bound;
+                # do not consume the task's semantic Tool-loop allowance.
+                observation, kwargs = result.observation, result.kwargs
+                await asyncio.sleep(0)
+                continue
+            if not isinstance(result, _ValidationRepairContinuation):
+                return result
+            repair_feedback = result.validation_feedback or str(
+                result.observation.content
+            )
+            await self._raise_if_task_interrupted(
+                message.context, reason="completion repair interrupted"
+            )
+            if await self.should_terminate_loop(message):
+                await self._resolve_completion_at_loop_budget(message)
+                self._finished = True
+                return [
+                    ActionModel(
+                        agent_name=self.id(),
+                        policy_info=(
+                            "The configured maximum number of attempts was reached before delivery validation passed. "
+                            "Work remains incomplete; retained progress is available for continuation."
+                        ),
+                    )
+                ]
+            message.context.update_agent_step(self.id())
+            self.loop_step += 1
+            observation, kwargs = result.observation, result.kwargs
+            await asyncio.sleep(0)
+
+    def _is_long_horizon_auto_generation_timeout(
+        self,
+        exc: Exception,
+        context: Context,
+    ) -> bool:
+        """Identify only liveness stops owned by the automatic armed policy."""
+        if not isinstance(exc, GenerationBudgetExceeded):
+            return False
+        if exc.reason not in {
+            GenerationStopReason.CALL_DEADLINE_EXCEEDED,
+            GenerationStopReason.IDLE_TIMEOUT,
+            GenerationStopReason.PROVIDER_TIMEOUT,
+            GenerationStopReason.PROVIDER_CANCELLED,
+        }:
+            return False
+        return self._automatic_generation_budget_policy(context) is not None
+
+    def _claim_long_horizon_generation_finalization(self, context: Context) -> bool:
+        """Claim the sole auto-timeout finalization for this scoped task."""
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context)
+        if owner is None:
+            return False
+        key = "long_horizon_generation_finalization_claim"
+        scope = {
+            "task_id": getattr(context, "task_id", None),
+            "task_epoch": getattr(context, "task_epoch", None),
+            "agent_id": self.id(),
+        }
+        claim = getattr(owner, "claim_task_runtime_token", None)
+        token = f"{key}:epoch-{scope['task_epoch']}"
+        try:
+            claimed = claim(self.id(), token) if callable(claim) else False
+        except Exception:
+            claimed = False
+        if not claimed:
+            return False
+        owner.context_info[f"{key}:{self.id()}"] = scope
+        return True
+
+    @staticmethod
+    def _long_horizon_generation_timeout_text(reason: str) -> str:
+        return (
+            "AWorld stopped waiting after the long-horizon model-generation "
+            f"liveness deadline ({reason}). Work already completed in the "
+            "environment is preserved, but the final state could not be "
+            "rechecked. This response does not claim successful completion."
+        )
+
+    def _record_long_horizon_generation_recovery(
+        self,
+        context: Context,
+        *,
+        reason: str,
+        outcome: str,
+    ) -> None:
+        key = "long_horizon_generation_budget_metrics"
+        metrics = context.context_info.get(key)
+        if not isinstance(metrics, dict):
+            metrics = {}
+        metrics["policy_source"] = "long_horizon_auto"
+        metrics["last_reason"] = reason
+        metrics["last_outcome"] = outcome
+        metrics["timeout_count"] = int(metrics.get("timeout_count", 0) or 0) + 1
+        metrics[f"outcome:{outcome}"] = (
+            int(metrics.get(f"outcome:{outcome}", 0) or 0) + 1
+        )
+        context.context_info[key] = metrics
+
+    async def _recover_long_horizon_generation_timeout(
+        self,
+        *,
+        exc: GenerationBudgetExceeded,
+        observation: Observation,
+        info: Dict[str, Any],
+        message: Message,
+        kwargs: Dict[str, Any],
+    ) -> List[ActionModel]:
+        """Produce one bounded handoff without promoting a timed-out task."""
+        from aworld.core.context.execution_state import record_execution_state
+
+        context = message.context
+        reason = exc.reason.value
+        if self._claim_long_horizon_generation_finalization(context):
+            protocol_policy = self._resolve_execution_protocol_policy(context)
+            timeout = self._remaining_before_completion_reserve(
+                context,
+                cap_seconds=protocol_policy.final_review_timeout_seconds,
+            )
+            finalization_kwargs = dict(kwargs)
+            finalization_kwargs.pop("_loop_budget_finalization", None)
+            try:
+                result = await asyncio.wait_for(
+                    self._async_policy_once(
+                        observation,
+                        info=info,
+                        message=message,
+                        _loop_budget_finalization=True,
+                        **finalization_kwargs,
+                    ),
+                    timeout=timeout,
+                )
+                if (
+                    isinstance(result, list)
+                    and any(
+                        str(getattr(action, "policy_info", "") or "").strip()
+                        for action in result
+                    )
+                    and not any(
+                        getattr(action, "tool_name", None)
+                        or getattr(action, "action_name", None)
+                        for action in result
+                    )
+                ):
+                    record_execution_state(
+                        context,
+                        self.id(),
+                        "budget_exhausted",
+                        "long_horizon_generation_budget_exhausted",
+                        recoverable=True,
+                    )
+                    self._record_long_horizon_generation_recovery(
+                        context, reason=reason, outcome="finalized"
+                    )
+                    self._finished = True
+                    return result
+            except asyncio.CancelledError:
+                raise
+            except Exception as finalization_exc:
+                logger.warning(
+                    "Long-horizon generation finalization failed for agent %s; "
+                    "returning an honest fail-open response (error_type=%s)",
+                    self.id(),
+                    type(finalization_exc).__name__,
+                )
+
+        text = self._long_horizon_generation_timeout_text(reason)
+        record_execution_state(
+            context,
+            self.id(),
+            "budget_exhausted",
+            "long_horizon_generation_budget_exhausted",
+            recoverable=True,
+        )
+        self._record_long_horizon_generation_recovery(
+            context, reason=reason, outcome="honest_fallback"
+        )
+        self._finished = True
+        return [ActionModel(agent_name=self.id(), policy_info=text)]
+
+    async def _async_policy_once(
+        self,
+        observation: Observation,
+        info: Dict[str, Any] = {},
+        message: Message = None,
+        **kwargs,
+    ) -> List[ActionModel]:
+        """The strategy of an agent can be to decide which tools to use in the environment, or to delegate tasks to other agents.
+
+        Args:
+            observation: The state observed from tools in the environment.
+            info: Extended information is used to assist the agent to decide a policy.
+
+        Returns:
+            ActionModel sequence from agent policy
+        """
+        logger.info(f"Agent{type(self)}#{self.id()}: async_policy start")
+        loop_budget_finalization = bool(kwargs.pop("_loop_budget_finalization", False))
+        transient_model_recovery_turn = bool(
+            kwargs.pop("_transient_model_recovery_turn", False)
+        )
+        transient_model_recovery_reason = str(
+            kwargs.pop("_transient_model_recovery_reason", "") or ""
+        )
+        # temporary state context
+        self.context = message.context
+        self._install_runtime_completion_contract(message.context)
+        from aworld.runners.execution_protocol import configure_execution_protocol
+
+        resolved_execution_policy = self._resolve_execution_protocol_policy(
+            message.context
+        )
+        configure_execution_protocol(
+            message.context,
+            self.id(),
+            resolved_execution_policy,
+        )
+        from aworld.runners.execution_protocol import (
+            acceptance_critic_active,
+            execution_protocol_model_decision_boundary,
+            execution_protocol_requires_tool_free_finalization,
+            model_owned_review_active,
+            record_pre_generation_delivery_decision,
+        )
+
+        # Before ordinary Tool time gives way to the later finalization-only
+        # reserve, expose one typed choice owned by the model. This call is
+        # inert for unarmed/short work and does not select a command.
+        record_pre_generation_delivery_decision(
+            message.context,
+            self.id(),
+            policy=resolved_execution_policy,
+        )
+        pending_decision_boundary = execution_protocol_model_decision_boundary(
+            message.context, self.id()
+        )
+        if pending_decision_boundary is not None:
+            timing = self._terminal_checkpoint_episode_timing(message.context)
+            if timing is not None and timing["effective_remaining_seconds"] <= 0:
+                from aworld.runners.execution_protocol import (
+                    record_model_decision_unavailable,
+                )
+
+                record_model_decision_unavailable(
+                    message.context,
+                    self.id(),
+                    boundary=pending_decision_boundary,
+                    reason="checkpoint_deadline_exceeded",
+                )
+                pending_decision_boundary = execution_protocol_model_decision_boundary(
+                    message.context, self.id()
+                )
+
+        independent_acceptance_review = acceptance_critic_active(
+            message.context, self.id()
+        )
+        model_owned_review = model_owned_review_active(message.context, self.id())
+
+        protocol_tool_free_finalization = (
+            not loop_budget_finalization
+            and pending_decision_boundary is None
+            and (
+                execution_protocol_requires_tool_free_finalization(
+                    message.context, self.id()
+                )
+                or self._pre_generation_caller_reserve_reached(message.context)
+            )
+        )
+        tool_free_finalization = (
+            loop_budget_finalization or protocol_tool_free_finalization
+        )
+        execution_control_offer = _LongHorizonControlOffer()
+        if tool_free_finalization:
+            # Consumed by invoke_model; never forwarded to a provider.  A
+            # finalization turn runs until the caller-owned persistence
+            # reserve, rather than subtracting the protocol reserve twice.
+            kwargs["_long_horizon_finalization_turn"] = True
+        context_compiler_mode = self._context_compiler_mode_value()
+        self._bind_context_output_budget(kwargs)
+        # A turn boundary expires single-call/turn sidecars before new owner
+        # observations are collected for this request.
+        if context_compiler_mode != "off":
+            try:
+                from aworld.core.context.compiler import LifecycleAction
+
+                message.context.advance_context_lifecycle(LifecycleAction.NEXT_TURN)
+            except Exception as exc:
+                logger.warning(
+                    "Context turn lifecycle transition failed; "
+                    f"error_type={type(exc).__name__}"
+                )
+            tool_output_policy_factory = getattr(
+                self.llm, "enforced_tool_output_policy", None
+            )
+            message.context.configure_tool_output_boundary(
+                (
+                    tool_output_policy_factory()
+                    if callable(tool_output_policy_factory)
+                    else None
+                ),
+                artifact_offload=getattr(self.llm, "_context_artifact_offload", True),
+            )
+
+        # Get current step information for trace recording
+        source_span = trace.get_current_span()
+        self._finished = False
+        if hasattr(observation, "context") and observation.context:
+            self.task_histories = observation.context
+
+        raw_messages = await self.build_llm_input(
+            observation, info, message=message, **kwargs
+        )
+        from aworld.core.context.work_progress import (
+            retain_work_progress,
+            checkpoint_work_progress,
+        )
+
+        retain_work_progress(message.context, self.id())
+        await checkpoint_work_progress(message.context, self.id())
+        raw_messages = await self._apply_adaptive_context_policy(
+            context=message.context,
+            messages=raw_messages,
+            context_compiler_mode=context_compiler_mode,
+        )
+        if independent_acceptance_review:
+            # This is a full replacement, not appended guidance.  Solver
+            # reasoning, self-claims, and prior assistant/tool transcript do
+            # not enter the critic provider request.
+            raw_messages = self._fresh_acceptance_messages(message.context)
+        if not tool_free_finalization:
+            from aworld.runners.execution_protocol import (
+                consume_execution_protocol_guidance,
+            )
+
+            execution_guidance = consume_execution_protocol_guidance(
+                message.context, self.id()
+            )
+            if execution_guidance:
+                raw_messages = list(raw_messages)
+                raw_messages.append(
+                    {
+                        "role": (
+                            "system"
+                            if execution_guidance.startswith(
+                                (
+                                    "AWorld mutation gate:",
+                                    "AWorld mutation validation window:",
+                                    "AWorld convergence constraint:",
+                                )
+                            )
+                            else "user"
+                        ),
+                        "content": execution_guidance,
+                        PROMPT_SECTION_NAME_HINT_KEY: "execution_protocol_guidance",
+                        PROMPT_STABILITY_HINT_KEY: "dynamic",
+                    }
+                )
+        if transient_model_recovery_turn and not tool_free_finalization:
+            raw_messages = list(raw_messages)
+            raw_messages.append(
+                {
+                    "role": "user",
+                    "content": (
+                        "A transient model-provider interruption ended the previous "
+                        "turn before any new action from that turn was accepted "
+                        f"({transient_model_recovery_reason}). Continue from the "
+                        "observed task state with the normal tools available. Do "
+                        "not treat the transport interruption as task completion; "
+                        "use a tool now when material work remains."
+                    ),
+                }
+            )
+        if loop_budget_finalization:
+            raw_messages = list(raw_messages)
+            raw_messages.append(
+                {
+                    "role": "user",
+                    "content": (
+                        "The execution step budget has been reached. This is the "
+                        "bounded finalization turn and no tools are available. "
+                        "Using only the task and observations already present, "
+                        "save a handoff summary of current progress and unfinished work. "
+                        "This is a budget stop, not successful task completion. Report "
+                        "verified outcomes and artifacts, state uncertainty instead "
+                        "of inventing results, and do not request another tool call."
+                    ),
+                }
+            )
+            tools = None
+        elif protocol_tool_free_finalization:
+            raw_messages = list(raw_messages)
+            raw_messages.append(
+                {
+                    "role": "user",
+                    "content": (
+                        "AWorld long-horizon finalization: the execution protocol "
+                        "has reserved this bounded final turn. No more tools are "
+                        "available. Reconcile the current observations "
+                        "with the original public request and return the best current "
+                        "final response. State material uncertainty accurately."
+                    ),
+                }
+            )
+            tools = None
+        else:
+            tools = await self._filter_tools(message.context)
+            from aworld.runners.execution_protocol import (
+                constrain_candidate_convergence_tool_catalog,
+            )
+
+            tools = constrain_candidate_convergence_tool_catalog(
+                message.context,
+                self.id(),
+                tools,
+                tool_identity_mapping=(getattr(self, "tool_mapping", {}) or {}),
+            )
+            tools, execution_control_offer = self._with_long_horizon_execution_profile(
+                tools,
+                message.context,
+            )
+            if execution_control_offer.decision_boundary is not None:
+                kwargs = dict(kwargs)
+                kwargs["tool_choice"] = "required"
+                kwargs["_long_horizon_decision_turn"] = True
+                self._record_terminal_checkpoint_metric(
+                    message.context,
+                    "offered",
+                    boundary=execution_control_offer.decision_boundary,
+                )
+            tools = self._with_model_review_control(tools, message.context)
+            tools = self._with_acceptance_probe_control(tools, message.context)
+            if independent_acceptance_review:
+                from aworld.runners.execution_protocol import (
+                    load_acceptance_critic_state,
+                )
+
+                if (
+                    load_acceptance_critic_state(message.context, self.id()).get(
+                        "status"
+                    )
+                    == "observed"
+                ):
+                    tools = None
+        progressive_tool_base_tools = getattr(
+            self.llm, "_context_progressive_tool_base_tools", None
+        )
+        explicit_progressive_catalog = (
+            getattr(self.llm, "_context_progressive_tools", True)
+            and progressive_tool_base_tools is not None
+        )
+        pending_exact_action_tool = None
+        if (
+            explicit_progressive_catalog
+            and execution_control_offer.decision_boundary is None
+        ):
+            try:
+                from aworld.runners.execution_protocol import (
+                    load_execution_protocol_state,
+                )
+
+                protocol_state = load_execution_protocol_state(
+                    message.context, self.id()
+                )
+                if (
+                    protocol_state.next_action_alignment_pending
+                    and protocol_state.model_plan_update is not None
+                ):
+                    pending_exact_action_tool = (
+                        protocol_state.model_plan_update.next_action_tool
+                    )
+            except Exception:
+                # Progressive projection remains fail-open; the controller
+                # will classify an unavailable next action from observations.
+                pending_exact_action_tool = None
+        # Keep the bounded readback action stable from the first request. A
+        # recovery must not have to expand the progressive catalog mid-task.
+        if explicit_progressive_catalog:
+            from aworld.core.context.budget_recovery import READ_TOOL
+
+            if any(
+                tool.get("function", {}).get("name") == READ_TOOL
+                for tool in (tools or ())
+            ):
+                progressive_tool_base_tools = tuple(
+                    dict.fromkeys((*progressive_tool_base_tools, READ_TOOL))
+                )
+        available_tool_ids = tuple(
+            str(function.get("name"))
+            for schema in (tools or ())
+            if isinstance(schema, dict)
+            for function in (schema.get("function", {}),)
+            if isinstance(function, dict) and function.get("name")
+        )
+        progressive_skill_proposal = None
+        progressive_sticky = (
+            getattr(self.llm, "_context_task_catalog_policy", "sticky") == "sticky"
+        )
+        if (
+            not tool_free_finalization
+            and execution_control_offer.decision_boundary is None
+            and getattr(self.llm, "_context_progressive_skills", True)
+            and context_compiler_mode != "off"
+        ):
+            from aworld.skills.progressive_context import (
+                prepare_progressive_skill_context,
+                publish_progressive_skill_context,
+            )
+
+            try:
+                skill_kwargs = {
+                    "context": message.context,
+                    "agent_id": self.id(),
+                    "skill_configs": self.skill_configs or {},
+                    "available_tool_ids": available_tool_ids,
+                    "tool_identity_mapping": (getattr(self, "tool_mapping", {}) or {}),
+                    "require_resolved_tools": (
+                        explicit_progressive_catalog
+                        and context_compiler_mode == "enforce"
+                    ),
+                }
+                if explicit_progressive_catalog and context_compiler_mode == "enforce":
+                    progressive_skill_proposal = prepare_progressive_skill_context(
+                        **skill_kwargs
+                    )
+                else:
+                    publish_progressive_skill_context(
+                        **skill_kwargs,
+                        sticky=progressive_sticky,
+                    )
+            except Exception:
+                if context_compiler_mode == "enforce":
+                    raise
+                logger.warning(
+                    "Progressive Skill publication failed in non-enforce mode; "
+                    f"traceback={traceback.format_exc()}"
+                )
+        if tool_free_finalization:
+            tools = None
+        elif not tools:
+            tools = None
+            if explicit_progressive_catalog and context_compiler_mode == "enforce":
+                from aworld.core.context.compiler import (
+                    CatalogChangeAction,
+                    TaskCatalogSnapshot,
+                )
+
+                transition = message.context.bind_task_tool_catalog(
+                    self.id(),
+                    TaskCatalogSnapshot.build(message.context.task_epoch, ()),
+                    action=(
+                        CatalogChangeAction.DEFER_NEXT_EPOCH
+                        if progressive_sticky
+                        else CatalogChangeAction.ACCEPT_CURRENT_EPOCH
+                    ),
+                )
+            if progressive_skill_proposal is not None:
+                from aworld.skills.progressive_context import (
+                    apply_progressive_skill_proposal,
+                )
+
+                apply_progressive_skill_proposal(
+                    context=message.context,
+                    agent_id=self.id(),
+                    proposal=progressive_skill_proposal,
+                    sticky=progressive_sticky,
+                    available_tool_ids=(),
+                )
+        elif (
+            context_compiler_mode != "off"
+            and execution_control_offer.decision_boundary is None
+        ):
+            try:
+                from aworld.core.context.compiler import (
+                    CatalogChangeAction,
+                    TaskCatalogSnapshot,
+                    ToolCatalogEntry,
+                    compile_minimal_tool_catalog,
+                    estimate_canonical_json_tokens,
+                    preserve_unmanaged_tool_namespaces,
+                )
+
+                entries = []
+                for index, schema in enumerate(tools):
+                    function = (
+                        schema.get("function", {}) if isinstance(schema, dict) else {}
+                    )
+                    tool_id = (
+                        function.get("name") if isinstance(function, dict) else None
+                    ) or (schema.get("name") if isinstance(schema, dict) else None)
+                    tool_id = tool_id or f"tool-{index}"
+                    entries.append(
+                        ToolCatalogEntry(
+                            tool_id=tool_id,
+                            schema=schema,
+                            schema_version="agent-tool-schema-v1",
+                            source="agent-final-catalog",
+                            estimated_tokens=(
+                                estimate_canonical_json_tokens(schema).value or 0
+                            ),
+                        )
+                    )
+                if explicit_progressive_catalog and context_compiler_mode == "enforce":
+                    skill_requested_tools = (
+                        message.context.preview_task_skill_tool_requests(
+                            self.id(),
+                            progressive_skill_proposal.snapshot,
+                            sticky=progressive_sticky,
+                        )
+                        if progressive_skill_proposal is not None
+                        else ()
+                    )
+                    if pending_exact_action_tool in available_tool_ids:
+                        # A decision turn sees the permission-filtered catalog
+                        # before progressive projection. Retain exactly the
+                        # declared Tool until its first observed action, then
+                        # normal projection contracts the catalog again.
+                        skill_requested_tools = tuple(
+                            dict.fromkeys(
+                                (
+                                    *skill_requested_tools,
+                                    pending_exact_action_tool,
+                                )
+                            )
+                        )
+                    if (
+                        getattr(
+                            self.llm,
+                            "_context_progressive_tool_unmanaged_policy",
+                            "preserve",
+                        )
+                        == "preserve"
+                    ):
+                        unmanaged_tools = preserve_unmanaged_tool_namespaces(
+                            available_tool_ids,
+                            requested_tools=(
+                                *progressive_tool_base_tools,
+                                *skill_requested_tools,
+                            ),
+                            tool_identity_mapping=(
+                                getattr(self, "tool_mapping", {}) or {}
+                            ),
+                        )
+                        skill_requested_tools = tuple(
+                            dict.fromkeys((*skill_requested_tools, *unmanaged_tools))
+                        )
+                    candidate_catalog = compile_minimal_tool_catalog(
+                        entries,
+                        base_tools=progressive_tool_base_tools,
+                        skill_requested_tools=skill_requested_tools,
+                        task_epoch=message.context.task_epoch,
+                    )
+                else:
+                    candidate_catalog = TaskCatalogSnapshot.build(
+                        message.context.task_epoch, entries
+                    )
+                transition = message.context.bind_task_tool_catalog(
+                    self.id(),
+                    candidate_catalog,
+                    action=(
+                        CatalogChangeAction.ACCEPT_CURRENT_EPOCH
+                        if pending_exact_action_tool in available_tool_ids
+                        else CatalogChangeAction.DEFER_NEXT_EPOCH
+                        if (
+                            getattr(self.llm, "_context_progressive_tools", True)
+                            and context_compiler_mode == "enforce"
+                            and getattr(
+                                self.llm,
+                                "_context_task_catalog_policy",
+                                "sticky",
+                            )
+                            == "sticky"
+                        )
+                        else CatalogChangeAction.ACCEPT_CURRENT_EPOCH
+                    ),
+                )
+                if (
+                    explicit_progressive_catalog and context_compiler_mode == "enforce"
+                ) or (
+                    transition.snapshot.catalog_hash != candidate_catalog.catalog_hash
+                ):
+                    from aworld.core.context.compiler import thaw_json
+
+                    tools = [
+                        thaw_json(entry.schema) for entry in transition.snapshot.entries
+                    ]
+                if progressive_skill_proposal is not None:
+                    from aworld.skills.progressive_context import (
+                        apply_progressive_skill_proposal,
+                    )
+
+                    applied_tool_ids = tuple(
+                        entry.tool_id for entry in transition.snapshot.entries
+                    )
+                    apply_progressive_skill_proposal(
+                        context=message.context,
+                        agent_id=self.id(),
+                        proposal=progressive_skill_proposal,
+                        sticky=progressive_sticky,
+                        available_tool_ids=applied_tool_ids,
+                    )
+            except Exception as exc:
+                if context_compiler_mode == "enforce":
+                    raise
+                logger.warning(
+                    "Task Tool Catalog tracking failed; "
+                    f"error_type={type(exc).__name__}"
+                )
+        reasoning_phase = self._reasoning_phase_for_turn(
+            decision_boundary=execution_control_offer.decision_boundary,
+            independent_acceptance_review=independent_acceptance_review,
+            model_owned_review=model_owned_review,
+            tool_free_finalization=tool_free_finalization,
+            role_reasoning_phase=getattr(self, "reasoning_phase_override", None),
+        )
+        # Continuations are new execution boundaries and must resolve their own
+        # phase profile.  Keep the caller-owned request before adding this
+        # turn's framework-owned reasoning selection; otherwise a plan/review
+        # effort is replayed as an explicit caller pin on the following
+        # execute/repair turn.
+        continuation_request_kwargs = dict(kwargs)
+        kwargs, reasoning_selection = self._apply_reasoning_phase_policy(
+            kwargs,
+            phase=reasoning_phase,
+        )
+
+        prompt_assembly_plan, messages, prompt_assembly_observability = (
+            self._build_prompt_assembly_state(
+                context=message.context,
+                messages=raw_messages,
+                tools=tools,
+                request_kwargs=kwargs,
+            )
+        )
+        # Retain the owner that produced the plan.  The transport provider
+        # below has a different responsibility and cannot attest prompt
+        # section stability.
+        prompt_assembly_provider = self._get_prompt_assembly_provider(message.context)
+
+        # Provider structural lowering is part of the final compiler input,
+        # not an unobserved post-compile mutation. The LLM model boundary runs
+        # the same reviewed normalizer again as an idempotent safety net for
+        # non-Agent entry points.
+        if context_compiler_mode != "off":
+            provider = getattr(self.llm, "provider", None)
+            normalizer = getattr(provider, "context_model_boundary_messages", None)
+            if callable(normalizer):
+                normalized_messages = normalizer(messages)
+                if not isinstance(normalized_messages, list):
+                    raise TypeError(
+                        "provider model-boundary normalizer must return a list"
+                    )
+                messages = normalized_messages
+
+        serializable_messages = to_serializable(messages)
+        llm_response = None
+        invoke_completed = False
+        agent_result = None
+        validation_feedback = None
+        long_horizon_review_feedback = None
+        execution_decision_feedback = None
+        execution_decision_outcome = None
+        critic_probe_planned = False
+        critic_decision_handled = False
+        critic_protocol_persistence_error = False
+        review_repair_requested = False
+        from aworld.core.context.execution_state import (
+            execution_resolution_observation,
+        )
+
+        provider_resolution_observation = execution_resolution_observation(
+            message.context, self.id()
+        )
+        if source_span:
+            source_span.set_attribute(
+                "messages", json.dumps(serializable_messages, ensure_ascii=False)
+            )
+        mark_post_tool_progress_llm_started(message.context, agent_id=self.id())
+        # Record LLM call start time (used to set MemoryMessage's start_time)
+        llm_call_start_time = datetime.now().isoformat()
+        llm_call_id = self._safe_record_llm_call_request(
+            message,
+            serializable_messages,
+            started_at=llm_call_start_time,
+            tools=tools,
+            request_params={
+                "temperature": float(self.conf.llm_config.llm_temperature),
+                "max_tokens": kwargs.get("max_tokens"),
+                "stop": kwargs.get("stop"),
+                "reasoning_selection": reasoning_selection,
+            },
+        )
+        self._safe_update_llm_call_observability(
+            message, llm_call_id, prompt_assembly_observability
+        )
+
+        try:
+            events = []
+            async for event in run_hooks(
+                message.context,
+                HookPoint.PRE_LLM_CALL,
+                hook_from=self.id(),
+                payload=observation,
+            ):
+                events.append(event)
+        except Exception as e:
+            logger.error(
+                f"{self.id()} failed to run PRE_LLM_CALL hooks: {e}, traceback is {traceback.format_exc()}"
+            )
+
+        model_call_started_monotonic = time.monotonic()
+        try:
+            response_parse_args = {
+                "use_tools_in_prompt": self.use_tools_in_prompt,
+                "agent_id": self.id(),
+            }
+            kwargs["response_parse_args"] = response_parse_args
+            kwargs["prepared_tools"] = tools
+            from aworld.models.reasoning_policy import (
+                AWORLD_REASONING_SELECTION_KWARG,
+            )
+
+            kwargs[AWORLD_REASONING_SELECTION_KWARG] = reasoning_selection
+            # Only an ordinary solver response can repair an incomplete prior
+            # provider action. Internal execution checkpoints, acceptance
+            # reviews, and bounded finalization prose are control-plane turns;
+            # accepting one must not erase task blockers.
+            kwargs["_execution_state_resolution_mode"] = (
+                self._execution_state_resolution_mode_for_turn(
+                    tool_free_finalization=tool_free_finalization,
+                    independent_acceptance_review=independent_acceptance_review,
+                    model_owned_review=model_owned_review,
+                    decision_boundary=execution_control_offer.decision_boundary,
+                )
+            )
+            # Consumed by LLMModel before provider kwargs are built. Artifact
+            # bytes remain opaque refs until that final transport boundary.
+            kwargs["_aworld_artifact_vision_enabled"] = (
+                self._artifact_vision_enabled(message.context)
+            )
+            kwargs["_aworld_artifact_agent_id"] = self.id()
+            if context_compiler_mode != "off":
+                try:
+                    from aworld.agents.final_context_adapter import (
+                        adapt_agent_final_request,
+                    )
+                    from aworld.core.context.compiler import ContextObservationSidecar
+
+                    source_identity = (
+                        f"agent-final://{self.id()}/task-{message.context.task_id}/"
+                        f"epoch-{message.context.task_epoch}"
+                    )
+                    message_result, tool_result = adapt_agent_final_request(
+                        messages=messages,
+                        tools=tools or (),
+                        source_identity=source_identity,
+                        task_id=message.context.task_id,
+                        task_epoch=message.context.task_epoch,
+                        agent_id=self.id(),
+                        amni_folded_system=self._is_amni_context(message.context),
+                    )
+                    message.context.publish_context_observation(
+                        ContextObservationSidecar.from_adapter_result(
+                            owner="agent.final_messages",
+                            namespace=self.id(),
+                            source_identity=source_identity,
+                            result=message_result,
+                        )
+                    )
+                    message.context.publish_context_observation(
+                        ContextObservationSidecar.from_adapter_result(
+                            owner="agent.final_tool_catalog",
+                            namespace=self.id(),
+                            source_identity=source_identity,
+                            result=tool_result,
+                        )
+                    )
+                    self._publish_prompt_assembly_system_sections(
+                        context=message.context,
+                        plan=prompt_assembly_plan,
+                        messages=messages,
+                        provider=prompt_assembly_provider,
+                    )
+                except Exception as exc:
+                    logger.warning(
+                        "Agent final Context publication failed; "
+                        f"error_type={type(exc).__name__}"
+                    )
+            provider_name = (
+                prompt_assembly_observability.get("provider_name")
+                or self._current_provider_name()
+            )
+            configured_provider = getattr(
+                getattr(self.conf, "llm_config", None), "llm_provider", None
+            ) or getattr(self.conf, "llm_provider", None)
+            # The universal final compiler snapshots the already assembled
+            # messages.  Replaying the legacy assembly plan in the provider
+            # would be a second post-compile transform and must not occur.
+            if self._forward_legacy_prompt_assembly_plan(
+                configured_provider or provider_name, context_compiler_mode
+            ):
+                kwargs["prompt_assembly_plan"] = prompt_assembly_plan
+                kwargs["provider_native_prompt_cache"] = bool(
+                    prompt_assembly_observability.get("provider_native_cache")
+                )
+            entrypoint_claim = getattr(
+                message.context, "_aworld_context_entrypoint_claim", None
+            )
+            if not isinstance(entrypoint_claim, _ContextEntrypointClaim):
+                entrypoint_claim = _issue_context_entrypoint_claim(
+                    ContextEntryPoint.AMNI
+                    if self._is_amni_context(message.context)
+                    else ContextEntryPoint.AGENT
+                )
+            with _bind_context_entrypoint_claim(entrypoint_claim):
+                with bind_llm_context_call_id(llm_call_id):
+                    if execution_control_offer.decision_boundary is not None:
+                        self._record_terminal_checkpoint_metric(
+                            message.context,
+                            "request_started",
+                            boundary=execution_control_offer.decision_boundary,
+                        )
+                    llm_response = await self.invoke_model(
+                        messages, message=message, **kwargs
+                    )
+                    if execution_control_offer.decision_boundary is not None:
+                        self._record_terminal_checkpoint_metric(
+                            message.context,
+                            "request_finished",
+                            boundary=execution_control_offer.decision_boundary,
+                        )
+            invoke_completed = True
+        except asyncio.CancelledError:
+            logger.info(f"{self.id()} LLM flow interrupted during invoke_model")
+            raise
+        except GenerationBudgetExceeded as exc:
+            # Preserve typed liveness stops for the outer Agent policy. Auto
+            # long-horizon timeouts fail open there; explicit watchdogs keep
+            # their existing fail-closed behavior.
+            if execution_control_offer.decision_boundary is not None:
+                setattr(
+                    exc,
+                    _LONG_HORIZON_DECISION_BOUNDARY_ATTR,
+                    execution_control_offer.decision_boundary,
+                )
+            raise
+        except Exception as e:
+            await self._raise_if_task_interrupted(
+                message.context if message else None,
+                reason=f"{self.id()} interrupted while waiting for LLM response",
+                source_exception=e,
+            )
+            logger.warn(f"{self.id()} result error: {e}")
+            runtime_error = AWorldRuntimeException(str(e))
+            if execution_control_offer.decision_boundary is not None:
+                setattr(
+                    runtime_error,
+                    _LONG_HORIZON_DECISION_BOUNDARY_ATTR,
+                    execution_control_offer.decision_boundary,
+                )
+            raise runtime_error from e
+        finally:
+            self._record_terminal_model_call_duration(
+                message.context,
+                time.monotonic() - model_call_started_monotonic,
+            )
+            self._safe_record_llm_call_response(message, llm_call_id, llm_response)
+            if tool_free_finalization and llm_response:
+                llm_response = self._coerce_loop_budget_final_response(llm_response)
+            if not invoke_completed:
+                raise
+            if llm_response:
+                if llm_response.error:
+                    logger.info(f"llm result error: {llm_response.error}")
+                    if eventbus is not None:
+                        output_message = Message(
+                            category=Constants.OUTPUT,
+                            payload=Output(
+                                data=f"llm result error: {llm_response.error}"
+                            ),
+                            sender=self.id(),
+                            session_id=message.context.session_id
+                            if message.context
+                            else "",
+                            headers={"context": message.context},
+                        )
+                        await send_message(output_message)
+                else:
+                    try:
+                        if self.output_converter and isinstance(
+                            self.output_converter, Callable
+                        ):
+                            if asyncio.iscoroutinefunction(self.output_converter):
+                                agent_result = await self.output_converter(
+                                    llm_response,
+                                    agent_id=self.id(),
+                                    use_tools_in_prompt=self.use_tools_in_prompt,
+                                )
+                            else:
+                                agent_result = self.output_converter(
+                                    llm_response,
+                                    agent_id=self.id(),
+                                    use_tools_in_prompt=self.use_tools_in_prompt,
+                                )
+                        else:
+                            agent_result = await self.output_converter.parse(
+                                llm_response,
+                                agent_id=self.id(),
+                                agent=self,
+                                use_tools_in_prompt=self.use_tools_in_prompt,
+                                tool_call_surface=response_parse_args.get(
+                                    "tool_call_surface"
+                                ),
+                            )
+                    except ToolCallBatchParseError as exc:
+                        validation_feedback = (
+                            "The model returned an incomplete or malformed tool-call batch. "
+                            "No calls in that batch were executed. Emit a complete, smaller "
+                            "tool call and continue from observed work. Issue codes: "
+                            + ",".join(issue.code.value for issue in exc.issues)
+                        )
+                        agent_result = AgentResult(actions=[], is_call_tool=False)
+                    incomplete_decision_state = (
+                        self._recoverable_model_response_state(message.context)
+                        if execution_control_offer.decision_boundary is not None
+                        else None
+                    )
+                    if incomplete_decision_state is not None:
+                        from aworld.runners.execution_protocol import (
+                            record_model_decision_unavailable,
+                        )
+
+                        record_model_decision_unavailable(
+                            message.context,
+                            self.id(),
+                            boundary=execution_control_offer.decision_boundary,
+                            reason="model_response_incomplete",
+                        )
+                        execution_decision_outcome = "fail_open"
+                    else:
+                        execution_decision_outcome = (
+                            self._consume_long_horizon_execution_profile(
+                                agent_result,
+                                message.context,
+                                offer=execution_control_offer,
+                            )
+                        )
+                    if execution_control_offer.decision_boundary is not None:
+                        if incomplete_decision_state is not None:
+                            # Let the normal typed model-response recovery path
+                            # retain the incomplete action and resume with the
+                            # ordinary task Tool catalog.  A separate decision
+                            # continuation would multiply the two retry loops.
+                            execution_decision_feedback = None
+                        elif execution_decision_outcome == "acknowledged":
+                            from aworld.runners.execution_protocol import (
+                                execution_protocol_requires_tool_free_finalization,
+                                load_execution_protocol_state,
+                            )
+
+                            protocol_state = load_execution_protocol_state(
+                                message.context, self.id()
+                            )
+                            if protocol_state.convergence_constraint_active:
+                                execution_decision_feedback = (
+                                    "AWorld recorded the checkpoint, but repeated "
+                                    "checkpoints did not produce an applied replan. "
+                                    "Resume with ordinary Tools under the active "
+                                    "delivery-phase constraint: produce a candidate, "
+                                    "or validate, repair, and submit the candidate "
+                                    "already present. Do not resume broad exploration."
+                                )
+                            elif execution_protocol_requires_tool_free_finalization(
+                                message.context, self.id()
+                            ):
+                                execution_decision_feedback = (
+                                    "AWorld recorded the model-owned terminal delivery "
+                                    "intent. Continue into Tool-free finalization and "
+                                    "return the best current result without inventing "
+                                    "verification or uncertainty."
+                                )
+                            else:
+                                execution_decision_feedback = (
+                                    "AWorld recorded the model-owned execution checkpoint. "
+                                    "Resume with ordinary Tools and execute the bounded "
+                                    "next action from that checkpoint."
+                                )
+                        elif execution_decision_outcome == "retry":
+                            execution_decision_feedback = (
+                                "The required AWorld execution checkpoint was missing, "
+                                "malformed, duplicated, or internally contradictory. "
+                                "No user Tool was executed. One bounded retry remains: "
+                                "emit exactly one structured checkpoint decision and "
+                                "choose horizon=unknown when classification is uncertain."
+                            )
+                        else:
+                            from aworld.runners.execution_protocol import (
+                                load_execution_protocol_state,
+                            )
+
+                            protocol_state = load_execution_protocol_state(
+                                message.context, self.id()
+                            )
+                            if protocol_state.convergence_constraint_active:
+                                execution_decision_feedback = (
+                                    "The bounded AWorld replan checkpoint was not "
+                                    "acknowledged twice. Resume with ordinary Tools "
+                                    "under the active delivery-phase constraint; no "
+                                    "further replan requests will be accumulated."
+                                )
+                            else:
+                                execution_decision_feedback = (
+                                    "The bounded AWorld execution-checkpoint attempts "
+                                    "were not acknowledged. Resume with ordinary Tools. "
+                                    "The initial horizon remains unknown or the replan "
+                                    "request remains explicitly unacknowledged; neither "
+                                    "condition is evidence of completion or authorization "
+                                    "for a short-task review bypass."
+                                )
+                    if agent_result.is_call_tool:
+                        if execution_control_offer.decision_boundary is None:
+                            from aworld.runners.execution_protocol import (
+                                bind_pending_next_action_call,
+                            )
+
+                            bind_pending_next_action_call(
+                                message.context,
+                                self.id(),
+                                list(agent_result.actions or ()),
+                            )
+                        review_repair_requested = self._consume_model_review_control(
+                            agent_result, message.context
+                        )
+                        if not independent_acceptance_review:
+                            self._consume_public_probe_controls(
+                                agent_result,
+                                message.context,
+                                offer=execution_control_offer,
+                            )
+                    if independent_acceptance_review and agent_result.is_call_tool:
+                        critic_probe_planned = self._consume_acceptance_probe_control(
+                            agent_result, message.context
+                        )
+                        if not critic_probe_planned:
+                            # A malformed/multiple probe is an uncertain critic
+                            # result, never ordinary solver tool work.
+                            agent_result = AgentResult(
+                                actions=[
+                                    ActionModel(
+                                        agent_name=self.id(),
+                                        policy_info=json.dumps(
+                                            {
+                                                "decision": "uncertain",
+                                                "highest_risk_counterexample": "probe_contract_invalid",
+                                                "hypothesis_id": "probe_contract_invalid",
+                                                "reason": "The independent probe call was missing or malformed.",
+                                            }
+                                        ),
+                                    )
+                                ],
+                                current_state=agent_result.current_state,
+                                is_call_tool=False,
+                            )
+                            llm_response.content = agent_result.actions[0].policy_info
+                    if tool_free_finalization and agent_result.is_call_tool:
+                        logger.warning(
+                            "Agent %s attempted tool work during its bounded "
+                            "finalization turn; returning the textual response only",
+                            self.id(),
+                        )
+                        agent_result = AgentResult(
+                            actions=[
+                                ActionModel(
+                                    agent_name=self.id(),
+                                    policy_info=llm_response.content or "",
+                                )
+                            ],
+                            current_state=agent_result.current_state,
+                            is_call_tool=False,
+                        )
+                    candidate_finished = (
+                        not agent_result.is_call_tool
+                        and execution_control_offer.decision_boundary is None
+                    )
+                    if (
+                        protocol_tool_free_finalization
+                        and candidate_finished
+                        and not any(
+                            str(getattr(action, "policy_info", "") or "").strip()
+                            for action in agent_result.actions
+                        )
+                    ):
+                        from aworld.runners.execution_protocol import (
+                            load_candidate_fallback,
+                        )
+
+                        fallback = load_candidate_fallback(message.context, self.id())
+                        if fallback is not None:
+                            fallback_text = str(fallback[0].policy_info or "")
+                            llm_response.content = fallback_text
+                            if isinstance(llm_response.message, dict):
+                                llm_response.message = dict(llm_response.message)
+                                llm_response.message["content"] = fallback_text
+                            agent_result = AgentResult(
+                                actions=list(fallback),
+                                current_state=agent_result.current_state,
+                                is_call_tool=False,
+                            )
+                    if agent_result.is_call_tool:
+                        from aworld.runners.execution_protocol import (
+                            clear_candidate_fallback,
+                        )
+
+                        if review_repair_requested:
+                            clear_candidate_fallback(message.context, self.id())
+                    response_incomplete = bool(
+                        isinstance(llm_response.message, dict)
+                        and llm_response.message.get("aworld_incomplete_reason")
+                    )
+                    if (
+                        independent_acceptance_review
+                        and candidate_finished
+                        and not response_incomplete
+                    ):
+                        from aworld.runners.execution_protocol import (
+                            clear_candidate_fallback,
+                            load_candidate_fallback,
+                            record_acceptance_critic_decision,
+                        )
+
+                        fallback = load_candidate_fallback(message.context, self.id())
+                        transition, _decision, accepted = (
+                            record_acceptance_critic_decision(
+                                message.context,
+                                self.id(),
+                                llm_response.content or "",
+                            )
+                        )
+                        critic_decision_handled = True
+                        if (
+                            transition is not None
+                            and transition.decision.reason.value
+                            == "protocol_persistence_error"
+                        ):
+                            critic_protocol_persistence_error = True
+                            preserved_actions = (
+                                list(fallback)
+                                if fallback is not None
+                                else list(agent_result.actions)
+                            )
+                            preserved_text = next(
+                                (
+                                    str(action.policy_info)
+                                    for action in preserved_actions
+                                    if str(
+                                        getattr(action, "policy_info", "") or ""
+                                    ).strip()
+                                ),
+                                "Completion is unverified.",
+                            )
+                            llm_response.content = preserved_text
+                            if isinstance(llm_response.message, dict):
+                                llm_response.message = dict(llm_response.message)
+                                llm_response.message["content"] = preserved_text
+                                llm_response.message["aworld_incomplete_reason"] = (
+                                    "independent_acceptance_protocol_"
+                                    "persistence_error"
+                                )
+                                llm_response.message["aworld_recoverable"] = True
+                            agent_result = AgentResult(
+                                actions=preserved_actions,
+                                current_state=agent_result.current_state,
+                                is_call_tool=False,
+                            )
+                            response_incomplete = True
+                            from aworld.core.context.execution_state import (
+                                record_execution_state,
+                            )
+
+                            record_execution_state(
+                                message.context,
+                                self.id(),
+                                "incomplete",
+                                "independent_acceptance_protocol_persistence_error",
+                                recoverable=True,
+                            )
+                        elif accepted and fallback is not None:
+                            from aworld.core.context.execution_state import (
+                                record_execution_resolution,
+                            )
+
+                            record_execution_resolution(
+                                message.context,
+                                self.id(),
+                                evidence_kind="accepted_critic",
+                                status="running",
+                                reason="independent_acceptance_accepted",
+                                observation=provider_resolution_observation,
+                            )
+                            fallback_text = str(fallback[0].policy_info or "")
+                            llm_response.content = fallback_text
+                            if isinstance(llm_response.message, dict):
+                                llm_response.message = dict(llm_response.message)
+                                llm_response.message["content"] = fallback_text
+                            agent_result = AgentResult(
+                                actions=list(fallback),
+                                current_state=agent_result.current_state,
+                                is_call_tool=False,
+                            )
+                        elif (
+                            transition is not None
+                            and transition.decision.action
+                            is ControllerAction.REQUEST_REPAIR
+                        ):
+                            validation_feedback = (
+                                "The independent acceptance critic did not produce "
+                                "a probe-backed accept decision. Repair the highest-"
+                                "risk gap, then produce a new evidence-backed candidate."
+                            )
+                        else:
+                            from aworld.core.context.execution_state import (
+                                record_execution_state,
+                            )
+
+                            incomplete_text = (
+                                "Independent acceptance could not be established "
+                                "within the bounded review/repair budget. Preserved "
+                                "work may be useful, but completion is unverified."
+                            )
+                            llm_response.content = incomplete_text
+                            if isinstance(llm_response.message, dict):
+                                llm_response.message = dict(llm_response.message)
+                                llm_response.message["content"] = incomplete_text
+                                llm_response.message["aworld_incomplete_reason"] = (
+                                    "acceptance_evidence_missing"
+                                )
+                            agent_result = AgentResult(
+                                actions=[
+                                    ActionModel(
+                                        agent_name=self.id(),
+                                        policy_info=incomplete_text,
+                                    )
+                                ],
+                                current_state=agent_result.current_state,
+                                is_call_tool=False,
+                            )
+                            response_incomplete = True
+                            record_execution_state(
+                                message.context,
+                                self.id(),
+                                "incomplete",
+                                "independent_acceptance_evidence_missing",
+                                recoverable=False,
+                            )
+                        if not critic_protocol_persistence_error:
+                            clear_candidate_fallback(message.context, self.id())
+                    if (
+                        candidate_finished
+                        and not loop_budget_finalization
+                        and not critic_decision_handled
+                        and not validation_feedback
+                        and not response_incomplete
+                    ):
+                        from aworld.runners.execution_protocol import (
+                            clear_candidate_fallback,
+                            execution_protocol_policy,
+                            final_review_guidance,
+                            load_execution_protocol_state,
+                            record_candidate_final,
+                            store_candidate_fallback,
+                        )
+
+                        # Persist the solver candidate before the controller
+                        # opens REVIEW.  A slow/unavailable reviewer must never
+                        # leave the task with only live model context.  Do not
+                        # overwrite it with the subsequent reviewer response.
+                        if not load_execution_protocol_state(
+                            message.context, self.id()
+                        ).review_pending:
+                            store_candidate_fallback(
+                                message.context, self.id(), agent_result.actions
+                            )
+                        protocol_transition = record_candidate_final(
+                            message.context,
+                            self.id(),
+                            actions=agent_result.actions,
+                            review_boundary_available=(
+                                self._candidate_review_boundary_available(
+                                    message.context,
+                                    tools=tools,
+                                )
+                            ),
+                        )
+                        if (
+                            protocol_transition is not None
+                            and protocol_transition.decision.action
+                            is ControllerAction.SUBMIT_CURRENT_RESULT
+                            and protocol_transition.decision.reason.value
+                            == "review_accepted"
+                        ):
+                            from aworld.core.context.execution_state import (
+                                record_execution_resolution,
+                            )
+
+                            record_execution_resolution(
+                                message.context,
+                                self.id(),
+                                evidence_kind="accepted_review",
+                                status="running",
+                                reason="model_owned_review_accepted",
+                                observation=provider_resolution_observation,
+                            )
+                        if (
+                            protocol_transition is not None
+                            and protocol_transition.decision.action
+                            is ControllerAction.STOP_INCOMPLETE
+                        ):
+                            from aworld.core.context.execution_state import (
+                                record_execution_state,
+                            )
+                            from aworld.runners.execution_protocol import (
+                                load_candidate_fallback,
+                            )
+
+                            reason = protocol_transition.decision.reason.value
+                            fallback = load_candidate_fallback(
+                                message.context, self.id()
+                            )
+                            preserved_actions = (
+                                list(fallback)
+                                if fallback is not None
+                                else list(agent_result.actions)
+                            )
+                            preserved_text = next(
+                                (
+                                    str(action.policy_info)
+                                    for action in preserved_actions
+                                    if str(
+                                        getattr(action, "policy_info", "") or ""
+                                    ).strip()
+                                ),
+                                "Completion is unverified.",
+                            )
+                            llm_response.content = preserved_text
+                            if isinstance(llm_response.message, dict):
+                                llm_response.message = dict(llm_response.message)
+                                llm_response.message["content"] = preserved_text
+                                llm_response.message["aworld_incomplete_reason"] = (
+                                    reason
+                                )
+                            agent_result = AgentResult(
+                                actions=preserved_actions,
+                                current_state=agent_result.current_state,
+                                is_call_tool=False,
+                            )
+                            response_incomplete = True
+                            review_authority = (
+                                "independent_acceptance"
+                                if execution_protocol_policy(
+                                    message.context, self.id()
+                                ).independent_acceptance_enabled
+                                else "model_owned_review"
+                            )
+                            record_execution_state(
+                                message.context,
+                                self.id(),
+                                "incomplete",
+                                (
+                                    f"{review_authority}_execution_protocol_"
+                                    f"{reason}_unverified"
+                                ),
+                                recoverable=reason
+                                in {
+                                    "controller_error",
+                                    "protocol_persistence_error",
+                                    "review_error",
+                                    "invalid_event",
+                                },
+                            )
+                        long_horizon_review_feedback = final_review_guidance(
+                            protocol_transition,
+                            independent_acceptance_enabled=(
+                                execution_protocol_policy(
+                                    message.context, self.id()
+                                ).independent_acceptance_enabled
+                            ),
+                        )
+                        if long_horizon_review_feedback:
+                            from aworld.runners.execution_protocol import (
+                                load_public_probe_receipts,
+                            )
+
+                            public_receipts = load_public_probe_receipts(
+                                message.context, self.id()
+                            )
+                            if public_receipts:
+                                receipt_summary = [
+                                    {
+                                        key: receipt.get(key)
+                                        for key in (
+                                            "receipt_id",
+                                            "hypothesis_id",
+                                            "probe_kind",
+                                            "selected_candidate_id",
+                                            "tool_execution_succeeded",
+                                            "probe_assessment",
+                                            "stale",
+                                        )
+                                    }
+                                    for receipt in public_receipts[-4:]
+                                ]
+                                long_horizon_review_feedback += (
+                                    " Current public self-check receipts "
+                                    "(advisory; tool success is not hypothesis "
+                                    "acceptance): "
+                                    + json.dumps(
+                                        receipt_summary,
+                                        ensure_ascii=False,
+                                        separators=(",", ":"),
+                                    )
+                                    + "."
+                                )
+                        else:
+                            clear_candidate_fallback(message.context, self.id())
+                    if (
+                        candidate_finished
+                        and not long_horizon_review_feedback
+                        and not validation_feedback
+                        and not response_incomplete
+                    ):
+                        validation_feedback = (
+                            await self._completion_feedback_if_unsatisfied(
+                                context=message.context,
+                                final_response_text=llm_response.content or "",
+                            )
+                        )
+                    if (
+                        candidate_finished
+                        and not long_horizon_review_feedback
+                        and not validation_feedback
+                        and not response_incomplete
+                    ):
+                        validation_feedback = (
+                            self._public_deliverable_feedback_if_unsatisfied(
+                                message.context
+                            )
+                        )
+                    if (
+                        candidate_finished
+                        and not long_horizon_review_feedback
+                        and not validation_feedback
+                        and not response_incomplete
+                    ):
+                        validation_feedback = (
+                            self._build_result_validation_feedback_from_context(
+                                context=message.context,
+                                final_response_text=llm_response.content or "",
+                            )
+                        )
+                    if tool_free_finalization and validation_feedback:
+                        final_text = (llm_response.content or "").strip()
+                        final_text = (
+                            f"{final_text}\n\n"
+                            "The completion contract remains unsatisfied, so I "
+                            "cannot confirm that the task is complete."
+                        ).strip()
+                        llm_response.content = final_text
+                        if isinstance(llm_response.message, dict):
+                            llm_response.message = dict(llm_response.message)
+                            llm_response.message["content"] = final_text
+                            llm_response.message["aworld_incomplete_reason"] = (
+                                "delivery_validation_unsatisfied"
+                            )
+                            llm_response.message["aworld_recoverable"] = False
+                        agent_result = AgentResult(
+                            actions=[
+                                ActionModel(
+                                    agent_name=self.id(),
+                                    policy_info=final_text,
+                                )
+                            ],
+                            current_state=agent_result.current_state,
+                            is_call_tool=False,
+                        )
+                        message.context.context_info[
+                            f"agent_loop_budget_validation_blocked:{self.id()}"
+                        ] = True
+                        validation_feedback = None
+                    # skip summary on final round
+                    if execution_control_offer.decision_boundary is None:
+                        await self._add_message_to_memory(
+                            payload=llm_response,
+                            message_type=MemoryType.AI,
+                            context=message.context,
+                            skip_summary=(
+                                candidate_finished and not validation_feedback
+                            ),
+                        )
+
+                    try:
+                        events = []
+                        async for event in run_hooks(
+                            message.context,
+                            HookPoint.POST_LLM_CALL,
+                            hook_from=self.id(),
+                            payload=llm_response,
+                            agent_message=message,
+                        ):
+                            events.append(event)
+                    except Exception as e:
+                        logger.error(
+                            f"{self.id()} failed to run POST_LLM_CALL hooks: {e}, traceback is {traceback.format_exc()}"
+                        )
+                        raise AWorldRuntimeException(str(e))
+            else:
+                await self._raise_if_task_interrupted(
+                    message.context if message else None,
+                    reason=f"{self.id()} interrupted before receiving a usable LLM response",
+                )
+                logger.error(f"{self.id()} failed to get LLM response")
+                raise AWorldRuntimeException(f"{self.id()} failed to get LLM response")
+
+        result_actions = tuple(getattr(agent_result, "actions", ()) or ())
+        logger.info(
+            "agent_result summary: "
+            + json.dumps(
+                {
+                    "action_count": len(result_actions),
+                    "tool_action_count": sum(
+                        bool(
+                            getattr(action, "tool_name", None)
+                            or getattr(action, "action_name", None)
+                        )
+                        for action in result_actions
+                    ),
+                    "policy_info_chars": sum(
+                        len(value)
+                        for action in result_actions
+                        for value in (getattr(action, "policy_info", None),)
+                        if isinstance(value, str)
+                    ),
+                    "is_call_tool": bool(getattr(agent_result, "is_call_tool", False)),
+                },
+                sort_keys=True,
+            )
+        )
+
+        if execution_decision_feedback:
+            recursive_kwargs = {
+                key: value
+                for key, value in continuation_request_kwargs.items()
+                if key
+                not in {
+                    "response_parse_args",
+                    "prepared_tools",
+                    "prompt_assembly_plan",
+                    "provider_native_prompt_cache",
+                    "tool_choice",
+                }
+            }
+            return _ExecutionDecisionContinuation(
+                observation=Observation(
+                    observer=self.id(),
+                    from_agent_name=self.id(),
+                    to_agent_name=self.id(),
+                    content=execution_decision_feedback,
+                    action_result=[
+                        ActionResult(
+                            content=execution_decision_feedback,
+                            success=execution_decision_outcome == "acknowledged",
+                            tool_name="aworld",
+                            action_name="execution_decision",
+                        )
+                    ],
+                ),
+                kwargs=recursive_kwargs,
+            )
+
+        if long_horizon_review_feedback:
+            recursive_kwargs = {
+                key: value
+                for key, value in continuation_request_kwargs.items()
+                if key
+                not in {
+                    "response_parse_args",
+                    "prepared_tools",
+                    "prompt_assembly_plan",
+                    "provider_native_prompt_cache",
+                }
+            }
+            followup_observation = Observation(
+                observer=self.id(),
+                from_agent_name=self.id(),
+                to_agent_name=self.id(),
+                content=long_horizon_review_feedback,
+            )
+            return _LongHorizonReviewContinuation(
+                observation=followup_observation,
+                kwargs=recursive_kwargs,
+                fallback_actions=tuple(agent_result.actions),
+            )
+
+        if validation_feedback:
+            logger.warning(
+                "Result validation asked agent %s to continue before finishing: %s",
+                self.id(),
+                validation_feedback,
+            )
+            return await self._retry_for_result_validation(
+                validation_feedback=validation_feedback,
+                observation=observation,
+                info=info,
+                message=message,
+                kwargs=continuation_request_kwargs,
+                iterative=True,
+            )
+
+        message.context.context_info.pop(
+            self._result_validation_retry_key(self.id()), None
+        )
+
+        retain_work_progress(message.context, self.id(), plan=llm_response.content)
+        await checkpoint_work_progress(message.context, self.id())
+        if self.is_agent_finished(llm_response, agent_result):
+            policy_result = agent_result.actions
+        else:
+            # Record all tool call start times (used to set MemoryMessage's start_time)
+            for act in agent_result.actions:
+                tool_call_start_time = datetime.now().isoformat()
+                message.context.context_info[
+                    f"tool_call_start_time_{act.tool_call_id}"
+                ] = tool_call_start_time
+
+            if not self.wait_tool_result:
+                policy_result = agent_result.actions
+            else:
+                policy_result = await self.execution_tools(
+                    agent_result.actions, message
+                )
+        if self.finished:
+            await checkpoint_work_progress(message.context, self.id(), force=True)
+        await self.send_agent_response_output(
+            self, llm_response, message.context, kwargs.get("outputs")
+        )
+        return policy_result
+
+    def _authoritative_request_from_context(self, context: Context) -> str:
+        return str(
+            getattr(context, "origin_user_input", None)
+            or getattr(context, "task_input", None)
+            or ""
+        ).strip()
+
+    @staticmethod
+    def _stringify_result_validation_content(content: Any) -> str:
+        if content is None:
+            return ""
+        if isinstance(content, str):
+            return content
+        if isinstance(content, (dict, list)):
+            try:
+                return json.dumps(content, ensure_ascii=False)
+            except Exception:
+                return str(content)
+        return str(content)
+
+    def _extract_tool_observation_text(self, content: Any) -> str:
+        text = self._stringify_result_validation_content(content).strip()
+        if not text:
+            return ""
+
+        try:
+            parsed = json.loads(text)
+        except (TypeError, json.JSONDecodeError):
+            parsed = None
+
+        if isinstance(parsed, dict):
+            message = parsed.get("message")
+            if isinstance(message, str):
+                output_match = re.search(
+                    r"## Output\s*```(?:[^\n`]*)\n(.*?)\n```", message, re.DOTALL
+                )
+                if output_match:
+                    return output_match.group(1).strip()
+                return message.strip()
+            if "output" in parsed:
+                return self._stringify_result_validation_content(
+                    parsed.get("output")
+                ).strip()
+
+        output_match = re.search(
+            r"## Output\s*```(?:[^\n`]*)\n(.*?)\n```", text, re.DOTALL
+        )
+        if output_match:
+            return output_match.group(1).strip()
+        return text
+
+    def _classify_result_validation_observation(self, observation_text: str) -> str:
+        stripped = observation_text.strip()
+        if not stripped:
+            return "ignore"
+
+        if (
+            len(stripped) < 80
+            and "http://" not in stripped
+            and "https://" not in stripped
+            and "\n" not in stripped
+        ):
+            return "ignore"
+
+        local_paths = [
+            path
+            for path in extract_path_candidates(stripped, max_paths=8)
+            if self._is_validation_local_path(path)
+        ]
+        preview_markers = (
+            "--- 文件前",
+            "--- File Preview",
+            "title:",
+            "source:",
+            "# ",
+            "## ",
+        )
+        if local_paths and any(marker in stripped for marker in preview_markers):
+            return "artifact"
+
+        return "source"
+
+    @staticmethod
+    def _is_validation_local_path(path: str) -> bool:
+        if not path or path.startswith(("http://", "https://")):
+            return False
+        if path.startswith(("~/", "./", "../")):
+            return True
+        if not path.startswith("/"):
+            return False
+
+        normalized = os.path.normpath(path)
+        common_roots = ("/Users/", "/tmp/", "/var/", "/private/", "/home/")
+        if normalized.startswith(common_roots):
+            return True
+
+        basename = os.path.basename(normalized)
+        return "." in basename
+
+    def _extract_validation_candidate_paths(self, value: Any) -> list[str]:
+        if hasattr(value, "to_dict") and callable(getattr(value, "to_dict")):
+            try:
+                value = value.to_dict()
+            except Exception:
+                pass
+        elif hasattr(value, "model_dump") and callable(getattr(value, "model_dump")):
+            try:
+                value = value.model_dump()
+            except Exception:
+                pass
+        return [
+            path
+            for path in extract_path_candidates(value, max_paths=24)
+            if self._is_validation_local_path(path)
+        ]
+
+    def _collect_validation_artifact_previews(
+        self,
+        *,
+        context: Context,
+        candidate_paths: list[str],
+        preview_chars: int = 1600,
+    ) -> list[str]:
+        task_start_time = getattr(context, "start_time", None)
+        text_file_exts = {
+            ".md",
+            ".txt",
+            ".json",
+            ".yaml",
+            ".yml",
+            ".html",
+            ".xml",
+            ".csv",
+            ".py",
+            ".js",
+            ".ts",
+            ".tsx",
+            ".jsx",
+            ".sh",
+        }
+        previews: list[str] = []
+        seen: set[str] = set()
+
+        for raw_path in candidate_paths:
+            expanded = os.path.expanduser(str(raw_path))
+            normalized = os.path.abspath(expanded)
+            if normalized in seen or not os.path.isfile(normalized):
+                continue
+            seen.add(normalized)
+
+            _, ext = os.path.splitext(normalized)
+            if ext.lower() not in text_file_exts:
+                continue
+
+            try:
+                stat = os.stat(normalized)
+            except OSError:
+                continue
+
+            if stat.st_size <= 0 or stat.st_size > 256 * 1024:
+                continue
+            if task_start_time and stat.st_mtime + 2 < float(task_start_time):
+                continue
+
+            try:
+                with open(normalized, "r", encoding="utf-8") as handle:
+                    content = handle.read(preview_chars).strip()
+            except Exception:
+                continue
+
+            if not content:
+                continue
+            previews.append(f"[artifact:{normalized}]\n{content}")
+
+        return previews
+
+    def _collect_result_validation_evidence(
+        self, context: Context, *, limit: int = 8
+    ) -> dict[str, str]:
+        try:
+            memory = MemoryFactory.instance()
+            agent_memory_config = context.get_agent_memory_config(self.id())
+            filters = self._build_memory_filters(
+                context, additional_filters={"memory_type": "message"}
+            )
+            histories = memory.get_last_n(
+                limit, filters=filters, agent_memory_config=agent_memory_config
+            )
+        except Exception:
+            logger.debug(
+                "failed to collect result validation evidence: %s",
+                traceback.format_exc(),
+            )
+            return {"source": "", "artifact": ""}
+
+        source_parts: list[str] = []
+        artifact_parts: list[str] = []
+        artifact_candidate_paths: list[str] = []
+        tool_call_map: dict[str, Any] = {}
+        for history in histories or []:
+            if isinstance(history, MemoryAIMessage):
+                for tool_call in history.tool_calls or []:
+                    tool_call_map[tool_call.id] = tool_call
+                continue
+            if not isinstance(history, MemoryToolMessage):
+                continue
+
+            observation_text = self._extract_tool_observation_text(
+                getattr(history, "content", None)
+            )
+            tool_call = tool_call_map.get(history.tool_call_id)
+            tool_name = str(
+                getattr(getattr(tool_call, "function", None), "name", "") or ""
+            ).lower()
+            if "spawn_subagent" in tool_name:
+                continue
+            evidence_kind = self._classify_result_validation_observation(
+                observation_text
+            )
+            if evidence_kind == "source":
+                source_parts.append(observation_text)
+            elif evidence_kind == "artifact":
+                artifact_parts.append(observation_text)
+                artifact_candidate_paths.extend(
+                    self._extract_validation_candidate_paths(
+                        getattr(history, "content", None)
+                    )
+                )
+                artifact_candidate_paths.extend(
+                    self._extract_validation_candidate_paths(tool_call)
+                )
+
+        artifact_parts.extend(
+            self._collect_validation_artifact_previews(
+                context=context, candidate_paths=artifact_candidate_paths
+            )
+        )
+
+        return {
+            "source": "\n".join(source_parts[-limit:]),
+            "artifact": "\n".join(artifact_parts[-limit:]),
+        }
+
+    def _build_result_validation_feedback(
+        self,
+        *,
+        authoritative_request: str,
+        final_response_text: str,
+        source_evidence_text: str,
+        artifact_evidence_text: str = "",
+    ) -> str | None:
+        anchors = extract_required_anchors(authoritative_request)
+        if not anchors:
+            return None
+
+        source_text = (source_evidence_text or "").strip()
+        if not source_text:
+            return None
+
+        missing_in_source = [
+            anchor for anchor in anchors if not anchor_matches_text(anchor, source_text)
+        ]
+        if missing_in_source:
+            logger.debug(
+                "result validation skipped soft missing anchors: %s",
+                ", ".join(missing_in_source[:4]),
+            )
+            return None
+
+        artifact_text = (artifact_evidence_text or "").strip()
+        if artifact_text:
+            missing_in_artifact = [
+                anchor
+                for anchor in anchors
+                if not anchor_matches_text(anchor, artifact_text)
+            ]
+            if missing_in_artifact:
+                logger.debug(
+                    "result validation skipped soft artifact missing anchors: %s",
+                    ", ".join(missing_in_artifact[:4]),
+                )
+                return None
+
+        return None
+
+    def _build_result_validation_feedback_from_context(
+        self,
+        *,
+        context: Context,
+        final_response_text: str,
+    ) -> str | None:
+        if self.name() != "Aworld":
+            return None
+        authoritative_request = self._authoritative_request_from_context(context)
+        if not authoritative_request:
+            return None
+        evidence = self._collect_result_validation_evidence(context)
+        return self._build_result_validation_feedback(
+            authoritative_request=authoritative_request,
+            final_response_text=final_response_text,
+            source_evidence_text=evidence.get("source", ""),
+            artifact_evidence_text=evidence.get("artifact", ""),
+        )
+
+    @staticmethod
+    def _truncate_result_validation_text(value: str, *, limit: int = 1200) -> str:
+        text = (value or "").strip()
+        if len(text) <= limit:
+            return text
+        return f"{text[:limit].rstrip()} ...(truncated)"
+
+    def _build_result_validation_recovery_brief(
+        self,
+        *,
+        authoritative_request: str,
+        validation_feedback: str,
+        source_evidence_text: str = "",
+        artifact_evidence_text: str = "",
+    ) -> str:
+        anchors = extract_required_anchors(authoritative_request)
+        anchor_lines = (
+            "\n".join(f"- {anchor}" for anchor in anchors[:6]) or "- (none extracted)"
+        )
+        source_excerpt = (
+            self._truncate_result_validation_text(source_evidence_text, limit=1600)
+            or "(none)"
+        )
+        artifact_excerpt = (
+            self._truncate_result_validation_text(artifact_evidence_text, limit=1200)
+            or "(none)"
+        )
+        return (
+            "Result validation detected a likely goal conflict. Treat this as unfinished.\n\n"
+            f"Original request:\n{authoritative_request}\n\n"
+            f"Validation feedback:\n{validation_feedback}\n\n"
+            f"High-confidence target anchors:\n{anchor_lines}\n\n"
+            f"Source evidence from this run:\n{source_excerpt}\n\n"
+            f"Generated artifact evidence from this run:\n{artifact_excerpt}\n\n"
+            "Recovery requirements:\n"
+            "1. Re-identify the requested goal and expected automation outcome from the original request.\n"
+            "2. If current evidence clearly points to a different target or scope, discard it and search again.\n"
+            "3. Do not require every anchor string to appear verbatim; use anchors only to orient the target.\n"
+            "4. Only continue blocking when the requested outcome was not produced or evidence conflicts with the goal.\n"
+            "5. Before attempting another final answer, execute at least one "
+            "concrete tool action that changes the result or verifies it against "
+            "the failed requirement.\n"
+            "6. Do not repeat a completion claim without new tool evidence. If "
+            "you still cannot verify the outcome, explain the practical mismatch "
+            "and the next evidence needed.\n"
+        )
+
+    @staticmethod
+    def _result_validation_retry_key(agent_id: str) -> str:
+        return f"result_validation_retry_count:{agent_id}"
+
+    @staticmethod
+    def _should_degrade_result_validation_retry_error(exc: Exception) -> bool:
+        message = str(exc).lower()
+        return (
+            "empty or invalid response" in message
+            or "failed to get llm response" in message
+        )
+
+    async def _retry_for_result_validation(
+        self,
+        *,
+        validation_feedback: str,
+        observation: Observation,
+        info: Dict[str, Any],
+        message: Message,
+        kwargs: Dict[str, Any],
+        iterative: bool = False,
+    ) -> List[ActionModel]:
+        retry_key = self._result_validation_retry_key(self.id())
+        retry_count = int(message.context.context_info.get(retry_key, 0) or 0)
+        recovery_brief = validation_feedback
+        authoritative_request = self._authoritative_request_from_context(
+            message.context
+        )
+        if authoritative_request:
+            evidence = self._collect_result_validation_evidence(message.context)
+            recovery_brief = self._build_result_validation_recovery_brief(
+                authoritative_request=authoritative_request,
+                validation_feedback=validation_feedback,
+                source_evidence_text=evidence.get("source", ""),
+                artifact_evidence_text=evidence.get("artifact", ""),
+            )
+
+        contract = getattr(message.context, "completion_contract", None)
+        maximum_repairs = contract.max_repairs if contract is not None else 1
+        if maximum_repairs is not None and retry_count >= maximum_repairs:
+            from aworld.core.context.execution_state import (
+                record_execution_state,
+                checkpoint_execution_state,
+            )
+
+            record_execution_state(
+                message.context,
+                self.id(),
+                "incomplete",
+                "validation_repair_exhausted",
+                recoverable=False,
+            )
+            await checkpoint_execution_state(message.context)
+            self._finished = True
+            return [
+                ActionModel(
+                    agent_name=self.id(),
+                    policy_info=(
+                        f"{validation_feedback}\n"
+                        "I cannot confirm the task is complete with the current evidence, so I am not claiming success."
+                    ),
+                )
+            ]
+
+        message.context.context_info[retry_key] = retry_count + 1
+        schedule_turn_cause = getattr(message.context, "schedule_turn_cause", None)
+        if callable(schedule_turn_cause):
+            schedule_turn_cause(
+                TurnCauseCode.VALIDATION_REPAIR,
+                evidence_hash=canonical_json_hash(
+                    {"validation_feedback": validation_feedback}
+                ),
+            )
+        followup_observation = Observation(
+            observer=self.id(),
+            from_agent_name=observation.from_agent_name or self.id(),
+            to_agent_name=self.id(),
+            content=recovery_brief,
+            action_result=[
+                ActionResult(
+                    content=recovery_brief,
+                    success=False,
+                    tool_name="result_validation",
+                    action_name="recovery",
+                )
+            ],
+        )
+        recursive_kwargs = {
+            key: value
+            for key, value in kwargs.items()
+            if key
+            not in {
+                "response_parse_args",
+                "prepared_tools",
+                "prompt_assembly_plan",
+                "provider_native_prompt_cache",
+            }
+        }
+        if iterative:
+            return _ValidationRepairContinuation(
+                followup_observation, recursive_kwargs, validation_feedback
+            )
+        try:
+            return await self.async_policy(
+                followup_observation,
+                info=info,
+                message=message,
+                **recursive_kwargs,
+            )
+        except Exception as exc:
+            if not self._should_degrade_result_validation_retry_error(exc):
+                raise
+            return await self._degrade_result_validation_retry(
+                message, validation_feedback, exc
+            )
+
+    async def _degrade_result_validation_retry(self, message, validation_feedback, exc):
+        logger.warning(
+            "Result validation follow-up degraded for agent %s after LLM retry failure: %s",
+            self.id(),
+            exc,
+        )
+        message.context.context_info.pop(
+            self._result_validation_retry_key(self.id()), None
+        )
+        from aworld.core.context.execution_state import (
+            record_execution_state,
+            checkpoint_execution_state,
+        )
+
+        record_execution_state(
+            message.context,
+            self.id(),
+            "incomplete",
+            "validation_repair_unavailable",
+            recoverable=False,
+        )
+        await checkpoint_execution_state(message.context)
+        self._finished = True
+        return [
+            ActionModel(
+                agent_name=self.id(),
+                policy_info=(
+                    f"{validation_feedback}\n"
+                    "The follow-up validation round failed because the model returned an empty or invalid "
+                    "response. I cannot confirm the task is complete with the current evidence, so I am not "
+                    "claiming success."
+                ),
+            )
+        ]
+
+    async def execution_tools(
+        self, actions: List[ActionModel], message: Message = None, **kwargs
+    ) -> List[ActionModel]:
+        """Tool execution operations.
+
+        Returns:
+            ActionModel sequence. Tool execution result.
+        """
+        from aworld.utils.run_util import exec_tool, exec_agent
+
+        get_task = getattr(message.context, "get_task", None)
+        try:
+            parent_task = get_task() if callable(get_task) else None
+        except Exception:
+            parent_task = None
+        tool_results = []
+        for act in actions:
+            context = message.context.deep_copy()
+            if parent_task is not None:
+                # Base Context deep copies intentionally drop Task references.
+                # Rebind only the execution parent; the child Task remains the
+                # owner once its runner constructs a sub-context.
+                context.set_task(parent_task)
+            context.agent_info.current_tool_call_id = act.tool_call_id
+            if is_agent(act):
+                content = act.policy_info
+                if act.params and "content" in act.params:
+                    content = act.params["content"]
+                task_conf = TaskConfig(
+                    run_mode=message.context.get_task().conf.run_mode
+                )
+                act_result = await exec_agent(
+                    question=content,
+                    agent=AgentFactory.agent_instance(act.tool_name),
+                    context=context,
+                    sub_task=True,
+                    outputs=message.context.outputs,
+                    task_group_id=message.context.get_task().group_id
+                    or uuid.uuid4().hex,
+                    task_conf=task_conf,
+                    parent_task=parent_task,
+                )
+            else:
+                act_result = await exec_tool(
+                    tool_name=act.tool_name,
+                    action_name=act.action_name,
+                    params=act.params,
+                    agent_name=self.id(),
+                    context=context,
+                    sub_task=True,
+                    outputs=message.context.outputs,
+                    task_group_id=message.context.get_task().group_id
+                    or uuid.uuid4().hex,
+                    parent_task=parent_task,
+                )
+
+            # tool hooks
+            try:
+                events = []
+                async for event in run_hooks(
+                    context=message.context,
+                    hook_point=HookPoint.POST_TOOL_CALL,
+                    hook_from=self.id(),
+                    payload=act_result,
+                ):
+                    events.append(event)
+            except Exception:
+                logger.debug(traceback.format_exc())
+
+            if not act_result or not act_result.success:
+                error_msg = act_result.msg if act_result else "Unknown error"
+                logger.warning(
+                    f"Agent {self.id()} _execute_tool failed with exception: {error_msg}",
+                    color=Color.red,
+                )
+                continue
+            act_res = ActionResult(
+                tool_call_id=act.tool_call_id,
+                tool_name=act.tool_name,
+                content=act_result.answer,
+            )
+            tool_results.append(act_res)
+            await self._add_message_to_memory(
+                payload=act_res, message_type=MemoryType.TOOL, context=message.context
+            )
+        result = sync_exec(self.tools_aggregate_func, tool_results)
+        await self._add_tool_result_token_ids_to_context(message.context)
+        return result
+
+    async def _tools_aggregate_func(
+        self, tool_results: List[ActionResult]
+    ) -> List[ActionModel]:
+        """Aggregate tool results
+        Args:
+            tool_results: Tool results
+        Returns:
+            ActionModel sequence
+        """
+        content = ""
+        for res in tool_results:
+            content += f"{self._format_tool_result_for_followup(res)}\n"
+        params = {"is_tool_result": True}
+        return [ActionModel(agent_name=self.id(), policy_info=content, params=params)]
+
+    def _format_tool_result_for_followup(self, result: ActionResult) -> str:
+        """Format tool results for the next LLM turn.
+
+        Most tools can be forwarded as-is. For cron scheduling, add an explicit
+        source-of-truth note so the model uses the runtime-confirmed schedule
+        instead of reusing an earlier guessed timestamp.
+        """
+        content = result.content
+        if result.tool_name != "cron" or not isinstance(content, dict):
+            compaction = compact_tool_result_for_memory(
+                content,
+                tool_name=result.tool_name,
+                action_name=result.action_name,
+                summary_content=(result.metadata or {}).get("tool_use_summary")
+                if isinstance(result.metadata, dict)
+                else None,
+                enabled=True,
+                preview_chars=2000,
+                force=bool(
+                    isinstance(result.metadata, dict)
+                    and result.metadata.get("offload") is True
+                ),
+                result_metadata=result.metadata
+                if isinstance(result.metadata, dict)
+                else None,
+            )
+            return str(compaction.content if compaction.applied else content)
+
+        serialized = json.dumps(content, ensure_ascii=False)
+        if not content.get("success"):
+            return (
+                f"{serialized}\n"
+                "Cron returned an error. Do not claim the reminder or scheduled task was created."
+            )
+
+        next_run = content.get("next_run")
+        job_id = content.get("job_id")
+        next_run_display = content.get("next_run_display")
+        if next_run:
+            return (
+                f"{serialized}\n"
+                f"Confirmed cron schedule: next_run={next_run}; job_id={job_id}. "
+                f"{'Use next_run_display=' + next_run_display + ' for any user-facing date or weekday wording. ' if next_run_display else ''}"
+                "Use this cron result as the source of truth and do not reuse any earlier guessed schedule_value or infer the weekday yourself."
+            )
+
+        return (
+            f"{serialized}\n"
+            "Cron did not return a confirmed next_run. Do not say the reminder time is confirmed."
+        )
+
+    async def build_llm_input(
+        self,
+        observation: Observation,
+        info: Dict[str, Any] = {},
+        message: Message = None,
+        **kwargs,
+    ):
+        """Build LLM input.
+
+        Args:
+            observation: The state observed from the environment
+            info: Extended information to assist the agent in decision-making
+        """
+        await self.async_desc_transform(message.context)
+        # observation secondary processing
+        observation = await self.init_observation(observation)
+        images = observation.images if self.conf.use_vision else None
+        if self.conf.use_vision and not images and observation.image:
+            images = [observation.image]
+        projection_token = _DEFER_ADAPTIVE_MEMORY_PROJECTION.set(True)
+        try:
+            messages = await self.async_messages_transform(
+                image_urls=images,
+                observation=observation,
+                message=message,
+            )
+        finally:
+            _DEFER_ADAPTIVE_MEMORY_PROJECTION.reset(projection_token)
+        # truncate and other process
+        try:
+            messages = self._process_messages(
+                messages=messages, context=message.context
+            )
+        except Exception as e:
+            logger.warning(f"Failed to process messages in messages_transform: {e}")
+            logger.debug(f"Process messages error details: {traceback.format_exc()}")
+        return self._finalize_adaptive_memory_projection(messages, message.context)
+
+    @staticmethod
+    def _amni_system_section_messages(
+        history: MemoryMessage,
+    ) -> List[Dict[str, Any]] | None:
+        """Expand only checksum-equivalent structured Amni system metadata."""
+        if not isinstance(history, MemorySystemMessage):
+            return None
+        sections = validated_amni_system_sections(
+            content=history.content,
+            metadata=history.metadata,
+        )
+        if sections is None:
+            return None
+        messages = []
+        for section in sections:
+            message = {
+                "role": "system",
+                "content": section["content"],
+                PROMPT_STABILITY_HINT_KEY: section["stability"],
+            }
+            name = section.get("name")
+            if isinstance(name, str) and name.strip():
+                message[PROMPT_SECTION_NAME_HINT_KEY] = name.strip()
+            messages.append(message)
+        return messages
+
+    def _process_messages(
+        self, messages: List[Dict[str, Any]], context: Context = None
+    ) -> Optional[List[Dict[str, Any]]]:
+        if context is None:
+            return messages
+        artifacts = self._public_deliverable_artifacts(context)
+        executables = self._public_executable_hints(context)
+        if not artifacts and not executables:
+            return messages
+        if artifacts:
+            from aworld.runners.post_tool_progress import (
+                capture_public_deliverable_baseline,
+            )
+
+            capture_public_deliverable_baseline(context, agent_id=self.id())
+        if any(
+            item.get("role") == "system"
+            and _PUBLIC_DELIVERABLE_PROMPT_MARKER in str(item.get("content", ""))
+            for item in messages
+        ):
+            return messages
+        paths = "\n".join(
+            f"- {item['display_path']} (resolved: {item['path']})" for item in artifacts
+        )
+        deliverable_guidance = (
+            "The public task text explicitly names the following output file(s):\n"
+            f"{paths}\n"
+            "Treat creation of these files as early, inspectable delivery "
+            "milestones. Verify that each exists before claiming completion. "
+            if artifacts
+            else ""
+        )
+        capability_guidance = (
+            "The public task text explicitly names required executable(s): "
+            + ", ".join(executables)
+            + ". Check availability once near the start; if unavailable, "
+            "prepare it through the environment's supported mechanism before "
+            "deep exploration. Do not repeatedly probe or install it. "
+            if executables
+            else ""
+        )
+        guidance = {
+            "role": "system",
+            "content": (
+                f"{_PUBLIC_DELIVERABLE_PROMPT_MARKER}: "
+                f"{deliverable_guidance}{capability_guidance}"
+                "These hints are advisory task grounding only; they do not "
+                "validate file contents, authorize arbitrary commands, or replace "
+                "a canonical verifier."
+            ),
+            PROMPT_SECTION_NAME_HINT_KEY: "public_deliverable_contract",
+            PROMPT_STABILITY_HINT_KEY: "stable",
+        }
+        return [guidance, *messages]
+
+    def _pre_generation_caller_reserve_reached(self, context: Context) -> bool:
+        """Avoid starting an ordinary generation that is likely to cross reserve."""
+
+        try:
+            from aworld.runners.execution_protocol import (
+                execution_protocol_control_eligible,
+            )
+
+            policy = self._resolve_execution_protocol_policy(context)
+            state = ExecutionProtocolStore(context, self.id(), policy).load()
+            task = context.get_task()
+            remaining = task.remaining_seconds() if task is not None else None
+        except Exception:
+            return False
+        if (
+            not execution_protocol_control_eligible(context, self.id())
+            or state.phase not in {ProtocolPhase.EXECUTE, ProtocolPhase.REPAIR}
+            or isinstance(remaining, bool)
+            or not isinstance(remaining, (int, float))
+            or not math.isfinite(float(remaining))
+        ):
+            return False
+        predicted_call_seconds = self._terminal_model_call_p95_seconds(context)
+        admission_boundary = float(policy.finalization_reserve_seconds)
+        if policy.terminal_review_gate_enabled:
+            admission_boundary += predicted_call_seconds
+        if float(remaining) > admission_boundary:
+            return False
+        metrics = context.context_info.get("pre_generation_reserve_metrics")
+        if not isinstance(metrics, dict):
+            metrics = {}
+        metrics["entry_count"] = int(metrics.get("entry_count", 0) or 0) + 1
+        metrics["last_remaining_seconds"] = max(0.0, float(remaining))
+        metrics["finalization_reserve_seconds"] = float(
+            policy.finalization_reserve_seconds
+        )
+        metrics["predicted_model_call_p95_seconds"] = predicted_call_seconds
+        metrics["call_admission_boundary_seconds"] = admission_boundary
+        metrics["admission_reason"] = (
+            "predicted_call_crosses_reserve"
+            if float(remaining) > float(policy.finalization_reserve_seconds)
+            else "finalization_reserve_reached"
+        )
+        context.context_info["pre_generation_reserve_metrics"] = metrics
+        return True
+
+    def _terminal_model_call_p95_seconds(self, context: Context) -> float:
+        """Return a bounded task-local p95 with a conservative cold-start floor."""
+
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context) or context
+        value = None
+        reader = getattr(owner, "read_task_runtime_state", None)
+        if callable(reader):
+            try:
+                value = reader(self.id(), _TERMINAL_MODEL_LATENCY_KEY)
+            except Exception:
+                value = None
+        if not isinstance(value, Mapping):
+            value = getattr(owner, "context_info", {}).get(
+                f"{_TERMINAL_MODEL_LATENCY_KEY}:{self.id()}"
+            )
+        samples = []
+        expected_scope = {
+            "task_id": getattr(owner, "task_id", None),
+            "task_epoch": getattr(owner, "task_epoch", None),
+        }
+        if (
+            isinstance(value, Mapping)
+            and value.get("schema_version") == _TERMINAL_MODEL_LATENCY_SCHEMA
+            and value.get("scope") == expected_scope
+        ):
+            samples = [
+                float(item)
+                for item in (value.get("samples_seconds") or ())
+                if isinstance(item, (int, float))
+                and not isinstance(item, bool)
+                and math.isfinite(float(item))
+                and float(item) >= 0
+            ][-_TERMINAL_MODEL_LATENCY_SAMPLE_LIMIT:]
+        floor = _TERMINAL_MODEL_LATENCY_FLOOR_SECONDS
+        try:
+            task = context.get_task()
+            total = getattr(task, "timeout", None) if task is not None else None
+        except Exception:
+            total = None
+        if (
+            isinstance(total, (int, float))
+            and not isinstance(total, bool)
+            and math.isfinite(float(total))
+            and float(total) > 0
+        ):
+            floor = min(
+                _TERMINAL_MODEL_LATENCY_CAP_SECONDS,
+                max(floor, float(total) * 0.05),
+            )
+        if not samples:
+            return floor
+        ordered = sorted(samples)
+        rank = max(0, math.ceil(0.95 * len(ordered)) - 1)
+        return min(
+            _TERMINAL_MODEL_LATENCY_CAP_SECONDS,
+            max(floor, ordered[rank]),
+        )
+
+    def _record_terminal_model_call_duration(
+        self, context: Context | None, elapsed_seconds: float
+    ) -> None:
+        """Persist bounded call timing for the next admission decision."""
+
+        if (
+            context is None
+            or isinstance(elapsed_seconds, bool)
+            or not isinstance(elapsed_seconds, (int, float))
+            or not math.isfinite(float(elapsed_seconds))
+            or elapsed_seconds < 0
+        ):
+            return
+        from aworld.core.context.execution_state import state_context
+
+        owner = state_context(context) or context
+        key = f"{_TERMINAL_MODEL_LATENCY_KEY}:{self.id()}"
+        current = getattr(owner, "context_info", {}).get(key)
+        expected_scope = {
+            "task_id": getattr(owner, "task_id", None),
+            "task_epoch": getattr(owner, "task_epoch", None),
+        }
+        samples = (
+            list(current.get("samples_seconds") or ())
+            if isinstance(current, Mapping)
+            and current.get("schema_version") == _TERMINAL_MODEL_LATENCY_SCHEMA
+            and current.get("scope") == expected_scope
+            else []
+        )
+        samples.append(
+            round(
+                min(_TERMINAL_MODEL_LATENCY_CAP_SECONDS, float(elapsed_seconds)),
+                6,
+            )
+        )
+        payload = {
+            "schema_version": _TERMINAL_MODEL_LATENCY_SCHEMA,
+            "scope": expected_scope,
+            "samples_seconds": samples[-_TERMINAL_MODEL_LATENCY_SAMPLE_LIMIT:],
+        }
+        owner.context_info[key] = payload
+        if owner is not context:
+            context.context_info[key] = copy.deepcopy(payload)
+        writer = getattr(owner, "write_task_runtime_state", None)
+        if callable(writer):
+            try:
+                writer(self.id(), _TERMINAL_MODEL_LATENCY_KEY, payload)
+            except Exception:
+                pass
+
+    @staticmethod
+    def _record_terminal_checkpoint_metric(
+        context: Context | None,
+        event: str,
+        *,
+        boundary: str | None = None,
+        reason: str | None = None,
+    ) -> None:
+        """Record content-free liveness telemetry for the terminal checkpoint."""
+
+        if context is None or event not in {"offered", "request_started", "request_finished"}:
+            return
+        key = "terminal_checkpoint_metrics"
+        metrics = context.context_info.get(key)
+        if not isinstance(metrics, dict):
+            metrics = {}
+        counter = f"{event}_count"
+        metrics[counter] = int(metrics.get(counter, 0) or 0) + 1
+        metrics["last_event"] = event
+        if boundary in {"initial", "replan"}:
+            metrics["last_boundary"] = boundary
+        if isinstance(reason, str) and reason:
+            metrics["last_reason"] = reason
+        context.context_info[key] = metrics
+
+    def _decision_generation_budget_policy(
+        self,
+        context: Context | None,
+    ) -> GenerationBudgetPolicy | None:
+        """Bound one exclusive execution-decision request before finalization."""
+
+        if context is None:
+            return None
+        timing = self._terminal_checkpoint_episode_timing(context)
+        if timing is None:
+            return None
+        timeout = max(0.1, float(timing["effective_remaining_seconds"]))
+        metrics = context.context_info.get("terminal_checkpoint_metrics")
+        if not isinstance(metrics, dict):
+            metrics = {}
+        metrics["last_effective_timeout_seconds"] = timeout
+        metrics["last_elapsed_seconds"] = timing["elapsed_seconds"]
+        context.context_info["terminal_checkpoint_metrics"] = metrics
+        return GenerationBudgetPolicy(
+            total_timeout_seconds=timeout,
+            stream_idle_timeout_seconds=timeout,
+            active_tool_free_timeout_seconds=None,
+            action_repair_timeout_seconds=None,
+            action_repair_enabled=False,
+        )
+
+    def _terminal_checkpoint_episode_timing(
+        self,
+        context: Context | None,
+    ) -> dict[str, float] | None:
+        """Return remaining time in the one absolute checkpoint episode."""
+
+        if context is None:
+            return None
+        try:
+            from aworld.runners.execution_protocol import (
+                execution_protocol_policy,
+                terminal_checkpoint_episode,
+            )
+
+            episode = terminal_checkpoint_episode(context, self.id())
+            if episode is None:
+                return None
+            protocol_policy = execution_protocol_policy(context, self.id())
+            task = context.get_task()
+            task_remaining = task.remaining_seconds() if task is not None else None
+        except Exception:
+            return None
+        now = _monotonic_now()
+        created = float(episode["created_at_monotonic"])
+        deadline = float(episode["deadline_at_monotonic"])
+        episode_remaining = max(0.0, deadline - now)
+        effective_remaining = episode_remaining
+        if (
+            isinstance(task_remaining, (int, float))
+            and not isinstance(task_remaining, bool)
+            and math.isfinite(float(task_remaining))
+        ):
+            effective_remaining = min(
+                effective_remaining,
+                max(
+                    0.0,
+                    float(task_remaining)
+                    - float(protocol_policy.finalization_reserve_seconds),
+                ),
+            )
+        return {
+            "created_at_monotonic": created,
+            "deadline_at_monotonic": deadline,
+            "elapsed_seconds": max(0.0, now - created),
+            "effective_remaining_seconds": effective_remaining,
+        }
+
+    def _automatic_generation_budget_policy(
+        self,
+        context: Context | None = None,
+    ) -> GenerationBudgetPolicy | None:
+        """Return an armed Skill watchdog without overriding caller policy."""
+        if self._explicit_generation_budget_policy is not None:
+            return None
+        if self._generation_budget_explicit_fields:
+            return None
+        context = context or getattr(self, "context", None)
+        if context is None:
+            return None
+        try:
+            from aworld.runners.execution_protocol import (
+                execution_protocol_control_eligible,
+            )
+
+            protocol_policy = self._resolve_execution_protocol_policy(context)
+            protocol_state = ExecutionProtocolStore(
+                context,
+                self.id(),
+                protocol_policy,
+            ).load()
+        except Exception:
+            return None
+        if not execution_protocol_control_eligible(context, self.id()):
+            return None
+
+        # The caller-owned Task deadline is the only active-generation wall
+        # clock.  A fixed per-turn ceiling makes an armed long-horizon task less
+        # capable than the same task before arming, and is especially harmful
+        # for providers that intentionally spend longer on reasoning.  Keep an
+        # idle watchdog for transport liveness, but otherwise consume at most
+        # the task time that remains before the protocol's finalization reserve.
+        total_timeout = None
+        idle_timeout = None
+        get_task = getattr(context, "get_task", None)
+        try:
+            task = get_task() if callable(get_task) else None
+            remaining_seconds = task.remaining_seconds() if task is not None else None
+            total_seconds = getattr(task, "timeout", None) if task is not None else None
+        except Exception:
+            remaining_seconds = None
+            total_seconds = None
+        if isinstance(remaining_seconds, (int, float)) and not isinstance(
+            remaining_seconds, bool
+        ):
+            generation_reserve = float(protocol_policy.finalization_reserve_seconds)
+            if (
+                protocol_policy.terminal_review_gate_enabled
+                and protocol_state.phase
+                in {ProtocolPhase.EXECUTE, ProtocolPhase.REPAIR}
+                and protocol_state.candidate_decision_count == 0
+                and isinstance(total_seconds, (int, float))
+                and not isinstance(total_seconds, bool)
+                and math.isfinite(float(total_seconds))
+                and float(total_seconds)
+                > float(protocol_policy.candidate_decision_reserve_seconds)
+                + _LONG_HORIZON_DECISION_TIMEOUT_SECONDS
+            ):
+                # Stop an ordinary solve turn at the earlier checkpoint
+                # boundary. The outer recovery loop then begins the exclusive
+                # 45-second decision request while finalization time remains.
+                generation_reserve = max(
+                    generation_reserve,
+                    float(protocol_policy.candidate_decision_reserve_seconds),
+                )
+            available_seconds = max(
+                0.1,
+                float(remaining_seconds) - generation_reserve,
+            )
+            total_timeout = available_seconds
+
+        # Automatic protection follows only the caller deadline. Provider idle
+        # and active-stream ceilings are explicit caller/transport policy: a
+        # framework-fixed value can truncate slow max-reasoning generations.
+        return GenerationBudgetPolicy(
+            total_timeout_seconds=total_timeout,
+            stream_idle_timeout_seconds=idle_timeout,
+            active_tool_free_timeout_seconds=None,
+            action_repair_timeout_seconds=None,
+            action_repair_enabled=False,
+        )
+
+    def _finalization_generation_budget_policy(
+        self,
+        context: Context | None,
+    ) -> GenerationBudgetPolicy | None:
+        """Bound one tool-free finalization turn at the caller reserve."""
+        if context is None:
+            return None
+        try:
+            from aworld.runners.execution_protocol import (
+                execution_protocol_control_eligible,
+            )
+
+            eligible = execution_protocol_control_eligible(context, self.id())
+        except Exception:
+            eligible = False
+        if not eligible:
+            return None
+        timeout = self._remaining_before_completion_reserve(
+            context,
+            cap_seconds=45.0,
+        )
+        return GenerationBudgetPolicy(
+            total_timeout_seconds=timeout,
+            stream_idle_timeout_seconds=timeout,
+            active_tool_free_timeout_seconds=None,
+            action_repair_timeout_seconds=None,
+            action_repair_enabled=False,
+        )
+
+    @staticmethod
+    def _compose_terminal_decision_generation_policy(
+        decision: GenerationBudgetPolicy,
+        caller: GenerationBudgetPolicy | None,
+    ) -> GenerationBudgetPolicy:
+        """Intersect the episode deadline with stricter caller-owned caps."""
+
+        if caller is None:
+            return decision
+
+        def minimum(*values: float | None) -> float | None:
+            finite = [float(value) for value in values if value is not None]
+            return min(finite) if finite else None
+
+        return GenerationBudgetPolicy(
+            total_timeout_seconds=minimum(
+                decision.total_timeout_seconds,
+                caller.total_timeout_seconds,
+            ),
+            stream_idle_timeout_seconds=minimum(
+                decision.stream_idle_timeout_seconds,
+                caller.stream_idle_timeout_seconds,
+            ),
+            active_tool_free_timeout_seconds=caller.active_tool_free_timeout_seconds,
+            action_repair_timeout_seconds=None,
+            action_repair_max_output_tokens=caller.action_repair_max_output_tokens,
+            response_recovery_max_output_tokens=(
+                caller.response_recovery_max_output_tokens
+            ),
+            partial_response_context_chars=caller.partial_response_context_chars,
+            action_repair_enabled=False,
+        )
+
+    def _resolve_generation_budget_policy(
+        self,
+        context: Context | None = None,
+        *,
+        finalization_turn: bool = False,
+        decision_turn: bool = False,
+    ) -> GenerationBudgetPolicy:
+        """Resolve one immutable policy for the complete Agent model turn."""
+        metric_context = context or getattr(self, "context", None)
+
+        def publish(
+            policy: GenerationBudgetPolicy,
+            source: str,
+        ) -> GenerationBudgetPolicy:
+            if metric_context is not None:
+                metric_context.context_info[f"generation_budget_policy:{self.id()}"] = {
+                    "policy_source": source,
+                    "total_timeout_seconds": policy.total_timeout_seconds,
+                    "stream_idle_timeout_seconds": (policy.stream_idle_timeout_seconds),
+                    "active_tool_free_timeout_seconds": (
+                        policy.active_tool_free_timeout_seconds
+                    ),
+                    "action_repair_timeout_seconds": (
+                        policy.action_repair_timeout_seconds
+                    ),
+                    "response_recovery_max_output_tokens": (
+                        policy.response_recovery_max_output_tokens
+                    ),
+                    "action_repair_enabled": policy.action_repair_enabled,
+                }
+            return policy
+
+        llm_config = getattr(self.conf, "llm_config", None)
+        compiler_config = getattr(llm_config, "context_compiler", None)
+
+        def configured(name: str, default: Any) -> Any:
+            if isinstance(compiler_config, dict):
+                return compiler_config.get(name, default)
+            return getattr(compiler_config, name, default)
+
+        def configured_policy() -> GenerationBudgetPolicy:
+            return GenerationBudgetPolicy(
+                total_timeout_seconds=configured(
+                    "generation_total_timeout_seconds", None
+                ),
+                stream_idle_timeout_seconds=configured(
+                    "generation_stream_idle_timeout_seconds", None
+                ),
+                active_tool_free_timeout_seconds=configured(
+                    "generation_active_tool_free_timeout_seconds", None
+                ),
+                action_repair_timeout_seconds=configured(
+                    "generation_action_repair_timeout_seconds", None
+                ),
+                action_repair_max_output_tokens=configured(
+                    "generation_action_repair_max_output_tokens", 1024
+                ),
+                response_recovery_max_output_tokens=configured(
+                    "generation_response_recovery_max_output_tokens", None
+                ),
+                partial_response_context_chars=configured(
+                    "generation_partial_response_context_chars", 8192
+                ),
+                action_repair_enabled=configured(
+                    "generation_action_repair_enabled", False
+                ),
+            )
+
+        if decision_turn:
+            decision = self._decision_generation_budget_policy(context)
+            if decision is not None:
+                caller = self._explicit_generation_budget_policy
+                if caller is None and self._generation_budget_explicit_fields:
+                    caller = configured_policy()
+                composed = self._compose_terminal_decision_generation_policy(
+                    decision,
+                    caller,
+                )
+                if metric_context is not None:
+                    metrics = metric_context.context_info.get(
+                        "terminal_checkpoint_metrics"
+                    )
+                    if not isinstance(metrics, dict):
+                        metrics = {}
+                    metrics["last_effective_timeout_seconds"] = (
+                        composed.total_timeout_seconds
+                    )
+                    metric_context.context_info[
+                        "terminal_checkpoint_metrics"
+                    ] = metrics
+                return publish(composed, "terminal_checkpoint")
+
+        if self._explicit_generation_budget_policy is not None:
+            return publish(self._explicit_generation_budget_policy, "explicit_policy")
+
+        if finalization_turn and not self._generation_budget_explicit_fields:
+            finalization = self._finalization_generation_budget_policy(context)
+            if finalization is not None:
+                return publish(finalization, "long_horizon_finalization")
+
+        automatic = self._automatic_generation_budget_policy(context)
+        if automatic is not None:
+            return publish(automatic, "long_horizon_auto")
+
+        # Generation watchdogs are opt-in. A long reasoning/tool-selection
+        # turn must not be cut short by an implicit budget before the generic
+        # long-horizon protocol has armed for the current task.
+        policy = configured_policy()
+        source = (
+            "explicit_config"
+            if self._generation_budget_explicit_fields
+            else "disabled_default"
+        )
+        return publish(policy, source)
+
+    @staticmethod
+    def _generation_partial_counts(
+        response: ModelResponse | None,
+    ) -> tuple[int, int]:
+        if response is None:
+            return 0, 0
+        content = getattr(response, "content", None)
+        content_chars = len(content) if isinstance(content, str) else 0
+        tool_calls = getattr(response, "tool_calls", None)
+        return content_chars, len(tool_calls) if isinstance(tool_calls, list) else 0
+
+    def _with_generation_partial(
+        self,
+        exc: GenerationBudgetExceeded,
+        *,
+        controller: GenerationBudgetController,
+        response: ModelResponse | None,
+    ) -> GenerationBudgetExceeded:
+        content_chars, tool_call_count = self._generation_partial_counts(response)
+        return GenerationBudgetExceeded(
+            controller.receipt(
+                exc.reason,
+                partial_response_chars=content_chars,
+                tool_call_count=tool_call_count,
+                repair_scheduled=exc.receipt.repair_scheduled,
+            ),
+            partial_response=response,
+            source_exception=exc.source_exception,
+        )
+
+    def _record_generation_budget_exception(
+        self,
+        context: Context | None,
+        exc: GenerationBudgetExceeded,
+    ) -> None:
+        """Best-effort privacy-safe projection onto existing runtime metrics."""
+        if exc.recorded:
+            return
+        exc.recorded = True
+        if context is None:
+            return
+        try:
+            event_manager = getattr(context, "event_manager", None)
+            runtime_context = (
+                getattr(event_manager, "context", None)
+                if event_manager is not None
+                else None
+            ) or context
+            events = runtime_context.context_info.get("generation_budget_events")
+            if not isinstance(events, list):
+                events = []
+            events.append(exc.receipt.to_dict())
+            runtime_context.context_info["generation_budget_events"] = events
+            metric_name = {
+                GenerationStopReason.CALLER_CANCELLED: (
+                    "generation_caller_cancelled_count"
+                ),
+                GenerationStopReason.PROVIDER_TIMEOUT: (
+                    "generation_provider_timeout_count"
+                ),
+                GenerationStopReason.PROVIDER_CANCELLED: (
+                    "generation_provider_cancelled_count"
+                ),
+                GenerationStopReason.STREAM_IDLE_TIMEOUT: (
+                    "generation_stream_idle_timeout_count"
+                ),
+                GenerationStopReason.ACTIVE_STREAM_OVER_BUDGET: (
+                    "generation_active_stream_over_budget_count"
+                ),
+                GenerationStopReason.CALL_DEADLINE_EXCEEDED: (
+                    "generation_call_deadline_exceeded_count"
+                ),
+                GenerationStopReason.ACTION_REPAIR_TIMEOUT: (
+                    "generation_action_repair_timeout_count"
+                ),
+                GenerationStopReason.ACTION_REPAIR_EXHAUSTED: (
+                    "generation_action_repair_exhausted_count"
+                ),
+            }[exc.reason]
+            increment_watchdog_metric(context, metric_name)
+            if exc.receipt.repair_scheduled:
+                increment_watchdog_metric(
+                    context, "generation_action_repair_scheduled_count"
+                )
+        except Exception as record_exc:
+            logger.warning(
+                "Generation budget evidence recording failed; "
+                f"error_type={type(record_exc).__name__}"
+            )
+
+    @staticmethod
+    def _consume_generation_task_result(task: asyncio.Task) -> None:
+        with _GENERATION_TASKS_LOCK:
+            _DETACHED_GENERATION_TASKS.discard(task)
+            _ACTIVE_GENERATION_TASKS.discard(task)
+        try:
+            task.exception()
+        except BaseException:
+            pass
+
+    @staticmethod
+    def _discard_active_generation_task(task: asyncio.Task) -> None:
+        with _GENERATION_TASKS_LOCK:
+            _ACTIVE_GENERATION_TASKS.discard(task)
+        # A task can finish between ``asyncio.wait`` cancellation and the
+        # caller's result retrieval. Always observe its exception here so a
+        # concurrent async-generator close cannot escape as "Task exception
+        # was never retrieved". Reading the exception does not prevent a later
+        # await/result call from seeing it.
+        if task.done():
+            try:
+                task.exception()
+            except BaseException:
+                pass
+
+    @classmethod
+    def _create_generation_task(cls, awaitable) -> asyncio.Task | None:
+        with _GENERATION_TASKS_LOCK:
+            for task in tuple(_ACTIVE_GENERATION_TASKS):
+                if task.done():
+                    _ACTIVE_GENERATION_TASKS.discard(task)
+            capacity = _configured_pending_generation_capacity()
+            if capacity is not None and len(_ACTIVE_GENERATION_TASKS) >= capacity:
+                return None
+            task = asyncio.ensure_future(awaitable)
+            _ACTIVE_GENERATION_TASKS.add(task)
+        task.add_done_callback(cls._discard_active_generation_task)
+        return task
+
+    @classmethod
+    def _detach_generation_task(cls, task: asyncio.Task) -> None:
+        if task.done():
+            cls._consume_generation_task_result(task)
+            return
+        with _GENERATION_TASKS_LOCK:
+            _DETACHED_GENERATION_TASKS.add(task)
+        task.add_done_callback(cls._consume_generation_task_result)
+
+    @classmethod
+    def _cleanup_capacity_available(cls) -> bool:
+        with _GENERATION_TASKS_LOCK:
+            for task in tuple(_ACTIVE_GENERATION_TASKS):
+                if task.done():
+                    _ACTIVE_GENERATION_TASKS.discard(task)
+            capacity = _configured_pending_generation_capacity()
+            return capacity is None or len(_ACTIVE_GENERATION_TASKS) < capacity
+
+    @classmethod
+    async def _cancel_generation_task(cls, task: asyncio.Task) -> None:
+        if _one_shot_process_cleanup_enabled():
+            cls._detach_generation_task(task)
+            return
+        if not task.done():
+            task.cancel()
+        try:
+            done, _ = await asyncio.wait(
+                {task}, timeout=_GENERATION_CLEANUP_GRACE_SECONDS
+            )
+        except BaseException:
+            if not task.done():
+                task.cancel()
+                cls._detach_generation_task(task)
+            raise
+        if task in done:
+            cls._consume_generation_task_result(task)
+            return
+        # A provider coroutine may swallow CancelledError.  Do not let its
+        # cooperative cleanup turn a generation deadline into an unbounded
+        # wait.  A second cancel is best effort; the callback safely consumes
+        # any eventual exception from the detached task.
+        task.cancel()
+        cls._detach_generation_task(task)
+        logger.warning(
+            "Model provider cleanup exceeded its bounded grace period; "
+            "the provider task was detached"
+        )
+
+    @classmethod
+    async def _close_generation_stream(cls, resp_stream) -> None:
+        if _one_shot_process_cleanup_enabled():
+            return
+        close_task: asyncio.Task | None = None
+        try:
+            if getattr(resp_stream, "ag_running", False):
+                # ``aclose`` on a currently-running async generator raises
+                # RuntimeError. Its owner is still responsible for leaving the
+                # iteration; a competing closer must not race it.
+                logger.debug(
+                    "Skipping model stream cleanup because the async generator "
+                    "is still running"
+                )
+                return
+            close = getattr(resp_stream, "aclose", None)
+            if not callable(close):
+                return
+            if not cls._cleanup_capacity_available():
+                logger.warning(
+                    "Skipping model stream cleanup because detached provider "
+                    "cleanup capacity is exhausted"
+                )
+                return
+            close_result = close()
+            if not inspect.isawaitable(close_result):
+                logger.debug("Model stream aclose() returned a non-awaitable result")
+                return
+            close_task = cls._create_generation_task(close_result)
+            if close_task is None:
+                close_awaitable = getattr(close_result, "close", None)
+                if callable(close_awaitable):
+                    close_awaitable()
+                logger.warning(
+                    "Skipping model stream cleanup because detached provider "
+                    "cleanup capacity is exhausted"
+                )
+                return
+            done, _ = await asyncio.wait(
+                {close_task}, timeout=_GENERATION_CLEANUP_GRACE_SECONDS
+            )
+        except asyncio.CancelledError as close_exc:
+            if close_task is not None and not close_task.done():
+                close_task.cancel()
+                cls._detach_generation_task(close_task)
+            current_task = asyncio.current_task()
+            if current_task is not None and current_task.cancelling():
+                raise
+            logger.debug(
+                "Model stream cleanup did not complete normally; "
+                f"error_type={type(close_exc).__name__}"
+            )
+            return
+        except BaseException as close_exc:
+            if close_task is not None and not close_task.done():
+                close_task.cancel()
+                cls._detach_generation_task(close_task)
+            logger.debug(
+                "Model stream cleanup did not complete normally; "
+                f"error_type={type(close_exc).__name__}"
+            )
+            return
+        if close_task in done:
+            try:
+                close_task.result()
+            except BaseException as close_exc:
+                logger.debug(
+                    "Model stream cleanup did not complete normally; "
+                    f"error_type={type(close_exc).__name__}"
+                )
+            return
+        close_task.cancel()
+        cls._detach_generation_task(close_task)
+        logger.warning(
+            "Model stream cleanup exceeded its bounded grace period; "
+            "the cleanup task was detached"
+        )
+
+    @staticmethod
+    def _is_provider_timeout_exception(exc: BaseException) -> bool:
+        timeout_type_names = {
+            "TimeoutError",
+            "TimeoutException",
+            "ReadTimeout",
+            "WriteTimeout",
+            "ConnectTimeout",
+            "PoolTimeout",
+            "APITimeoutError",
+        }
+        return any(cls.__name__ in timeout_type_names for cls in type(exc).__mro__)
+
+    async def _await_generation_operation(
+        self,
+        awaitable,
+        *,
+        controller: GenerationBudgetController,
+        streaming: bool,
+    ):
+        """Await provider work without confusing its timeout with our deadline."""
+        if not self._cleanup_capacity_available():
+            close = getattr(awaitable, "close", None)
+            if callable(close):
+                close()
+            raise AWorldRuntimeException(
+                "Model generation cannot start because detached provider "
+                "cleanup capacity is exhausted"
+            )
+        operation = self._create_generation_task(awaitable)
+        if operation is None:
+            close = getattr(awaitable, "close", None)
+            if callable(close):
+                close()
+            raise AWorldRuntimeException(
+                "Model generation cannot start because detached provider "
+                "cleanup capacity is exhausted"
+            )
+        deadline = controller.next_deadline(streaming=streaming)
+        try:
+            if deadline is None:
+                try:
+                    return await operation
+                except Exception as exc:
+                    if self._is_provider_timeout_exception(exc):
+                        raise GenerationBudgetExceeded(
+                            controller.receipt(GenerationStopReason.PROVIDER_TIMEOUT),
+                            source_exception=exc,
+                        ) from exc
+                    raise
+            else:
+                remaining = max(0.0, deadline.expires_at - controller.now())
+                done, _ = await asyncio.wait({operation}, timeout=remaining)
+            if operation not in done:
+                await self._cancel_generation_task(operation)
+                raise GenerationBudgetExceeded(controller.receipt(deadline.reason))
+            try:
+                return operation.result()
+            except Exception as exc:
+                if self._is_provider_timeout_exception(exc):
+                    raise GenerationBudgetExceeded(
+                        controller.receipt(GenerationStopReason.PROVIDER_TIMEOUT),
+                        source_exception=exc,
+                    ) from exc
+                raise
+        except asyncio.CancelledError:
+            current_task = asyncio.current_task()
+            if (
+                operation.done()
+                and operation.cancelled()
+                and not (current_task and current_task.cancelling())
+            ):
+                raise GenerationBudgetExceeded(
+                    controller.receipt(GenerationStopReason.PROVIDER_CANCELLED)
+                ) from None
+            await self._cancel_generation_task(operation)
+            raise
+
+    async def _consume_model_stream(
+        self,
+        *,
+        messages: List[Dict[str, Any]],
+        message: Message,
+        tools: List[Dict[str, Any]] | None,
+        float_temperature: float,
+        prompt_tokens_est: int,
+        controller: GenerationBudgetController,
+        request_kwargs: Dict[str, Any],
+    ) -> ModelResponse:
+        """Consume one stream while retaining the existing output surfaces."""
+        llm_response = ModelResponse(id="", model="", content="", tool_calls=[])
+        provider_kwargs = {
+            key: value for key, value in request_kwargs.items() if key != "stream"
+        }
+        resp_stream = acall_llm_model_stream(
+            self.llm,
+            messages=messages,
+            temperature=float_temperature,
+            tools=tools,
+            stream=True,
+            context=message.context,
+            **provider_kwargs,
+        )
+        controller.begin_stream(action_available=bool(tools))
+        stream_iterator = resp_stream.__aiter__()
+        try:
+            while True:
+                try:
+                    chunk = await self._await_generation_operation(
+                        stream_iterator.__anext__(),
+                        controller=controller,
+                        streaming=True,
+                    )
+                except StopAsyncIteration:
+                    break
+                except GenerationBudgetExceeded as exc:
+                    raise self._with_generation_partial(
+                        exc, controller=controller, response=llm_response
+                    ) from exc
+
+                tool_progress = bool(getattr(chunk, "tool_call_progress", False))
+                meaningful_progress = bool(
+                    chunk.content
+                    or chunk.reasoning_content
+                    or chunk.tool_calls
+                    or tool_progress
+                )
+                if meaningful_progress:
+                    controller.observe_stream_activity(
+                        meaningful_content_observed=True,
+                        tool_call_observed=bool(chunk.tool_calls) or tool_progress,
+                    )
+                if chunk.is_tool_progress_only:
+                    continue
+
+                if chunk.content:
+                    llm_response.content += chunk.content
+                if chunk.reasoning_content:
+                    llm_response.reasoning_content = (
+                        llm_response.reasoning_content or ""
+                    ) + chunk.reasoning_content
+                if chunk.tool_calls:
+                    for tc in chunk.tool_calls:
+                        if (
+                            tc.function is not None
+                            and tc.function.name == "unknown"
+                            and llm_response.tool_calls
+                        ):
+                            last = llm_response.tool_calls[-1]
+                            if last.function is not None:
+                                last.function.arguments = (
+                                    last.function.arguments or ""
+                                ) + (tc.function.arguments or "")
+                        else:
+                            llm_response.tool_calls.append(tc)
+                if chunk.finish_reason is not None:
+                    llm_response.finish_reason = chunk.finish_reason
+                if chunk.error:
+                    llm_response.error = chunk.error
+                llm_response.id = chunk.id
+                llm_response.model = chunk.model
+                llm_response.usage = nest_dict_counter(
+                    {} if chunk.usage_is_cumulative else llm_response.usage,
+                    chunk.usage,
+                    ignore_zero=False,
+                )
+                if getattr(chunk, "usage_reported", False) is True:
+                    llm_response.usage_reported = True
+                chunk_raw_usage = getattr(chunk, "raw_usage", None)
+                if isinstance(chunk_raw_usage, dict) and chunk_raw_usage:
+                    llm_response.raw_usage = nest_dict_counter(
+                        llm_response.raw_usage or {},
+                        chunk_raw_usage,
+                        ignore_zero=False,
+                    )
+                if isinstance(chunk.message, dict):
+                    llm_response.message.update(chunk.message)
+                if llm_response.tool_calls:
+                    llm_response.message["tool_calls"] = [
+                        tc.to_dict() for tc in llm_response.tool_calls
+                    ]
+                await send_message(
+                    ChunkMessage(
+                        payload=chunk,
+                        source_type="llm",
+                        session_id=message.context.session_id,
+                        headers=message.headers,
+                    )
+                )
+                task = message.context.get_task() if message.context else None
+                if (
+                    task
+                    and hasattr(task, "outputs")
+                    and hasattr(task.outputs, "add_output")
+                ):
+                    from aworld.output.base import ChunkOutput
+
+                    usage = llm_response.usage or {}
+                    output_tokens = usage.get("completion_tokens")
+                    output_estimated = False
+                    if output_tokens is None or output_tokens == 0:
+                        output_tokens = max(0, len(llm_response.content or "") // 4)
+                        output_estimated = True
+                    input_tokens = usage.get("prompt_tokens")
+                    input_estimated = False
+                    if input_tokens is None or input_tokens == 0:
+                        input_tokens = prompt_tokens_est
+                        input_estimated = True
+                    tool_call_count = len(llm_response.tool_calls or [])
+                    tool_call_content_length = sum(
+                        len(
+                            getattr(getattr(tc, "function", None), "arguments", None)
+                            or ""
+                        )
+                        for tc in llm_response.tool_calls or []
+                    )
+                    metadata = {
+                        "output_tokens": output_tokens,
+                        "input_tokens": input_tokens,
+                        "tool_calls_count": tool_call_count,
+                        "tool_calls_content_length": tool_call_content_length,
+                        "output_tokens_estimated": output_estimated,
+                        "input_tokens_estimated": input_estimated,
+                        "tool_calls_count_estimated": True,
+                        "tool_calls_content_estimated": True,
+                        "agent_id": self.id(),
+                        "agent_name": self.name(),
+                        "model_name": getattr(chunk, "model", None)
+                        or getattr(llm_response, "model", None)
+                        or self.model_name,
+                    }
+                    await task.outputs.add_output(
+                        ChunkOutput(data=chunk, metadata=metadata)
+                    )
+            require_terminal_reason = os.environ.get(
+                "AWORLD_REQUIRE_STREAM_FINISH_REASON", ""
+            ).strip().lower() in {"1", "true", "yes", "on"}
+            if require_terminal_reason:
+                llm_response.message["aworld_stream_terminal_observed"] = (
+                    llm_response.finish_reason is not None
+                )
+            return llm_response
+        except asyncio.CancelledError:
+            controller.cancelled_partial_response = llm_response
+            raise
+        finally:
+            await self._close_generation_stream(resp_stream)
+
+    @staticmethod
+    def _incomplete_model_response_reason(response: ModelResponse | None) -> str | None:
+        if response is None:
+            return None
+        response_message = (
+            response.message if isinstance(response.message, dict) else {}
+        )
+        if response_message.get("aworld_stream_terminal_observed") is False:
+            return "model_stream_ended_without_finish_reason"
+        if (
+            not response.tool_calls
+            and not str(response.content or "").strip()
+            and response.reasoning_content
+        ):
+            # A length stop explains why generation ended, but the actionable
+            # failure mode is that no model action was emitted after the
+            # reasoning channel consumed the allowance.  Classify that shape
+            # before the generic truncation case so recovery can be observed
+            # and tuned without mistaking hidden reasoning for partial prose.
+            return "reasoning_only_response"
+        if response.finish_reason in {"length", "max_tokens", "max_output_tokens"}:
+            return "model_output_truncated"
+        if response.finish_reason in {"content_filter", "error", "cancelled"}:
+            return "model_output_interrupted"
+        ids = set()
+        for call in response.tool_calls or []:
+            function = getattr(call, "function", None)
+            call_id = getattr(call, "id", None)
+            if not call_id or call_id in ids or not function or not function.name:
+                return "malformed_tool_call_batch"
+            ids.add(call_id)
+            try:
+                arguments = json.loads(function.arguments)
+            except (TypeError, ValueError):
+                return "incomplete_tool_arguments"
+            if not isinstance(arguments, dict):
+                return "invalid_tool_arguments"
+        if response.tool_calls:
+            return None
+        if not str(response.content or "").strip():
+            return (
+                "reasoning_only_response"
+                if response.reasoning_content
+                else "empty_model_response"
+            )
+        return None
+
+    def _artifact_media_attempt_count(self, context: Context | None) -> int:
+        if context is None:
+            return 0
+        from aworld.sandbox.artifact_observation import (
+            artifact_projection_attempt_count,
+        )
+
+        try:
+            return artifact_projection_attempt_count(
+                context,
+                agent_id=self.id(),
+            )
+        except Exception:
+            return 0
+
+    def _record_artifact_media_recovery(
+        self,
+        context: Context | None,
+        *,
+        status: str,
+        recovery_failure_reason: str | None = None,
+    ) -> None:
+        context_info = getattr(context, "context_info", None)
+        if not hasattr(context_info, "__setitem__"):
+            return
+        diagnostic = {
+            "schema_version": _ARTIFACT_MEDIA_RECOVERY_SCHEMA,
+            "status": status,
+            "reason": "empty_model_response_after_artifact_media",
+        }
+        if recovery_failure_reason is not None:
+            diagnostic["recovery_failure_reason"] = recovery_failure_reason
+        context_info[f"artifact_media_recovery:{self.id()}"] = diagnostic
+
+    @staticmethod
+    def _tool_surface_rejection_codes(
+        response: ModelResponse | None,
+        surface: ModelToolCallSurface,
+    ) -> tuple[ToolCallParseIssueCode, ...]:
+        result = []
+        for call in getattr(response, "tool_calls", None) or ():
+            function = getattr(call, "function", None)
+            name = getattr(function, "name", None)
+            rejection = (
+                surface.rejection_code(name)
+                if isinstance(name, str)
+                else ToolCallParseIssueCode.TOOL_NOT_IN_LIVE_SURFACE
+            )
+            if rejection is not None:
+                result.append(rejection)
+        return tuple(result)
+
+    def _artifact_media_recovery_exhausted_response(
+        self,
+        *,
+        context: Context | None,
+        response: ModelResponse | None,
+        recovery_failure_reason: str,
+        recovery_context: str,
+    ) -> ModelResponse:
+        from aworld.core.context.execution_state import (
+            ARTIFACT_MEDIA_RECOVERY_EXHAUSTED_REASON,
+            record_execution_state,
+        )
+
+        self._record_artifact_media_recovery(
+            context,
+            status="recovery_exhausted",
+            recovery_failure_reason=recovery_failure_reason,
+        )
+        record_execution_state(
+            context,
+            self.id(),
+            "incomplete",
+            ARTIFACT_MEDIA_RECOVERY_EXHAUSTED_REASON,
+            recoverable=False,
+        )
+        self._store_model_response_recovery_context(
+            context,
+            reason=ARTIFACT_MEDIA_RECOVERY_EXHAUSTED_REASON,
+            content=recovery_context,
+        )
+        return self._incomplete_model_response(
+            response,
+            ARTIFACT_MEDIA_RECOVERY_EXHAUSTED_REASON,
+            recoverable=False,
+        )
+
+    @staticmethod
+    def _incomplete_model_response(
+        response: ModelResponse | None,
+        reason: str,
+        *,
+        recoverable: bool = True,
+    ) -> ModelResponse:
+        # Preserve usage/finish metadata for diagnostics; discard executable and
+        # unfinished prose rather than presenting a truncated plan as completion.
+        result = (
+            copy.copy(response)
+            if response is not None
+            else ModelResponse(id="", model="")
+        )
+        result.content = (
+            "Work remains incomplete after bounded model-response recovery ("
+            + reason
+            + "). Progress is retained for continuation."
+        )
+        result.tool_calls = []
+        result.message = {
+            "role": "assistant",
+            "content": result.content,
+            "aworld_incomplete_reason": reason,
+            "aworld_recoverable": recoverable,
+        }
+        return result
+
+    @staticmethod
+    def _context_overflow_response(messages: List[Dict[str, Any]]) -> ModelResponse:
+        """Preserve the latest model text without misreporting user cancellation."""
+
+        content = next(
+            (
+                item.get("content", "").strip()
+                for item in reversed(messages)
+                if isinstance(item, dict)
+                and item.get("role") == "assistant"
+                and isinstance(item.get("content"), str)
+                and item.get("content", "").strip()
+            ),
+            "The context window was exhausted before another model response could be produced.",
+        )
+        return ModelResponse(
+            id=uuid.uuid4().hex,
+            model="",
+            content=content,
+            finish_reason="error",
+            message={
+                "role": "assistant",
+                "content": content,
+                "aworld_incomplete_reason": "context_window_exceeded",
+                "aworld_recoverable": False,
+            },
+        )
+
+    @staticmethod
+    def _bounded_partial_for_repair(content: str, *, limit: int) -> str:
+        if len(content) <= limit:
+            return content
+        marker = "[Earlier partial response omitted by the runtime action budget.]\n"
+        if limit <= len(marker):
+            return content[-limit:]
+        return marker + content[-(limit - len(marker)) :]
+
+    @classmethod
+    def _bounded_working_context_for_repair(
+        cls,
+        content: str,
+        *,
+        limit: int,
+    ) -> str:
+        """Bound the complete retained-context message, including its label."""
+
+        if limit <= 0:
+            return ""
+        label = (
+            "[Retained incomplete model working context; not a final answer "
+            "or executable action.]\n"
+        )
+        if limit <= len(label):
+            return content[-limit:]
+        return label + cls._bounded_partial_for_repair(
+            content,
+            limit=limit - len(label),
+        )
+
+    def _build_action_repair_messages(
+        self,
+        *,
+        messages: List[Dict[str, Any]],
+        partial_response: ModelResponse | None,
+        policy: GenerationBudgetPolicy,
+    ) -> List[Dict[str, Any]]:
+        continuation = copy.deepcopy(messages)
+        partial_content = next(
+            (
+                value
+                for value in (
+                    getattr(partial_response, "reasoning_content", None),
+                    getattr(partial_response, "content", None),
+                )
+                if isinstance(value, str) and value
+            ),
+            None,
+        )
+        if isinstance(partial_content, str) and partial_content:
+            retained = self._bounded_working_context_for_repair(
+                partial_content,
+                limit=policy.partial_response_context_chars,
+            )
+            continuation.append(
+                {
+                    "role": "assistant",
+                    "content": retained,
+                }
+            )
+        continuation.append(
+            {
+                "role": "user",
+                "content": (
+                    "Runtime action budget reached. Do not expand or repeat the "
+                    "analysis. Continue from the partial response and take the "
+                    "next concrete action now by calling an available tool. If "
+                    "no tool is actually required, return only the concise final "
+                    "answer."
+                ),
+            }
+        )
+        return continuation
+
+    async def _invoke_action_budget_repair(
+        self,
+        *,
+        messages: List[Dict[str, Any]],
+        message: Message,
+        tools: List[Dict[str, Any]],
+        float_temperature: float,
+        controller: GenerationBudgetController,
+        request_kwargs: Dict[str, Any],
+    ) -> ModelResponse:
+        policy = controller.policy
+        repair_kwargs = dict(request_kwargs)
+        configured_max = repair_kwargs.get("max_tokens")
+        if isinstance(configured_max, int) and not isinstance(configured_max, bool):
+            repair_kwargs["max_tokens"] = min(
+                configured_max, policy.action_repair_max_output_tokens
+            )
+        elif isinstance(
+            repair_kwargs.get("max_completion_tokens"), int
+        ) and not isinstance(repair_kwargs.get("max_completion_tokens"), bool):
+            repair_kwargs["max_completion_tokens"] = min(
+                repair_kwargs["max_completion_tokens"],
+                policy.action_repair_max_output_tokens,
+            )
+        else:
+            repair_kwargs["max_tokens"] = policy.action_repair_max_output_tokens
+        repair_kwargs["stream"] = True
+        prompt_tokens_est = 0
+        try:
+            breakdown = ModelUtils.calculate_token_breakdown(
+                messages, self.model_name or "gpt-4o"
+            )
+            prompt_tokens_est = breakdown.get("total", 0) or 0
+        except Exception:
+            pass
+        try:
+            response = await self._consume_model_stream(
+                messages=messages,
+                message=message,
+                tools=tools,
+                float_temperature=float_temperature,
+                prompt_tokens_est=prompt_tokens_est,
+                controller=controller,
+                request_kwargs=repair_kwargs,
+            )
+        except GenerationBudgetExceeded as exc:
+            self._record_generation_budget_exception(message.context, exc)
+            raise
+        incomplete_reason = self._incomplete_model_response_reason(response)
+        if incomplete_reason:
+            content_chars, tool_call_count = self._generation_partial_counts(response)
+            exhausted = GenerationBudgetExceeded(
+                controller.receipt(
+                    GenerationStopReason.ACTION_REPAIR_EXHAUSTED,
+                    partial_response_chars=content_chars,
+                    tool_call_count=tool_call_count,
+                ),
+                partial_response=response,
+            )
+            self._record_generation_budget_exception(message.context, exhausted)
+            raise exhausted
+        if response and (
+            response.content or response.tool_calls or response.reasoning_content
+        ):
+            increment_watchdog_metric(
+                message.context, "generation_action_repair_completed_count"
+            )
+            usage_process(response.usage, message.context)
+            return response
+        exhausted = GenerationBudgetExceeded(
+            controller.receipt(GenerationStopReason.ACTION_REPAIR_EXHAUSTED),
+            partial_response=response,
+        )
+        self._record_generation_budget_exception(message.context, exhausted)
+        raise exhausted
+
+    async def invoke_model(
+        self, messages: List[Dict[str, str]] = [], message: Message = None, **kwargs
+    ) -> ModelResponse:
+        """Run one LLM turn under typed, composable generation deadlines."""
+        finalization_turn = bool(kwargs.pop("_long_horizon_finalization_turn", False))
+        decision_turn = bool(kwargs.pop("_long_horizon_decision_turn", False))
+        controller = GenerationBudgetController(
+            self._resolve_generation_budget_policy(
+                message.context if message is not None else None,
+                finalization_turn=finalization_turn,
+                decision_turn=decision_turn,
+            )
+        )
+        try:
+            return await self._invoke_model_with_retries(
+                messages=messages,
+                message=message,
+                _generation_budget_controller=controller,
+                **kwargs,
+            )
+        except GenerationBudgetExceeded as exc:
+            self._record_generation_budget_exception(
+                message.context if message is not None else None, exc
+            )
+            raise
+        except asyncio.CancelledError:
+            context = message.context if message is not None else None
+            partial = controller.cancelled_partial_response
+            content_chars, tool_call_count = self._generation_partial_counts(partial)
+            cancelled = GenerationBudgetExceeded(
+                controller.receipt(
+                    GenerationStopReason.CALLER_CANCELLED,
+                    partial_response_chars=content_chars,
+                    tool_call_count=tool_call_count,
+                ),
+                partial_response=partial,
+            )
+            self._record_generation_budget_exception(context, cancelled)
+            raise
+
+    async def _invoke_model_with_retries(
+        self, messages: List[Dict[str, str]] = [], message: Message = None, **kwargs
+    ) -> ModelResponse:
+        """Perform LLM call with retry mechanism.
+
+        Args:
+            messages: LLM model input messages.
+            message: Event message.
+            **kwargs: Other parameters
+
+        Returns:
+            LLM response
+        """
+        llm_response = None
+        context = message.context if message else None
+        failure_output_sent = False
+        execution_state_resolution_mode = kwargs.pop(
+            "_execution_state_resolution_mode", "ordinary"
+        )
+        model_response_recovery_turn = bool(
+            kwargs.pop("_model_response_recovery_turn", False)
+        )
+        controller = kwargs.pop("_generation_budget_controller", None)
+        if not isinstance(controller, GenerationBudgetController):
+            controller = GenerationBudgetController(
+                self._resolve_generation_budget_policy(context)
+            )
+
+        # Prepare parameters once before retry loop
+        try:
+            tools = kwargs.pop("prepared_tools", _PREPARED_TOOLS_UNSET)
+            if tools is _PREPARED_TOOLS_UNSET:
+                tools = await self._await_generation_operation(
+                    self._filter_tools(message.context),
+                    controller=controller,
+                    streaming=False,
+                )
+            if not tools:
+                # Some model must be clearly defined as None
+                tools = None
+            if model_response_recovery_turn and tools:
+                kwargs = self._model_response_action_projection_kwargs(
+                    kwargs,
+                    max_output_tokens=self._model_response_action_projection_output_cap(
+                        controller.policy
+                    ),
+                    context=context,
+                )
+                if tools:
+                    kwargs["tool_choice"] = "required"
+            self._log_messages(messages, tools=tools, context=message.context)
+
+            stream_mode = (
+                kwargs.get("stream", False) or self.conf.llm_config.llm_stream_call
+                if self.conf.llm_config
+                else False
+            )
+            float_temperature = float(self.conf.llm_config.llm_temperature)
+
+            # Retry loop for LLM call
+            attempt = 1
+            last_exception = None
+            incomplete_action_recovery_attempted = False
+            artifact_media_empty_recovery_attempted = False
+            # Track if stream_mode failed and we need to fallback to non_stream_mode
+            stream_failed_fallback = False
+
+            while attempt <= self.llm_max_attempts:
+                provider_resolution_observation = None
+                if (
+                    context is not None
+                    and execution_state_resolution_mode == "ordinary"
+                ):
+                    from aworld.core.context.execution_state import (
+                        execution_resolution_observation,
+                    )
+
+                    provider_resolution_observation = (
+                        execution_resolution_observation(context, self.id())
+                    )
+                try:
+                    logger.info(
+                        f"🔄 Attempt {attempt}/{self.llm_max_attempts} for LLM call"
+                    )
+
+                    if attempt > 1 and context is not None:
+                        schedule_turn_cause = getattr(
+                            context, "schedule_turn_cause", None
+                        )
+                        if callable(schedule_turn_cause):
+                            try:
+                                schedule_turn_cause(
+                                    TurnCauseCode.FRAMEWORK_RETRY,
+                                    evidence_hash=canonical_json_hash(
+                                        {
+                                            "retry_attempt": attempt,
+                                            "maximum_attempts": self.llm_max_attempts,
+                                        }
+                                    ),
+                                )
+                            except Exception as exc:
+                                logger.warning(
+                                    "Failed to type LLM retry turn; "
+                                    f"error_type={type(exc).__name__}"
+                                )
+
+                    # Use non_stream_mode if stream_mode failed in previous attempt
+                    current_stream_mode = stream_mode and not stream_failed_fallback
+
+                    if stream_failed_fallback:
+                        logger.info(
+                            f"🔀 Using non-stream mode for attempt {attempt}/{self.llm_max_attempts} due to previous stream failure"
+                        )
+
+                    artifact_media_attempt_count = (
+                        self._artifact_media_attempt_count(context)
+                    )
+                    tool_call_surface = self._model_tool_call_surface(
+                        tools,
+                        context,
+                    )
+                    if current_stream_mode:
+                        # Pre-calc prompt tokens for display (API often does not return in stream chunks)
+                        prompt_tokens_est = 0
+                        try:
+                            breakdown = ModelUtils.calculate_token_breakdown(
+                                messages, self.model_name or "gpt-4o"
+                            )
+                            prompt_tokens_est = breakdown.get("total", 0) or 0
+                        except Exception:
+                            pass
+                        llm_response = await self._consume_model_stream(
+                            messages=messages,
+                            message=message,
+                            tools=tools,
+                            float_temperature=float_temperature,
+                            prompt_tokens_est=prompt_tokens_est,
+                            controller=controller,
+                            request_kwargs=kwargs,
+                        )
+                    else:
+                        # Remove stream-only kwargs to avoid leaking stale stream options into fallback calls.
+                        non_stream_kwargs = {
+                            k: v
+                            for k, v in kwargs.items()
+                            if k not in {"stream", "stream_options"}
+                        }
+                        logger.info(
+                            "🔀 Using non-stream mode with the shared generation deadline"
+                        )
+                        llm_response = await self._await_generation_operation(
+                            acall_llm_model(
+                                self.llm,
+                                messages=messages,
+                                temperature=float_temperature,
+                                tools=tools,
+                                stream=False,
+                                context=message.context,
+                                **non_stream_kwargs,
+                            ),
+                            controller=controller,
+                            streaming=False,
+                        )
+
+                    artifact_media_projected = (
+                        self._artifact_media_attempt_count(context)
+                        > artifact_media_attempt_count
+                    )
+                    parser_args = kwargs.get("response_parse_args")
+                    if isinstance(parser_args, dict):
+                        parser_args["tool_call_surface"] = tool_call_surface
+                    surface_rejection_codes = (
+                        self._tool_surface_rejection_codes(
+                            llm_response,
+                            tool_call_surface,
+                        )
+                    )
+                    if (
+                        artifact_media_empty_recovery_attempted
+                        and ToolCallParseIssueCode.MEDIA_CAPABILITY_UNAVAILABLE
+                        in surface_rejection_codes
+                    ):
+                        if llm_response:
+                            usage_process(llm_response.usage, message.context)
+                        return self._artifact_media_recovery_exhausted_response(
+                            context=context,
+                            response=llm_response,
+                            recovery_failure_reason=(
+                                "media_capability_unavailable_tool_call"
+                            ),
+                            recovery_context=(
+                                "Text-only artifact media recovery returned a "
+                                "Tool call outside its immutable live surface."
+                            ),
+                        )
+                    # A non-empty provider response is not necessarily a completed
+                    # action. In particular length-stop batches must be discarded
+                    # atomically even if an early call happens to be valid JSON.
+                    incomplete_reason = self._incomplete_model_response_reason(
+                        llm_response
+                    )
+                    if llm_response is None and (
+                        artifact_media_projected
+                        or artifact_media_empty_recovery_attempted
+                    ):
+                        incomplete_reason = "empty_model_response"
+                    if incomplete_reason:
+                        if llm_response:
+                            usage_process(llm_response.usage, message.context)
+                        from aworld.core.context.execution_state import (
+                            ARTIFACT_MEDIA_RECOVERY_EXHAUSTED_REASON,
+                            record_execution_state,
+                        )
+
+                        media_empty_response = bool(
+                            incomplete_reason == "empty_model_response"
+                            and artifact_media_projected
+                        )
+                        media_recovery_failed = (
+                            artifact_media_empty_recovery_attempted
+                        )
+                        recorded_reason = (
+                            ARTIFACT_MEDIA_RECOVERY_EXHAUSTED_REASON
+                            if media_recovery_failed
+                            else incomplete_reason
+                        )
+                        record_execution_state(
+                            context, self.id(), "incomplete", recorded_reason
+                        )
+                        recovery_context = (
+                            self._bounded_model_response_recovery_context(
+                                llm_response,
+                                limit=controller.policy.partial_response_context_chars,
+                            )
+                        )
+                        if (
+                            attempt < self.llm_max_attempts
+                            and not incomplete_action_recovery_attempted
+                        ):
+                            incomplete_action_recovery_attempted = True
+                            if media_empty_response:
+                                artifact_media_empty_recovery_attempted = True
+                                self._record_artifact_media_recovery(
+                                    context,
+                                    status="text_only_recovery",
+                                )
+                                tools = self._without_artifact_observation_tools(
+                                    tools
+                                )
+                                if not tools:
+                                    tools = None
+                                kwargs = dict(kwargs)
+                                kwargs["_aworld_artifact_vision_enabled"] = False
+                                if tools is None:
+                                    kwargs.pop("tool_choice", None)
+                            attempt += 1
+                            capsule_limit = min(
+                                32_768,
+                                max(
+                                    8_192,
+                                    controller.policy.partial_response_context_chars
+                                    * 3,
+                                ),
+                            )
+                            messages = self._bounded_action_recovery_messages(
+                                messages,
+                                recovery_context=recovery_context,
+                                limit=capsule_limit,
+                            )
+                            recovery_instruction = (
+                                "Return one complete, minimal Tool call that "
+                                "advances the task. If a concrete deliverable "
+                                "and its core format are already known, create "
+                                "or update an inspectable candidate now."
+                                + self._staged_action_recovery_guidance(
+                                    incomplete_reason,
+                                    repeated=(
+                                        model_response_recovery_turn
+                                        or self._model_response_recovery_continuations(
+                                            context
+                                        )
+                                        > 0
+                                    ),
+                                )
+                                if tools
+                                else (
+                                    "No Tools are available in this recovery "
+                                    "turn. Return only the concise, accurate "
+                                    "final answer; do not request a Tool call."
+                                )
+                            )
+                            messages.append(
+                                {
+                                    "role": "user",
+                                    "content": (
+                                        "Runtime response recovery: the previous model response was "
+                                        + incomplete_reason
+                                        + ". No tool calls from that response were executed. "
+                                        "Continue from the retained working context without recomputing "
+                                        "it. "
+                                        + recovery_instruction
+                                        + " Provide a final answer only when "
+                                        "the task is actually complete."
+                                    ),
+                                }
+                            )
+                            if tools:
+                                # This retry is an action projection of reasoning
+                                # the model already performed, not another open-
+                                # ended planning turn. Requiring one declared Tool
+                                # call prevents max-reasoning models from spending
+                                # the entire continuation on a second prose-only
+                                # analysis. Ordinary recovery preserves the
+                                # caller's output allowance; only an explicitly
+                                # enabled action-repair policy may apply its
+                                # configured output cap.
+                                kwargs = dict(kwargs)
+                                kwargs["tool_choice"] = "required"
+                                kwargs = (
+                                    self._model_response_action_projection_kwargs(
+                                        kwargs,
+                                        max_output_tokens=self._model_response_action_projection_output_cap(
+                                            controller.policy
+                                        ),
+                                        context=context,
+                                    )
+                                )
+                            continue
+                        if media_recovery_failed:
+                            return (
+                                self._artifact_media_recovery_exhausted_response(
+                                    context=context,
+                                    response=llm_response,
+                                    recovery_failure_reason=incomplete_reason,
+                                    recovery_context=recovery_context,
+                                )
+                            )
+                        record_execution_state(
+                            context,
+                            self.id(),
+                            "incomplete",
+                            incomplete_reason,
+                            recoverable=True,
+                        )
+                        self._store_model_response_recovery_context(
+                            context,
+                            reason=incomplete_reason,
+                            content=recovery_context,
+                        )
+                        return self._incomplete_model_response(
+                            llm_response, incomplete_reason
+                        )
+                    from aworld.core.context.execution_state import (
+                        execution_resolution_observation,
+                        record_execution_resolution,
+                        record_execution_state,
+                    )
+
+                    if (
+                        incomplete_action_recovery_attempted
+                        and context is not None
+                        and llm_response is not None
+                        and not surface_rejection_codes
+                        and (llm_response.tool_calls or llm_response.content)
+                    ):
+                        # The blocker was created by an incomplete provider
+                        # response earlier in this same bounded request.  A
+                        # complete internal retry is causal evidence that this
+                        # model-response blocker recovered, including on an
+                        # execution-checkpoint control turn.  Do not leave the
+                        # stale blocker for _async_policy_once to misclassify
+                        # the recovered decision as unavailable.
+                        observation = execution_resolution_observation(
+                            context, self.id()
+                        )
+                        record_execution_resolution(
+                            context,
+                            self.id(),
+                            evidence_kind=(
+                                "complete_provider_tool_action"
+                                if llm_response.tool_calls
+                                else "complete_provider_final_action"
+                            ),
+                            status="running",
+                            reason="model_response_recovered",
+                            observation=observation,
+                        )
+                    elif surface_rejection_codes:
+                        # The parser will emit the stable typed rejection and
+                        # preserve its existing validation-feedback behavior.
+                        # A call outside this request's immutable surface cannot
+                        # resolve an earlier model-response blocker.
+                        pass
+                    elif (
+                        context is not None
+                        and execution_state_resolution_mode == "ordinary"
+                        and llm_response
+                        and (llm_response.tool_calls or llm_response.content)
+                    ):
+                        record_execution_resolution(
+                            context,
+                            self.id(),
+                            evidence_kind=(
+                                "complete_provider_tool_action"
+                                if llm_response.tool_calls
+                                else "complete_provider_final_action"
+                            ),
+                            status="running",
+                            reason="model_response_accepted",
+                            observation=provider_resolution_observation,
+                        )
+                    else:
+                        record_execution_state(
+                            context,
+                            self.id(),
+                            "running",
+                            "model_response_accepted",
+                        )
+                    # Check if we got a valid response
+                    if llm_response and (
+                        llm_response.content
+                        or llm_response.tool_calls
+                        or llm_response.reasoning_content
+                    ):
+                        logger.info(
+                            "LLM Execute response summary: "
+                            + json.dumps(
+                                summarize_llm_payload_for_log(llm_response),
+                                sort_keys=True,
+                            )
+                        )
+                        if llm_response:
+                            usage_process(llm_response.usage, message.context)
+                        self._clear_model_response_recovery_context(context)
+                        return llm_response
+                    else:
+                        await self._raise_if_task_interrupted(
+                            context,
+                            reason="LLM stream interrupted before any final response was assembled",
+                        )
+                        # Invalid response, treat as failure
+                        error_msg = (
+                            f"LLM returned empty or invalid response: {llm_response}"
+                        )
+                        logger.warning(
+                            f"⚠️[attempt {attempt}/{self.llm_max_attempts}] {error_msg}"
+                        )
+                        if attempt < self.llm_max_attempts:
+                            attempt += 1
+                            await self._await_generation_operation(
+                                asyncio.sleep(self.llm_retry_delay),
+                                controller=controller,
+                                streaming=False,
+                            )
+                            continue
+                        else:
+                            raise AWorldRuntimeException(error_msg)
+
+                except Exception as e:
+                    if isinstance(e, GenerationBudgetExceeded):
+                        can_repair = (
+                            e.reason is GenerationStopReason.ACTIVE_STREAM_OVER_BUDGET
+                            and controller.phase is GenerationPhase.PRIMARY
+                            and bool(tools)
+                            and not controller.repair_attempted
+                            and controller.policy.action_repair_enabled
+                        )
+                        if can_repair:
+                            scheduled = GenerationBudgetExceeded(
+                                replace(
+                                    e.receipt,
+                                    repair_attempted=True,
+                                    repair_scheduled=True,
+                                ),
+                                partial_response=e.partial_response,
+                                source_exception=e.source_exception,
+                            )
+                            self._record_generation_budget_exception(context, scheduled)
+                            if not controller.begin_action_repair():
+                                raise e
+                            schedule_turn_cause = getattr(
+                                context, "schedule_turn_cause", None
+                            )
+                            if callable(schedule_turn_cause):
+                                try:
+                                    schedule_turn_cause(
+                                        TurnCauseCode.ACTION_BUDGET_REPAIR,
+                                        evidence_hash=canonical_json_hash(
+                                            scheduled.receipt.to_dict()
+                                        ),
+                                    )
+                                except Exception as schedule_exc:
+                                    logger.warning(
+                                        "Failed to type action-budget repair turn; "
+                                        f"error_type={type(schedule_exc).__name__}"
+                                    )
+                            repair_messages = self._build_action_repair_messages(
+                                messages=messages,
+                                partial_response=e.partial_response,
+                                policy=controller.policy,
+                            )
+                            return await self._invoke_action_budget_repair(
+                                messages=repair_messages,
+                                message=message,
+                                tools=tools,
+                                float_temperature=float_temperature,
+                                controller=controller,
+                                request_kwargs=kwargs,
+                            )
+                        self._record_generation_budget_exception(context, e)
+
+                    await self._raise_if_task_interrupted(
+                        context,
+                        reason="LLM call interrupted during provider execution",
+                        source_exception=e,
+                    )
+                    last_exception = e
+                    logger.warn(
+                        f"❌[attempt {attempt}/{self.llm_max_attempts}] LLM call failed : {str(e)}"
+                    )
+
+                    # Rollout contract failures occur before provider execution
+                    # and are deterministic for this exact request. Retrying or
+                    # switching stream modes cannot repair them.
+                    if isinstance(e, CandidateRequestNotEnforceable):
+                        await self._save_failed_request_context(
+                            messages=messages,
+                            tools=tools,
+                            error=str(e),
+                            attempt=attempt,
+                            context=message.context,
+                        )
+                        await send_message(
+                            Message(
+                                category=Constants.OUTPUT,
+                                payload=Output(
+                                    data=f"Failed to prepare llm request: {e}"
+                                ),
+                                sender=self.id(),
+                                session_id=message.context.session_id
+                                if message.context
+                                else "",
+                                headers={"context": message.context},
+                            )
+                        )
+                        failure_output_sent = True
+                        raise
+
+                    if isinstance(e, GenerationBudgetExceeded) and e.reason in {
+                        GenerationStopReason.ACTIVE_STREAM_OVER_BUDGET,
+                        GenerationStopReason.CALL_DEADLINE_EXCEEDED,
+                        GenerationStopReason.ACTION_REPAIR_TIMEOUT,
+                        GenerationStopReason.ACTION_REPAIR_EXHAUSTED,
+                    }:
+                        await self._save_failed_request_context(
+                            messages=messages,
+                            tools=tools,
+                            error=str(e),
+                            attempt=attempt,
+                            context=message.context,
+                        )
+                        raise
+
+                    # Check if this is a context length error - don't retry for these
+                    if "Please reduce the length of the messages" in str(e):
+                        await send_message(
+                            Message(
+                                category=Constants.OUTPUT,
+                                payload=Output(data=f"Failed to call llm model: {e}"),
+                                sender=self.id(),
+                                session_id=message.context.session_id
+                                if message.context
+                                else "",
+                                headers={"context": message.context},
+                            )
+                        )
+                        from aworld.core.context.execution_state import (
+                            record_execution_state,
+                        )
+
+                        record_execution_state(
+                            context,
+                            self.id(),
+                            "incomplete",
+                            "context_window_exceeded",
+                            recoverable=False,
+                        )
+                        return self._context_overflow_response(messages)
+
+                    # If we haven't reached max attempts, try again
+                    if attempt < self.llm_max_attempts:
+                        # If stream_mode failed and we haven't tried non_stream_mode fallback yet, enable it
+                        if stream_mode and not stream_failed_fallback:
+                            stream_failed_fallback = True
+                            logger.warning(
+                                f"⚠️ Stream mode failed, switching to non-stream mode for retry (attempt {attempt + 1}/{self.llm_max_attempts})"
+                            )
+
+                        # Exponential backoff: retry_delay * (2 ^ (attempt - 1))
+                        # attempt 1->2: 1.0s, attempt 2->3: 2.0s, attempt 3->4: 4.0s
+                        backoff_delay = self.llm_retry_delay * (2 ** (attempt - 1))
+                        logger.info(
+                            f"⏳ Retrying in {backoff_delay}s (exponential backoff)..."
+                        )
+                        await self._await_generation_operation(
+                            asyncio.sleep(backoff_delay),
+                            controller=controller,
+                            streaming=False,
+                        )
+
+                        attempt += 1
+                        continue
+                    else:
+                        # Max attempts reached, save context and tools for analysis
+                        await self._save_failed_request_context(
+                            messages=messages,
+                            tools=tools,
+                            error=str(e),
+                            attempt=attempt,
+                            context=message.context,
+                        )
+
+                        # Send error message and raise
+                        await send_message(
+                            Message(
+                                category=Constants.OUTPUT,
+                                payload=Output(
+                                    data=f"Failed to call llm model after {attempt} attempts: {e}"
+                                ),
+                                sender=self.id(),
+                                session_id=message.context.session_id
+                                if message.context
+                                else "",
+                                headers={"context": message.context},
+                            )
+                        )
+                        failure_output_sent = True
+                        if isinstance(e, GenerationBudgetExceeded):
+                            # The typed generation controller already carries
+                            # the precise provider/deadline reason. Preserve it
+                            # for the outer long-horizon recovery policy.
+                            raise e
+                        transient_details = self._transient_model_failure_details(e)
+                        if transient_details is not None:
+                            raise AWorldTransientModelError(
+                                "transient model provider failure after request retries were exhausted",
+                                status_code=transient_details.get("status_code"),
+                                error_code=transient_details.get("error_code"),
+                                source_error_type=transient_details.get(
+                                    "source_error_type"
+                                ),
+                            ) from e
+                        raise e
+
+            # This should not be reached, but just in case
+            if last_exception:
+                raise last_exception
+            return llm_response
+
+        except Exception as e:
+            await self._raise_if_task_interrupted(
+                context,
+                reason="LLM call interrupted while bubbling provider failure",
+                source_exception=e,
+            )
+            logger.warn(f"Failed to call llm model: {e}")
+            if not failure_output_sent:
+                await send_message(
+                    Message(
+                        category=Constants.OUTPUT,
+                        payload=Output(data=f"Failed to call llm model: {e}"),
+                        sender=self.id(),
+                        session_id=message.context.session_id
+                        if message.context
+                        else "",
+                        headers={"context": message.context},
+                    )
+                )
+                failure_output_sent = True
+
+            if "Please reduce the length of the messages" in str(e):
+                # Meaning context too long, will return directly. You can develop a Processor to truncate or compress it.
+                await send_message(
+                    Message(
+                        category=Constants.TASK,
+                        topic=TopicType.CANCEL,
+                        payload=TaskItem(data=messages, msg=str(e)),
+                        sender=self.id(),
+                        priority=-1,
+                        session_id=message.context.session_id
+                        if message.context
+                        else "",
+                        headers={"context": message.context},
+                    )
+                )
+                return ModelResponse(
+                    id=uuid.uuid4().hex,
+                    model=self.model_name,
+                    content=to_serializable(messages),
+                )
+            raise e
+
+    async def custom_system_prompt(
+        self, context: Context, content: str, tool_list: List[str] = None
+    ):
+        logger.info(f"llm_agent custom_system_prompt .. agent#{type(self)}#{self.id()}")
+        from aworld.core.context.amni.prompt.prompt_ext import ContextPromptTemplate
+        from aworld.core.context.amni import AmniContext
+
+        if isinstance(context, AmniContext):
+            system_prompt_template = ContextPromptTemplate.from_template(
+                self.system_prompt
+            )
+            return await system_prompt_template.async_format(
+                context=context, task=content, tool_list=tool_list, agent_id=self.id()
+            )
+        else:
+            system_prompt_template = StringPromptTemplate.from_template(
+                self.system_prompt
+            )
+            system_prompt = system_prompt_template.format(
+                context=context, task=content, tool_list=tool_list
+            )
+            if self.ptc_tools:
+                from aworld.experimental.ptc.ptc_neuron import PTC_NEURON_PROMPT
+
+                system_prompt += PTC_NEURON_PROMPT
+            return system_prompt
+
+    async def _save_failed_request_context(
+        self,
+        messages: List[Dict[str, Any]],
+        tools: List[Dict[str, Any]],
+        error: str,
+        attempt: int,
+        context: Context,
+    ) -> None:
+        """Save failed request context and tools to file for analysis.
+
+        Args:
+            messages: LLM input messages
+            tools: Tool descriptions
+            error: Error message
+            attempt: Number of attempts made
+            context: Agent context
+        """
+        if getattr(self, "failed_request_diagnostics_enabled", True) is False:
+            logger.warning(
+                "Failed request diagnostics suppressed for agent "
+                f"{self.id()}; attempt={attempt}"
+            )
+            return
+        try:
+            # Create failed_requests directory if not exists
+            failed_dir = os.path.join(os.getcwd(), "failed_requests")
+            os.makedirs(failed_dir, exist_ok=True)
+
+            # Generate filename with timestamp
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            session_id = context.session_id if context else "unknown"
+            filename = f"failed_request_{self.id()}_{session_id}_{timestamp}.json"
+            filepath = os.path.join(failed_dir, filename)
+
+            # Calculate token estimates
+            def estimate_tokens(data):
+                """Rough token estimation: ~4 chars per token"""
+                return len(json.dumps(data, ensure_ascii=False)) // 4
+
+            messages_tokens = estimate_tokens(messages)
+            tools_tokens = estimate_tokens(tools)
+            total_tokens = messages_tokens + tools_tokens
+
+            # Prepare data to save
+            failed_data = {
+                "timestamp": timestamp,
+                "agent_id": self.id(),
+                "agent_name": self.name(),
+                "session_id": session_id,
+                "task_id": context.task_id if context else None,
+                "model_name": self.model_name,
+                "error": error,
+                "attempts": attempt,
+                "retry_delay": self.llm_retry_delay,
+                "statistics": {
+                    "total_tokens_estimate": total_tokens,
+                    "messages_tokens_estimate": messages_tokens,
+                    "tools_tokens_estimate": tools_tokens,
+                    "messages_count": len(messages),
+                    "tools_count": len(tools) if tools else 0,
+                },
+                "messages": messages,
+                "tools": tools,
+            }
+
+            # Write to file
+            with open(filepath, "w", encoding="utf-8") as f:
+                json.dump(failed_data, f, ensure_ascii=False, indent=2, default=str)
+
+            logger.warning(
+                f"💾 Failed request context saved to: {filepath}\n"
+                f"   📊 Statistics: {total_tokens} tokens (~{messages_tokens} messages + ~{tools_tokens} tools), "
+                f"{len(messages)} messages, {len(tools) if tools else 0} tools\n"
+                f"   ❌ Error: {error[:100]}..."
+            )
+
+        except Exception as save_error:
+            logger.error(
+                f"Failed to save failed request context: {save_error}\n{traceback.format_exc()}"
+            )
+
+    async def _add_message_to_memory(
+        self,
+        payload: Any,
+        message_type: MemoryType,
+        context: Context,
+        skip_summary: bool = False,
+    ):
+        memory_msg = MemoryEventMessage(
+            payload=payload,
+            agent=self,
+            memory_event_type=message_type,
+            headers={"context": context, "skip_summary": skip_summary},
+        )
+
+        # Send through message system (DIRECT mode handling is now in send_message_with_future)
+        try:
+            future = await send_message_with_future(memory_msg)
+            results = await future.wait(context=context)
+            if not results:
+                logger.warning(f"Memory write task failed: {memory_msg}")
+        except Exception as e:
+            logger.warn(f"Memory write task failed: {traceback.format_exc()}")
+
+    @staticmethod
+    async def send_agent_response_output(
+        agent: BaseAgent, response: Any, context: Context, outputs: Outputs = None
+    ):
+        model_name = getattr(response, "model", None) if response else None
+        resp_output = MessageOutput(
+            source=response,
+            metadata={
+                "agent_id": agent.id(),
+                "agent_name": agent.name(),
+                "is_finished": agent._finished,
+                "model_name": model_name,
+            },
+        )
+        if eventbus is not None:
+            await send_message(
+                Message(
+                    category=Constants.OUTPUT,
+                    payload=resp_output,
+                    sender=agent.id(),
+                    session_id=context.session_id if context else "",
+                    headers={"context": context},
+                )
+            )
+        elif outputs:
+            await outputs.add_output(resp_output)
+
+    def is_agent_finished(
+        self, llm_response: ModelResponse, agent_result: AgentResult
+    ) -> bool:
+        if not agent_result.is_call_tool:
+            from aworld.core.context.execution_state import record_execution_state
+
+            response_metadata = (
+                llm_response.message if isinstance(llm_response.message, dict) else {}
+            )
+            reason = response_metadata.get("aworld_incomplete_reason")
+            recoverable_reason = bool(
+                reason and response_metadata.get("aworld_recoverable", False)
+            )
+            raw_reason = self._incomplete_model_response_reason(llm_response)
+            if raw_reason and not reason:
+                self._finished = False
+                if getattr(self, "context", None) is not None:
+                    record_execution_state(
+                        self.context, self.id(), "incomplete", raw_reason
+                    )
+                return False
+            completion_satisfied = False
+            completion_resolution_observation = None
+            if not reason and getattr(self, "context", None) is not None:
+                from aworld.core.context.compiler import (
+                    CompletionMode,
+                    CompletionStatus,
+                )
+                from aworld.core.context.execution_state import (
+                    execution_resolution_observation,
+                )
+
+                completion_resolution_observation = execution_resolution_observation(
+                    self.context, self.id()
+                )
+                assessment = self.context.assess_completion_contract(
+                    agent_claimed_finished=True
+                )
+                if (
+                    assessment is not None
+                    and assessment.mode is CompletionMode.ENFORCE
+                    and self.context.context_info.get(
+                        "completion_enforcement_explicit", True
+                    )
+                    is not False
+                    and assessment.status is not CompletionStatus.SATISFIED
+                ):
+                    self._finished = False
+                    record_execution_state(
+                        self.context,
+                        self.id(),
+                        "incomplete",
+                        "completion_contract_unsatisfied",
+                    )
+                    return False
+                completion_satisfied = bool(
+                    assessment is not None
+                    and assessment.status is CompletionStatus.SATISFIED
+                )
+            if recoverable_reason:
+                self._finished = False
+                if getattr(self, "context", None) is not None:
+                    record_execution_state(
+                        self.context,
+                        self.id(),
+                        "incomplete",
+                        reason,
+                        recoverable=True,
+                    )
+                return False
+            if getattr(self, "context", None) is not None:
+                if completion_satisfied and not reason:
+                    from aworld.core.context.execution_state import (
+                        record_execution_resolution,
+                    )
+
+                    record_execution_resolution(
+                        self.context,
+                        self.id(),
+                        evidence_kind="completion_contract_satisfied",
+                        status="running",
+                        reason="completion_contract_satisfied",
+                        observation=completion_resolution_observation,
+                    )
+                record_execution_state(
+                    self.context,
+                    self.id(),
+                    "incomplete" if reason else "succeeded",
+                    reason or "agent_final_response",
+                    recoverable=bool(
+                        reason and response_metadata.get("aworld_recoverable", False)
+                    ),
+                )
+            self._finished = True
+        return self.finished
+
+    def _context_budget_recovery_tool(self, context: Context):
+        """Provide only bounded workspace readback, without enabling ingestion."""
+        if not self._is_amni_context(context):
+            return None
+        if (
+            self._context_compiler_mode_value() != "enforce"
+            or getattr(self.llm, "_context_checkpoint_policy", "explicit")
+            not in {"adaptive", "budget_pressure"}
+            or not getattr(self.llm, "_context_artifact_offload", True)
+        ):
+            return None
+        from aworld.core.context.amni.tool.context_knowledge_tool import (
+            CONTEXT_KNOWLEDGE,
+        )
+        from aworld.core.context.budget_recovery import READ_TOOL
+
+        schemas = tool_desc_transform(
+            get_tool_desc(),
+            tools=[CONTEXT_KNOWLEDGE],
+            black_tool_actions=getattr(self, "black_tool_actions", {}) or {},
+        )
+        return next(
+            (
+                schema
+                for schema in schemas
+                if schema.get("function", {}).get("name") == READ_TOOL
+            ),
+            None,
+        )
+
+    async def _filter_tools(self, context: Context) -> List[Dict[str, Any]]:
+        from aworld.core.context.amni import AmniContext
+
+        if not isinstance(context, AmniContext) or not self.skill_configs:
+            logger.info(
+                f"llm_agent don't need _filter_tools .. agent#{type(self)}#{self.id()}"
+            )
+            return self._filter_artifact_observation_tools(
+                self.tools, context
+            ) or []
+        # get current active skills
+        skills = await context.get_active_skills(namespace=self.id())
+
+        forced_skill_names = self._requested_skill_names_from_context(context)
+        if forced_skill_names and self._should_disable_tools_for_forced_skills(
+            forced_skill_names=forced_skill_names,
+            active_skills=skills,
+        ):
+            logger.info(
+                "Forced instruction-only skills active for agent %s; disabling runtime tool access",
+                self.id(),
+            )
+            return []
+
+        selected = await skill_translate_tools(
+            skills=skills,
+            skill_configs=self.skill_configs,
+            tools=self.tools,
+            tool_mapping=self.tool_mapping,
+        )
+        recovery_tool = self._context_budget_recovery_tool(context)
+        if recovery_tool and not any(
+            tool.get("function", {}).get("name") == recovery_tool["function"]["name"]
+            for tool in selected
+        ):
+            selected.append(recovery_tool)
+        return self._filter_artifact_observation_tools(selected, context) or []
+
+    @staticmethod
+    def _requested_skill_names_from_context(context: Context) -> List[str]:
+        task_input = getattr(context, "task_input_object", None)
+        metadata = getattr(task_input, "metadata", None)
+        if not isinstance(metadata, dict):
+            return []
+        requested = metadata.get("requested_skill_names")
+        if not isinstance(requested, list):
+            return []
+        return [str(item).strip() for item in requested if str(item).strip()]
+
+    @staticmethod
+    def _is_instruction_only_skill(skill_config: Dict[str, Any]) -> bool:
+        if not isinstance(skill_config, dict):
+            return False
+        if skill_config.get("type") == "agent":
+            return False
+        execution_assets = skill_config.get("execution_assets")
+        if isinstance(execution_assets, dict) and execution_assets.get("enabled"):
+            return False
+        return not bool(skill_config.get("tool_list"))
+
+    def _should_disable_tools_for_forced_skills(
+        self,
+        *,
+        forced_skill_names: List[str],
+        active_skills: List[str],
+    ) -> bool:
+        if not forced_skill_names:
+            return False
+
+        active_skill_set = set(active_skills or [])
+        forced_active_configs: list[Dict[str, Any]] = []
+
+        for skill_name in forced_skill_names:
+            if skill_name not in active_skill_set:
+                continue
+            skill_config = self.skill_configs.get(skill_name)
+            if not isinstance(skill_config, dict):
+                continue
+            forced_active_configs.append(skill_config)
+
+        if not forced_active_configs:
+            return False
+
+        return all(
+            self._is_instruction_only_skill(skill) for skill in forced_active_configs
+        )
+
+    async def _add_tool_result_token_ids_to_context(self, context: Context):
+        """Add tool result token ids to context"""
+        if context.get_task().conf.get("run_mode") != TaskRunMode.INTERACTIVE:
+            return
+        filters = self._build_memory_filters(
+            context, additional_filters={"memory_type": "message"}
+        )
+        memory = MemoryFactory.instance()
+        histories = memory.get_all(filters=filters)
+        tool_openai_messages_after_last_assistant = []
+        found_assistant = False
+        tool_call_ids = []
+        for i in range(len(histories) - 1, -1, -1):
+            history = histories[i]
+            if hasattr(history, "role") and history.role == "assistant":
+                found_assistant = True
+                break
+            elif (
+                not found_assistant
+                and hasattr(history, "role")
+                and history.role == "tool"
+            ):
+                tool_openai_messages_after_last_assistant.append(
+                    history.to_openai_message()
+                )
+                tool_call_ids.append(history.tool_call_id)
+
+        if tool_openai_messages_after_last_assistant:
+            tool_result_token_ids = apply_chat_template(
+                self.llm, tool_openai_messages_after_last_assistant
+            )
+            context.add_tool_resp_token_ids(
+                tool_resp_token_ids=tool_result_token_ids,
+                resp_tool_call_ids=tool_call_ids,
+                agent_id=self.id(),
+            )
+
+    def to_dict(self):
+        attributes = {
+            "name": self.name(),
+            "conf": self.conf,
+            "desc": self.desc(),
+            "task": self.task,
+            "tool_names": self.tool_names,
+            "agent_names": self.handoffs,
+            "mcp_servers": self.mcp_servers,
+            "mcp_config": self.mcp_config,
+            "feedback_tool_result": self.feedback_tool_result,
+            "wait_tool_result": self.wait_tool_result,
+            "system_prompt": self.system_prompt,
+            "need_reset": self.need_reset,
+            "step_reset": self.step_reset,
+            "use_tools_in_prompt": self.use_tools_in_prompt,
+            "black_tool_actions": self.black_tool_actions,
+            "output_converter": self.output_converter,
+            "tool_aggregate_func": self.tools_aggregate_func,
+            "event_handler_name": self.event_handler_name,
+            "event_driven": self.event_driven,
+            "skill_configs": self.skill_configs,
+            "_generation_budget_explicit_fields": tuple(
+                sorted(self._generation_budget_explicit_fields)
+            ),
+        }
+        if self._explicit_generation_budget_policy is not None:
+            attributes["generation_budget_policy"] = (
+                self._explicit_generation_budget_policy
+            )
+        if self._explicit_execution_protocol_policy is not None:
+            attributes["execution_protocol_policy"] = (
+                self._explicit_execution_protocol_policy
+            )
+        if self._tool_surface_specs:
+            attributes["tool_surface_specs"] = self._tool_surface_specs
+            attributes["tool_surface_profile"] = self._tool_surface_profile
+            attributes["tool_surface_probes"] = self._tool_surface_probes
+        return attributes
+
+    @staticmethod
+    async def agent_to_dict(agent: "LLMAgent", override: Dict[str, Any] = None):
+        """Agent attribute dict."""
+        attr_dict = agent.to_dict()
+        if override:
+            attr_dict.update(override)
+        return attr_dict
+
+    @staticmethod
+    def from_dict(attr_dict: Dict[str, Any]) -> "Agent":
+        return Agent(**attr_dict)
+
+    async def process_by_ptc(self, tools, context: Context):
+        if not hasattr(self, "ptc_tools") or not self.ptc_tools:
+            return
+        ptc_tools = self.ptc_tools
+
+        for tool in tools:
+            if tool["function"]["name"] in ptc_tools:
+                tool["function"]["description"] = (
+                    "[allow_code_execution]" + tool["function"]["description"]
+                )
+                logger.debug(f"ptc augmented tool: {tool['function']['description']}")
+
+
+# Considering compatibility and current universality, we still use Agent to represent LLM Agent.
+Agent = LLMAgent

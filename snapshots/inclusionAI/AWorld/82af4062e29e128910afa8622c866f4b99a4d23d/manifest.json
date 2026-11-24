@@ -89,7 +89,10 @@
     {
       "path": "LICENSE",
       "bytes": 1071,
-      "sha256": "7a6308fd98e53e0ef59b98fab14f9312ef32f4edae093b1604e56c7ade56e3b5"
+      "sha256": "7a6308fd98e53e0ef59b98fab14f9312ef32f4edae093b1604e56c7ade56e3b5",
+      "git_blob": "43e80c00dfa6a7aeb48ed20103821f84ddb03657",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/LICENSE",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "README.md",
@@ -234,17 +237,26 @@
     {
       "path": "aworld-skills/long-running-agent/SKILL.md",
       "bytes": 12810,
-      "sha256": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4"
+      "sha256": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4",
+      "git_blob": "72437cd517aface6fbc3f40246c5e62e64d5caa9",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld-skills/long-running-agent/SKILL.md",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "aworld-skills/long-running-agent/references/checkpoints-and-review.md",
       "bytes": 5085,
-      "sha256": "ff7783fc3f18b8cb8c88f55f8bad4e0ac9a6412b4021e8e3fecb20f10b030e23"
+      "sha256": "ff7783fc3f18b8cb8c88f55f8bad4e0ac9a6412b4021e8e3fecb20f10b030e23",
+      "git_blob": "4181e8f14cbec6f465c2c38c1aec1120913dd3ed",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "aworld-skills/long-running-agent/references/execution-semantics.md",
       "bytes": 2508,
-      "sha256": "23e9520d70d8136085dab308f5dfb43478e83d91982a03dcf11568708c969468"
+      "sha256": "23e9520d70d8136085dab308f5dfb43478e83d91982a03dcf11568708c969468",
+      "git_blob": "1261e6b3bacbad04d317a848758192f9ceb0e2d5",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld-skills/long-running-agent/references/execution-semantics.md",
+      "checked_on": "2026-11-24"
     },
     {
       "path": "aworld-skills/media_comprehension/SKILL.md",
@@ -473,7 +485,33 @@
       "path": "aworld/core/execution_protocol/models.py",
       "bytes": 97444,
       "sha256": "d0ce1e427a75bda7c1ca03a3036038cb4f0a7f201417844245fe0264538850d8",
-      "git_blob": "b99e1cc7d7b205499a5a53f3e5f3cba14bb8d546"
+      "git_blob": "b99e1cc7d7b205499a5a53f3e5f3cba14bb8d546",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld/core/execution_protocol/models.py",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "aworld/agents/llm_agent.py",
+      "bytes": 480471,
+      "sha256": "0e8b5061623aa69e4abd8f78d9905e5458e4f022132041d99ee7c66d363fd0b6",
+      "git_blob": "500db361d3096e7c400d058c88c5b8a77249259c",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld/agents/llm_agent.py",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "aworld/runners/execution_protocol.py",
+      "bytes": 256172,
+      "sha256": "0779f466a87318251e707ba1fb7c356a00e22f2c03a5fe456497564dd4ecfbf5",
+      "git_blob": "e31bebe156a52f1be0de2e9f84efe3eeed5810e4",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/aworld/runners/execution_protocol.py",
+      "checked_on": "2026-11-24"
+    },
+    {
+      "path": "docs/Agents/Runtime/Completion and Progress.md",
+      "bytes": 5899,
+      "sha256": "92b1fa0863a6bbf175caa4b3683f9bfd26644e19245e8844656794ab7f9e50b7",
+      "git_blob": "f3765ac8af839bf00b5028426dccf95644ff7b3e",
+      "source_url": "https://github.com/inclusionAI/AWorld/blob/82af4062e29e128910afa8622c866f4b99a4d23d/docs/Agents/Runtime/Completion%20and%20Progress.md",
+      "checked_on": "2026-11-24"
     }
   ],
   "skills": [
@@ -684,6 +722,16 @@
       ],
       "scope": "selected functions/classes read; full files archived, not full protocol study",
       "evidence": "research/evidence/2026-11-22/source-review.json"
+    },
+    {
+      "checked_on": "2026-11-24",
+      "files": [
+        "aworld/agents/llm_agent.py",
+        "aworld/runners/execution_protocol.py",
+        "docs/Agents/Runtime/Completion and Progress.md"
+      ],
+      "evidence": "research/evidence/2026-11-24/source-review.json",
+      "scope": "selected complete files; reading ranges separately recorded; historical archive parts retained, not redownloaded or rehashed"
     }
   ]
 }

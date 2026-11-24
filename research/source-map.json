@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-23",
+  "updated_at": "2026-11-24",
   "note": "来源登记、入口核对、摘要阅读和全文研究分别记状态；候选不是已完成覆盖。",
   "sources": [
     {
@@ -754,6 +754,16 @@
           "manifest": "research/evidence/2026-11-20/aworld-review.json",
           "execution_status": "static_only",
           "scope": "skill activation and prompt evidence; frozen skill direct references read; runtime protocol pending"
+        },
+        {
+          "checked_at": "2026-11-24",
+          "version": "82af4062e29e128910afa8622c866f4b99a4d23d",
+          "evidence": [
+            "research/solutions/aworld-policy-resolution-and-runtime.md"
+          ],
+          "manifest": "research/evidence/2026-11-24/source-review.json",
+          "execution_status": "static_only",
+          "scope": "frozen occurrence LLMAgent policy resolution, Runner configure/read, selected ranges only; not a current HEAD refresh or full skill review"
         }
       ]
     },
@@ -1013,13 +1023,27 @@
       "backup_scope": "见 catalog/snapshots.json；官方网页例外",
       "full_research_complete": false,
       "latest_metadata_audit": {
-        "checked_on": "2026-10-26",
+        "checked_on": "2026-11-24",
         "head": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
         "default_branch": "data_agent",
         "archived": false,
         "head_backed_up": true,
-        "evidence": "research/repository-audit-2026-10-26.md"
-      }
+        "evidence": "research/ownership-review-2026-11-24.md",
+        "backup_scope": "historical whole archive retained, not rehashed today; 9 expanded file additions and 6 existing file verifications"
+      },
+      "supplementary_reviews": [
+        {
+          "checked_at": "2026-11-24",
+          "version": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+          "evidence": [
+            "research/ownership-review-2026-11-24.md",
+            "research/solutions/joyagent-tool-join-and-finish.md"
+          ],
+          "manifest": "research/evidence/2026-11-24/source-review.json",
+          "execution_status": "static_only",
+          "scope": "ownership/version and Executor tool join/error/finish; full product and evaluator not verified"
+        }
+      ]
     },
     {
       "id": "prior-kuaishou-kwaiagents-lite",

@@ -1,0 +1,458 @@
+{
+  "checked_on": "2026-11-24",
+  "timezone": "Asia/Shanghai",
+  "base_commit": "8c714104fdf4ddbbb3bbaea1487fbfd635d1e358",
+  "task": "P1-01",
+  "execution_status": "source_static_review_only",
+  "upstream_code_executed": false,
+  "model_or_business_calls": false,
+  "experiments_run": [],
+  "verification": "our SHA256/Git blob hashing and exact remote snapshot content comparison only; not upstream system validation",
+  "queries": [
+    {
+      "date": "2026-11-24",
+      "q": "京东 JoyAgent JDGenie 官方 开源 工具 调用 失败",
+      "use": "official repository discovery; community excluded"
+    },
+    {
+      "date": "2026-11-24",
+      "q": "JoyAgent JDGenie data_agent BaseAgent tool execution error finish",
+      "use": "fixed source read; search snippets not evidence"
+    },
+    {
+      "date": "2026-11-24",
+      "q": "site.jdcloud.com JoyAgent JDGenie github 京东",
+      "recency_days": 90,
+      "use": "no exact jdcloud official reverse-link obtained; JD GitHub organization and fixed README checked"
+    },
+    {
+      "date": "2026-11-24",
+      "q": "site.github.com/inclusionAI/AWorld execution_protocol_policy long-running-agent GUIDE",
+      "use": "official docs discovery; floating docs not transferred to frozen source"
+    }
+  ],
+  "sources": [
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "fixed_commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "current_default_branch": "data_agent",
+      "current_head": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "archived": false,
+      "ownership_evidence": [
+        "https://github.com/jd-opensource",
+        "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/README.md",
+        "https://github.com/jd-opensource/joyagent-jdgenie/blob/2417e0b8b636d941ad5fb14c59b20dddfef5375d/LICENSE"
+      ],
+      "ownership_observation": "JD.com organization links jdcloud and pins project; fixed README names JD teams; root license names JD group; exact jdcloud reverse link not obtained",
+      "license": "root Apache-2.0 declaration; NOTICE-Third Party retained; not a whole dependency legal review",
+      "historical_archive_status": "manifest/parts retained; not redownloaded or rehashed this batch",
+      "specialist_record": "29/31 after this source subunit, not P1 acceptance",
+      "unread": [
+        "concrete tools/MCP service implementation",
+        "PlanningTool plan mutation",
+        "SummaryAgent internals",
+        "actual runtime configuration and controller entry",
+        "cancel/authorization/side-effect idempotency",
+        "GAIA evaluators, budgets and claimed performance"
+      ]
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "fixed_commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "scope": "frozen occurrence policy resolution/publication/readback subchain, not current HEAD refresh or full harness review",
+      "license": "MIT",
+      "content_id": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4",
+      "occurrence_id": "88db3ba554f3e23ef7f1b3e5",
+      "entry_directory_read": [
+        3,
+        3
+      ],
+      "dependency_status": "partially_reviewed",
+      "host_status": "partially_reviewed",
+      "execution_status": "not_run",
+      "floating_docs": {
+        "url": "https://www.inclusion-ai.org/AWorld/Agents/Runtime/Completion%20and%20Progress/",
+        "checked_on": "2026-11-24",
+        "source_type": "official_documentation",
+        "backup": "floating page not mirrored; fixed repository Markdown saved separately",
+        "version_equivalence": "not asserted; public contract ledger/inline guidance additions visible on floating page"
+      },
+      "unread": [
+        "full LLMAgent and execution protocol runner",
+        "candidate/review/repair event generation and tool-result return",
+        "actual Context registry atomicity and checkpoint durability",
+        "CLI wiring and deployed environment",
+        "conditional Workbench and collaborator capabilities"
+      ]
+    }
+  ],
+  "tree_inventory": [
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "entries": 548,
+      "truncated": false
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "entries": 3757,
+      "truncated": false
+    }
+  ],
+  "files": [
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "LICENSE",
+      "tree_blob": "587d3dcc197412eba6b4d713b803db89d9c7e580",
+      "bytes": 10292,
+      "sha256": "e359035ed218e1da4cd009b72242f1531ba3001a66d1217bda8c556749c00835",
+      "git_blob": "587d3dcc197412eba6b4d713b803db89d9c7e580",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/LICENSE",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "full license text"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "NOTICE-Third Party",
+      "tree_blob": "1e7e8e5e085c25a9f0384573846ba83398a35c45",
+      "bytes": 34181,
+      "sha256": "a521d0e5ee6973fc1fdad624a0696530916c679fe3f832922bd5ccd0dfcc3ea1",
+      "git_blob": "1e7e8e5e085c25a9f0384573846ba83398a35c45",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/NOTICE-Third Party",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "notice headings and representative license blocks; full bytes preserved, no dependency-wide licensing opinion"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "README.md",
+      "tree_blob": "d53eff2b4b63605f892625e6a409b68066895243",
+      "bytes": 21104,
+      "sha256": "be98aa2744f6c8b377f9321330b1f1efa2214b8ca0567d0bceca1f1f6f719ff0",
+      "git_blob": "d53eff2b4b63605f892625e6a409b68066895243",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/README.md",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "project/branch introductions, author claims, architecture prose, extension examples and authorship sections; embedded media not acquired"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/BaseAgent.java",
+      "tree_blob": "3567d12354cf1de5b69ab476e82d590acae952d2",
+      "bytes": 5159,
+      "sha256": "67a464057976dc041f0852f89d584d43ab92d28ca95196e9e5ac68259e84711f",
+      "git_blob": "3567d12354cf1de5b69ab476e82d590acae952d2",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/agent/BaseAgent.java",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/ExecutorAgent.java",
+      "tree_blob": "617c83448ea84c011c078def1c550b9b3a66eee2",
+      "bytes": 8788,
+      "sha256": "44df1978063f292f36617a850f2c3f7caf5853dd7214312d29772a0064feb7ec",
+      "git_blob": "617c83448ea84c011c078def1c550b9b3a66eee2",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/agent/ExecutorAgent.java",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/PlanningAgent.java",
+      "tree_blob": "e5443057341ef3c8183fdd8ad7b592426baed041",
+      "bytes": 8447,
+      "sha256": "731cd8067bb56cbec7f1c50fbdf7816d94a47eda9ff4b1c86b330e43c45d0904",
+      "git_blob": "e5443057341ef3c8183fdd8ad7b592426baed041",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/agent/PlanningAgent.java",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/agent/ReActAgent.java",
+      "tree_blob": "d37b3bdd6918a64b9343f81bf9dd67b9aebf2dc7",
+      "bytes": 4558,
+      "sha256": "0ea92e1a02e159d2d702e843d5e7584621cd3ad5976cf033c169460d8a8f24b2",
+      "git_blob": "d37b3bdd6918a64b9343f81bf9dd67b9aebf2dc7",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/agent/ReActAgent.java",
+      "backup": "new_expanded_file",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/dto/Memory.java",
+      "tree_blob": "be4a06a3284d2c3897069765515084e5128ace03",
+      "bytes": 2225,
+      "sha256": "dfeff75a2fb63d203adcbb3ae554f8e81808e988634c53f1093c37559f3ea3a9",
+      "git_blob": "be4a06a3284d2c3897069765515084e5128ace03",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/dto/Memory.java",
+      "backup": "new_expanded_file",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/dto/tool/ToolResult.java",
+      "tree_blob": "05a8cc027271a2ff0c8ea5b8ba0f1f4391fa2291",
+      "bytes": 5120,
+      "sha256": "3cd2193919ff1df2f1e9e8179c018e66089f7ba590b1fcfbbe1f5bee906c07b2",
+      "git_blob": "05a8cc027271a2ff0c8ea5b8ba0f1f4391fa2291",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/dto/tool/ToolResult.java",
+      "backup": "new_expanded_file",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/llm/LLM.java",
+      "tree_blob": "81bdc8322fc908697b5f2fdb1a93c39c2303bda2",
+      "bytes": 58326,
+      "sha256": "d1b525a3f94da7e909b58527f4385a4d7e6eda4e7f9eba86dfade8502b86e77b",
+      "git_blob": "81bdc8322fc908697b5f2fdb1a93c39c2303bda2",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/llm/LLM.java",
+      "backup": "new_expanded_file",
+      "read_scope": "360-546 askTool;558-587 nonstream HTTP construction; helpers and full stream paths unread"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/prompt/ToolCallPrompt.java",
+      "tree_blob": "0a7586fb5c7fe9054a34c3353adb08760bf369ea",
+      "bytes": 2943,
+      "sha256": "c46c67dd7c12e149b2750a82641ce1c0cec73745fdcfeb07f7f85bec8c2a1ef3",
+      "git_blob": "0a7586fb5c7fe9054a34c3353adb08760bf369ea",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/prompt/ToolCallPrompt.java",
+      "backup": "new_expanded_file",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/tool/ToolCollection.java",
+      "tree_blob": "9bee795ef6966fa51cbbdeb880251ef3786c09ec",
+      "bytes": 2968,
+      "sha256": "70cc871afcc436a6dd90b23341394dbd6f56e81e1a176571184a0562cc017faa",
+      "git_blob": "9bee795ef6966fa51cbbdeb880251ef3786c09ec",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/tool/ToolCollection.java",
+      "backup": "new_expanded_file",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/util/FileUtil.java",
+      "tree_blob": "0b0d67c6eb58e9def3236031793402cfd4db6b5e",
+      "bytes": 968,
+      "sha256": "4d50ac465d8b179413a5afe4df0bd5674d81cd76ea0b3e5fc75fd20553c0bf76",
+      "git_blob": "0b0d67c6eb58e9def3236031793402cfd4db6b5e",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/util/FileUtil.java",
+      "backup": "new_expanded_file",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/agent/util/ThreadUtil.java",
+      "tree_blob": "acac7a3a752affc93cb68cfb5ee4ecabada2e882",
+      "bytes": 1353,
+      "sha256": "820854f3356c9966df85042e3b5e13cd5f3e243aac1aa0cb82da0822914dcb23",
+      "git_blob": "acac7a3a752affc93cb68cfb5ee4ecabada2e882",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/agent/util/ThreadUtil.java",
+      "backup": "new_expanded_file",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "jd-opensource/joyagent-jdgenie",
+      "commit": "2417e0b8b636d941ad5fb14c59b20dddfef5375d",
+      "path": "genie-backend/src/main/java/com/jd/genie/service/impl/PlanSolveHandlerImpl.java",
+      "tree_blob": "30c8b4b3ddb0577fe1876a641570cf326ee980f3",
+      "bytes": 7189,
+      "sha256": "f629ab8f1bc06f100298d5c303408789fb8da4af6826a1bbfc23fc4d1ad4049d",
+      "git_blob": "30c8b4b3ddb0577fe1876a641570cf326ee980f3",
+      "target": "snapshots/jd-opensource/joyagent-jdgenie/2417e0b8b636d941ad5fb14c59b20dddfef5375d/files/genie-backend/src/main/java/com/jd/genie/service/impl/PlanSolveHandlerImpl.java",
+      "backup": "new_expanded_file",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "LICENSE",
+      "tree_blob": "43e80c00dfa6a7aeb48ed20103821f84ddb03657",
+      "bytes": 1071,
+      "sha256": "7a6308fd98e53e0ef59b98fab14f9312ef32f4edae093b1604e56c7ade56e3b5",
+      "git_blob": "43e80c00dfa6a7aeb48ed20103821f84ddb03657",
+      "target": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/LICENSE",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "full license text"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/agents/llm_agent.py",
+      "tree_blob": "500db361d3096e7c400d058c88c5b8a77249259c",
+      "bytes": 480471,
+      "sha256": "0e8b5061623aa69e4abd8f78d9905e5458e4f022132041d99ee7c66d363fd0b6",
+      "git_blob": "500db361d3096e7c400d058c88c5b8a77249259c",
+      "target": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld/agents/llm_agent.py",
+      "backup": "new_expanded_file",
+      "read_scope": "302-342,690-755,854-867,1017-1121,6366-6378; other matched call locations only inspected, not full loop"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/runners/execution_protocol.py",
+      "tree_blob": "e31bebe156a52f1be0de2e9f84efe3eeed5810e4",
+      "bytes": 256172,
+      "sha256": "0779f466a87318251e707ba1fb7c356a00e22f2c03a5fe456497564dd4ecfbf5",
+      "git_blob": "e31bebe156a52f1be0de2e9f84efe3eeed5810e4",
+      "target": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld/runners/execution_protocol.py",
+      "backup": "new_expanded_file",
+      "read_scope": "1016-1083 configure_execution_protocol;2178-2183 execution_protocol_policy"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld/core/execution_protocol/models.py",
+      "tree_blob": "b99e1cc7d7b205499a5a53f3e5f3cba14bb8d546",
+      "bytes": 97444,
+      "sha256": "d0ce1e427a75bda7c1ca03a3036038cb4f0a7f201417844245fe0264538850d8",
+      "git_blob": "b99e1cc7d7b205499a5a53f3e5f3cba14bb8d546",
+      "target": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld/core/execution_protocol/models.py",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "802-856,965-1012; earlier partial review retained, not full file"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/SKILL.md",
+      "tree_blob": "72437cd517aface6fbc3f40246c5e62e64d5caa9",
+      "bytes": 12810,
+      "sha256": "69472b4e8d888820e251fa10180933be9e2963447b6d615033d76c39682867d4",
+      "git_blob": "72437cd517aface6fbc3f40246c5e62e64d5caa9",
+      "target": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-skills/long-running-agent/SKILL.md",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/references/execution-semantics.md",
+      "tree_blob": "1261e6b3bacbad04d317a848758192f9ceb0e2d5",
+      "bytes": 2508,
+      "sha256": "23e9520d70d8136085dab308f5dfb43478e83d91982a03dcf11568708c969468",
+      "git_blob": "1261e6b3bacbad04d317a848758192f9ceb0e2d5",
+      "target": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-skills/long-running-agent/references/execution-semantics.md",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "tree_blob": "4181e8f14cbec6f465c2c38c1aec1120913dd3ed",
+      "bytes": 5085,
+      "sha256": "ff7783fc3f18b8cb8c88f55f8bad4e0ac9a6412b4021e8e3fecb20f10b030e23",
+      "git_blob": "4181e8f14cbec6f465c2c38c1aec1120913dd3ed",
+      "target": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/aworld-skills/long-running-agent/references/checkpoints-and-review.md",
+      "backup": "existing_expanded_file_verified",
+      "read_scope": "full file"
+    },
+    {
+      "repository": "inclusionAI/AWorld",
+      "commit": "82af4062e29e128910afa8622c866f4b99a4d23d",
+      "path": "docs/Agents/Runtime/Completion and Progress.md",
+      "tree_blob": "f3765ac8af839bf00b5028426dccf95644ff7b3e",
+      "bytes": 5899,
+      "sha256": "92b1fa0863a6bbf175caa4b3683f9bfd26644e19245e8844656794ab7f9e50b7",
+      "git_blob": "f3765ac8af839bf00b5028426dccf95644ff7b3e",
+      "target": "snapshots/inclusionAI/AWorld/82af4062e29e128910afa8622c866f4b99a4d23d/files/docs/Agents/Runtime/Completion and Progress.md",
+      "backup": "new_expanded_file",
+      "read_scope": "full file"
+    }
+  ],
+  "counts": {
+    "verified_files": 23,
+    "new_expanded_files": 12,
+    "reused_files": 11,
+    "new_complete_repository_archives": 0,
+    "new_entry_groups": 0,
+    "new_full_skill_groups": 0,
+    "new_main_task_acceptances": 0
+  },
+  "conclusions": [
+    {
+      "id": "J-error",
+      "kind": "source_fact",
+      "statement": "executeTool returns text after parse/tool/cast exceptions; Executor does not consume ToolResult.ExecutionStatus"
+    },
+    {
+      "id": "J-join",
+      "kind": "conditional_static_inference",
+      "statement": "silent rejection or exception before countDown can leave latch nonzero; await has no timeout; no stress test performed"
+    },
+    {
+      "id": "J-finish",
+      "kind": "source_fact",
+      "statement": "model-processing exception can set FINISHED; max-step post-loop check can replace final-step result with budget halt"
+    },
+    {
+      "id": "A-default",
+      "kind": "source_fact",
+      "statement": "AWORLD_SUCCESS_FIRST unset/blank is enabled; actual LLMAgent default OBSERVE with terminal gate, GUIDE requires success-first false; Policy class default OFF is separate"
+    },
+    {
+      "id": "A-publish",
+      "kind": "source_fact",
+      "statement": "configure narrows independent acceptance using existing flag, validation_commands presence and environment; explicit policy is not immutable published state"
+    },
+    {
+      "id": "A-budget",
+      "kind": "static_arithmetic_example_not_executed",
+      "inputs": {
+        "task_timeout": 600,
+        "external_reserve": 30
+      },
+      "default_success_first": {
+        "finalization_reserve": 115.5,
+        "candidate_reserve": 235.5,
+        "review_timeout": 120
+      },
+      "success_first_off_guide": {
+        "finalization_reserve": 75,
+        "candidate_reserve": 195,
+        "review_timeout_after_configure": 60
+      }
+    },
+    {
+      "id": "A-skill",
+      "kind": "inference_with_scope",
+      "statement": "skill active and review prose alone cannot certify actual review events; configured mode and runner path remain separate"
+    }
+  ],
+  "unpublished_recovery_tasks_retained": [
+    "prior lark SDK card and expanded originals",
+    "VitaBench six expanded scoring originals"
+  ],
+  "website_deployed": false,
+  "quality_checks": {
+    "json_files": 7,
+    "unselected_groups_unchanged": 193,
+    "status_unchanged": true,
+    "diagrams": 4,
+    "primary_links": 18,
+    "relative_links": 8,
+    "new_targets": 5,
+    "new_snapshot_paths_checked_absent": 12,
+    "source_git_blob_sha256_verified": 23,
+    "remote_lease_before_commit": "8c714104fdf4ddbbb3bbaea1487fbfd635d1e358",
+    "historical_source_bytes_preserved": true
+  }
+}

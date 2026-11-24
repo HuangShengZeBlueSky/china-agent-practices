@@ -127,3 +127,7 @@ GitHub 是本轮排期、证据和研究进度的持久入口。研究看板保�
 ## 2026-11-23
 
 [Open-AutoGLM截图与结束](solutions/open-autoglm-finish-and-observation.md)补Android子链；[MiniMax宿主证据](solutions/minimax-review-host-evidence.md)区分知识包与强制审查。专项28/31，完整技能组0。[当日记录](log/2026-11-23.md)。
+
+## 2026-11-24
+
+[JoyAgent工具汇合](solutions/joyagent-tool-join-and-finish.md)补错误文本、并发等待和退出；[AWorld实际策略](solutions/aworld-policy-resolution-and-runtime.md)核出默认success-first为OBSERVE及发布收紧。两卡各有两类图；[归属专项](ownership-review-2026-11-24.md)推进29/31，完整技能组0、实跑0。[日志](log/2026-11-24.md)。

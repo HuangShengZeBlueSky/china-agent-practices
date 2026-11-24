@@ -202,3 +202,7 @@
 ## 2026-11-23 设备完成与宿主审查补核
 
 [Open-AutoGLM固定循环](../research/solutions/open-autoglm-finish-and-observation.md)补模型输入、错误、截图和ADB返回边界；[MiniMax宿主证据](../research/solutions/minimax-review-host-evidence.md)补包元数据和CI可见范围。两者均静态核对，不能据终止信号宣称业务验收。详见[归属专项](../research/ownership-review-2026-11-23.md)。
+
+## 2026-11-24 京东执行专项
+
+[JoyAgent-JDGenie工具汇合与结束](../research/solutions/joyagent-tool-join-and-finish.md)核固定data_agent执行子链：工具异常可变成普通文本，无超时计数锁、模型故障FINISHED与步数覆盖需分别记录。[归属与版本](../research/ownership-review-2026-11-24.md)确认HEAD未变，历史整包未重验。源码静态核对，未实跑或复现收益。
